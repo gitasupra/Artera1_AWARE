@@ -1,0 +1,1014 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
+		CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC94828B2AF870DF00A3A64E /* ContentView.swift */; };
+		CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC94828D2AF870E100A3A64E /* Assets.xcassets */; };
+		CC9482912AF870E100A3A64E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC9482902AF870E100A3A64E /* Preview Assets.xcassets */; };
+		CC94829B2AF870E100A3A64E /* AWARETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC94829A2AF870E100A3A64E /* AWARETests.swift */; };
+		CC9482A52AF870E100A3A64E /* AWAREUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482A42AF870E100A3A64E /* AWAREUITests.swift */; };
+		CC9482A72AF870E100A3A64E /* AWAREUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482A62AF870E100A3A64E /* AWAREUITestsLaunchTests.swift */; };
+		CC9482AD2AF870E100A3A64E /* AWARE Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CC9482AC2AF870E100A3A64E /* AWARE Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CC9482B22AF870E100A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482B12AF870E100A3A64E /* AWAREApp.swift */; };
+		CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482B32AF870E100A3A64E /* ContentView.swift */; };
+		CC9482B62AF870E200A3A64E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC9482B52AF870E200A3A64E /* Assets.xcassets */; };
+		CC9482B92AF870E200A3A64E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC9482B82AF870E200A3A64E /* Preview Assets.xcassets */; };
+		CC9482C32AF870E300A3A64E /* AWARE_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482C22AF870E300A3A64E /* AWARE_Watch_AppTests.swift */; };
+		CC9482CD2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */; };
+		CC9482CF2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CC9482972AF870E100A3A64E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC9482852AF870DF00A3A64E;
+			remoteInfo = AWARE;
+		};
+		CC9482A12AF870E100A3A64E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC9482852AF870DF00A3A64E;
+			remoteInfo = AWARE;
+		};
+		CC9482AE2AF870E100A3A64E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC9482AB2AF870E100A3A64E;
+			remoteInfo = "AWARE Watch App";
+		};
+		CC9482BF2AF870E300A3A64E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC9482AB2AF870E100A3A64E;
+			remoteInfo = "AWARE Watch App";
+		};
+		CC9482C92AF870E300A3A64E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC9482AB2AF870E100A3A64E;
+			remoteInfo = "AWARE Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CC9482D52AF870E300A3A64E /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				CC9482AD2AF870E100A3A64E /* AWARE Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CC9482862AF870DF00A3A64E /* AWARE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWARE.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC9482892AF870DF00A3A64E /* AWAREApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREApp.swift; sourceTree = "<group>"; };
+		CC94828B2AF870DF00A3A64E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CC94828D2AF870E100A3A64E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC9482902AF870E100A3A64E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CC9482962AF870E100A3A64E /* AWARETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWARETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC94829A2AF870E100A3A64E /* AWARETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARETests.swift; sourceTree = "<group>"; };
+		CC9482A02AF870E100A3A64E /* AWAREUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWAREUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC9482A42AF870E100A3A64E /* AWAREUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREUITests.swift; sourceTree = "<group>"; };
+		CC9482A62AF870E100A3A64E /* AWAREUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CC9482AC2AF870E100A3A64E /* AWARE Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AWARE Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC9482B12AF870E100A3A64E /* AWAREApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREApp.swift; sourceTree = "<group>"; };
+		CC9482B32AF870E100A3A64E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CC9482B52AF870E200A3A64E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC9482B82AF870E200A3A64E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CC9482BE2AF870E300A3A64E /* AWARE Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AWARE Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC9482C22AF870E300A3A64E /* AWARE_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppTests.swift; sourceTree = "<group>"; };
+		CC9482C82AF870E300A3A64E /* AWARE Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AWARE Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CC9482832AF870DF00A3A64E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482932AF870E100A3A64E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC94829D2AF870E100A3A64E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482A92AF870E100A3A64E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482BB2AF870E300A3A64E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482C52AF870E300A3A64E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CC94827D2AF870DF00A3A64E = {
+			isa = PBXGroup;
+			children = (
+				CC9482882AF870DF00A3A64E /* AWARE */,
+				CC9482992AF870E100A3A64E /* AWARETests */,
+				CC9482A32AF870E100A3A64E /* AWAREUITests */,
+				CC9482B02AF870E100A3A64E /* AWARE Watch App */,
+				CC9482C12AF870E300A3A64E /* AWARE Watch AppTests */,
+				CC9482CB2AF870E300A3A64E /* AWARE Watch AppUITests */,
+				CC9482872AF870DF00A3A64E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CC9482872AF870DF00A3A64E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CC9482862AF870DF00A3A64E /* AWARE.app */,
+				CC9482962AF870E100A3A64E /* AWARETests.xctest */,
+				CC9482A02AF870E100A3A64E /* AWAREUITests.xctest */,
+				CC9482AC2AF870E100A3A64E /* AWARE Watch App.app */,
+				CC9482BE2AF870E300A3A64E /* AWARE Watch AppTests.xctest */,
+				CC9482C82AF870E300A3A64E /* AWARE Watch AppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CC9482882AF870DF00A3A64E /* AWARE */ = {
+			isa = PBXGroup;
+			children = (
+				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
+				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
+				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
+				CC94828F2AF870E100A3A64E /* Preview Content */,
+			);
+			path = AWARE;
+			sourceTree = "<group>";
+		};
+		CC94828F2AF870E100A3A64E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				CC9482902AF870E100A3A64E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CC9482992AF870E100A3A64E /* AWARETests */ = {
+			isa = PBXGroup;
+			children = (
+				CC94829A2AF870E100A3A64E /* AWARETests.swift */,
+			);
+			path = AWARETests;
+			sourceTree = "<group>";
+		};
+		CC9482A32AF870E100A3A64E /* AWAREUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CC9482A42AF870E100A3A64E /* AWAREUITests.swift */,
+				CC9482A62AF870E100A3A64E /* AWAREUITestsLaunchTests.swift */,
+			);
+			path = AWAREUITests;
+			sourceTree = "<group>";
+		};
+		CC9482B02AF870E100A3A64E /* AWARE Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				CC9482B12AF870E100A3A64E /* AWAREApp.swift */,
+				CC9482B32AF870E100A3A64E /* ContentView.swift */,
+				CC9482B52AF870E200A3A64E /* Assets.xcassets */,
+				CC9482B72AF870E200A3A64E /* Preview Content */,
+			);
+			path = "AWARE Watch App";
+			sourceTree = "<group>";
+		};
+		CC9482B72AF870E200A3A64E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				CC9482B82AF870E200A3A64E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CC9482C12AF870E300A3A64E /* AWARE Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC9482C22AF870E300A3A64E /* AWARE_Watch_AppTests.swift */,
+			);
+			path = "AWARE Watch AppTests";
+			sourceTree = "<group>";
+		};
+		CC9482CB2AF870E300A3A64E /* AWARE Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */,
+				CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "AWARE Watch AppUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CC9482852AF870DF00A3A64E /* AWARE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC9482D62AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARE" */;
+			buildPhases = (
+				CC9482822AF870DF00A3A64E /* Sources */,
+				CC9482832AF870DF00A3A64E /* Frameworks */,
+				CC9482842AF870DF00A3A64E /* Resources */,
+				CC9482D52AF870E300A3A64E /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC9482AF2AF870E100A3A64E /* PBXTargetDependency */,
+			);
+			name = AWARE;
+			productName = AWARE;
+			productReference = CC9482862AF870DF00A3A64E /* AWARE.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CC9482952AF870E100A3A64E /* AWARETests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC9482D92AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARETests" */;
+			buildPhases = (
+				CC9482922AF870E100A3A64E /* Sources */,
+				CC9482932AF870E100A3A64E /* Frameworks */,
+				CC9482942AF870E100A3A64E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC9482982AF870E100A3A64E /* PBXTargetDependency */,
+			);
+			name = AWARETests;
+			productName = AWARETests;
+			productReference = CC9482962AF870E100A3A64E /* AWARETests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CC94829F2AF870E100A3A64E /* AWAREUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC9482DC2AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWAREUITests" */;
+			buildPhases = (
+				CC94829C2AF870E100A3A64E /* Sources */,
+				CC94829D2AF870E100A3A64E /* Frameworks */,
+				CC94829E2AF870E100A3A64E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC9482A22AF870E100A3A64E /* PBXTargetDependency */,
+			);
+			name = AWAREUITests;
+			productName = AWAREUITests;
+			productReference = CC9482A02AF870E100A3A64E /* AWAREUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CC9482AB2AF870E100A3A64E /* AWARE Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC9482D22AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARE Watch App" */;
+			buildPhases = (
+				CC9482A82AF870E100A3A64E /* Sources */,
+				CC9482A92AF870E100A3A64E /* Frameworks */,
+				CC9482AA2AF870E100A3A64E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AWARE Watch App";
+			productName = "AWARE Watch App";
+			productReference = CC9482AC2AF870E100A3A64E /* AWARE Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CC9482BD2AF870E300A3A64E /* AWARE Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC9482DF2AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARE Watch AppTests" */;
+			buildPhases = (
+				CC9482BA2AF870E300A3A64E /* Sources */,
+				CC9482BB2AF870E300A3A64E /* Frameworks */,
+				CC9482BC2AF870E300A3A64E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC9482C02AF870E300A3A64E /* PBXTargetDependency */,
+			);
+			name = "AWARE Watch AppTests";
+			productName = "AWARE Watch AppTests";
+			productReference = CC9482BE2AF870E300A3A64E /* AWARE Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CC9482C72AF870E300A3A64E /* AWARE Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC9482E22AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARE Watch AppUITests" */;
+			buildPhases = (
+				CC9482C42AF870E300A3A64E /* Sources */,
+				CC9482C52AF870E300A3A64E /* Frameworks */,
+				CC9482C62AF870E300A3A64E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC9482CA2AF870E300A3A64E /* PBXTargetDependency */,
+			);
+			name = "AWARE Watch AppUITests";
+			productName = "AWARE Watch AppUITests";
+			productReference = CC9482C82AF870E300A3A64E /* AWARE Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CC94827E2AF870DF00A3A64E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					CC9482852AF870DF00A3A64E = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					CC9482952AF870E100A3A64E = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = CC9482852AF870DF00A3A64E;
+					};
+					CC94829F2AF870E100A3A64E = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = CC9482852AF870DF00A3A64E;
+					};
+					CC9482AB2AF870E100A3A64E = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					CC9482BD2AF870E300A3A64E = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = CC9482AB2AF870E100A3A64E;
+					};
+					CC9482C72AF870E300A3A64E = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = CC9482AB2AF870E100A3A64E;
+					};
+				};
+			};
+			buildConfigurationList = CC9482812AF870DF00A3A64E /* Build configuration list for PBXProject "AWARE" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CC94827D2AF870DF00A3A64E;
+			productRefGroup = CC9482872AF870DF00A3A64E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CC9482852AF870DF00A3A64E /* AWARE */,
+				CC9482952AF870E100A3A64E /* AWARETests */,
+				CC94829F2AF870E100A3A64E /* AWAREUITests */,
+				CC9482AB2AF870E100A3A64E /* AWARE Watch App */,
+				CC9482BD2AF870E300A3A64E /* AWARE Watch AppTests */,
+				CC9482C72AF870E300A3A64E /* AWARE Watch AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CC9482842AF870DF00A3A64E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC9482912AF870E100A3A64E /* Preview Assets.xcassets in Resources */,
+				CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482942AF870E100A3A64E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC94829E2AF870E100A3A64E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482AA2AF870E100A3A64E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC9482B92AF870E200A3A64E /* Preview Assets.xcassets in Resources */,
+				CC9482B62AF870E200A3A64E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482BC2AF870E300A3A64E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482C62AF870E300A3A64E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CC9482822AF870DF00A3A64E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */,
+				CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482922AF870E100A3A64E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC94829B2AF870E100A3A64E /* AWARETests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC94829C2AF870E100A3A64E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC9482A52AF870E100A3A64E /* AWAREUITests.swift in Sources */,
+				CC9482A72AF870E100A3A64E /* AWAREUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482A82AF870E100A3A64E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
+				CC9482B22AF870E100A3A64E /* AWAREApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482BA2AF870E300A3A64E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC9482C32AF870E300A3A64E /* AWARE_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC9482C42AF870E300A3A64E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC9482CD2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift in Sources */,
+				CC9482CF2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CC9482982AF870E100A3A64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC9482852AF870DF00A3A64E /* AWARE */;
+			targetProxy = CC9482972AF870E100A3A64E /* PBXContainerItemProxy */;
+		};
+		CC9482A22AF870E100A3A64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC9482852AF870DF00A3A64E /* AWARE */;
+			targetProxy = CC9482A12AF870E100A3A64E /* PBXContainerItemProxy */;
+		};
+		CC9482AF2AF870E100A3A64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC9482AB2AF870E100A3A64E /* AWARE Watch App */;
+			targetProxy = CC9482AE2AF870E100A3A64E /* PBXContainerItemProxy */;
+		};
+		CC9482C02AF870E300A3A64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC9482AB2AF870E100A3A64E /* AWARE Watch App */;
+			targetProxy = CC9482BF2AF870E300A3A64E /* PBXContainerItemProxy */;
+		};
+		CC9482CA2AF870E300A3A64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC9482AB2AF870E100A3A64E /* AWARE Watch App */;
+			targetProxy = CC9482C92AF870E300A3A64E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CC9482D02AF870E300A3A64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CC9482D12AF870E300A3A64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		CC9482D32AF870E300A3A64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		CC9482D42AF870E300A3A64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		CC9482D72AF870E300A3A64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CC9482D82AF870E300A3A64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CC9482DA2AF870E300A3A64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARETests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWARE.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AWARE";
+			};
+			name = Debug;
+		};
+		CC9482DB2AF870E300A3A64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARETests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWARE.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AWARE";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CC9482DD2AF870E300A3A64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWAREUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AWARE;
+			};
+			name = Debug;
+		};
+		CC9482DE2AF870E300A3A64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWAREUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AWARE;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CC9482E02AF870E300A3A64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWARE Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AWARE Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		CC9482E12AF870E300A3A64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWARE Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AWARE Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		CC9482E32AF870E300A3A64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "AWARE Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		CC9482E42AF870E300A3A64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "AWARE Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CC9482812AF870DF00A3A64E /* Build configuration list for PBXProject "AWARE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC9482D02AF870E300A3A64E /* Debug */,
+				CC9482D12AF870E300A3A64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC9482D22AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARE Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC9482D32AF870E300A3A64E /* Debug */,
+				CC9482D42AF870E300A3A64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC9482D62AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC9482D72AF870E300A3A64E /* Debug */,
+				CC9482D82AF870E300A3A64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC9482D92AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARETests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC9482DA2AF870E300A3A64E /* Debug */,
+				CC9482DB2AF870E300A3A64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC9482DC2AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWAREUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC9482DD2AF870E300A3A64E /* Debug */,
+				CC9482DE2AF870E300A3A64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC9482DF2AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARE Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC9482E02AF870E300A3A64E /* Debug */,
+				CC9482E12AF870E300A3A64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC9482E22AF870E300A3A64E /* Build configuration list for PBXNativeTarget "AWARE Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC9482E32AF870E300A3A64E /* Debug */,
+				CC9482E42AF870E300A3A64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CC94827E2AF870DF00A3A64E /* Project object */;
+}
