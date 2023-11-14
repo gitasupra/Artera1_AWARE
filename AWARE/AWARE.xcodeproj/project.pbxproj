@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D2354212B036F5F009BBFA6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8D2354202B036F5F009BBFA6 /* FirebaseAnalytics */; };
+		8D2354232B036F66009BBFA6 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8D2354222B036F66009BBFA6 /* FirebaseDatabase */; };
+		8D328A382B02E155004E451E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D328A372B02E155004E451E /* GoogleService-Info.plist */; };
+		8D328A392B02E155004E451E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D328A372B02E155004E451E /* GoogleService-Info.plist */; };
+		8D328A3A2B02E155004E451E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D328A372B02E155004E451E /* GoogleService-Info.plist */; };
+		8D328A3B2B02E155004E451E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D328A372B02E155004E451E /* GoogleService-Info.plist */; };
+		8D328A3C2B02E155004E451E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D328A372B02E155004E451E /* GoogleService-Info.plist */; };
+		8D328A3D2B02E155004E451E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D328A372B02E155004E451E /* GoogleService-Info.plist */; };
+		8D765E482B036E3E003B481C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8D765E472B036E3E003B481C /* FirebaseAnalytics */; };
+		8D765E4A2B036E3E003B481C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8D765E492B036E3E003B481C /* FirebaseDatabase */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
 		CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC94828B2AF870DF00A3A64E /* ContentView.swift */; };
 		CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC94828D2AF870E100A3A64E /* Assets.xcassets */; };
@@ -77,6 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8D328A372B02E155004E451E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC9482862AF870DF00A3A64E /* AWARE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWARE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9482892AF870DF00A3A64E /* AWAREApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREApp.swift; sourceTree = "<group>"; };
 		CC94828B2AF870DF00A3A64E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +115,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D765E4A2B036E3E003B481C /* FirebaseDatabase in Frameworks */,
+				8D765E482B036E3E003B481C /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +138,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D2354232B036F66009BBFA6 /* FirebaseDatabase in Frameworks */,
+				8D2354212B036F5F009BBFA6 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,9 +160,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D7156C32B0364390099BE8B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CC94827D2AF870DF00A3A64E = {
 			isa = PBXGroup;
 			children = (
+				8D328A372B02E155004E451E /* GoogleService-Info.plist */,
 				CC9482882AF870DF00A3A64E /* AWARE */,
 				CC9482992AF870E100A3A64E /* AWARETests */,
 				CC9482A32AF870E100A3A64E /* AWAREUITests */,
@@ -155,6 +178,7 @@
 				CC9482C12AF870E300A3A64E /* AWARE Watch AppTests */,
 				CC9482CB2AF870E300A3A64E /* AWARE Watch AppUITests */,
 				CC9482872AF870DF00A3A64E /* Products */,
+				8D7156C32B0364390099BE8B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -261,6 +285,10 @@
 				CC9482AF2AF870E100A3A64E /* PBXTargetDependency */,
 			);
 			name = AWARE;
+			packageProductDependencies = (
+				8D765E472B036E3E003B481C /* FirebaseAnalytics */,
+				8D765E492B036E3E003B481C /* FirebaseDatabase */,
+			);
 			productName = AWARE;
 			productReference = CC9482862AF870DF00A3A64E /* AWARE.app */;
 			productType = "com.apple.product-type.application";
@@ -314,6 +342,10 @@
 			dependencies = (
 			);
 			name = "AWARE Watch App";
+			packageProductDependencies = (
+				8D2354202B036F5F009BBFA6 /* FirebaseAnalytics */,
+				8D2354222B036F66009BBFA6 /* FirebaseDatabase */,
+			);
 			productName = "AWARE Watch App";
 			productReference = CC9482AC2AF870E100A3A64E /* AWARE Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -397,6 +429,9 @@
 				Base,
 			);
 			mainGroup = CC94827D2AF870DF00A3A64E;
+			packageReferences = (
+				8D765E462B036E3E003B481C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = CC9482872AF870DF00A3A64E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -418,6 +453,7 @@
 			files = (
 				CC9482912AF870E100A3A64E /* Preview Assets.xcassets in Resources */,
 				CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */,
+				8D328A382B02E155004E451E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +461,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D328A392B02E155004E451E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +469,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D328A3A2B02E155004E451E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +479,7 @@
 			files = (
 				CC9482B92AF870E200A3A64E /* Preview Assets.xcassets in Resources */,
 				CC9482B62AF870E200A3A64E /* Assets.xcassets in Resources */,
+				8D328A3B2B02E155004E451E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +487,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D328A3C2B02E155004E451E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +495,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D328A3D2B02E155004E451E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,14 +704,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -678,6 +721,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -692,14 +736,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -707,6 +753,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -720,7 +767,6 @@
 		CC9482D72AF870E300A3A64E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -752,7 +798,6 @@
 		CC9482D82AF870E300A3A64E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -1009,6 +1054,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8D765E462B036E3E003B481C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.17.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8D2354202B036F5F009BBFA6 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D765E462B036E3E003B481C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		8D2354222B036F66009BBFA6 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D765E462B036E3E003B481C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		8D765E472B036E3E003B481C /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D765E462B036E3E003B481C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		8D765E492B036E3E003B481C /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D765E462B036E3E003B481C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CC94827E2AF870DF00A3A64E /* Project object */;
 }
