@@ -5,6 +5,7 @@ struct ContentView: View {
     @State private var shouldHide = false
 
     // setting toggles
+    @State private var name = ""
     @State private var isNotificationEnabled = true
     @State private var isContactListEnabled = true
     @State private var isUberEnabled = false
@@ -105,16 +106,21 @@ struct ContentView: View {
             
             // Page 5 Settings
             NavigationView {
-                VStack(alignment: .center) {
+                Form {
+                    Section(header: Text("User Profile")){
+                        Text("Name").font(.headline)
+                        TextField(.constant(""), text: $name, placeholder: Text("Enter your name"))
+                    }
+                    
                     Section(header: Text("Notifications")) {
                         Toggle(isOn: $isNotificationEnabled) {
-                            Text("Allow Notifications")
+                            Text("Allow notifications")
                         }
                     }
 
                     Section(header: Text("Contacts")) {
                         Toggle(isOn: $isContactListEnabled) {
-                            Text("Enable Contact List")
+                            Text("Enable contact list")
                         }
 
                         Toggle(isOn: $isUberEnabled) {
@@ -122,13 +128,23 @@ struct ContentView: View {
                         }
 
                         Toggle(isOn: $isEmergencyContacts) {
-                            Text("Enable Emergency Services")
+                            Text("Enable emergency services")
                         }
                     }
                     
                     Section(header: Text("Miscellaneous")){
                         Toggle(isOn: $isHelpTipsEnabled) {
-                            Text("Enable Help Tips")
+                            Text("Enable help tips")
+                        }
+                    }
+
+                    Section {
+                        Button("Reset settings to default") {
+                            isNotificationEnabled = true
+                            isContactListEnabled = true
+                            isUberEnabled = false
+                            isEmergencyContacts = false
+                            isHelpTipsEnabled = true
                         }
                     }
                 }
