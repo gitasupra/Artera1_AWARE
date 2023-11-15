@@ -107,48 +107,36 @@ struct ContentView: View {
             // Page 5 Settings
             NavigationView {
                 Form {
-                    Section(header: Text("User Profile")){
-                        TextField(text: $name, placeholder: Text("Enter your name")) {
-                            Text("Name")
+                    Section(header: Text("User Profile")) {
+                        TextField("Name", text: $name).disableAutocorrection(true)
+                    }
+                    
+                    Section(header: Text("Contacts")) {
+                        Toggle(isOn: $isContactListEnabled) {
+                            Text("Enable contact list")
+                        }
+                        Toggle(isOn: $isUberEnabled) {
+                            Text("Enable Uber")
+                        }
+                        Toggle(isOn: $isEmergencyContacts) {
+                            Text("Enable emergency services")
                         }
                     }
 
-                    Section(header: Text("Profile")) {
-                    Text("Name").font(.headline)
-                    TextField(.constant(""), text: $name, placeholder: Text("Enter your name")) {
-                        .padding(.all)
-                        .background(Color(red: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, opacity: 0.7), cornerRadius: 8.0)
-                    }
-                }
-                    
                     Section(header: Text("Notifications")) {
                         Toggle(isOn: $isNotificationEnabled) {
                             Text("Allow notifications")
                         }
                     }
-
-                    Section(header: Text("Contacts")) {
-                        Toggle(isOn: $isContactListEnabled) {
-                            Text("Enable contact list")
-                        }
-
-                        Toggle(isOn: $isUberEnabled) {
-                            Text("Enable Uber")
-                        }
-
-                        Toggle(isOn: $isEmergencyContacts) {
-                            Text("Enable emergency services")
-                        }
-                    }
                     
-                    Section(header: Text("Miscellaneous")){
+                    Section(header: Text("Miscellaneous")) {
                         Toggle(isOn: $isHelpTipsEnabled) {
                             Text("Enable help tips")
                         }
                     }
 
                     Section {
-                        Button("Reset settings to default") {
+                        Button("Reset to default") {
                             isNotificationEnabled = true
                             isContactListEnabled = true
                             isUberEnabled = false
