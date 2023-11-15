@@ -3,6 +3,13 @@ import SwiftUI
 struct ContentView: View {
     @State private var enableDataCollection = false
     @State private var shouldHide = false
+
+    // setting toggles
+    @State private var isNotificationEnabled = true
+    @State private var isContactListEnabled = true
+    @State private var isUberEnabled = false
+    @State private var isEmergencyContacts = false
+    @State private var isHelpTipsEnabled = true
     
     var body: some View {
         TabView {
