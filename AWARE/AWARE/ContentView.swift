@@ -114,24 +114,29 @@ struct ContentView: View {
                     Section(header: Text("Contacts")) {
                         Toggle(isOn: $isContactListEnabled) {
                             Text("Enable contact list")
+                            Text("Contact others when intoxicated")
                         }
                         Toggle(isOn: $isUberEnabled) {
                             Text("Enable Uber")
+                            Text("Open the Uber app when driving impaired")
                         }
                         Toggle(isOn: $isEmergencyContacts) {
                             Text("Enable emergency services")
+                            Text("Call 911 in case of extreme emergencies")
                         }
                     }
 
                     Section(header: Text("Notifications")) {
                         Toggle(isOn: $isNotificationEnabled) {
                             Text("Allow notifications")
+                            Text("Receive updates on your intoxication level")
                         }
                     }
                     
                     Section(header: Text("Miscellaneous")) {
                         Toggle(isOn: $isHelpTipsEnabled) {
                             Text("Enable help tips")
+                            Text("Receive tips on drinking safely")
                         }
                     }
 
