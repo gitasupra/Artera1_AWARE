@@ -108,9 +108,18 @@ struct ContentView: View {
             NavigationView {
                 Form {
                     Section(header: Text("User Profile")){
-                        Text("Name").font(.headline)
-                        TextField(.constant(""), text: $name, placeholder: Text("Enter your name"))
+                        TextField(text: $name, placeholder: Text("Enter your name")) {
+                            Text("Name")
+                        }
                     }
+
+                    Section(header: Text("Profile")) {
+                    Text("Name").font(.headline)
+                    TextField(.constant(""), text: $name, placeholder: Text("Enter your name")) {
+                        .padding(.all)
+                        .background(Color(red: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, opacity: 0.7), cornerRadius: 8.0)
+                    }
+                }
                     
                     Section(header: Text("Notifications")) {
                         Toggle(isOn: $isNotificationEnabled) {
