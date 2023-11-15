@@ -97,9 +97,35 @@ struct ContentView: View {
             }
             
             // Page 5 Settings
-            VStack(alignment: .center) {
-                Text("Settings")
-                    .font(.system(size: 36))
+            NavigationView {
+                VStack(alignment: .center) {
+                    Section(header: Text("Notifications")) {
+                        Toggle(isOn: $isNotificationEnabled) {
+                            Text("Allow Notifications")
+                        }
+                    }
+
+                    Section(header: Text("Contacts")) {
+                        Toggle(isOn: $isContactListEnabled) {
+                            Text("Enable Contact List")
+                        }
+
+                        Toggle(isOn: $isUberEnabled) {
+                            Text("Enable Uber")
+                        }
+
+                        Toggle(isOn: $isEmergencyContacts) {
+                            Text("Enable Emergency Services")
+                        }
+                    }
+                    
+                    Section(header: Text("Miscellaneous")){
+                        Toggle(isOn: $isHelpTipsEnabled) {
+                            Text("Enable Help Tips")
+                        }
+                    }
+                }
+                .navigationBarTitle(Text("Settings"))
             }
             .tabItem {
                 Label("Settings", systemImage: "5.circle")
