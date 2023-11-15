@@ -62,7 +62,7 @@ struct Page2View: View {
                         Image(systemName: "touchid")
                             .font(.system(size: 50))
                             .foregroundColor(.white)
-                            .background(Color.red)
+                            .background(Color.green)
                             .controlSize(.extraLarge)
                     }
                 }
@@ -75,7 +75,7 @@ struct Page2View: View {
                     Image(systemName: "touchid")
                         .font(.system(size: 50))
                         .foregroundColor(.white)
-                        .background(Color.green)
+                        .background(Color.red)
                         .controlSize(.extraLarge)
                 }
             }
@@ -83,3 +83,6 @@ struct Page2View: View {
     }
 }
 
+#Preview{
+    ContentView()
+}
