@@ -3,6 +3,14 @@ import SwiftUI
 struct ContentView: View {
     @State private var enableDataCollection = false
     @State private var shouldHide = false
+
+    // setting toggles
+    @State private var name = ""
+    @State private var isNotificationEnabled = true
+    @State private var isContactListEnabled = true
+    @State private var isUberEnabled = false
+    @State private var isEmergencyContacts = false
+    @State private var isHelpTipsEnabled = true
     
     var body: some View {
         TabView {
@@ -97,9 +105,52 @@ struct ContentView: View {
             }
             
             // Page 5 Settings
-            VStack(alignment: .center) {
-                Text("Settings")
-                    .font(.system(size: 36))
+            NavigationView {
+                Form {
+                    Section(header: Text("User Profile")) {
+                        TextField("Name", text: $name).disableAutocorrection(true)
+                    }
+                    
+                    Section(header: Text("Contacts")) {
+                        Toggle(isOn: $isContactListEnabled) {
+                            Text("Enable contact list")
+                            Text("Contact others when intoxicated")
+                        }
+                        Toggle(isOn: $isUberEnabled) {
+                            Text("Enable Uber")
+                            Text("Open the Uber app when driving impaired")
+                        }
+                        Toggle(isOn: $isEmergencyContacts) {
+                            Text("Enable emergency services")
+                            Text("Call 911 in case of extreme emergencies")
+                        }
+                    }
+
+                    Section(header: Text("Notifications")) {
+                        Toggle(isOn: $isNotificationEnabled) {
+                            Text("Allow notifications")
+                            Text("Receive updates on your intoxication level")
+                        }
+                    }
+                    
+                    Section(header: Text("Miscellaneous")) {
+                        Toggle(isOn: $isHelpTipsEnabled) {
+                            Text("Enable help tips")
+                            Text("Receive tips on drinking safely")
+                        }
+                    }
+
+                    Section {
+                        Button("Reset to default") {
+                            isNotificationEnabled = true
+                            isContactListEnabled = true
+                            isUberEnabled = false
+                            isEmergencyContacts = false
+                            isHelpTipsEnabled = true
+                        }
+                    }
+                }
+                .navigationBarTitle(Text("Settings"))
             }
             .tabItem {
                 Label("Settings", systemImage: "5.circle")
