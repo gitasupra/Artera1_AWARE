@@ -98,6 +98,7 @@
 		CC9482C82AF870E300A3A64E /* AWARE Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AWARE Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARE.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +176,7 @@
 		CC9482882AF870DF00A3A64E /* AWARE */ = {
 			isa = PBXGroup;
 			children = (
+				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
@@ -672,6 +674,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -702,6 +705,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -727,12 +731,15 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AWARE/AWARE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -759,12 +766,15 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AWARE/AWARE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

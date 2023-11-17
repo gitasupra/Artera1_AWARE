@@ -54,7 +54,7 @@ struct ContentView: View {
                 }
             }
             .tabItem {
-                Label("Home", systemImage: "1.circle")
+                Label("Home", systemImage: "house.fill")
             }
             
             // Page 2 Graphs
@@ -77,7 +77,7 @@ struct ContentView: View {
                 }
             }
             .tabItem {
-                Label("Graphs", systemImage: "2.circle")
+                Label("Graphs", systemImage: "chart.pie.fill")
             }
             
             // Page 3 User
@@ -86,7 +86,7 @@ struct ContentView: View {
                     .font(.system(size: 36))
             }
             .tabItem {
-                Label("User", systemImage: "3.circle")
+                Label("User", systemImage: "person.crop.circle")
             }
             
             // Page 4 Today
@@ -101,7 +101,7 @@ struct ContentView: View {
                 }
             }
             .tabItem {
-                Label("Today", systemImage: "4.circle")
+                Label("Today", systemImage: "calendar")
             }
             
             // Page 5 Settings
@@ -153,7 +153,7 @@ struct ContentView: View {
                 .navigationBarTitle(Text("Settings"))
             }
             .tabItem {
-                Label("Settings", systemImage: "5.circle")
+                Label("Settings", systemImage: "gearshape.fill")
             }
         }
     }
