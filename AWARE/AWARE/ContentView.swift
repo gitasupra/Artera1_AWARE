@@ -1,5 +1,7 @@
 import SwiftUI
 import CoreMotion
+import Charts
+
 
 struct ContentView: View {
     @EnvironmentObject var motion: CMMotionManager
@@ -14,9 +16,123 @@ struct ContentView: View {
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
     
+    // style variables
+    let accentColor:Color = .purple
+    struct CustomButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .padding()
+                .cornerRadius(6)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.accentColor, lineWidth: 1)
+                )
+                .padding([.top, .bottom], 2)
+        }
+    }
+    
+    func getDatesForCurrentWeek() -> [String] {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        
+        let lastSunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: currentDate))!
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM'\u{2028}' d"
+        
+        return (0..<7).map { calendar.date(byAdding: .day, value: $0, to: lastSunday)! }
+            .map {formatter.string(from: $0)}
+    }
+    
     var body: some View {
         TabView {
-            // Page 1 - Home / Toggle
+            // Page 1 Graphs
+            NavigationView {
+                VStack(alignment: .center) {
+                    Text("Graphs")
+                        .font(.system(size: 36))
+                    
+                    HStack {
+                        let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+                        let datesForCurrentWeek = getDatesForCurrentWeek()
+                        let currentDay = Calendar.current.component(.day, from: Date())
+                        
+                        ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
+                            VStack {
+                                Text(element)
+                                    .padding(10)
+                                    .foregroundColor(.gray)
+                                    .cornerRadius(8)
+                                
+                                let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
+                                Text(datesForCurrentWeek[index])
+                                    .padding(10)
+                                    .background(currentDay == dayOnly ? Color.accentColor : Color.white)
+                                    .foregroundColor(.black)
+                                    .cornerRadius(8)
+                            }
+                        }
+                    }
+                        .cornerRadius(6)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(Color.accentColor, lineWidth: 1)
+                        )
+                        .padding([.top, .bottom], 2)
+                    
+                    Spacer()
+                    
+                    NavigationLink(destination: Text("Heart Rate Data")) {
+                        Button("View Heart Rate Data") {}
+                            .buttonStyle(CustomButtonStyle())
+                    }
+                    
+                    NavigationLink(destination: Text("Breathing Rate Data")) {
+                        Button("View Breathing Rate Data") {}
+                            .buttonStyle(CustomButtonStyle())
+                    }
+                    
+                    NavigationLink(destination: Text("Walking Steadiness Data")) {
+                        Button("View Walking Steadiness Data") {}
+                            .buttonStyle(CustomButtonStyle())
+                    }
+                }
+            }
+            .tabItem {
+                Label("Graphs", systemImage: "chart.pie.fill")
+            }
+            
+            // Page 3 Contacts
+            VStack(alignment: .center) {
+                Text("Contacts")
+                    .font(.system(size: 36))
+                    .multilineTextAlignment(.leading)
+                    .padding()
+                
+                Spacer()
+                
+                NavigationLink(destination: Text("Contact List")) {
+                    Button("Edit Contact List") {}
+                        .buttonStyle(CustomButtonStyle())
+                }
+                
+                NavigationLink(destination: Text("Call Uber")) {
+                    Button("Call Uber") {}
+                        .buttonStyle(CustomButtonStyle())
+                }
+                
+                NavigationLink(destination: Text("Call 911")) {
+                    Button("Call Emergency Services") {}
+                        .buttonStyle(CustomButtonStyle())
+                }
+                
+                Spacer()
+            }
+            .tabItem {
+                Label("Contacts", systemImage: "person.crop.circle")
+            }
+            
+            // Page 3 - Home / Toggle
             VStack(alignment: .center) {
                 Text("AWARE")
                     .font(.system(size: 36)) // Adjust the font size for the title
@@ -66,51 +182,20 @@ struct ContentView: View {
                 Label("Home", systemImage: "house.fill")
             }
             
-            // Page 2 Graphs
+            // Page 4 Analytics
             NavigationView {
                 VStack(alignment: .center) {
-                    Text("Graphs")
-                        .font(.system(size: 36))
-                    
-                    NavigationLink(destination: Text("Heart Rate Data")) {
-                        Button("View Heart Rate Data") {}
-                    }
-                    
-                    NavigationLink(destination: Text("Breathing Rate Data")) {
-                        Button("View Breathing Rate Data") {}
-                    }
-                    
-                    NavigationLink(destination: Text("Walking Steadiness Data")) {
-                        Button("View Walking Steadiness Data") {}
-                    }
-                }
-            }
-            .tabItem {
-                Label("Graphs", systemImage: "chart.pie.fill")
-            }
-            
-            // Page 3 User
-            VStack(alignment: .center) {
-                Text("User")
-                    .font(.system(size: 36))
-            }
-            .tabItem {
-                Label("User", systemImage: "person.crop.circle")
-            }
-            
-            // Page 4 Today
-            NavigationView {
-                VStack(alignment: .center) {
-                    Text("Today")
+                    Text("Analytics")
                         .font(.system(size: 36))
                     
                     NavigationLink(destination: Text("Past Holistic Drunkenness Data Collection")) {
                         Button("View Past Holistic Drunkenness Data Collection") {}
+                            .buttonStyle(CustomButtonStyle())
                     }
                 }
             }
             .tabItem {
-                Label("Today", systemImage: "calendar")
+                Label("Analytics", systemImage: "heart.text.square")
             }
             
             // Page 5 Settings
@@ -118,7 +203,7 @@ struct ContentView: View {
                 Form {
                     Section(header: Text("User Profile")) {
                         TextField("Name", text: $name).disableAutocorrection(true)
-                    }
+                    }.tint(accentColor)
                     
                     Section(header: Text("Contacts")) {
                         Toggle(isOn: $isContactListEnabled) {
@@ -133,21 +218,21 @@ struct ContentView: View {
                             Text("Enable emergency services")
                             Text("Call 911 in case of extreme emergencies")
                         }
-                    }
+                    }.tint(accentColor)
 
                     Section(header: Text("Notifications")) {
                         Toggle(isOn: $isNotificationEnabled) {
                             Text("Allow notifications")
                             Text("Receive updates on your intoxication level")
                         }
-                    }
+                    }.tint(accentColor)
                     
                     Section(header: Text("Miscellaneous")) {
                         Toggle(isOn: $isHelpTipsEnabled) {
                             Text("Enable help tips")
                             Text("Receive tips on drinking safely")
                         }
-                    }
+                    }.tint(accentColor)
 
                     Section {
                         Button("Reset to default") {
@@ -157,14 +242,14 @@ struct ContentView: View {
                             isEmergencyContacts = false
                             isHelpTipsEnabled = true
                         }
-                    }
+                    }.tint(accentColor)
                 }
                 .navigationBarTitle(Text("Settings"))
             }
             .tabItem {
                 Label("Settings", systemImage: "gearshape.fill")
             }
-        }
+        }.accentColor(accentColor)
     }
     
     struct ContentView_Previews: PreviewProvider {
