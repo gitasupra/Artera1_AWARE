@@ -88,59 +88,44 @@ struct Page2View: View {
         .onChange(of: enableDataCollection)
         {
             if (enableDataCollection) {
-                startAccelerometer()
-                startGyroscope()
+                startDeviceMotion()
             } else {
-                self.motion.stopAccelerometerUpdates()
-                self.motion.stopGyroUpdates()
+                self.motion.stopDeviceMotionUpdates()
             }
         }
     }
     
-    func startAccelerometer() {
+    func startDeviceMotion() {
             
             
-            if motion.isAccelerometerAvailable {
-                self.motion.accelerometerUpdateInterval = 1.0 / 50.0
-                self.motion.startAccelerometerUpdates()
+            if motion.isDeviceMotionAvailable {
+                self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
+                self.motion.showsDeviceMovementDisplay = true
+                self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
                 
-                // Configure a timer to fetch the accelerometer data
+                // Configure a timer to fetch the device motion data
                 let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true,
                                    block: { (timer) in
-                    if let data = self.motion.accelerometerData {
-                        // Get the acceleration data
-                        let accelerationX = data.acceleration.x
-                        let accelerationY = data.acceleration.y
-                        let accelerationZ = data.acceleration.z
-                        
-                        print("Acceleration x: ", accelerationX)
-                        print("Acceleration y: ", accelerationY)
-                        print("Acceleration z: ", accelerationZ)
-                    }
-                })
-                
-                // Add the timer to the current run loop
-                RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
-            }
-            
-        }
-    
-    func startGyroscope() {
-            
-            
-            if motion.isGyroAvailable {
-                self.motion.gyroUpdateInterval = 1.0 / 50.0
-                self.motion.startGyroUpdates()
-                
-                // Configure a timer to fetch the gyroscope data
-                let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true,
-                                   block: { (timer) in
-                    if let data = self.motion.gyroData {
+                    if let data = self.motion.deviceMotion {
+                        // Get attitude data
+                        let attitudeX = data.attitude.pitch
+                        let attitudeY = data.attitude.roll
+                        let attitudeZ = data.attitude.yaw
+                        // Get accelerometer data
+                        let accelerometerX = data.userAcceleration.x
+                        let accelerometerY = data.userAcceleration.y
+                        let accelerometerZ = data.userAcceleration.z
                         // Get the gyroscope data
                         let gyroX = data.rotationRate.x
                         let gyroY = data.rotationRate.y
                         let gyroZ = data.rotationRate.z
                         
+                        print("Attitude x: ", attitudeX)
+                        print("Attitude y: ", attitudeY)
+                        print("Attitude z: ", attitudeZ)
+                        print("Accelerometer x: ", accelerometerX)
+                        print("Accelerometer y: ", accelerometerY)
+                        print("Accelerometer z: ", accelerometerZ)
                         print("Rotation x: ", gyroX)
                         print("Rotation y: ", gyroY)
                         print("Rotation z: ", gyroZ)
