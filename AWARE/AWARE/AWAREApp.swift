@@ -1,14 +1,17 @@
 import SwiftUI
 import HealthKit
+import CoreMotion
 
 @main
 struct AWAREApp: App {
     
     private let healthStore: HKHealthStore
+    private let motion: CMMotionManager
     
     init() {
            guard HKHealthStore.isHealthDataAvailable() else {  fatalError("This app requires a device that supports HealthKit") }
            healthStore = HKHealthStore()
+            motion = CMMotionManager()
            requestHealthkitPermissions()
     }
     
@@ -44,11 +47,15 @@ struct AWAREApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(healthStore)
+            ContentView()
+                .environmentObject(healthStore)
+                .environmentObject(motion)
+
         }
     }
 }
 
 
 extension HKHealthStore: ObservableObject{}
+extension CMMotionManager: ObservableObject{}
 
