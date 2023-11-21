@@ -136,9 +136,9 @@ struct ContentView: View {
             VStack(alignment: .center) {
                 Text("AWARE")
                     .font(.system(size: 36)) // Adjust the font size for the title
-                Image(systemName: "person.circle.fill")
-                    .font(.system(size: 100)) // Adjust the font size to make the image bigger
-                    .foregroundColor(.gray)
+                Image(systemName: "heart.circle")
+                    .font(.system(size: 200)) // Adjust the font size to make the image bigger
+                    .foregroundColor(accentColor)
                     .padding()
                 
                 if enableDataCollection {
@@ -150,9 +150,9 @@ struct ContentView: View {
                             print(enableDataCollection)
                         } label: {
                             Image(systemName: "touchid")
-                                .font(.system(size: 50)) // Adjust the font size for the button image
-                                .foregroundColor(.white)
-                                .background(Color.green)
+                                .font(.system(size: 100)) // Adjust the font size for the button image
+                                .foregroundColor(.green)
+                                .background(Color.white)
                                 .controlSize(.extraLarge)
                         }
                     }
@@ -164,9 +164,9 @@ struct ContentView: View {
                         print(enableDataCollection)
                     } label: {
                         Image(systemName: "touchid")
-                            .font(.system(size: 50)) // Adjust the font size for the button image
-                            .foregroundColor(.white)
-                            .background(Color.red)
+                            .font(.system(size: 100)) // Adjust the font size for the button image
+                            .foregroundColor(.red)
+                            .background(Color.white)
                             .controlSize(.extraLarge)
                     }
                 }

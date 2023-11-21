@@ -28,16 +28,17 @@ struct ContentView: View {
 }
 
 struct Page1View: View {
-
+    let accentColor:Color = .purple
 
     var body: some View {
         VStack {
             Text("AWARE")
                 .font(.largeTitle)
                 .padding()
-            Image(systemName: "person.circle.fill")
+                .offset(y: 15)
+            Image(systemName: "heart.circle")
                 .font(.system(size: 100)) // Adjust the font size to make the image bigger
-                .foregroundColor(.gray)
+                .foregroundColor(accentColor)
                 .padding()
 
 
@@ -66,8 +67,7 @@ struct Page2View: View {
                     } label: {
                         Image(systemName: "touchid")
                             .font(.system(size: 50))
-                            .foregroundColor(.white)
-                            .background(Color.green)
+                            .foregroundColor(.red)
                             .controlSize(.extraLarge)
                     }
                 }
@@ -79,8 +79,7 @@ struct Page2View: View {
                 } label: {
                     Image(systemName: "touchid")
                         .font(.system(size: 50))
-                        .foregroundColor(.white)
-                        .background(Color.red)
+                        .foregroundColor(.green)
                         .controlSize(.extraLarge)
                 }
             }
