@@ -118,3 +118,6 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode,visualstudiocode
+
+# Files automatically created by Mac when open file with Finder
+.DS_Store
