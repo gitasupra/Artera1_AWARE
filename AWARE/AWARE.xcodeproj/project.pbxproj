@@ -99,6 +99,8 @@
 		CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARE.entitlements; sourceTree = "<group>"; };
+		FF38D4792B0965D400A7BF63 /* AWARE Watch AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AWARE Watch AppRelease.entitlements"; sourceTree = "<group>"; };
+		FF38D47A2B0965ED00A7BF63 /* AWARERelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARERelease.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		CC9482882AF870DF00A3A64E /* AWARE */ = {
 			isa = PBXGroup;
 			children = (
+				FF38D47A2B0965ED00A7BF63 /* AWARERelease.entitlements */,
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
@@ -213,6 +216,7 @@
 		CC9482B02AF870E100A3A64E /* AWARE Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				FF38D4792B0965D400A7BF63 /* AWARE Watch AppRelease.entitlements */,
 				56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */,
 				CC9482B12AF870E100A3A64E /* AWAREApp.swift */,
 				CC9482B32AF870E100A3A64E /* ContentView.swift */,
@@ -699,7 +703,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "AWARE Watch App/AWARE Watch App.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "AWARE Watch App/AWARE Watch AppRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
@@ -769,7 +773,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = AWARE/AWARE.entitlements;
+				CODE_SIGN_ENTITLEMENTS = AWARE/AWARERelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";

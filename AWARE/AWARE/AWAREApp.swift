@@ -15,22 +15,36 @@ struct AWAREApp: App {
     private func requestHealthkitPermissions() {
         
         let sampleTypesToReadShare = Set([
+            //height weight sex (bmi) // Make these Required manual inputs
+            HKObjectType.quantityType(forIdentifier: .height)!,
+            HKObjectType.quantityType(forIdentifier: .bodyMass)!,
+            HKObjectType.quantityType(forIdentifier: .bodyMassIndex)!,
+
             HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKObjectType.quantityType(forIdentifier: .bloodAlcoholContent)!,
-            HKObjectType.quantityType(forIdentifier: .bloodPressureSystolic)!,
-            HKObjectType.quantityType(forIdentifier: .bloodPressureDiastolic)!,
+//            HKObjectType.quantityType(forIdentifier: .bloodAlcoholContent)!,
+//            HKObjectType.quantityType(forIdentifier: .bloodPressureSystolic)!,
+//            HKObjectType.quantityType(forIdentifier: .bloodPressureDiastolic)!,
             HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
             HKObjectType.categoryType(forIdentifier: .shortnessOfBreath)!,
+            HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
+
         ])
         
         let sampleTypesToReadOnly = Set([
+            //height weight sex (bmi) // Make these Required manual inputs
+            HKObjectType.quantityType(forIdentifier: .height)!,
+            HKObjectType.quantityType(forIdentifier: .bodyMass)!,
+            HKObjectType.quantityType(forIdentifier: .bodyMassIndex)!,
+            
             HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKObjectType.quantityType(forIdentifier: .bloodAlcoholContent)!,
-            HKObjectType.quantityType(forIdentifier: .bloodPressureSystolic)!,
-            HKObjectType.quantityType(forIdentifier: .bloodPressureDiastolic)!,
+//            HKObjectType.quantityType(forIdentifier: .bloodAlcoholContent)!,
+//            HKObjectType.quantityType(forIdentifier: .bloodPressureSystolic)!,
+//            HKObjectType.quantityType(forIdentifier: .bloodPressureDiastolic)!,
             HKObjectType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
-            HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
+//            HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
             HKObjectType.categoryType(forIdentifier: .shortnessOfBreath)!,
+            HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
+
         ])
         
         

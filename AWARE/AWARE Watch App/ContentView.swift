@@ -3,7 +3,12 @@ import HealthKit
 import CoreMotion
 
 struct ContentView: View {
-    @State private var enableDataCollection = false
+    
+    @AppStorage("enableDataCollection", store: UserDefaults(suiteName: "artera.aware.shared")) var enableDataCollection: Bool = false
+    
+    
+
+//    @State private var enableDataCollection = false
     @State private var shouldHide = false
 
     var body: some View {
