@@ -8,6 +8,9 @@ struct ContentView: View {
     @State private var enableDataCollection = false
     @State private var shouldHide = false
     
+    // accelerometer data variables
+    @State private var acc: [AccelerometerDataPoint] = []
+    @State private var time: UInt64 = UInt64(Date().timeIntervalSince1970)
     // setting toggles
     @State private var name = ""
     @State private var isNotificationEnabled = true
@@ -16,6 +19,14 @@ struct ContentView: View {
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
     
+    // accelerometer data struct
+    struct AccelerometerDataPoint: Identifiable {
+          let pitch: Double
+          let yaw: Double
+          let roll: Double
+          var myIndex: Int = 0
+          var id: UUID
+       }
     // style variables
     let accentColor:Color = .purple
     struct CustomButtonStyle: ButtonStyle {
@@ -79,8 +90,22 @@ struct ContentView: View {
                                 .stroke(Color.accentColor, lineWidth: 1)
                         )
                         .padding([.top, .bottom], 2)
-                    
-                    Spacer()
+                    ScrollView {
+                        HStack {
+                            Chart {
+                                ForEach(acc) { element in
+                                    LineMark(x: .value("Date", element.myIndex), y: .value("pitch", element.pitch))
+                                        .foregroundStyle(by: .value("x", "x"))
+                                    LineMark(x: .value("Date", element.myIndex), y: .value("pitch", element.yaw))
+                                        .foregroundStyle(by: .value("y", "y"))
+                                    LineMark(x: .value("Date", element.myIndex), y: .value("pitch", element.roll))
+                                        .foregroundStyle(by: .value("z", "z"))
+                                }
+                            }
+                            .padding()
+                        }
+                    }
+                    //Spacer()
                     
                     NavigationLink(destination: Text("Heart Rate Data")) {
                         Button("View Heart Rate Data") {}
@@ -259,39 +284,37 @@ struct ContentView: View {
     }
     
     func startDeviceMotion() {
-            
+            var idx = 0
             
             if motion.isDeviceMotionAvailable {
-                self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
+                self.motion.deviceMotionUpdateInterval = 1.0/50.0
                 self.motion.showsDeviceMovementDisplay = true
                 self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
                 
                 // Configure a timer to fetch the device motion data
-                let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true,
+                let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
                                    block: { (timer) in
                     if let data = self.motion.deviceMotion {
                         // Get attitude data
-                        let attitudeX = data.attitude.pitch
-                        let attitudeY = data.attitude.roll
-                        let attitudeZ = data.attitude.yaw
+                        let attitude = data.attitude
                         // Get accelerometer data
-                        let accelerometerX = data.userAcceleration.x
-                        let accelerometerY = data.userAcceleration.y
-                        let accelerometerZ = data.userAcceleration.z
+                        let accelerometer = data.userAcceleration
                         // Get the gyroscope data
-                        let gyroX = data.rotationRate.x
-                        let gyroY = data.rotationRate.y
-                        let gyroZ = data.rotationRate.z
+                        let gyro = data.rotationRate
+                        idx += 1
                         
-                        print("Attitude x: ", attitudeX)
-                        print("Attitude y: ", attitudeY)
-                        print("Attitude z: ", attitudeZ)
-                        print("Accelerometer x: ", accelerometerX)
-                        print("Accelerometer y: ", accelerometerY)
-                        print("Accelerometer z: ", accelerometerZ)
-                        print("Rotation x: ", gyroX)
-                        print("Rotation y: ", gyroY)
-                        print("Rotation z: ", gyroZ)
+                        let new:AccelerometerDataPoint = AccelerometerDataPoint(pitch: Double(accelerometer.x), yaw: Double(accelerometer.y), roll: Double(accelerometer.z), myIndex: idx, id: UUID())
+                                    
+                        acc.append(new)
+                        print("Attitude x: ", attitude.pitch)
+                        print("Attitude y: ", attitude.roll)
+                        print("Attitude z: ", attitude.yaw)
+                        print("Accelerometer x: ", accelerometer.x)
+                        print("Accelerometer y: ", accelerometer.y)
+                        print("Accelerometer z: ", accelerometer.z)
+                        print("Rotation x: ", gyro.x)
+                        print("Rotation y: ", gyro.y)
+                        print("Rotation z: ", gyro.z)
                     }
                 })
                 
