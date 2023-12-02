@@ -1,6 +1,7 @@
 import SwiftUI
 import CoreMotion
 import Charts
+import WatchConnectivity
 
 
 struct ContentView: View {
@@ -135,22 +136,24 @@ struct ContentView: View {
             // Page 3 - Home / Toggle
             VStack(alignment: .center) {
                 Text("AWARE")
-                    .font(.system(size: 36)) // Adjust the font size for the title
+                    .font(.system(size: 36))
+                
                 Image(systemName: "heart.circle")
-                    .font(.system(size: 200)) // Adjust the font size to make the image bigger
-                    .foregroundColor(accentColor)
+                    .font(.system(size: 200))
+                    .foregroundColor(enableDataCollection ? .green : .red)
                     .padding()
                 
                 if enableDataCollection {
-                    if !self.$shouldHide.wrappedValue {
+                    if !shouldHide {
                         Text("Disable Data Collection")
                             .padding()
                         Button {
                             enableDataCollection.toggle()
+                            sendDataToWatch()
                             print(enableDataCollection)
                         } label: {
                             Image(systemName: "touchid")
-                                .font(.system(size: 100)) // Adjust the font size for the button image
+                                .font(.system(size: 100))
                                 .foregroundColor(.green)
                                 .background(Color.white)
                                 .controlSize(.extraLarge)
@@ -161,27 +164,47 @@ struct ContentView: View {
                         .padding()
                     Button {
                         enableDataCollection.toggle()
+                        sendDataToWatch()
                         print(enableDataCollection)
                     } label: {
                         Image(systemName: "touchid")
-                            .font(.system(size: 100)) // Adjust the font size for the button image
+                            .font(.system(size: 100))
                             .foregroundColor(.red)
                             .background(Color.white)
                             .controlSize(.extraLarge)
                     }
                 }
             }
-            .onChange(of: enableDataCollection) {
-                if (enableDataCollection) {
+            .onChange(of: enableDataCollection) { newValue in
+                if enableDataCollection {
                     startDeviceMotion()
                 } else {
-                    self.motion.stopDeviceMotionUpdates()
+                    motion.stopDeviceMotionUpdates()
                 }
+            }
+            .onAppear {
+                receiveDataFromWatch()
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")
             }
-            
+
+            func sendDataToWatch() {
+                if WCSession.default.isReachable {
+                    let message = ["enableDataCollection": enableDataCollection]
+                    WCSession.default.sendMessage(message, replyHandler: nil, errorHandler: { error in
+                        print("Error sending message to watch: \(error)")
+                    })
+                }
+            }
+
+            func receiveDataFromWatch() {
+                if WCSession.default.isSupported {
+                    WCSession.default.delegate = self
+                    WCSession.default.activate()
+                }
+            }
+                    
             // Page 4 Analytics
             NavigationView {
                 VStack(alignment: .center) {
@@ -300,4 +323,32 @@ struct ContentView: View {
             }
             
         }
+}
+
+extension ContentView: WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        switch activationState {
+        case .notActivated:
+            print("WCSession not yet activated.")
+        case .inactive:
+            print("WCSession is inactive.")
+        case .activated:
+            print("WCSession activated and ready to send/receive data.")
+            // Perform any necessary setup for active state
+        case .deactivated:
+            print("WCSession deactivated.")
+            // Perform cleanup or take appropriate action for deactivated state
+        @unknown default:
+            fatalError("Unexpected WCSession activation state.")
+        }
+    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        if let receivedEnableDataCollection = message["enableDataCollection"] as? Bool {
+            DispatchQueue.main.async {
+                self.enableDataCollection = receivedEnableDataCollection
+                print("Received enableDataCollection from watch: \(self.enableDataCollection)")
+            }
+        }
+    }
 }

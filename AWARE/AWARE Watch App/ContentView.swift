@@ -54,15 +54,12 @@ struct Page2View: View {
 
     var body: some View {
         VStack {
-//            Text("Page 2 Content")
-//                .font(.largeTitle)
-//                .padding()
-            
-            if (enableDataCollection) {
+            if enableDataCollection {
                 if !shouldHide {
                     Text("Disable Data Collection on your Apple Watch")
                     Button {
                         enableDataCollection.toggle()
+                        sendDataToPhone()
                         print(enableDataCollection)
                     } label: {
                         Image(systemName: "touchid")
@@ -75,6 +72,7 @@ struct Page2View: View {
                 Text("Enable Data Collection on your Apple Watch")
                 Button {
                     enableDataCollection.toggle()
+                    sendDataToPhone()
                     print(enableDataCollection)
                 } label: {
                     Image(systemName: "touchid")
@@ -84,19 +82,19 @@ struct Page2View: View {
                 }
             }
         }
-        .onChange(of: enableDataCollection)
-        {
-            if (enableDataCollection) {
+        .onChange(of: enableDataCollection) { newValue in
+            if enableDataCollection {
                 startDeviceMotion()
             } else {
-                self.motion.stopDeviceMotionUpdates()
+                motion.stopDeviceMotionUpdates()
             }
         }
+        .onAppear {
+            receiveDataFromPhone()
+        }
     }
-    
+
     func startDeviceMotion() {
-            
-            
             if motion.isDeviceMotionAvailable {
                 self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
                 self.motion.showsDeviceMovementDisplay = true
@@ -136,6 +134,50 @@ struct Page2View: View {
             }
             
         }
+
+    func sendDataToPhone() {
+        if WCSession.default.isReachable {
+            let message = ["enableDataCollection": enableDataCollection]
+            WCSession.default.sendMessage(message, replyHandler: nil, errorHandler: { error in
+                print("Error sending message to phone: \(error)")
+            })
+        }
+    }
+
+    func receiveDataFromPhone() {
+        if WCSession.default.isSupported {
+            WCSession.default.delegate = self
+            WCSession.default.activate()
+        }
+    }
+}
+
+extension Page2View: WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        switch activationState {
+        case .notActivated:
+            print("WCSession not yet activated.")
+        case .inactive:
+            print("WCSession is inactive.")
+        case .activated:
+            print("WCSession activated and ready to send/receive data.")
+            // Perform any necessary setup for active state
+        case .deactivated:
+            print("WCSession deactivated.")
+            // Perform cleanup or take appropriate action for deactivated state
+        @unknown default:
+            fatalError("Unexpected WCSession activation state.")
+        }
+    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        if let receivedEnableDataCollection = message["enableDataCollection"] as? Bool {
+            DispatchQueue.main.async {
+                self.enableDataCollection = receivedEnableDataCollection
+                print("Received enableDataCollection from phone: \(self.enableDataCollection)")
+            }
+        }
+    }
 }
 
 #Preview{
