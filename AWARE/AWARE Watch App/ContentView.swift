@@ -1,6 +1,6 @@
 import SwiftUI
-import HealthKit
 import CoreMotion
+import WatchConnectivity
 
 struct ContentView: View {
     @State private var enableDataCollection = false
@@ -24,11 +24,10 @@ struct ContentView: View {
             .navigationTitle("AWARE App")
         }
     }
-    
 }
 
 struct Page1View: View {
-    let accentColor:Color = .purple
+    let accentColor: Color = .purple
 
     var body: some View {
         VStack {
@@ -37,12 +36,9 @@ struct Page1View: View {
                 .padding()
                 .offset(y: 15)
             Image(systemName: "heart.circle")
-                .font(.system(size: 100)) // Adjust the font size to make the image bigger
+                .font(.system(size: 100))
                 .foregroundColor(accentColor)
                 .padding()
-
-
-            
         }
     }
 }
@@ -82,7 +78,8 @@ struct Page2View: View {
                 }
             }
         }
-        .onChange(of: enableDataCollection) { newValue in
+        // Use onChange with two parameters
+        .onChange(of: enableDataCollection) { newValue, _ in
             if enableDataCollection {
                 startDeviceMotion()
             } else {
@@ -95,45 +92,41 @@ struct Page2View: View {
     }
 
     func startDeviceMotion() {
-            if motion.isDeviceMotionAvailable {
-                self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
-                self.motion.showsDeviceMovementDisplay = true
-                self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
-                
-                // Configure a timer to fetch the device motion data
-                let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true,
-                                   block: { (timer) in
-                    if let data = self.motion.deviceMotion {
-                        // Get attitude data
-                        let attitudeX = data.attitude.pitch
-                        let attitudeY = data.attitude.roll
-                        let attitudeZ = data.attitude.yaw
-                        // Get accelerometer data
-                        let accelerometerX = data.userAcceleration.x
-                        let accelerometerY = data.userAcceleration.y
-                        let accelerometerZ = data.userAcceleration.z
-                        // Get the gyroscope data
-                        let gyroX = data.rotationRate.x
-                        let gyroY = data.rotationRate.y
-                        let gyroZ = data.rotationRate.z
-                        
-                        print("Attitude x: ", attitudeX)
-                        print("Attitude y: ", attitudeY)
-                        print("Attitude z: ", attitudeZ)
-                        print("Accelerometer x: ", accelerometerX)
-                        print("Accelerometer y: ", accelerometerY)
-                        print("Accelerometer z: ", accelerometerZ)
-                        print("Rotation x: ", gyroX)
-                        print("Rotation y: ", gyroY)
-                        print("Rotation z: ", gyroZ)
-                    }
-                })
-                
-                // Add the timer to the current run loop
-                RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
-            }
-            
+        if motion.isDeviceMotionAvailable {
+            self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
+            self.motion.showsDeviceMovementDisplay = true
+            self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
+
+            // Configure a timer to fetch the device motion data
+            let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true,
+                              block: { (timer) in
+                                  if let data = self.motion.deviceMotion {
+                                      let attitudeX = data.attitude.pitch
+                                      let attitudeY = data.attitude.roll
+                                      let attitudeZ = data.attitude.yaw
+                                      let accelerometerX = data.userAcceleration.x
+                                      let accelerometerY = data.userAcceleration.y
+                                      let accelerometerZ = data.userAcceleration.z
+                                      let gyroX = data.rotationRate.x
+                                      let gyroY = data.rotationRate.y
+                                      let gyroZ = data.rotationRate.z
+
+                                      print("Attitude x: ", attitudeX)
+                                      print("Attitude y: ", attitudeY)
+                                      print("Attitude z: ", attitudeZ)
+                                      print("Accelerometer x: ", accelerometerX)
+                                      print("Accelerometer y: ", accelerometerY)
+                                      print("Accelerometer z: ", accelerometerZ)
+                                      print("Rotation x: ", gyroX)
+                                      print("Rotation y: ", gyroY)
+                                      print("Rotation z: ", gyroZ)
+                                  }
+                              })
+
+            // Add the timer to the current run loop
+            RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
         }
+    }
 
     func sendDataToPhone() {
         if WCSession.default.isReachable {
@@ -141,18 +134,29 @@ struct Page2View: View {
             WCSession.default.sendMessage(message, replyHandler: nil, errorHandler: { error in
                 print("Error sending message to phone: \(error)")
             })
+        } else {
+            print("Phone is not reachable.")
         }
     }
 
     func receiveDataFromPhone() {
-        if WCSession.default.isSupported {
-            WCSession.default.delegate = self
+        if WCSession.isSupported() {
+            let sessionDelegate = WCSessionDelegateHandler(enableDataCollection: $enableDataCollection)
+            WCSession.default.delegate = sessionDelegate
             WCSession.default.activate()
         }
     }
 }
 
-extension Page2View: WCSessionDelegate {
+// Use NSObject as a superclass
+class WCSessionDelegateHandler: NSObject, WCSessionDelegate {
+    @Binding var enableDataCollection: Bool
+
+    init(enableDataCollection: Binding<Bool>) {
+        _enableDataCollection = enableDataCollection
+        super.init()
+    }
+
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         switch activationState {
         case .notActivated:
@@ -161,10 +165,6 @@ extension Page2View: WCSessionDelegate {
             print("WCSession is inactive.")
         case .activated:
             print("WCSession activated and ready to send/receive data.")
-            // Perform any necessary setup for active state
-        case .deactivated:
-            print("WCSession deactivated.")
-            // Perform cleanup or take appropriate action for deactivated state
         @unknown default:
             fatalError("Unexpected WCSession activation state.")
         }
@@ -180,6 +180,5 @@ extension Page2View: WCSessionDelegate {
     }
 }
 
-#Preview{
-    ContentView()
-}
+// ... (unchanged code)
+

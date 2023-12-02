@@ -4,9 +4,64 @@ import Charts
 import WatchConnectivity
 
 
+class WatchSessionDelegate: NSObject, WCSessionDelegate {
+    var contentView: ContentView?
+    var enableDataCollectionBinding: Binding<Bool>?
+    var receiveDataClosure: (() -> Void)?
+
+    init(enableDataCollection: Binding<Bool>) {
+        self.enableDataCollectionBinding = enableDataCollection
+        super.init()
+    }
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        switch activationState {
+        case .notActivated:
+            print("WCSession not yet activated.")
+        case .inactive:
+            print("WCSession is inactive.")
+        case .activated:
+            print("WCSession activated and ready to send/receive data.")
+        @unknown default:
+            fatalError("Unexpected WCSession activation state.")
+        }
+    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        if let receivedEnableDataCollection = message["enableDataCollection"] as? Bool {
+            DispatchQueue.main.async {
+                self.enableDataCollectionBinding?.wrappedValue = receivedEnableDataCollection
+                print("Received enableDataCollection from watch: \(receivedEnableDataCollection)")
+            }
+        }
+    }
+    
+    func sendDataToWatch() {
+        // Implement your logic to send data to the watch
+        // Example: use WCSession.default.sendMessage
+    }
+    
+    func receiveDataFromWatch() {
+        // Implement your logic to send data to the watch
+        // Example: use WCSession.default.sendMessage
+    }
+
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        // Handle session becoming inactive
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        // Handle session deactivation
+    }
+}
+
+class EnableDataCollectionObservable: ObservableObject {
+    @Published var enableDataCollection: Bool = false
+}
+
 struct ContentView: View {
     @EnvironmentObject var motion: CMMotionManager
-    @State private var enableDataCollection = false
+    @StateObject private var enableDataCollectionObservable = EnableDataCollectionObservable()
     @State private var shouldHide = false
     
     // setting toggles
@@ -16,6 +71,42 @@ struct ContentView: View {
     @State private var isUberEnabled = false
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
+    
+    var watchSessionDelegate: WatchSessionDelegate?
+    
+    func setupWatchDelegate() {
+        watchSessionDelegate?.receiveDataClosure = {
+            // Call any function in ContentView when data is received from the watch
+            print("Data received from watch!")
+        }
+    }
+    
+    func sendDataToWatch() {
+        if WCSession.default.isReachable {
+            let message = ["enableDataCollection": enableDataCollectionObservable.enableDataCollection]
+            WCSession.default.sendMessage(message, replyHandler: { response in
+                print("Successfully sent message to watch. Response: \(response)")
+            }, errorHandler: { error in
+                print("Error sending message to watch: \(error)")
+            })
+        } else {
+            print("Watch is not reachable.")
+        }
+    }
+
+    mutating func receiveDataFromWatch() {
+        if WCSession.isSupported() {
+            // Check if the delegate is already set
+            if watchSessionDelegate == nil {
+                watchSessionDelegate = WatchSessionDelegate(enableDataCollection: $enableDataCollectionObservable.enableDataCollection)
+                WCSession.default.delegate = watchSessionDelegate
+                WCSession.default.activate()
+                print("Watch session activated.")
+            }
+        } else {
+            print("Watch session is not supported.")
+        }
+    }
     
     // style variables
     let accentColor:Color = .purple
@@ -47,17 +138,20 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            // Page 1 Graphs
+            // Page 1: Graphs
             NavigationView {
                 VStack(alignment: .center) {
                     Text("Graphs")
                         .font(.system(size: 36))
                     
+                    // Display days of the week and dates for the current week
+                    // Display days of the week and dates for the current week
                     HStack {
                         let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
                         let datesForCurrentWeek = getDatesForCurrentWeek()
                         let currentDay = Calendar.current.component(.day, from: Date())
                         
+                        // Iterate through days of the week
                         ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
                             VStack {
                                 Text(element)
@@ -65,7 +159,10 @@ struct ContentView: View {
                                     .foregroundColor(.gray)
                                     .cornerRadius(8)
                                 
+                                // Extract day only from the date
                                 let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
+                                
+                                // Display date with background color indicating the current day
                                 Text(datesForCurrentWeek[index])
                                     .padding(10)
                                     .background(currentDay == dayOnly ? Color.accentColor : Color.white)
@@ -74,15 +171,22 @@ struct ContentView: View {
                             }
                         }
                     }
-                        .cornerRadius(6)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 6)
-                                .stroke(Color.accentColor, lineWidth: 1)
-                        )
-                        .padding([.top, .bottom], 2)
+                    .cornerRadius(6)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(Color.accentColor, lineWidth: 1)
+                    )
+                    .padding([.top, .bottom], 2)
+                    .cornerRadius(6)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(Color.accentColor, lineWidth: 1)
+                    )
+                    .padding([.top, .bottom], 2)
                     
                     Spacer()
                     
+                    // Navigation links to different data views
                     NavigationLink(destination: Text("Heart Rate Data")) {
                         Button("View Heart Rate Data") {}
                             .buttonStyle(CustomButtonStyle())
@@ -102,8 +206,8 @@ struct ContentView: View {
             .tabItem {
                 Label("Graphs", systemImage: "chart.pie.fill")
             }
-            
-            // Page 3 Contacts
+
+            // Page 2: Contacts
             VStack(alignment: .center) {
                 Text("Contacts")
                     .font(.system(size: 36))
@@ -112,6 +216,7 @@ struct ContentView: View {
                 
                 Spacer()
                 
+                // Navigation links to different contact actions
                 NavigationLink(destination: Text("Contact List")) {
                     Button("Edit Contact List") {}
                         .buttonStyle(CustomButtonStyle())
@@ -132,25 +237,25 @@ struct ContentView: View {
             .tabItem {
                 Label("Contacts", systemImage: "person.crop.circle")
             }
-            
-            // Page 3 - Home / Toggle
+
+            // Page 3: Home / Toggle
             VStack(alignment: .center) {
                 Text("AWARE")
                     .font(.system(size: 36))
                 
                 Image(systemName: "heart.circle")
                     .font(.system(size: 200))
-                    .foregroundColor(enableDataCollection ? .green : .red)
+                    .foregroundColor(enableDataCollectionObservable.enableDataCollection ? .green : .red)
                     .padding()
                 
-                if enableDataCollection {
+                if enableDataCollectionObservable.enableDataCollection {
                     if !shouldHide {
                         Text("Disable Data Collection")
                             .padding()
                         Button {
-                            enableDataCollection.toggle()
+                            enableDataCollectionObservable.enableDataCollection.toggle()
                             sendDataToWatch()
-                            print(enableDataCollection)
+                            print(enableDataCollectionObservable.enableDataCollection)
                         } label: {
                             Image(systemName: "touchid")
                                 .font(.system(size: 100))
@@ -163,9 +268,9 @@ struct ContentView: View {
                     Text("Enable Data Collection")
                         .padding()
                     Button {
-                        enableDataCollection.toggle()
+                        enableDataCollectionObservable.enableDataCollection.toggle()
                         sendDataToWatch()
-                        print(enableDataCollection)
+                        print(enableDataCollectionObservable.enableDataCollection)
                     } label: {
                         Image(systemName: "touchid")
                             .font(.system(size: 100))
@@ -175,34 +280,32 @@ struct ContentView: View {
                     }
                 }
             }
-            .onChange(of: enableDataCollection) { newValue in
-                if enableDataCollection {
+            .onChange(of: enableDataCollectionObservable.enableDataCollection) { newValue in
+                if enableDataCollectionObservable.enableDataCollection {
                     startDeviceMotion()
                 } else {
                     motion.stopDeviceMotionUpdates()
                 }
             }
             .onAppear {
-                receiveDataFromWatch()
+                if let watchSessionDelegate = watchSessionDelegate {
+                    watchSessionDelegate.enableDataCollectionBinding = Binding {
+                        enableDataCollectionObservable.enableDataCollection
+                    } set: { newValue in
+                        enableDataCollectionObservable.enableDataCollection = newValue
+                        sendDataToWatch()
+                    }
+
+                    // Setup closure to be called when data is received from the watch
+                    setupWatchDelegate()
+
+                    // Receive data from the watch
+                    watchSessionDelegate.receiveDataFromWatch()
+                }
             }
+            .environmentObject(enableDataCollectionObservable)
             .tabItem {
                 Label("Home", systemImage: "house.fill")
-            }
-
-            func sendDataToWatch() {
-                if WCSession.default.isReachable {
-                    let message = ["enableDataCollection": enableDataCollection]
-                    WCSession.default.sendMessage(message, replyHandler: nil, errorHandler: { error in
-                        print("Error sending message to watch: \(error)")
-                    })
-                }
-            }
-
-            func receiveDataFromWatch() {
-                if WCSession.default.isSupported {
-                    WCSession.default.delegate = self
-                    WCSession.default.activate()
-                }
             }
                     
             // Page 4 Analytics
@@ -280,10 +383,8 @@ struct ContentView: View {
             ContentView()
         }
     }
-    
+
     func startDeviceMotion() {
-            
-            
             if motion.isDeviceMotionAvailable {
                 self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
                 self.motion.showsDeviceMovementDisplay = true
@@ -321,34 +422,5 @@ struct ContentView: View {
                 // Add the timer to the current run loop
                 RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
             }
-            
         }
-}
-
-extension ContentView: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        switch activationState {
-        case .notActivated:
-            print("WCSession not yet activated.")
-        case .inactive:
-            print("WCSession is inactive.")
-        case .activated:
-            print("WCSession activated and ready to send/receive data.")
-            // Perform any necessary setup for active state
-        case .deactivated:
-            print("WCSession deactivated.")
-            // Perform cleanup or take appropriate action for deactivated state
-        @unknown default:
-            fatalError("Unexpected WCSession activation state.")
-        }
-    }
-
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        if let receivedEnableDataCollection = message["enableDataCollection"] as? Bool {
-            DispatchQueue.main.async {
-                self.enableDataCollection = receivedEnableDataCollection
-                print("Received enableDataCollection from watch: \(self.enableDataCollection)")
-            }
-        }
-    }
 }
