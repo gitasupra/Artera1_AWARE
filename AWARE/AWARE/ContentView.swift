@@ -83,6 +83,7 @@ struct ContentView: View {
     
     func sendDataToWatch() {
         if WCSession.default.isReachable {
+            print("WC Session Reachable")
             let message = ["enableDataCollection": enableDataCollectionObservable.enableDataCollection]
             WCSession.default.sendMessage(message, replyHandler: { response in
                 print("Successfully sent message to watch. Response: \(response)")
@@ -442,5 +443,8 @@ struct ContentView: View {
                 // Add the timer to the current run loop
                 RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
             }
+        else{
+            print("Device motion not available")
+        }
         }
 }
