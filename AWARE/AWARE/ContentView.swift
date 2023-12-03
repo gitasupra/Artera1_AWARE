@@ -102,6 +102,11 @@ struct ContentView: View {
                 WCSession.default.delegate = watchSessionDelegate
                 WCSession.default.activate()
                 print("Watch session activated.")
+                if WCSession.default.activationState == .activated {
+                    print("WCSession activated and ready to send/receive data.")
+                } else {
+                    print("WCSession is not yet activated. Current activation state: \(WCSession.default.activationState.rawValue)")
+                }
             }
         } else {
             print("Watch session is not supported.")
@@ -110,6 +115,7 @@ struct ContentView: View {
     
     // style variables
     let accentColor:Color = .purple
+    let backgroundColor:Color = .black
     struct CustomButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
@@ -374,8 +380,9 @@ struct ContentView: View {
             }
             .tabItem {
                 Label("Settings", systemImage: "gearshape.fill")
-            }
+            }.background(backgroundColor)
         }.accentColor(accentColor)
+            
     }
     
     struct ContentView_Previews: PreviewProvider {

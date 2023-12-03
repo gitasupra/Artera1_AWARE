@@ -21,7 +21,6 @@ struct ContentView: View {
                         Label("Page 2", systemImage: "info.circle")
                     }
             }
-            .navigationTitle("AWARE App")
         }
     }
 }
@@ -52,7 +51,8 @@ struct Page2View: View {
         VStack {
             if enableDataCollection {
                 if !shouldHide {
-                    Text("Disable Data Collection on your Apple Watch")
+                    Text("Disable Data Collection")
+                        .multilineTextAlignment(.center)
                     Button {
                         enableDataCollection.toggle()
                         sendDataToPhone()
@@ -65,7 +65,8 @@ struct Page2View: View {
                     }
                 }
             } else {
-                Text("Enable Data Collection on your Apple Watch")
+                Text("Enable Data Collection")
+                    .multilineTextAlignment(.center)
                 Button {
                     enableDataCollection.toggle()
                     sendDataToPhone()
@@ -140,10 +141,19 @@ struct Page2View: View {
     }
 
     func receiveDataFromPhone() {
+        print("Receiving data from phone...")
         if WCSession.isSupported() {
             let sessionDelegate = WCSessionDelegateHandler(enableDataCollection: $enableDataCollection)
             WCSession.default.delegate = sessionDelegate
             WCSession.default.activate()
+
+            if WCSession.default.activationState == .activated {
+                print("WCSession activated and ready to send/receive data.")
+            } else {
+                print("WCSession is not yet activated. Current activation state: \(WCSession.default.activationState.rawValue)")
+            }
+        } else {
+            print("WCSession is not supported.")
         }
     }
 }
@@ -180,5 +190,6 @@ class WCSessionDelegateHandler: NSObject, WCSessionDelegate {
     }
 }
 
-// ... (unchanged code)
-
+#Preview{
+    ContentView()
+}
