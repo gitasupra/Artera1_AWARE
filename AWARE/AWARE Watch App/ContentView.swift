@@ -1,3 +1,4 @@
+// ContentView.swift
 import SwiftUI
 import CoreMotion
 import WatchConnectivity
@@ -13,10 +14,44 @@ class MotionManager: ObservableObject {
     }
 }
 
+// WatchConnectivityManager to handle WatchConnectivity
+class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
+    @Published var wcSession: WCSession?
+
+    func setupWatchConnectivity() {
+        if WCSession.isSupported() {
+            wcSession = WCSession.default
+            wcSession?.delegate = self
+            wcSession?.activate()
+        }
+    }
+
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        // Handle session activation completion
+    }
+
+//    func sessionDidBecomeInactive(_ session: WCSession) {
+//        // Handle session did become inactive
+//    }
+
+//    func sessionDidDeactivate(_ session: WCSession) {
+//        // Handle session did deactivate
+//        wcSession?.activate()
+//    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        // Handle received message from Watch
+    }
+
+    // Implement WCSessionDelegate methods if needed
+    // ...
+}
+
 struct ContentView: View {
     @State private var enableDataCollection: Bool = false
     @State private var shouldHide: Bool = false
     @ObservedObject private var motion = MotionManager()
+    @StateObject private var watchConnectivityManager = WatchConnectivityManager()
 
     var body: some View {
         NavigationView {
@@ -28,12 +63,15 @@ struct ContentView: View {
                     }
 
                 // Page 2
-                Page2View(enableDataCollection: $enableDataCollection, shouldHide: $shouldHide, motion: motion)
+                Page2View(enableDataCollection: $enableDataCollection, shouldHide: $shouldHide, motion: motion, watchConnectivityManager: watchConnectivityManager)
                     .tabItem {
                         Label("Page 2", systemImage: "info.circle")
                     }
             }
             .navigationTitle("AWARE App")
+        }
+        .onAppear {
+            watchConnectivityManager.setupWatchConnectivity()
         }
     }
 }
@@ -56,6 +94,7 @@ struct Page2View: View {
     @Binding var enableDataCollection: Bool
     @Binding var shouldHide: Bool
     @ObservedObject var motion: MotionManager
+    @ObservedObject var watchConnectivityManager: WatchConnectivityManager
 
     var body: some View {
         VStack {
@@ -102,7 +141,7 @@ struct Page2View: View {
     }
 
     func sendDataToPhone() {
-        guard WCSession.default.isReachable else {
+        guard watchConnectivityManager.wcSession?.isReachable == true else {
             print("Phone is not reachable")
             return
         }
@@ -112,7 +151,7 @@ struct Page2View: View {
             // Add other data you want to send...
         ]
 
-        WCSession.default.transferUserInfo(dataToSend)
+        watchConnectivityManager.wcSession?.transferUserInfo(dataToSend)
     }
 
     func startDeviceMotion() {

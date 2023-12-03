@@ -101,6 +101,7 @@
 		FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARE.entitlements; sourceTree = "<group>"; };
 		FF38D4792B0965D400A7BF63 /* AWARE Watch AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AWARE Watch AppRelease.entitlements"; sourceTree = "<group>"; };
 		FF38D47A2B0965ED00A7BF63 /* AWARERelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARERelease.entitlements; sourceTree = "<group>"; };
+		FF38D47B2B1C7E9700A7BF63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +179,7 @@
 		CC9482882AF870DF00A3A64E /* AWARE */ = {
 			isa = PBXGroup;
 			children = (
+				FF38D47B2B1C7E9700A7BF63 /* Info.plist */,
 				FF38D47A2B0965ED00A7BF63 /* AWARERelease.entitlements */,
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
@@ -744,6 +746,7 @@
 				DEVELOPMENT_TEAM = TPAA6G9JYB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AWARE/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
@@ -780,6 +783,7 @@
 				DEVELOPMENT_TEAM = TPAA6G9JYB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AWARE/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
