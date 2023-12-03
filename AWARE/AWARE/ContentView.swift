@@ -95,17 +95,19 @@ struct ContentView: View {
     }
 
     mutating func receiveDataFromWatch() {
+        print("Receiving data from watch...")
         if WCSession.isSupported() {
             // Check if the delegate is already set
             if watchSessionDelegate == nil {
                 watchSessionDelegate = WatchSessionDelegate(enableDataCollection: $enableDataCollectionObservable.enableDataCollection)
                 WCSession.default.delegate = watchSessionDelegate
                 WCSession.default.activate()
-                print("Watch session activated.")
                 while WCSession.default.activationState != .activated {
                     WCSession.default.activate()
                     print("activate again")
                 }
+                
+                print("Watch session activated.")
             }
         } else {
             print("Watch session is not supported.")
@@ -294,6 +296,7 @@ struct ContentView: View {
             }
             .onAppear {
                 if let watchSessionDelegate = watchSessionDelegate {
+                    print("watchSessionDelegate created")
                     watchSessionDelegate.enableDataCollectionBinding = Binding {
                         enableDataCollectionObservable.enableDataCollection
                     } set: { newValue in
@@ -306,6 +309,9 @@ struct ContentView: View {
 
                     // Receive data from the watch
                     watchSessionDelegate.receiveDataFromWatch()
+                }
+                else{
+                    print("Issue creating watchSessionDelegate")
                 }
             }
             .environmentObject(enableDataCollectionObservable)

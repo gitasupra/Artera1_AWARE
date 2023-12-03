@@ -150,6 +150,8 @@ struct Page2View: View {
                 WCSession.default.activate()
                 print("activate again")
             }
+            
+            print("Watch session activated.")
         } else {
             print("WCSession is not supported.")
         }
