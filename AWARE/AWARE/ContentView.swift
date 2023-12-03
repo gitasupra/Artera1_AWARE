@@ -10,7 +10,7 @@ struct ContentView: View {
     
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
-    @State private var time: UInt64 = UInt64(Date().timeIntervalSince1970)
+    @State private var idx: Int = 0
     // setting toggles
     @State private var name = ""
     @State private var isNotificationEnabled = true
@@ -314,7 +314,7 @@ struct ContentView: View {
         }
     }
     func startDeviceMotion() {
-            var idx = 0
+            //var idx = 0
             
             if motion.isDeviceMotionAvailable {
                 self.motion.deviceMotionUpdateInterval = 1.0/50.0
@@ -344,9 +344,7 @@ struct ContentView: View {
                         print("Accelerometer z: ", accelerometer.z)
                         print("Rotation x: ", gyro.x)
                         print("Rotation y: ", gyro.y)
-                        print("Rotation z: ", gyro.z)
-                        print(acc)
-                    }
+                        print("Rotation z: ", gyro.z)                    }
                 })
                 
                 // Add the timer to the current run loop
