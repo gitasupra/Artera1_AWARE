@@ -18,12 +18,13 @@ struct ContentView: View {
     @State private var isUberEnabled = false
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
+    @State var showChart: Bool = true
     
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
-          let pitch: Double
-          let yaw: Double
-          let roll: Double
+          let x: Double
+          let y: Double
+          let z: Double
           var myIndex: Int = 0
           var id: UUID
        }
@@ -90,36 +91,43 @@ struct ContentView: View {
                                 .stroke(Color.accentColor, lineWidth: 1)
                         )
                         .padding([.top, .bottom], 2)
-                    ScrollView {
-                        HStack {
-                            Chart {
-                                ForEach(acc) { element in
-                                    LineMark(x: .value("Date", element.myIndex), y: .value("pitch", element.pitch))
-                                        .foregroundStyle(by: .value("x", "x"))
-                                    LineMark(x: .value("Date", element.myIndex), y: .value("pitch", element.yaw))
-                                        .foregroundStyle(by: .value("y", "y"))
-                                    LineMark(x: .value("Date", element.myIndex), y: .value("pitch", element.roll))
-                                        .foregroundStyle(by: .value("z", "z"))
-                                }
+                        Spacer()
+                    
+                    NavigationStack {
+                        VStack {
+                            Button {
+                                showChart = true
+                            } label: {
+                                Text("View Heart Rate Data")
                             }
-                            .padding()
+                            .navigationDestination(
+                                isPresented: $showChart) {
+                                    accelerometerGraph(acc: acc)
+                            }
+                            .buttonStyle(CustomButtonStyle())
+                            
+                            Button {
+                                showChart = true
+                            } label: {
+                                Text("View Breathing Rate Data")
+                            }
+                            .navigationDestination(
+                                isPresented: $showChart) {
+                                    accelerometerGraph(acc: acc)
+                            }
+                            .buttonStyle(CustomButtonStyle())
+                            
+                            Button {
+                                showChart = true
+                            } label: {
+                                Text("View Walking Steadiness Data")
+                            }
+                            .navigationDestination(
+                                isPresented: $showChart) {
+                                    accelerometerGraph(acc: acc)
+                            }
+                            .buttonStyle(CustomButtonStyle())
                         }
-                    }
-                    //Spacer()
-                    
-                    NavigationLink(destination: Text("Heart Rate Data")) {
-                        Button("View Heart Rate Data") {}
-                            .buttonStyle(CustomButtonStyle())
-                    }
-                    
-                    NavigationLink(destination: Text("Breathing Rate Data")) {
-                        Button("View Breathing Rate Data") {}
-                            .buttonStyle(CustomButtonStyle())
-                    }
-                    
-                    NavigationLink(destination: Text("Walking Steadiness Data")) {
-                        Button("View Walking Steadiness Data") {}
-                            .buttonStyle(CustomButtonStyle())
                     }
                 }
             }
@@ -283,6 +291,28 @@ struct ContentView: View {
         }
     }
     
+    struct accelerometerGraph: View {
+        var acc: [AccelerometerDataPoint]
+        var body: some View {
+            ScrollView {
+                VStack {
+                    Chart {
+                        ForEach(acc) { element in
+                            LineMark(x: .value("Date", element.myIndex), y: .value("x", element.x))
+                                .foregroundStyle(by: .value("x", "x"))
+                            LineMark(x: .value("Date", element.myIndex), y: .value("y", element.y))
+                                .foregroundStyle(by: .value("y", "y"))
+                            LineMark(x: .value("Date", element.myIndex), y: .value("z", element.z))
+                                .foregroundStyle(by: .value("z", "z"))
+                        }
+                    }
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 50)
+                    .padding()
+                }
+            }
+        }
+    }
     func startDeviceMotion() {
             var idx = 0
             
@@ -303,7 +333,7 @@ struct ContentView: View {
                         let gyro = data.rotationRate
                         idx += 1
                         
-                        let new:AccelerometerDataPoint = AccelerometerDataPoint(pitch: Double(accelerometer.x), yaw: Double(accelerometer.y), roll: Double(accelerometer.z), myIndex: idx, id: UUID())
+                        let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: idx, id: UUID())
                                     
                         acc.append(new)
                         print("Attitude x: ", attitude.pitch)
@@ -315,6 +345,7 @@ struct ContentView: View {
                         print("Rotation x: ", gyro.x)
                         print("Rotation y: ", gyro.y)
                         print("Rotation z: ", gyro.z)
+                        print(acc)
                     }
                 })
                 
