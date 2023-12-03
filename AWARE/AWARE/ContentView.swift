@@ -152,7 +152,6 @@ struct ContentView: View {
                         .font(.system(size: 36))
                     
                     // Display days of the week and dates for the current week
-                    // Display days of the week and dates for the current week
                     HStack {
                         let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
                         let datesForCurrentWeek = getDatesForCurrentWeek()
@@ -310,7 +309,16 @@ struct ContentView: View {
                     // Receive data from the watch
                     watchSessionDelegate.receiveDataFromWatch()
                 }
-                else{
+                else if !WCSession.isSupported() {
+                    print("Watch Connectivity is not supported.")
+                }
+                else if WCSession.default.activationState != .activated {
+                    print("WCSession is not yet activated. Current activation state: \(WCSession.default.activationState.rawValue)")
+                }
+                else if watchSessionDelegate == nil {
+                    print("Watch session delegate does not exist.")
+                }
+                else {
                     print("Issue creating watchSessionDelegate")
                 }
             }
