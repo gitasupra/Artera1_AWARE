@@ -1,7 +1,59 @@
 import SwiftUI
 import CoreMotion
 import Charts
+import Foundation
 
+
+func calculateZScore(_ data: [Double], _ windowSize: Int, _ threshold: Double) -> [Double] {
+    var zScores: [Double] = []
+    var sum: Double = 0.0
+    var sumSquares: Double = 0.0
+    var mean: Double = 0.0
+    var stdDev: Double = 0.0
+    
+    // Calculate initial mean and standard deviation
+    for i in 0..<windowSize {
+        sum += data[i]
+        sumSquares += data[i] * data[i]
+    }
+    
+    mean = sum / Double(windowSize)
+    stdDev = sqrt((sumSquares - Double(windowSize) * mean * mean) / Double(windowSize))
+    
+    // Calculate Z-scores for the rest of the data
+    for i in 0..<data.count {
+        if i >= windowSize {
+            let currentValue = data[i]
+            let prevValue = data[i - windowSize]
+            
+            sum = sum - prevValue + currentValue
+            sumSquares = sumSquares - prevValue * prevValue + currentValue * currentValue
+            
+            mean = sum / Double(windowSize)
+            stdDev = sqrt((sumSquares - Double(windowSize) * mean * mean) / Double(windowSize))
+            
+            let zScore = (currentValue - mean) / stdDev
+            zScores.append(zScore)
+        } else {
+            zScores.append(0.0)  // Initial values are set to 0
+        }
+    }
+    
+    return zScores
+}
+
+
+func findPeaks(_ zScores: [Double], _ threshold: Double) -> [Int] {
+    var peaks: [Int] = []
+    
+    for i in 0..<zScores.count {
+        if abs(zScores[i]) > threshold {
+            peaks.append(i)
+        }
+    }
+    
+    return peaks
+}
 
 struct ContentView: View {
     @EnvironmentObject var motion: CMMotionManager
@@ -10,6 +62,10 @@ struct ContentView: View {
     
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
+    //FIXME remove
+    @State private var accX: [Double] = []
+    @State private var accY: [Double] = []
+    @State private var accZ: [Double] = []
     @State private var time: UInt64 = UInt64(Date().timeIntervalSince1970)
     // setting toggles
     @State private var name = ""
@@ -306,6 +362,38 @@ struct ContentView: View {
                         let new:AccelerometerDataPoint = AccelerometerDataPoint(pitch: Double(accelerometer.x), yaw: Double(accelerometer.y), roll: Double(accelerometer.z), myIndex: idx, id: UUID())
                                     
                         acc.append(new)
+                        //FIXME may need to change to use data differently in one call / stacked
+                        //FIXME may need to call analysis in another part of the code
+                        accX.append(Double(accelerometer.x))
+                        accY.append(Double(accelerometer.y))
+                        accZ.append(Double(accelerometer.z))
+                        let windowSize = 3
+                        let zScoreThreshold = 1.0
+                        
+                        if(acc.count >= 3){
+                            
+                            
+                            
+                            let zScoresX = calculateZScore(accX, windowSize, 0.5)
+                            let zScoresY = calculateZScore(accY, windowSize, 1.5)
+                            let zScoresZ = calculateZScore(accZ, windowSize, 0.5)
+                            
+                            let detectedPeaksX = findPeaks(zScoresX, 0.5)
+                            let detectedPeaksY = findPeaks(zScoresY, 1.5)
+                            let detectedPeaksZ = findPeaks(zScoresZ, 0.5)
+                            
+                            
+                            print("Z-scores X:", zScoresX)
+                            print("Z-scores Y:", zScoresY)
+                            print("Z-scores Z:", zScoresZ)
+                            
+                            print("Detected peaks at indices X:", detectedPeaksX)
+                            print("Detected peaks at indices Y:", detectedPeaksY)
+                            print("Detected peaks at indices Z:", detectedPeaksZ)
+                        }
+                        
+                        print("Adding at index: ", acc.count)
+                        
                         print("Attitude x: ", attitude.pitch)
                         print("Attitude y: ", attitude.roll)
                         print("Attitude z: ", attitude.yaw)
