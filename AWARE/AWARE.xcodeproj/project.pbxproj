@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12A538942B1C229D00A34176 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A538922B1C229A00A34176 /* WatchConnectivity.framework */; };
+		12A538972B1C22A100A34176 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A538902B1C226C00A34176 /* WatchConnectivity.framework */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
 		CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC94828B2AF870DF00A3A64E /* ContentView.swift */; };
 		CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC94828D2AF870E100A3A64E /* Assets.xcassets */; };
@@ -77,6 +79,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12A538902B1C226C00A34176 /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS10.0.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		12A538922B1C229A00A34176 /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.0.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AWARE Watch App.entitlements"; sourceTree = "<group>"; };
 		CC9482862AF870DF00A3A64E /* AWARE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWARE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9482892AF870DF00A3A64E /* AWAREApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREApp.swift; sourceTree = "<group>"; };
@@ -106,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12A538942B1C229D00A34176 /* WatchConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12A538972B1C22A100A34176 /* WatchConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +153,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12A5388F2B1C226C00A34176 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				12A538922B1C229A00A34176 /* WatchConnectivity.framework */,
+				12A538902B1C226C00A34176 /* WatchConnectivity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CC94827D2AF870DF00A3A64E = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +172,7 @@
 				CC9482C12AF870E300A3A64E /* AWARE Watch AppTests */,
 				CC9482CB2AF870E300A3A64E /* AWARE Watch AppUITests */,
 				CC9482872AF870DF00A3A64E /* Products */,
+				12A5388F2B1C226C00A34176 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

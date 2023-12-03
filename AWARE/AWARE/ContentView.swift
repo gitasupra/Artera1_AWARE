@@ -102,10 +102,9 @@ struct ContentView: View {
                 WCSession.default.delegate = watchSessionDelegate
                 WCSession.default.activate()
                 print("Watch session activated.")
-                if WCSession.default.activationState == .activated {
-                    print("WCSession activated and ready to send/receive data.")
-                } else {
-                    print("WCSession is not yet activated. Current activation state: \(WCSession.default.activationState.rawValue)")
+                while WCSession.default.activationState != .activated {
+                    WCSession.default.activate()
+                    print("activate again")
                 }
             }
         } else {

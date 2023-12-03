@@ -8,6 +8,7 @@
 import SwiftUI
 import HealthKit
 import CoreMotion
+import WatchConnectivity
 
 @main
 struct AWARE_Watch_AppApp: App {
