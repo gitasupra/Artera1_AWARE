@@ -44,6 +44,7 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
     func receiveDataFromWatch() {
         // Implement your logic to send data to the watch
         // Example: use WCSession.default.sendMessage
+        print("receive data stub")
     }
 
     func sessionDidBecomeInactive(_ session: WCSession) {
@@ -60,6 +61,7 @@ class EnableDataCollectionObservable: ObservableObject {
 }
 
 struct ContentView: View {
+
     @EnvironmentObject var motion: CMMotionManager
     @StateObject private var enableDataCollectionObservable = EnableDataCollectionObservable()
     @State private var shouldHide = false
@@ -73,6 +75,10 @@ struct ContentView: View {
     @State private var isHelpTipsEnabled = true
     
     var watchSessionDelegate: WatchSessionDelegate?
+    
+    init(){
+        self.watchSessionDelegate = WatchSessionDelegate(enableDataCollection: $enableDataCollectionObservable.enableDataCollection)
+    }
     
     func setupWatchDelegate() {
         watchSessionDelegate?.receiveDataClosure = {
@@ -95,14 +101,18 @@ struct ContentView: View {
         }
     }
 
-    mutating func receiveDataFromWatch() {
+     func receiveDataFromWatch() {
         print("Receiving data from watch...")
         if WCSession.isSupported() {
             // Check if the delegate is already set
-            if watchSessionDelegate == nil {
-                watchSessionDelegate = WatchSessionDelegate(enableDataCollection: $enableDataCollectionObservable.enableDataCollection)
+            if watchSessionDelegate != nil {
+                print("delegate not nil")
+//                watchSessionDelegate = WatchSessionDelegate(enableDataCollection: $enableDataCollectionObservable.enableDataCollection)
                 WCSession.default.delegate = watchSessionDelegate
                 WCSession.default.activate()
+                if(WCSession.default.activationState == .activated ){
+                    print("activated first time")
+                }
                 while WCSession.default.activationState != .activated {
                     WCSession.default.activate()
                     print("activate again")
@@ -308,7 +318,8 @@ struct ContentView: View {
                     setupWatchDelegate()
 
                     // Receive data from the watch
-                    watchSessionDelegate.receiveDataFromWatch()
+//                    watchSessionDelegate.receiveDataFromWatch()
+                    receiveDataFromWatch()
                 }
                 else if !WCSession.isSupported() {
                     print("Watch Connectivity is not supported.")
