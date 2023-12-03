@@ -1,15 +1,22 @@
 import SwiftUI
-import HealthKit
 import CoreMotion
+import WatchConnectivity
+
+// Create a MotionManager class to conform to ObservableObject
+class MotionManager: ObservableObject {
+    let motion = CMMotionManager()
+
+    init() {
+        motion.deviceMotionUpdateInterval = 1.0 / 50.0
+        motion.showsDeviceMovementDisplay = true
+        motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
+    }
+}
 
 struct ContentView: View {
-    
-    @AppStorage("enableDataCollection", store: UserDefaults(suiteName: "artera.aware.shared")) var enableDataCollection: Bool = false
-    
-    
-
-//    @State private var enableDataCollection = false
-    @State private var shouldHide = false
+    @State private var enableDataCollection: Bool = false
+    @State private var shouldHide: Bool = false
+    @ObservedObject private var motion = MotionManager()
 
     var body: some View {
         NavigationView {
@@ -21,7 +28,7 @@ struct ContentView: View {
                     }
 
                 // Page 2
-                Page2View(enableDataCollection: $enableDataCollection, shouldHide: $shouldHide)
+                Page2View(enableDataCollection: $enableDataCollection, shouldHide: $shouldHide, motion: motion)
                     .tabItem {
                         Label("Page 2", systemImage: "info.circle")
                     }
@@ -29,24 +36,18 @@ struct ContentView: View {
             .navigationTitle("AWARE App")
         }
     }
-    
 }
 
 struct Page1View: View {
-
-
     var body: some View {
         VStack {
             Text("AWARE")
                 .font(.largeTitle)
                 .padding()
             Image(systemName: "person.circle.fill")
-                .font(.system(size: 100)) // Adjust the font size to make the image bigger
+                .font(.system(size: 100))
                 .foregroundColor(.gray)
                 .padding()
-
-
-            
         }
     }
 }
@@ -54,19 +55,16 @@ struct Page1View: View {
 struct Page2View: View {
     @Binding var enableDataCollection: Bool
     @Binding var shouldHide: Bool
-    @EnvironmentObject var motion: CMMotionManager
+    @ObservedObject var motion: MotionManager
 
     var body: some View {
         VStack {
-//            Text("Page 2 Content")
-//                .font(.largeTitle)
-//                .padding()
-            
-            if (enableDataCollection) {
+            if enableDataCollection {
                 if !shouldHide {
                     Text("Disable Data Collection on your Apple Watch")
                     Button {
                         enableDataCollection.toggle()
+                        sendDataToPhone()
                         print(enableDataCollection)
                     } label: {
                         Image(systemName: "touchid")
@@ -80,6 +78,7 @@ struct Page2View: View {
                 Text("Enable Data Collection on your Apple Watch")
                 Button {
                     enableDataCollection.toggle()
+                    sendDataToPhone()
                     print(enableDataCollection)
                 } label: {
                     Image(systemName: "touchid")
@@ -92,58 +91,61 @@ struct Page2View: View {
         }
         .onChange(of: enableDataCollection)
         {
-            if (enableDataCollection) {
+            sendDataToPhone()
+
+            if enableDataCollection {
                 startDeviceMotion()
             } else {
-                self.motion.stopDeviceMotionUpdates()
+                motion.motion.stopDeviceMotionUpdates()
             }
         }
     }
-    
-    func startDeviceMotion() {
-            
-            
-            if motion.isDeviceMotionAvailable {
-                self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
-                self.motion.showsDeviceMovementDisplay = true
-                self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
-                
-                // Configure a timer to fetch the device motion data
-                let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true,
-                                   block: { (timer) in
-                    if let data = self.motion.deviceMotion {
-                        // Get attitude data
-                        let attitudeX = data.attitude.pitch
-                        let attitudeY = data.attitude.roll
-                        let attitudeZ = data.attitude.yaw
-                        // Get accelerometer data
-                        let accelerometerX = data.userAcceleration.x
-                        let accelerometerY = data.userAcceleration.y
-                        let accelerometerZ = data.userAcceleration.z
-                        // Get the gyroscope data
-                        let gyroX = data.rotationRate.x
-                        let gyroY = data.rotationRate.y
-                        let gyroZ = data.rotationRate.z
-                        
-                        print("Attitude x: ", attitudeX)
-                        print("Attitude y: ", attitudeY)
-                        print("Attitude z: ", attitudeZ)
-                        print("Accelerometer x: ", accelerometerX)
-                        print("Accelerometer y: ", accelerometerY)
-                        print("Accelerometer z: ", accelerometerZ)
-                        print("Rotation x: ", gyroX)
-                        print("Rotation y: ", gyroY)
-                        print("Rotation z: ", gyroZ)
-                    }
-                })
-                
-                // Add the timer to the current run loop
-                RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
-            }
-            
-        }
-}
 
-#Preview{
-    ContentView()
+    func sendDataToPhone() {
+        guard WCSession.default.isReachable else {
+            print("Phone is not reachable")
+            return
+        }
+
+        let dataToSend: [String: Any] = [
+            "enableDataCollection": enableDataCollection
+            // Add other data you want to send...
+        ]
+
+        WCSession.default.transferUserInfo(dataToSend)
+    }
+
+    func startDeviceMotion() {
+        if motion.motion.isDeviceMotionAvailable {
+            motion.motion.deviceMotionUpdateInterval = 1.0 / 50.0
+            motion.motion.showsDeviceMovementDisplay = true
+            motion.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
+
+            let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true) { timer in
+                if let data = motion.motion.deviceMotion {
+                    let attitudeX = data.attitude.pitch
+                    let attitudeY = data.attitude.roll
+                    let attitudeZ = data.attitude.yaw
+                    let accelerometerX = data.userAcceleration.x
+                    let accelerometerY = data.userAcceleration.y
+                    let accelerometerZ = data.userAcceleration.z
+                    let gyroX = data.rotationRate.x
+                    let gyroY = data.rotationRate.y
+                    let gyroZ = data.rotationRate.z
+
+                    print("Attitude x: ", attitudeX)
+                    print("Attitude y: ", attitudeY)
+                    print("Attitude z: ", attitudeZ)
+                    print("Accelerometer x: ", accelerometerX)
+                    print("Accelerometer y: ", accelerometerY)
+                    print("Accelerometer z: ", accelerometerZ)
+                    print("Rotation x: ", gyroX)
+                    print("Rotation y: ", gyroY)
+                    print("Rotation z: ", gyroZ)
+                }
+            }
+
+            RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
+        }
+    }
 }

@@ -1,27 +1,17 @@
-//
-//  AWAREApp.swift
-//  AWARE Watch App
-//
-//  Created by Jessica Lieu on 11/5/23.
-//
-
 import SwiftUI
 import HealthKit
-import CoreMotion
+import WatchConnectivity // Import WatchConnectivity
 
 @main
-struct AWARE_Watch_AppApp: App {
-    private let motion: CMMotionManager
-        
-    init() {
-        motion = CMMotionManager()
-    }
-    
+struct AWAREApp: App {
+    @StateObject private var healthStoreWrapper = HealthStoreWrapper()
+    @StateObject private var watchCoordinator = WatchAppCoordinator() // Add this line
+
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(motion)
+            ContentView()
+                .environmentObject(healthStoreWrapper)
+                .environmentObject(watchCoordinator) // Add this line
         }
     }
 }
-
-extension CMMotionManager: ObservableObject{}

@@ -1,11 +1,13 @@
 import SwiftUI
+import HealthKit
+import CoreMotion
+import WatchConnectivity  // Import WatchConnectivity
 
 
 
 struct ContentView: View {
     @AppStorage("enableDataCollection", store: UserDefaults(suiteName: "artera.aware.shared")) var enableDataCollection: Bool = false
 
-//    @State private var enableDataCollection = false
     @State private var shouldHide = false
 
     // setting toggles
@@ -15,6 +17,9 @@ struct ContentView: View {
     @State private var isUberEnabled = false
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
+    
+    // Declare WatchConnectivity properties
+       @StateObject private var watchConnectivityManager = WatchConnectivityManager()
     
     var body: some View {
         TabView {
@@ -68,15 +73,24 @@ struct ContentView: View {
                         .font(.system(size: 36))
                     
                     NavigationLink(destination: Text("Heart Rate Data")) {
-                        Button("View Heart Rate Data") {}
+                        Button("View Heart Rate Data") {
+                            sendDataToWatch()  // Send data to Watch
+                        }
                     }
                     
                     NavigationLink(destination: Text("Breathing Rate Data")) {
-                        Button("View Breathing Rate Data") {}
+                        Button("View Breathing Rate Data") {
+                            sendDataToWatch()  // Send data to Watch
+                        }
+                        
+            
                     }
                     
                     NavigationLink(destination: Text("Walking Steadiness Data")) {
-                        Button("View Walking Steadiness Data") {}
+                        Button("View Walking Steadiness Data") {
+                            sendDataToWatch()  // Send data to Watch
+
+                        }
                     }
                 }
             }
@@ -160,7 +174,29 @@ struct ContentView: View {
                 Label("Settings", systemImage: "gearshape.fill")
             }
         }
+        .onAppear {
+                   watchConnectivityManager.setupWatchConnectivity()
+        }
     }
+    
+    // Function to send data to Watch
+    func sendDataToWatch() {
+            guard let wcSession = watchConnectivityManager.wcSession, wcSession.isReachable else {
+                print("Watch is not reachable")
+                return
+            }
+
+            let dataToSend: [String: Any] = [
+                "enableDataCollection": enableDataCollection,
+                // Add other data you want to send...
+            ]
+
+            wcSession.sendMessage(dataToSend, replyHandler: nil, errorHandler: { error in
+                print("Error sending message to Watch: \(error.localizedDescription)")
+            })
+        }
+    
+  
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
@@ -168,3 +204,37 @@ struct ContentView: View {
         }
     }
 }
+// WatchConnectivityManager class
+class WatchConnectivityManager: NSObject, ObservableObject, WCSessionDelegate {
+    @Published var wcSession: WCSession?
+
+    func setupWatchConnectivity() {
+        if WCSession.isSupported() {
+            wcSession = WCSession.default
+            wcSession?.delegate = self
+            wcSession?.activate()
+        }
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+          // Handle session did become inactive
+      }
+
+      func sessionDidDeactivate(_ session: WCSession) {
+          // Handle session did deactivate
+          wcSession?.activate()
+      }
+
+      func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+          // Handle session activation completion
+      }
+
+      func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+          // Handle received message from Watch
+      }
+
+    // Implement WCSessionDelegate methods if needed
+    // ...
+}
+
+
