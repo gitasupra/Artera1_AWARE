@@ -2,10 +2,10 @@ import Combine
 import WatchConnectivity
 
 class SessionDelegater: NSObject, WCSessionDelegate {
-    let countSubject: PassthroughSubject<Int, Never>
+    let enableDataCollectionSubject: PassthroughSubject<Int, Never>
     
-    init(countSubject: PassthroughSubject<Int, Never>) {
-        self.countSubject = countSubject
+    init(enableDataCollectionSubject: PassthroughSubject<Int, Never>) {
+        self.enableDataCollectionSubject = enableDataCollectionSubject
         super.init()
     }
     
@@ -16,8 +16,8 @@ class SessionDelegater: NSObject, WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async {
-            if let count = message["count"] as? Int {
-                self.countSubject.send(count)
+            if let enableDataCollection = message["enableDataCollection"] as? Int {
+                self.enableDataCollectionSubject.send(enableDataCollection)
             } else {
                 print("There was an error")
             }

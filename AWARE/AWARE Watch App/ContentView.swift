@@ -40,47 +40,41 @@ struct Page1View: View {
                 .font(.system(size: 100)) // Adjust the font size to make the image bigger
                 .foregroundColor(accentColor)
                 .padding()
-
-
-            
         }
     }
 }
 
 struct Page2View: View {
+    @StateObject var enableDataCollectionObj = EnableDataCollection()
     @Binding var enableDataCollection: Bool
     @Binding var shouldHide: Bool
     @EnvironmentObject var motion: CMMotionManager
 
     var body: some View {
         VStack {
-//            Text("Page 2 Content")
-//                .font(.largeTitle)
-//                .padding()
-            
-            if (enableDataCollection) {
-                if !shouldHide {
-                    Text("Disable Data Collection on your Apple Watch")
-                    Button {
+            if (enableDataCollectionObj.enableDataCollection == 0) {
+                if !self.$shouldHide.wrappedValue {
+                    Text("Disable Data Collection")
+                    Button(action: {
+                        enableDataCollectionObj.toggleOn()
                         enableDataCollection.toggle()
-                        print(enableDataCollection)
-                    } label: {
+                    }) {
                         Image(systemName: "touchid")
-                            .font(.system(size: 50))
-                            .foregroundColor(.red)
-                            .controlSize(.extraLarge)
-                    }
-                }
-            } else {
-                Text("Enable Data Collection on your Apple Watch")
-                Button {
-                    enableDataCollection.toggle()
-                    print(enableDataCollection)
-                } label: {
-                    Image(systemName: "touchid")
                         .font(.system(size: 50))
                         .foregroundColor(.green)
                         .controlSize(.extraLarge)
+                    }
+                }
+            } else {
+                Text("Enable Data Collection")
+                Button {
+                    enableDataCollectionObj.toggleOff()
+                    enableDataCollection.toggle()
+                } label: {
+                    Image(systemName: "touchid")
+                    .font(.system(size: 50))
+                    .foregroundColor(.red)
+                    .controlSize(.extraLarge)
                 }
             }
         }
