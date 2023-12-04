@@ -31,14 +31,10 @@ struct Page1View: View {
 
     var body: some View {
         VStack {
-            Text("AWARE")
-                .font(.largeTitle)
-                .padding()
-                .offset(y: 15)
-            Image(systemName: "heart.circle")
-                .font(.system(size: 100)) // Adjust the font size to make the image bigger
-                .foregroundColor(accentColor)
-                .padding()
+            Image("AWARE_Logo_2")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 150, height: 150)
         }
     }
 }
