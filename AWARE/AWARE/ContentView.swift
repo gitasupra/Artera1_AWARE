@@ -1,16 +1,24 @@
 import SwiftUI
 import CoreMotion
 import Charts
+import HealthKit
+import HealthKitUI
 
 
 struct ContentView: View {
     @EnvironmentObject var motion: CMMotionManager
+    @EnvironmentObject var healthStore: HKHealthStore
     @State private var enableDataCollection = false
     @State private var shouldHide = false
     
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
-    @State private var idx: Int = 0
+    @State private var accIdx: Int = 0
+    
+    // heart rate data variables
+    @State private var heartRate: [HeartRateDataPoint] = []
+    @State private var heartRateIdx: Int = 0
+    
     // setting toggles
     @State private var name = ""
     @State private var isNotificationEnabled = true
@@ -18,16 +26,24 @@ struct ContentView: View {
     @State private var isUberEnabled = false
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
-    @State var showChart: Bool = true
+    @State var showAccChart: Bool = true
+    @State var showHeartChart: Bool = true
     
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
-          let x: Double
-          let y: Double
-          let z: Double
-          var myIndex: Int = 0
-          var id: UUID
-       }
+        let x: Double
+        let y: Double
+        let z: Double
+        var myIndex: Int = 0
+        var id: UUID
+    }
+    
+    // heart rate data struct
+    struct HeartRateDataPoint: Identifiable {
+        let heartRate: Double
+        var myIndex: Int = 0
+        var id: UUID
+    }
     // style variables
     let accentColor:Color = .purple
     struct CustomButtonStyle: ButtonStyle {
@@ -85,48 +101,48 @@ struct ContentView: View {
                             }
                         }
                     }
-                        .cornerRadius(6)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 6)
-                                .stroke(Color.accentColor, lineWidth: 1)
-                        )
-                        .padding([.top, .bottom], 2)
-                        Spacer()
+                    .cornerRadius(6)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(Color.accentColor, lineWidth: 1)
+                    )
+                    .padding([.top, .bottom], 2)
+                    Spacer()
                     
                     NavigationStack {
                         VStack {
                             Button {
-                                showChart = true
+                                showHeartChart = true
                             } label: {
                                 Text("View Heart Rate Data")
                             }
                             .navigationDestination(
-                                isPresented: $showChart) {
-                                    accelerometerGraph(acc: acc)
-                            }
-                            .buttonStyle(CustomButtonStyle())
+                                isPresented: $showHeartChart) {
+                                    heartRateGraph(heartRate: heartRate)
+                                }
+                                .buttonStyle(CustomButtonStyle())
                             
                             Button {
-                                showChart = true
+                                showAccChart = true
                             } label: {
                                 Text("View Breathing Rate Data")
                             }
                             .navigationDestination(
-                                isPresented: $showChart) {
+                                isPresented: $showAccChart) {
                                     accelerometerGraph(acc: acc)
-                            }
-                            .buttonStyle(CustomButtonStyle())
+                                }
+                                .buttonStyle(CustomButtonStyle())
                             
                             Button {
-                                showChart = true
+                                showAccChart = true
                             } label: {
                                 Text("View Walking Steadiness Data")
                             }
                             .navigationDestination(
-                                isPresented: $showChart) {
+                                isPresented: $showAccChart) {
                                     accelerometerGraph(acc: acc)
-                            }
-                            .buttonStyle(CustomButtonStyle())
+                                }
+                                .buttonStyle(CustomButtonStyle())
                         }
                     }
                 }
@@ -252,7 +268,7 @@ struct ContentView: View {
                             Text("Call 911 in case of extreme emergencies")
                         }
                     }.tint(accentColor)
-
+                    
                     Section(header: Text("Notifications")) {
                         Toggle(isOn: $isNotificationEnabled) {
                             Text("Allow notifications")
@@ -266,7 +282,7 @@ struct ContentView: View {
                             Text("Receive tips on drinking safely")
                         }
                     }.tint(accentColor)
-
+                    
                     Section {
                         Button("Reset to default") {
                             isNotificationEnabled = true
@@ -313,43 +329,82 @@ struct ContentView: View {
             }
         }
     }
-    func startDeviceMotion() {
-            //var idx = 0
-            
-            if motion.isDeviceMotionAvailable {
-                self.motion.deviceMotionUpdateInterval = 1.0/50.0
-                self.motion.showsDeviceMovementDisplay = true
-                self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
-                
-                // Configure a timer to fetch the device motion data
-                let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
-                                   block: { (timer) in
-                    if let data = self.motion.deviceMotion {
-                        // Get attitude data
-                        let attitude = data.attitude
-                        // Get accelerometer data
-                        let accelerometer = data.userAcceleration
-                        // Get the gyroscope data
-                        let gyro = data.rotationRate
-                        idx += 1
-                        
-                        let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: idx, id: UUID())
-                                    
-                        acc.append(new)
-                        print("Attitude x: ", attitude.pitch)
-                        print("Attitude y: ", attitude.roll)
-                        print("Attitude z: ", attitude.yaw)
-                        print("Accelerometer x: ", accelerometer.x)
-                        print("Accelerometer y: ", accelerometer.y)
-                        print("Accelerometer z: ", accelerometer.z)
-                        print("Rotation x: ", gyro.x)
-                        print("Rotation y: ", gyro.y)
-                        print("Rotation z: ", gyro.z)                    }
-                })
-                
-                // Add the timer to the current run loop
-                RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
+    struct heartRateGraph: View {
+        var heartRate: [HeartRateDataPoint]
+        var body: some View {
+            ScrollView {
+                VStack {
+                    Chart {
+                        ForEach(heartRate) { element in
+                            LineMark(x: .value("Date", element.myIndex), y: .value("x", element.heartRate))
+                                .foregroundStyle(by: .value("x", "x"))
+                        }
+                    }
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 50)
+                    .padding()
+                }
             }
-            
         }
+    }
+    func startDeviceMotion() {
+        //var idx = 0
+        
+        if motion.isDeviceMotionAvailable {
+            self.motion.deviceMotionUpdateInterval = 1.0/50.0
+            self.motion.showsDeviceMovementDisplay = true
+            self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
+            
+            // Configure a timer to fetch the device motion data
+            let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
+                              block: { (timer) in
+                if let data = self.motion.deviceMotion {
+                    // Get attitude data
+                    let attitude = data.attitude
+                    // Get accelerometer data
+                    let accelerometer = data.userAcceleration
+                    // Get the gyroscope data
+                    let gyro = data.rotationRate
+                    accIdx += 1
+                    
+                    let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+                    
+                    acc.append(new)
+                    //                        print("Attitude x: ", attitude.pitch)
+                    //                        print("Attitude y: ", attitude.roll)
+                    //                        print("Attitude z: ", attitude.yaw)
+                    //                        print("Accelerometer x: ", accelerometer.x)
+                    //                        print("Accelerometer y: ", accelerometer.y)
+                    //                        print("Accelerometer z: ", accelerometer.z)
+                    //                        print("Rotation x: ", gyro.x)
+                    //                        print("Rotation y: ", gyro.y)
+                    //                        print("Rotation z: ", gyro.z)
+                    let startDate = Date()
+                    let predicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: HKQueryOptions())
+                    
+                    let queryHeartRate = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!, predicate: predicate, anchor: nil, limit: Int(HKObjectQueryNoLimit)) { (query, samples, deletedObjects, anchor, error) -> Void in
+                    }
+                    
+                    queryHeartRate.updateHandler = { [self](query, samples, deletedObjects, anchor, error) -> Void in
+                        if let heartRateSample = samples?.last as? HKQuantitySample {
+                            
+                            let unit = HKUnit.count().unitDivided(by: HKUnit.minute())
+                            let heartRateValue = Double(heartRateSample.quantity.doubleValue(for: unit))
+                            let newHeart:HeartRateDataPoint = HeartRateDataPoint(heartRate: heartRateValue, myIndex: accIdx, id: UUID())
+                            
+                            heartRate.append(newHeart)
+                        }
+                    }
+                    
+                    self.healthStore.execute(queryHeartRate)
+                }
+                
+                
+            })
+            
+            // Add the timer to the current run loop
+            RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
+        }
+        
+    }
 }
