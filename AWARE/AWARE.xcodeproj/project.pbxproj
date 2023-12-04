@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		127DBA202B1D56230031F9F7 /* Shared in Resources */ = {isa = PBXBuildFile; fileRef = 127DBA1F2B1D56230031F9F7 /* Shared */; };
+		127DBA212B1D56230031F9F7 /* Shared in Resources */ = {isa = PBXBuildFile; fileRef = 127DBA1F2B1D56230031F9F7 /* Shared */; };
+		127DBA232B1D564C0031F9F7 /* ContentViewShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA222B1D564C0031F9F7 /* ContentViewShared.swift */; };
+		127DBA252B1D565C0031F9F7 /* ContentViewShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA242B1D565C0031F9F7 /* ContentViewShared.swift */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
 		CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC94828B2AF870DF00A3A64E /* ContentView.swift */; };
 		CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC94828D2AF870E100A3A64E /* Assets.xcassets */; };
@@ -77,6 +81,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		127DBA1F2B1D56230031F9F7 /* Shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shared; path = ../../../Desktop/MainApp/Shared; sourceTree = "<group>"; };
+		127DBA222B1D564C0031F9F7 /* ContentViewShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentViewShared.swift; path = ../../../../Desktop/MainApp/MainApp/ContentViewShared.swift; sourceTree = "<group>"; };
+		127DBA242B1D565C0031F9F7 /* ContentViewShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentViewShared.swift; path = "../../../../Desktop/MainApp/MainApp Watch App/ContentViewShared.swift"; sourceTree = "<group>"; };
 		56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AWARE Watch App.entitlements"; sourceTree = "<group>"; };
 		CC9482862AF870DF00A3A64E /* AWARE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWARE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9482892AF870DF00A3A64E /* AWAREApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREApp.swift; sourceTree = "<group>"; };
@@ -150,6 +157,7 @@
 		CC94827D2AF870DF00A3A64E = {
 			isa = PBXGroup;
 			children = (
+				127DBA1F2B1D56230031F9F7 /* Shared */,
 				CC9482882AF870DF00A3A64E /* AWARE */,
 				CC9482992AF870E100A3A64E /* AWARETests */,
 				CC9482A32AF870E100A3A64E /* AWAREUITests */,
@@ -179,6 +187,7 @@
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
+				127DBA222B1D564C0031F9F7 /* ContentViewShared.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
 			);
@@ -216,6 +225,7 @@
 				56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */,
 				CC9482B12AF870E100A3A64E /* AWAREApp.swift */,
 				CC9482B32AF870E100A3A64E /* ContentView.swift */,
+				127DBA242B1D565C0031F9F7 /* ContentViewShared.swift */,
 				CC9482B52AF870E200A3A64E /* Assets.xcassets */,
 				CC9482B72AF870E200A3A64E /* Preview Content */,
 			);
@@ -422,6 +432,7 @@
 			files = (
 				CC9482912AF870E100A3A64E /* Preview Assets.xcassets in Resources */,
 				CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */,
+				127DBA202B1D56230031F9F7 /* Shared in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +456,7 @@
 			files = (
 				CC9482B92AF870E200A3A64E /* Preview Assets.xcassets in Resources */,
 				CC9482B62AF870E200A3A64E /* Assets.xcassets in Resources */,
+				127DBA212B1D56230031F9F7 /* Shared in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +481,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				127DBA232B1D564C0031F9F7 /* ContentViewShared.swift in Sources */,
 				CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */,
 				CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */,
 			);
@@ -495,6 +508,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				127DBA252B1D565C0031F9F7 /* ContentViewShared.swift in Sources */,
 				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
 				CC9482B22AF870E100A3A64E /* AWAREApp.swift in Sources */,
 			);
