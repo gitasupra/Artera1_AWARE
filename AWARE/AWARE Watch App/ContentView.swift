@@ -21,7 +21,6 @@ struct ContentView: View {
                         Label("Page 2", systemImage: "info.circle")
                     }
             }
-            .navigationTitle("AWARE App")
         }
     }
     
@@ -55,6 +54,7 @@ struct Page2View: View {
             if (enableDataCollectionObj.enableDataCollection == 0) {
                 if !self.$shouldHide.wrappedValue {
                     Text("Disable Data Collection")
+                        .multilineTextAlignment(.center)
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
                         enableDataCollection.toggle()
@@ -67,6 +67,7 @@ struct Page2View: View {
                 }
             } else {
                 Text("Enable Data Collection")
+                    .multilineTextAlignment(.center)
                 Button {
                     enableDataCollectionObj.toggleOff()
                     enableDataCollection.toggle()

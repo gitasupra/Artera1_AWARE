@@ -178,13 +178,11 @@ struct ContentView: View {
                     .font(.system(size: 36)) // Adjust the font size for the title
                 Image(systemName: "heart.circle")
                     .font(.system(size: 200)) // Adjust the font size to make the image bigger
-                    .foregroundColor(accentColor)
+                    .foregroundColor(enableDataCollectionObj.enableDataCollection == 0 ? .green : .red)
                     .padding()
                 
                 if (enableDataCollectionObj.enableDataCollection == 0) {
                     if !self.$shouldHide.wrappedValue {
-                        Text("Disable Data Collection")
-                            .padding()
                         Button(action: {
                                 enableDataCollectionObj.toggleOn()
                                 enableDataCollection.toggle()
@@ -192,13 +190,12 @@ struct ContentView: View {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
                                     .foregroundColor(.green)
-                                    .background(Color.white)
                                     .controlSize(.extraLarge)
-                            }
+                            }.padding()
+                        Text("Disable Data Collection")
                         }
+                        
                     } else {
-                        Text("Enable Data Collection")
-                            .padding()
                         Button(action: {
                                 enableDataCollectionObj.toggleOff()
                                 enableDataCollection.toggle()
@@ -206,10 +203,11 @@ struct ContentView: View {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
                                     .foregroundColor(.red)
-                                    .background(Color.white)
                                     .controlSize(.extraLarge)
-                            }
+                            }.padding()
+                        Text("Enable Data Collection")
                     }
+                    
                 }
                 .onChange(of: enableDataCollection) {
                     if (enableDataCollection) {
