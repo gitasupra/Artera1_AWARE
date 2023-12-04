@@ -349,6 +349,7 @@ struct ContentView: View {
     }
     func startDeviceMotion() {
         //var idx = 0
+        let heartRateQuantity = HKUnit(from: "count/min")
         
         if motion.isDeviceMotionAvailable {
             self.motion.deviceMotionUpdateInterval = 1.0/50.0
@@ -370,6 +371,7 @@ struct ContentView: View {
                     let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
                     
                     acc.append(new)
+                    //print(new)
                     //                        print("Attitude x: ", attitude.pitch)
                     //                        print("Attitude y: ", attitude.roll)
                     //                        print("Attitude z: ", attitude.yaw)
@@ -379,24 +381,40 @@ struct ContentView: View {
                     //                        print("Rotation x: ", gyro.x)
                     //                        print("Rotation y: ", gyro.y)
                     //                        print("Rotation z: ", gyro.z)
-                    let startDate = Date()
-                    let predicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: HKQueryOptions())
-                    
-                    let queryHeartRate = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!, predicate: predicate, anchor: nil, limit: Int(HKObjectQueryNoLimit)) { (query, samples, deletedObjects, anchor, error) -> Void in
+
+                    let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
+
+                    let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
+                        query, samples, deletedObjects, queryAnchor, error in
+                        
+
+                    guard let samples = samples as? [HKQuantitySample] else {
+                        print("uhoh")
+                        return
                     }
-                    
-                    queryHeartRate.updateHandler = { [self](query, samples, deletedObjects, anchor, error) -> Void in
-                        if let heartRateSample = samples?.last as? HKQuantitySample {
+                        
+                    var lastHeartRate = 0.0
                             
-                            let unit = HKUnit.count().unitDivided(by: HKUnit.minute())
-                            let heartRateValue = Double(heartRateSample.quantity.doubleValue(for: unit))
-                            let newHeart:HeartRateDataPoint = HeartRateDataPoint(heartRate: heartRateValue, myIndex: accIdx, id: UUID())
+                        for sample in samples {
                             
-                            heartRate.append(newHeart)
+                            lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
                         }
-                    }
+
+                            
+                            let newHeart:HeartRateDataPoint = HeartRateDataPoint(heartRate: lastHeartRate, myIndex: accIdx, id: UUID())
+                            heartRate.append(newHeart)
+                            print(newHeart)
+                        }
+
                     
-                    self.healthStore.execute(queryHeartRate)
+
+                    let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: .heartRate)!, predicate: devicePredicate, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: updateHandler)
+                    
+                    query.updateHandler = updateHandler
+                    
+
+                    
+                    healthStore.execute(query)
                 }
                 
                 

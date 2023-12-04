@@ -48,9 +48,19 @@ struct Page1View: View {
 }
 
 struct Page2View: View {
+    @EnvironmentObject var healthStore: HKHealthStore
+    @State public var heartRate: [HeartRateDataPoint] = []
+    @State private var heartRateIdx: Int = 0
     @Binding var enableDataCollection: Bool
     @Binding var shouldHide: Bool
     @EnvironmentObject var motion: CMMotionManager
+    
+    // heart rate data struct
+    struct HeartRateDataPoint: Identifiable {
+        let heartRate: Double
+        var myIndex: Int = 0
+        var id: UUID
+    }
 
     var body: some View {
         VStack {
@@ -95,7 +105,9 @@ struct Page2View: View {
     }
     
     func startDeviceMotion() {
-            
+        let heartRateQuantity = HKUnit(from: "count/min")
+        let accIdx = 0
+
             
             if motion.isDeviceMotionAvailable {
                 self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
@@ -129,6 +141,38 @@ struct Page2View: View {
                         print("Rotation y: ", gyroY)
                         print("Rotation z: ", gyroZ)
                     }
+                    let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
+
+                    let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
+                        query, samples, deletedObjects, queryAnchor, error in
+                        
+
+                    guard let samples = samples as? [HKQuantitySample] else {
+                        return
+                    }
+                        
+                    var lastHeartRate = 0.0
+                            
+                        for sample in samples {
+                            
+                            lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
+                        }
+
+                            
+                            let newHeart:HeartRateDataPoint = HeartRateDataPoint(heartRate: lastHeartRate, myIndex: accIdx, id: UUID())
+                            heartRateIdx += 1
+                            heartRate.append(newHeart)
+                            print(newHeart)
+                        }
+
+                    
+
+                    let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: .heartRate)!, predicate: devicePredicate, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: updateHandler)
+                    
+                    query.updateHandler = updateHandler
+                    
+                    
+                    healthStore.execute(query)
                 })
                 
                 // Add the timer to the current run loop
