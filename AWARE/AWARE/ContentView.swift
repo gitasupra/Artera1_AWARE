@@ -19,6 +19,7 @@ struct ContentView: View {
     
     // style variables
     let accentColor:Color = .purple
+    let backgroundColor:Color = .black
     struct CustomButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
@@ -91,37 +92,6 @@ struct ContentView: View {
                 VStack(alignment: .center) {
                     Text("Graphs")
                         .font(.system(size: 36))
-                    
-                    HStack {
-                        let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-                        let datesForCurrentWeek = getDatesForCurrentWeek()
-                        let currentDay = Calendar.current.component(.day, from: Date())
-                        
-                        ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
-                            VStack {
-                                Text(element)
-                                    .padding(10)
-                                    .foregroundColor(.gray)
-                                    .cornerRadius(8)
-                                
-                                let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-                                Text(datesForCurrentWeek[index])
-                                    .padding(10)
-                                    .background(currentDay == dayOnly ? Color.accentColor : Color.white)
-                                    .foregroundColor(.black)
-                                    .cornerRadius(8)
-                            }
-                        }
-                    }
-                    .cornerRadius(6)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.accentColor, lineWidth: 1)
-                    )
-                    .padding([.top, .bottom], 2)
-                    
-                    Spacer()
-                    
                     NavigationLink(destination: Text("Heart Rate Data")) {
                         Button("View Heart Rate Data") {}
                             .buttonStyle(CustomButtonStyle())
@@ -174,12 +144,17 @@ struct ContentView: View {
             
             // Page 3 - Home / Toggle
             VStack(alignment: .center) {
-                Text("AWARE")
-                    .font(.system(size: 36)) // Adjust the font size for the title
-                Image(systemName: "heart.circle")
-                    .font(.system(size: 200)) // Adjust the font size to make the image bigger
-                    .foregroundColor(enableDataCollectionObj.enableDataCollection == 0 ? .green : .red)
-                    .padding()
+                Spacer()
+                Image("testlogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 300, height: 100)
+                Image("testicon")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 150, height: 150)
+                
+                Spacer()
                 
                 if (enableDataCollectionObj.enableDataCollection == 0) {
                     if !self.$shouldHide.wrappedValue {
@@ -192,9 +167,9 @@ struct ContentView: View {
                                     .foregroundColor(.green)
                                     .controlSize(.extraLarge)
                             }.padding()
-                        Text("Disable Data Collection")
+                            Text("Disable Data Collection")
+                            Spacer()
                         }
-                        
                     } else {
                         Button(action: {
                                 enableDataCollectionObj.toggleOff()
@@ -206,8 +181,8 @@ struct ContentView: View {
                                     .controlSize(.extraLarge)
                             }.padding()
                         Text("Enable Data Collection")
+                        Spacer()
                     }
-                    
                 }
                 .onChange(of: enableDataCollection) {
                     if (enableDataCollection) {
@@ -226,10 +201,45 @@ struct ContentView: View {
                         Text("Analytics")
                             .font(.system(size: 36))
                         
-                        NavigationLink(destination: Text("Past Holistic Drunkenness Data Collection")) {
-                            Button("View Past Holistic Drunkenness Data Collection") {}
+                        Spacer()
+                        
+                        VStack {
+                            HStack {
+                                let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+                                let datesForCurrentWeek = getDatesForCurrentWeek()
+                                let currentDay = Calendar.current.component(.day, from: Date())
+                                
+                                ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
+                                    VStack {
+                                        Text(element)
+                                            .padding(10)
+                                            .foregroundColor(.gray)
+                                            .cornerRadius(8)
+                                            .font(.system(size: 12))
+                                        
+                                        let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
+                                        Text(datesForCurrentWeek[index].components(separatedBy: " ")[1])
+                                            .padding(10)
+                                            .background(currentDay == dayOnly ? Color.accentColor : backgroundColor)
+                                            .foregroundColor(.white)
+                                            .cornerRadius(8)
+                                            .font(.system(size: 15))
+                                    }
+                                }
+                            }
+                            .cornerRadius(6)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .stroke(Color.accentColor, lineWidth: 1)
+                            )
+                        }
+                        
+                        NavigationLink(destination: Text("View Past Data")) {
+                            Button("View Past Data") {}
                                 .buttonStyle(CustomButtonStyle())
                         }
+                        
+                        Spacer()
                     }
                 }
                 .tabItem {
