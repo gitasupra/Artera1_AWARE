@@ -2,9 +2,14 @@ import SwiftUI
 import HealthKit
 import CoreMotion
 import Charts
+import Firebase
+import FirebaseCore
+import FirebaseAnalytics
+import FirebaseAnalyticsSwift
 
 
 struct ContentView: View {
+    
     @EnvironmentObject var motion: CMMotionManager
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @State private var enableDataCollection = false
@@ -36,7 +41,9 @@ struct ContentView: View {
     let accentColor:Color = .purple
     let backgroundColor:Color = .black
     struct CustomButtonStyle: ButtonStyle {
+        
         func makeBody(configuration: Configuration) -> some View {
+
             configuration.label
                 .padding()
                 .cornerRadius(6)
@@ -62,6 +69,7 @@ struct ContentView: View {
     }
     
     var body: some View {
+        
         TabView {
             // Page 1 Graphs
             NavigationView {
