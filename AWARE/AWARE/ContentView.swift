@@ -6,9 +6,35 @@ import Firebase
 import FirebaseCore
 import FirebaseAnalytics
 import FirebaseAnalyticsSwift
+import FirebaseDatabase
+
+struct viewDidLoadModifier: ViewModifier{
+    @State private var didLoad = false
+    private let action: (() -> Void)?
+    
+    init(perform action: (() -> Void)? = nil){
+        self.action = action
+    }
+    
+    func body(content: Content) -> some View{
+        content.onAppear{
+            if didLoad == false{
+                didLoad=true
+                action?()
+            }
+        }
+    }
+}
+
+extension View{
+    func onLoad(perform action: (() -> Void)? = nil) -> some View{
+        modifier(viewDidLoadModifier(perform: action))
+    }
+}
 
 
 struct ContentView: View {
+    
     
     @EnvironmentObject var motion: CMMotionManager
     @StateObject var enableDataCollectionObj = EnableDataCollection()
@@ -36,6 +62,12 @@ struct ContentView: View {
         var myIndex: Int = 0
         var id: UUID
     }
+    
+    // database
+    //FIXME may be loading DB every time, ideally in .onload
+    let ref=Database.database().reference()
+
+    
     
     // style variables
     let accentColor:Color = .purple
@@ -113,6 +145,8 @@ struct ContentView: View {
                         }
                     }
                 }
+            }.onLoad{
+                self.ref.child("users").child("1").setValue(["username": "test"])
             }
             .tabItem {
                 Label("Graphs", systemImage: "chart.pie.fill")
