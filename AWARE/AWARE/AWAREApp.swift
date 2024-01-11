@@ -16,7 +16,8 @@ class AppDelegate: NSObject, UIApplicationDelegate{
 @main
 struct AWAREApp: App {
     
-    
+    //create AuthViewModel once to use for all pages
+    @StateObject var viewModel = AuthViewModel()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     private let healthStore: HKHealthStore
@@ -64,6 +65,7 @@ struct AWAREApp: App {
             ContentView()
                 .environmentObject(healthStore)
                 .environmentObject(motion)
+                .environmentObject(viewModel)
 
         }
     }
