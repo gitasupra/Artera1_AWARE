@@ -148,7 +148,8 @@ struct ContentView: View {
                     }
                 }
             }.onLoad{
-                self.ref.child("users").child("1").setValue(["username": "test"])
+                //used to test db write
+                //self.ref.child("users").child("1").setValue(["username": "test2"])
             }
             .tabItem {
                 Label("Graphs", systemImage: "chart.pie.fill")
