@@ -149,7 +149,7 @@ struct ContentView: View {
                 }
             }.onLoad{
                 //used to test db write
-                //self.ref.child("users").child("1").setValue(["username": "test2"])
+                //self.ref.child("users").child("1").setValue(["username": "test3"])
             }
             .tabItem {
                 Label("Graphs", systemImage: "chart.pie.fill")
@@ -334,6 +334,12 @@ struct ContentView: View {
                                 isHelpTipsEnabled = true
                             }
                         }.tint(accentColor)
+                        
+                        Section {
+                            Button("Log out") {
+                                viewModel.signOut()
+                            }
+                        }.tint(.red)
                     }
                     .navigationBarTitle(Text("Settings"))
                 }
