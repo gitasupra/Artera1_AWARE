@@ -1,4 +1,5 @@
 import SwiftUI
+import HealthKit
 import CoreMotion
 import Charts
 
@@ -16,6 +17,20 @@ struct ContentView: View {
     @State private var isUberEnabled = false
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
+    @State var showAccChart: Bool = true
+    
+    // accelerometer data variables
+    @State private var acc: [AccelerometerDataPoint] = []
+    @State private var accIdx: Int = 0
+    
+    // accelerometer data struct
+    struct AccelerometerDataPoint: Identifiable {
+        let x: Double
+        let y: Double
+        let z: Double
+        var myIndex: Int = 0
+        var id: UUID
+    }
     
     // style variables
     let accentColor:Color = .purple
@@ -46,45 +61,6 @@ struct ContentView: View {
             .map {formatter.string(from: $0)}
     }
     
-    func startDeviceMotion() {
-        if motion.isDeviceMotionAvailable {
-            self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
-            self.motion.showsDeviceMovementDisplay = true
-            self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
-            
-            // Configure a timer to fetch the device motion data
-            let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true) { _ in
-                guard let data = self.motion.deviceMotion else { return }
-                
-                // Get attitude data
-                let attitudeX = data.attitude.pitch
-                let attitudeY = data.attitude.roll
-                let attitudeZ = data.attitude.yaw
-                // Get accelerometer data
-                let accelerometerX = data.userAcceleration.x
-                let accelerometerY = data.userAcceleration.y
-                let accelerometerZ = data.userAcceleration.z
-                // Get the gyroscope data
-                let gyroX = data.rotationRate.x
-                let gyroY = data.rotationRate.y
-                let gyroZ = data.rotationRate.z
-                
-                print("Attitude x: ", attitudeX)
-                print("Attitude y: ", attitudeY)
-                print("Attitude z: ", attitudeZ)
-                print("Accelerometer x: ", accelerometerX)
-                print("Accelerometer y: ", accelerometerY)
-                print("Accelerometer z: ", accelerometerZ)
-                print("Rotation x: ", gyroX)
-                print("Rotation y: ", gyroY)
-                print("Rotation z: ", gyroZ)
-            }
-            
-            // Add the timer to the current run loop
-            RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
-        }
-    }
-    
     var body: some View {
         TabView {
             // Page 1 Graphs
@@ -92,19 +68,41 @@ struct ContentView: View {
                 VStack(alignment: .center) {
                     Text("Graphs")
                         .font(.system(size: 36))
-                    NavigationLink(destination: Text("Heart Rate Data")) {
-                        Button("View Heart Rate Data") {}
-                            .buttonStyle(CustomButtonStyle())
-                    }
-                    
-                    NavigationLink(destination: Text("Breathing Rate Data")) {
-                        Button("View Breathing Rate Data") {}
-                            .buttonStyle(CustomButtonStyle())
-                    }
-                    
-                    NavigationLink(destination: Text("Walking Steadiness Data")) {
-                        Button("View Walking Steadiness Data") {}
-                            .buttonStyle(CustomButtonStyle())
+                    NavigationStack {
+                        VStack {
+                            Button {
+                                //showHeartChart = true
+                            } label: {
+                                Text("View Heart Rate Data")
+                            }
+                            .navigationDestination(
+                                isPresented: $showAccChart) {
+                                    accelerometerGraph(acc: acc)
+                                }
+                                .buttonStyle(CustomButtonStyle())
+                            
+                            Button {
+                                showAccChart = true
+                            } label: {
+                                Text("View Breathing Rate Data")
+                            }
+                            .navigationDestination(
+                                isPresented: $showAccChart) {
+                                    accelerometerGraph(acc: acc)
+                                }
+                                .buttonStyle(CustomButtonStyle())
+                            
+                            Button {
+                                showAccChart = true
+                            } label: {
+                                Text("View Walking Steadiness Data")
+                            }
+                            .navigationDestination(
+                                isPresented: $showAccChart) {
+                                    accelerometerGraph(acc: acc)
+                                }
+                                .buttonStyle(CustomButtonStyle())
+                        }
                     }
                 }
             }
@@ -159,150 +157,209 @@ struct ContentView: View {
                 if (enableDataCollectionObj.enableDataCollection == 0) {
                     if !self.$shouldHide.wrappedValue {
                         Button(action: {
-                                enableDataCollectionObj.toggleOn()
-                                enableDataCollection.toggle()
-                            }) {
-                                Image(systemName: "touchid")
-                                    .font(.system(size: 100))
-                                    .foregroundColor(.green)
-                                    .controlSize(.extraLarge)
-                            }.padding()
-                            Text("Disable Data Collection")
-                            Spacer()
-                        }
-                    } else {
-                        Button(action: {
-                                enableDataCollectionObj.toggleOff()
-                                enableDataCollection.toggle()
-                            }) {
-                                Image(systemName: "touchid")
-                                    .font(.system(size: 100))
-                                    .foregroundColor(.red)
-                                    .controlSize(.extraLarge)
-                            }.padding()
-                        Text("Enable Data Collection")
+                            enableDataCollectionObj.toggleOn()
+                            enableDataCollection.toggle()
+                        }) {
+                            Image(systemName: "touchid")
+                                .font(.system(size: 100))
+                                .foregroundColor(.green)
+                                .controlSize(.extraLarge)
+                        }.padding()
+                        Text("Disable Data Collection")
                         Spacer()
                     }
+                } else {
+                    Button(action: {
+                        enableDataCollectionObj.toggleOff()
+                        enableDataCollection.toggle()
+                    }) {
+                        Image(systemName: "touchid")
+                            .font(.system(size: 100))
+                            .foregroundColor(.red)
+                            .controlSize(.extraLarge)
+                    }.padding()
+                    Text("Enable Data Collection")
+                    Spacer()
                 }
-                .onChange(of: enableDataCollection) {
-                    if (enableDataCollection) {
-                        startDeviceMotion()
-                    } else {
-                        self.motion.stopDeviceMotionUpdates()
-                    }
+            }
+            .onChange(of: enableDataCollection) {
+                if (enableDataCollection) {
+                    startDeviceMotion()
+                } else {
+                    self.motion.stopDeviceMotionUpdates()
                 }
-                .tabItem {
-                    Label("Home", systemImage: "house.fill")
-                }
-                
-                // Page 4 Analytics
-                NavigationView {
-                    VStack(alignment: .center) {
-                        Text("Analytics")
-                            .font(.system(size: 36))
-                        
-                        Spacer()
-                        
-                        VStack {
-                            HStack {
-                                let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-                                let datesForCurrentWeek = getDatesForCurrentWeek()
-                                let currentDay = Calendar.current.component(.day, from: Date())
-                                
-                                ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
-                                    VStack {
-                                        Text(element)
-                                            .padding(10)
-                                            .foregroundColor(.gray)
-                                            .cornerRadius(8)
-                                            .font(.system(size: 12))
-                                        
-                                        let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-                                        Text(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-                                            .padding(10)
-                                            .background(currentDay == dayOnly ? Color.accentColor : backgroundColor)
-                                            .foregroundColor(.white)
-                                            .cornerRadius(8)
-                                            .font(.system(size: 15))
-                                    }
+            }
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
+            
+            // Page 4 Analytics
+            NavigationView {
+                VStack(alignment: .center) {
+                    Text("Analytics")
+                        .font(.system(size: 36))
+                    
+                    Spacer()
+                    
+                    VStack {
+                        HStack {
+                            let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+                            let datesForCurrentWeek = getDatesForCurrentWeek()
+                            let currentDay = Calendar.current.component(.day, from: Date())
+                            
+                            ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
+                                VStack {
+                                    Text(element)
+                                        .padding(10)
+                                        .foregroundColor(.gray)
+                                        .cornerRadius(8)
+                                        .font(.system(size: 12))
+                                    
+                                    let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
+                                    Text(datesForCurrentWeek[index].components(separatedBy: " ")[1])
+                                        .padding(10)
+                                        .background(currentDay == dayOnly ? Color.accentColor : backgroundColor)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                        .font(.system(size: 15))
                                 }
                             }
-                            .cornerRadius(6)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 6)
-                                    .stroke(Color.accentColor, lineWidth: 1)
-                            )
                         }
-                        
-                        NavigationLink(destination: Text("View Past Data")) {
-                            Button("View Past Data") {}
-                                .buttonStyle(CustomButtonStyle())
+                        .cornerRadius(6)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(Color.accentColor, lineWidth: 1)
+                        )
+                    }
+                    
+                    NavigationLink(destination: Text("View Past Data")) {
+                        Button("View Past Data") {}
+                            .buttonStyle(CustomButtonStyle())
+                    }
+                    
+                    Spacer()
+                }
+            }
+            .tabItem {
+                Label("Analytics", systemImage: "heart.text.square")
+            }
+            
+            // Page 5 Settings
+            NavigationView {
+                Form {
+                    Section(header: Text("User Profile")) {
+                        TextField("Name", text: $name).disableAutocorrection(true)
+                    }.tint(accentColor)
+                    
+                    Section(header: Text("Contacts")) {
+                        Toggle(isOn: $isContactListEnabled) {
+                            Text("Enable contact list")
+                            Text("Contact others when intoxicated")
                         }
-                        
-                        Spacer()
-                    }
+                        Toggle(isOn: $isUberEnabled) {
+                            Text("Enable Uber")
+                            Text("Open the Uber app when driving impaired")
+                        }
+                        Toggle(isOn: $isEmergencyContacts) {
+                            Text("Enable emergency services")
+                            Text("Call 911 in case of extreme emergencies")
+                        }
+                    }.tint(accentColor)
+                    
+                    Section(header: Text("Notifications")) {
+                        Toggle(isOn: $isNotificationEnabled) {
+                            Text("Allow notifications")
+                            Text("Receive updates on your intoxication level")
+                        }
+                    }.tint(accentColor)
+                    
+                    Section(header: Text("Miscellaneous")) {
+                        Toggle(isOn: $isHelpTipsEnabled) {
+                            Text("Enable help tips")
+                            Text("Receive tips on drinking safely")
+                        }
+                    }.tint(accentColor)
+                    
+                    Section {
+                        Button("Reset to default") {
+                            isNotificationEnabled = true
+                            isContactListEnabled = true
+                            isUberEnabled = false
+                            isEmergencyContacts = false
+                            isHelpTipsEnabled = true
+                        }
+                    }.tint(accentColor)
                 }
-                .tabItem {
-                    Label("Analytics", systemImage: "heart.text.square")
-                }
-                
-                // Page 5 Settings
-                NavigationView {
-                    Form {
-                        Section(header: Text("User Profile")) {
-                            TextField("Name", text: $name).disableAutocorrection(true)
-                        }.tint(accentColor)
-                        
-                        Section(header: Text("Contacts")) {
-                            Toggle(isOn: $isContactListEnabled) {
-                                Text("Enable contact list")
-                                Text("Contact others when intoxicated")
-                            }
-                            Toggle(isOn: $isUberEnabled) {
-                                Text("Enable Uber")
-                                Text("Open the Uber app when driving impaired")
-                            }
-                            Toggle(isOn: $isEmergencyContacts) {
-                                Text("Enable emergency services")
-                                Text("Call 911 in case of extreme emergencies")
-                            }
-                        }.tint(accentColor)
-                        
-                        Section(header: Text("Notifications")) {
-                            Toggle(isOn: $isNotificationEnabled) {
-                                Text("Allow notifications")
-                                Text("Receive updates on your intoxication level")
-                            }
-                        }.tint(accentColor)
-                        
-                        Section(header: Text("Miscellaneous")) {
-                            Toggle(isOn: $isHelpTipsEnabled) {
-                                Text("Enable help tips")
-                                Text("Receive tips on drinking safely")
-                            }
-                        }.tint(accentColor)
-                        
-                        Section {
-                            Button("Reset to default") {
-                                isNotificationEnabled = true
-                                isContactListEnabled = true
-                                isUberEnabled = false
-                                isEmergencyContacts = false
-                                isHelpTipsEnabled = true
-                            }
-                        }.tint(accentColor)
-                    }
-                    .navigationBarTitle(Text("Settings"))
-                }
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape.fill")
-                }
-            }.accentColor(accentColor)
+                .navigationBarTitle(Text("Settings"))
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gearshape.fill")
+            }
+        }.accentColor(accentColor)
+    }
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
         }
     }
+    
+    struct accelerometerGraph: View {
+            var acc: [AccelerometerDataPoint]
+            var body: some View {
+                ScrollView {
+                    VStack {
+                        Chart {
+                            ForEach(acc) { element in
+                                LineMark(x: .value("Date", element.myIndex), y: .value("x", element.x))
+                                    .foregroundStyle(by: .value("x", "x"))
+                                LineMark(x: .value("Date", element.myIndex), y: .value("y", element.y))
+                                    .foregroundStyle(by: .value("y", "y"))
+                                LineMark(x: .value("Date", element.myIndex), y: .value("z", element.z))
+                                    .foregroundStyle(by: .value("z", "z"))
+                            }
+                        }
+                        .chartScrollableAxes(.horizontal)
+                        .chartXVisibleDomain(length: 50)
+                        .padding()
+                    }
+                }
+            }
+        }
+        func startDeviceMotion() {
+                //var idx = 0
+                
+                if motion.isDeviceMotionAvailable {
+                    self.motion.deviceMotionUpdateInterval = 1.0/50.0
+                    self.motion.showsDeviceMovementDisplay = true
+                    self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
+                    
+                    // Configure a timer to fetch the device motion data
+                    let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
+                                      block: { (timer) in
+                        if let data = self.motion.deviceMotion {
+                            // Get attitude data
+                            let attitude = data.attitude
+                            // Get accelerometer data
+                            let accelerometer = data.userAcceleration
+                            // Get the gyroscope data
+                            let gyro = data.rotationRate
+                            accIdx += 1
+                            
+                            let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+                            
+                            acc.append(new)
+                            
+                        }
+                        
+                        
+                    })
+                    
+                    // Add the timer to the current run loop
+                    RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
+                }
+                
+            }
+        }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+
+
