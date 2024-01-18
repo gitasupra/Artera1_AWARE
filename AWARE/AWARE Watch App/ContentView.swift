@@ -1,7 +1,6 @@
 import SwiftUI
 import HealthKit
 import CoreMotion
-import FirebaseCore
 
 struct ContentView: View {
     @State private var enableDataCollection = false
