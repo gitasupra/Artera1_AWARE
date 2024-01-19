@@ -28,6 +28,11 @@
 		CC9482C32AF870E300A3A64E /* AWARE_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482C22AF870E300A3A64E /* AWARE_Watch_AppTests.swift */; };
 		CC9482CD2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */; };
 		CC9482CF2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */; };
+		FFC411952B52692C00AE29B9 /* DeviceLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC411922B51157A00AE29B9 /* DeviceLocationService.swift */; };
+		FFC411962B526A4800AE29B9 /* DeviceLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC411922B51157A00AE29B9 /* DeviceLocationService.swift */; };
+		FFC411982B53BCF300AE29B9 /* LocationDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC411972B53BCF300AE29B9 /* LocationDetailsView.swift */; };
+		FFC4119B2B5537E200AE29B9 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC4119A2B5537E200AE29B9 /* LocationRequestView.swift */; };
+		FFC4119D2B55386500AE29B9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC4119C2B55386500AE29B9 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +114,11 @@
 		CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARE.entitlements; sourceTree = "<group>"; };
+		FFC411912B50EB9000AE29B9 /* AWARE-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "AWARE-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
+		FFC411922B51157A00AE29B9 /* DeviceLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLocationService.swift; sourceTree = "<group>"; };
+		FFC411972B53BCF300AE29B9 /* LocationDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationDetailsView.swift; path = AWARE/LocationDetailsView.swift; sourceTree = SOURCE_ROOT; };
+		FFC4119A2B5537E200AE29B9 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
+		FFC4119C2B55386500AE29B9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +170,7 @@
 		127DBA272B1D571A0031F9F7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				FFC411922B51157A00AE29B9 /* DeviceLocationService.swift */,
 				127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */,
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
 			);
@@ -197,11 +208,14 @@
 			isa = PBXGroup;
 			children = (
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
+				FFC4119C2B55386500AE29B9 /* LocationManager.swift */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
 				127DBA2B2B1D57790031F9F7 /* Shared.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
+				FFC411972B53BCF300AE29B9 /* LocationDetailsView.swift */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
+				FFC4119A2B5537E200AE29B9 /* LocationRequestView.swift */,
 			);
 			path = AWARE;
 			sourceTree = "<group>";
@@ -234,6 +248,7 @@
 		CC9482B02AF870E100A3A64E /* AWARE Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				FFC411912B50EB9000AE29B9 /* AWARE-Watch-App-Info.plist */,
 				56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */,
 				CC9482B12AF870E100A3A64E /* AWAREApp.swift */,
 				CC9482B32AF870E100A3A64E /* ContentView.swift */,
@@ -492,10 +507,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
+				FFC4119B2B5537E200AE29B9 /* LocationRequestView.swift in Sources */,
 				CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */,
+				FFC411952B52692C00AE29B9 /* DeviceLocationService.swift in Sources */,
 				127DBA302B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
+				FFC411982B53BCF300AE29B9 /* LocationDetailsView.swift in Sources */,
 				127DBA2C2B1D57790031F9F7 /* Shared.swift in Sources */,
 				CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */,
+				FFC4119D2B55386500AE29B9 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +541,7 @@
 			files = (
 				127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
 				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
+				FFC411962B526A4800AE29B9 /* DeviceLocationService.swift in Sources */,
 				127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
 				127DBA2E2B1D57A40031F9F7 /* Shared.swift in Sources */,
 				CC9482B22AF870E100A3A64E /* AWAREApp.swift in Sources */,
@@ -699,11 +719,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = TPAA6G9JYB;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AWARE-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -728,14 +751,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AWARE Watch App/AWARE Watch App.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = TPAA6G9JYB;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AWARE-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -745,6 +772,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -765,12 +793,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";
-				DEVELOPMENT_TEAM = TPAA6G9JYB;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -798,15 +828,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AWARE/AWARE.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";
-				DEVELOPMENT_TEAM = TPAA6G9JYB;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -820,6 +853,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -835,6 +869,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -855,6 +890,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -875,6 +911,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -894,6 +931,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -915,6 +953,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppTests";
@@ -935,6 +974,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppTests";
@@ -955,6 +995,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppUITests";
@@ -974,6 +1015,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppUITests";
