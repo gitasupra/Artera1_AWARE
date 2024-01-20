@@ -19,6 +19,10 @@ struct ContactDetailView: View {
     @State private var isImagePickerPresented: Bool = false
     @State private var sourceType: UIImagePickerController.SourceType?
     
+    @State private var showAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    
     var contactIndex: Int
     
     var body: some View {
@@ -123,21 +127,28 @@ struct ContactDetailView: View {
                                 .background(isEditing ? Color.accentColor.opacity(0.1) : Color.clear)
                         }
                     )
-
+                
                 // Phone Number and Contact Options
                 Form {
                     HStack {
                         Text("Phone")
                         Spacer()
                         
-                        TextField("Enter phone", text: $editedPhone)
-                            .foregroundColor(.gray)
-                            .font(.callout)
-                            .padding(.horizontal)
-                            .disabled(!isEditing)
-                            .onAppear {
-                                editedPhone = contact.phone
+                        TextField("Enter phone", text: Binding<String>(
+                            get: {
+                                return isEditing ? editedPhone : formatPhoneNumber(phoneNumber: editedPhone) ?? ""
+                            },
+                            set: { newValue in
+                                editedPhone = newValue
                             }
+                        ))
+                        .foregroundColor(.gray)
+                        .font(.callout)
+                        .padding(.horizontal)
+                        .disabled(!isEditing)
+                        .onAppear {
+                            editedPhone = contact.phone
+                        }
                     }
                     .background(
                         ZStack {
@@ -147,15 +158,15 @@ struct ContactDetailView: View {
                                 .padding(-10)
                         }
                     )
-
+                    
                     Section {
                         Button(action: {
-                            // TODO
+                            // TODO: open user's messaging app
                         }) {
                             Text("Send message")
                         }.disabled(isEditing)
                         Button(action: {
-                            // TODO
+                            // TODO: open user's phone app
                         }) {
                             Text("Call")
                         }.disabled(isEditing)
@@ -163,35 +174,77 @@ struct ContactDetailView: View {
                 }
             }
             .padding()
-            .navigationBarItems(leading:
-                Group {
-                    if isEditing {
-                        Button(action: {
-                            isEditing.toggle()
-                            editedImage = contact.image
-                            editedName = contact.name
-                            editedPhone = contact.phone
-                            selectedImage = nil
-                        }) {
-                            Text("Cancel")
-                                .padding(.horizontal)
-                        }
+            .navigationBarItems(leading: Group {
+                if isEditing {
+                    Button(action: {
+                        isEditing.toggle()
+                        editedImage = contact.image
+                        editedName = contact.name
+                        editedPhone = contact.phone
+                        selectedImage = nil
+                    }) {
+                        Text("Cancel")
+                            .padding(.horizontal)
                     }
-                },
-                trailing:
-                Button(action: {
-                    if isEditing {
+                }
+            }, trailing: Button(action: {
+                if isEditing {
+                    if validateChanges(name: editedName, phoneNumber: editedPhone) {
+                        let formattedPhoneNumber = formatPhoneNumber(phoneNumber: editedPhone)
                         contactsManager.contacts[contactIndex].image = editedImage
                         contactsManager.contacts[contactIndex].name = editedName
-                        contactsManager.contacts[contactIndex].phone = editedPhone
+                        contactsManager.contacts[contactIndex].phone = formattedPhoneNumber!
+                        showAlert = true
+                        alertTitle = "Success"
+                        alertMessage = "Saved new contact details."
+                    } else {
+                        editedImage = contact.image
+                        editedName = contact.name
+                        editedPhone = contact.phone
+                        selectedImage = nil
                     }
-                    isEditing.toggle()
-                }) {
-                    Text(isEditing ? "Save" : "Edit")
-                        .padding(.horizontal)
                 }
-            )
-
+                isEditing.toggle()
+            }) {
+                Text(isEditing ? "Save" : "Edit")
+                    .padding(.horizontal)
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            })
         }
+    }
+    
+    private func formatPhoneNumber(phoneNumber: String) -> String? {
+        let numericPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let formattedPhoneNumber = "+\(numericPhoneNumber.dropLast(10))(\(numericPhoneNumber.suffix(10).dropLast(7)))-\(numericPhoneNumber.suffix(7))"
+        return formattedPhoneNumber
+    }
+    
+    private func validateChanges(name: String, phoneNumber: String) -> Bool {
+        let numericPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        
+        guard name != "" else {
+            showAlert = true
+            alertTitle = "Error"
+            alertMessage = "Contact name cannot be blank."
+            return false
+        }
+        
+        guard !numericPhoneNumber.isEmpty else {
+            showAlert = true
+            alertTitle = "Error"
+            alertMessage = "Phone number cannot be blank."
+            return false
+        }
+        
+        guard numericPhoneNumber.count > 10 else {
+            showAlert = true
+            alertTitle = "Error"
+            alertMessage = "Phone number must have country code and 10 digits."
+            return false
+        }
+        
+        return true
     }
 }
