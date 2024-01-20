@@ -22,7 +22,7 @@ struct RegistrationView: View {
                 InputView(text: $email, title: "Email Address", placeholder:"name@example.com")
                     .autocapitalization(.none)
                 
-                InputView(text: $fullname, title: "Enter your name", placeholder:"name@example.com")
+                InputView(text: $fullname, title: "Enter your name", placeholder:"name")
                     .autocapitalization(.none)
                 
                 InputView(text: $password, title: "Password", placeholder: "Enter your password", isSecureField: true)
