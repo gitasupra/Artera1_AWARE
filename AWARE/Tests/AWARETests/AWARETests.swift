@@ -1,7 +1,7 @@
 import XCTest
-@testable import Artera1_AWARE
+@testable import AWARE
 
-final class Artera1_AWARETests: XCTestCase {
+final class AWARETests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest
