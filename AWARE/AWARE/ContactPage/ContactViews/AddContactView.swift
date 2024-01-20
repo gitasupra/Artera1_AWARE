@@ -27,6 +27,10 @@ struct AddContactView: View {
     let countryCodes = ["+1", "+44", "+81", "+86", "+91", "+254", "+"]
     @State private var selectedCountryCode = "+1"
     
+    @State private var showAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    
     var body: some View {
         VStack {
             // Profile Picture Section
@@ -81,7 +85,6 @@ struct AddContactView: View {
             .padding()
             
             // Contact Information Section
-            // Add Contact Name
             TextField("Enter contact name", text: Binding<String>(
                 get: {
                     if let givenName = importedContact?.givenName, let familyName = importedContact?.familyName {
@@ -98,7 +101,6 @@ struct AddContactView: View {
             .padding()
             .textFieldStyle(RoundBorderStyle())
             
-            // Add Phone Number
             HStack {
                 // Country code dropdown
                 Picker("", selection: $selectedCountryCode) {
@@ -107,7 +109,7 @@ struct AddContactView: View {
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
-                .frame(width: 80)
+                .frame(width: 90)
                 
                 TextField("Enter phone number", text: Binding<String>(
                     get: {
@@ -121,7 +123,7 @@ struct AddContactView: View {
                         editablePhoneNumber = newValue
                         isEditingPhoneNumber = true
                     }
-                ))
+                )).padding(.leading, -20)
             }
             .padding(.vertical, 10)
             .overlay(
@@ -132,7 +134,14 @@ struct AddContactView: View {
             Button("Add contact") {
                 addContact()
             }
-            ContactPickerButton(contact: $importedContact, phoneNumber: $importedPhoneNumber, onCancel: {}) {
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
+            
+            ContactPickerButton(contact: $importedContact, phoneNumber: $importedPhoneNumber, onCancel: {
+                isEditingContactName = false
+                isEditingPhoneNumber = false
+            }) {
                 Label("Import from contacts", systemImage: "")
                     .fixedSize()
             }
@@ -154,42 +163,75 @@ struct AddContactView: View {
                 return contactName
             }
         }()
-
+        
+        guard !finalContactName.isEmpty else {
+            showAlert = true
+            alertTitle = "Error"
+            alertMessage = "Contact name cannot be blank."
+            return
+        }
+        
         let finalPhoneNumber: String = {
             if !editablePhoneNumber.isEmpty {
-                // Attach selected country code in front of the phone number
-                return formatPhoneNumber(name: finalContactName, phoneNumber: editablePhoneNumber, countryCode: selectedCountryCode) ?? ""
+                return editablePhoneNumber
             } else if let importedPhoneNumber = importedPhoneNumber {
-                // Attach selected country code in front of the imported phone number
-                return formatPhoneNumber(name: finalContactName, phoneNumber: importedPhoneNumber, countryCode: selectedCountryCode) ?? ""
+                return importedPhoneNumber
             } else {
-                return formatPhoneNumber(name: finalContactName, phoneNumber: phoneNumber, countryCode: selectedCountryCode) ?? ""
+                return phoneNumber
             }
         }()
 
         if let formattedPhoneNumber = formatPhoneNumber(name: finalContactName, phoneNumber: finalPhoneNumber, countryCode: selectedCountryCode) {
             let newContact = Contact(imageName: finalContactName, name: finalContactName, phone: formattedPhoneNumber, image: selectedImage)
             contactsManager.contacts.append(newContact)
+            
+            // Reset all fields
             contactName = ""
             editableContactName = ""
             editablePhoneNumber = ""
             importedPhoneNumber = nil
             importedContact = nil
             selectedImage = nil
-        } else {
-            debugPrint("Invalid phone number format")
+            showAlert = true
+            
+            // Send success alert
+            alertTitle = "Success"
+            alertMessage = "Added new contact"
         }
     }
     
     func formatPhoneNumber(name: String, phoneNumber: String, countryCode: String) -> String? {
         let numericPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-
+        
         guard !numericPhoneNumber.isEmpty else {
+            showAlert = true
+            alertTitle = "Error"
+            alertMessage = "Phone number cannot be blank."
             return nil
         }
-
-        let formattedPhoneNumber = countryCode + "(\(numericPhoneNumber.prefix(3)))-\(numericPhoneNumber.dropFirst(3))"
-
+        
+        guard numericPhoneNumber.count == 10 || countryCode == "+" else {
+            showAlert = true
+            alertTitle = "Error"
+            alertMessage = "Phone number must have 10 digits."
+            return nil
+        }
+        
+        guard numericPhoneNumber.count > 10 || countryCode != "+" else {
+            showAlert = true
+            alertTitle = "Error"
+            alertMessage = "Phone number must have country code and 10 digits."
+            return nil
+        }
+        
+        let formattedPhoneNumber: String = {
+            if countryCode != "+" {
+                return countryCode + "(\(numericPhoneNumber.prefix(3)))-\(numericPhoneNumber.dropFirst(3))"
+            } else {
+                return countryCode + "\(numericPhoneNumber.dropLast(10))(\(numericPhoneNumber.suffix(10).dropLast(7)))-\(numericPhoneNumber.suffix(7))"
+            }
+        }()
+        
         return formattedPhoneNumber
     }
 }
