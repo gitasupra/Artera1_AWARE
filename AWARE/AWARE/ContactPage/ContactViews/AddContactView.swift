@@ -5,6 +5,7 @@
 //  Created by Jessica Nguyen on 1/18/24.
 //
 
+import Foundation
 import SwiftUI
 import Contacts
 
@@ -22,6 +23,9 @@ struct AddContactView: View {
     @State private var editablePhoneNumber = ""
     @State private var isEditingContactName = false
     @State private var isEditingPhoneNumber = false
+    
+    let countryCodes = ["+1", "+44", "+81", "+86", "+91", "+254", "+"]
+    @State private var selectedCountryCode = "+1"
     
     var body: some View {
         VStack {
@@ -77,10 +81,10 @@ struct AddContactView: View {
             .padding()
             
             // Contact Information Section
+            // Add Contact Name
             TextField("Enter contact name", text: Binding<String>(
                 get: {
                     if let givenName = importedContact?.givenName, let familyName = importedContact?.familyName {
-                        // Check if the contact name is being edited
                         return isEditingContactName ? editableContactName : "\(givenName) \(familyName)"
                     } else {
                         return editableContactName
@@ -88,28 +92,42 @@ struct AddContactView: View {
                 },
                 set: { newValue in
                     editableContactName = newValue
-                    isEditingContactName = true // Set the flag when editing
+                    isEditingContactName = true
                 }
             ))
             .padding()
             .textFieldStyle(RoundBorderStyle())
             
-            TextField("Enter phone number", text: Binding<String>(
-                get: {
-                    if let phoneNumber = importedPhoneNumber {
-                        // Check if the phone number is being edited
-                        return isEditingPhoneNumber ? editablePhoneNumber : "\(phoneNumber)"
-                    } else {
-                        return editablePhoneNumber
+            // Add Phone Number
+            HStack {
+                // Country code dropdown
+                Picker("", selection: $selectedCountryCode) {
+                    ForEach(countryCodes, id: \.self) { code in
+                        Text(code)
                     }
-                },
-                set: { newValue in
-                    editablePhoneNumber = newValue
-                    isEditingPhoneNumber = true // Set the flag when editing
                 }
-            ))
-            .padding()
-            .textFieldStyle(RoundBorderStyle())
+                .pickerStyle(MenuPickerStyle())
+                .frame(width: 80)
+                
+                TextField("Enter phone number", text: Binding<String>(
+                    get: {
+                        if let phoneNumber = importedPhoneNumber {
+                            return isEditingPhoneNumber ? editablePhoneNumber : "\(phoneNumber)"
+                        } else {
+                            return editablePhoneNumber
+                        }
+                    },
+                    set: { newValue in
+                        editablePhoneNumber = newValue
+                        isEditingPhoneNumber = true
+                    }
+                ))
+            }
+            .padding(.vertical, 10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 30)
+                    .stroke(Color.accentColor, lineWidth: 1)
+            )
 
             Button("Add contact") {
                 addContact()
@@ -127,8 +145,30 @@ struct AddContactView: View {
     }
 
     private func addContact() {
-        if let formattedPhoneNumber = formatPhoneNumber(name: editableContactName, phoneNumber: editablePhoneNumber) {
-            let newContact = Contact(imageName: editableContactName, name: editableContactName, phone: formattedPhoneNumber, image: selectedImage)
+        let finalContactName: String = {
+            if !editableContactName.isEmpty {
+                return editableContactName
+            } else if let givenName = importedContact?.givenName, let familyName = importedContact?.familyName {
+                return "\(givenName) \(familyName)"
+            } else {
+                return contactName
+            }
+        }()
+
+        let finalPhoneNumber: String = {
+            if !editablePhoneNumber.isEmpty {
+                // Attach selected country code in front of the phone number
+                return formatPhoneNumber(name: finalContactName, phoneNumber: editablePhoneNumber, countryCode: selectedCountryCode) ?? ""
+            } else if let importedPhoneNumber = importedPhoneNumber {
+                // Attach selected country code in front of the imported phone number
+                return formatPhoneNumber(name: finalContactName, phoneNumber: importedPhoneNumber, countryCode: selectedCountryCode) ?? ""
+            } else {
+                return formatPhoneNumber(name: finalContactName, phoneNumber: phoneNumber, countryCode: selectedCountryCode) ?? ""
+            }
+        }()
+
+        if let formattedPhoneNumber = formatPhoneNumber(name: finalContactName, phoneNumber: finalPhoneNumber, countryCode: selectedCountryCode) {
+            let newContact = Contact(imageName: finalContactName, name: finalContactName, phone: formattedPhoneNumber, image: selectedImage)
             contactsManager.contacts.append(newContact)
             contactName = ""
             editableContactName = ""
@@ -141,16 +181,14 @@ struct AddContactView: View {
         }
     }
     
-    func formatPhoneNumber(name: String, phoneNumber: String) -> String? {
+    func formatPhoneNumber(name: String, phoneNumber: String, countryCode: String) -> String? {
         let numericPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
 
         guard !numericPhoneNumber.isEmpty else {
             return nil
         }
 
-        let formattedPhoneNumber = numericPhoneNumber
-
-        print("Name: \(name), Formatted Phone Number: \(formattedPhoneNumber)")
+        let formattedPhoneNumber = countryCode + "(\(numericPhoneNumber.prefix(3)))-\(numericPhoneNumber.dropFirst(3))"
 
         return formattedPhoneNumber
     }
