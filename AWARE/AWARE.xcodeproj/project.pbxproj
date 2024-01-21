@@ -24,6 +24,15 @@
 		12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EBE2B5C8B52004A168F /* Alamofire */; };
 		12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC12B5C8B68004A168F /* FirebaseDatabase */; };
 		12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC32B5C8B70004A168F /* FirebaseAuth */; };
+		125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AD2B5CB61F007F0323 /* ContactsManager.swift */; };
+		125506B82B5CB61F007F0323 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AE2B5CB61F007F0323 /* Contact.swift */; };
+		125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B02B5CB61F007F0323 /* ContactListView.swift */; };
+		125506BA2B5CB61F007F0323 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B12B5CB61F007F0323 /* Styles.swift */; };
+		125506BB2B5CB61F007F0323 /* ContactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B22B5CB61F007F0323 /* ContactRow.swift */; };
+		125506BC2B5CB61F007F0323 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B32B5CB61F007F0323 /* AddContactView.swift */; };
+		125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B42B5CB61F007F0323 /* ContactPickerButton.swift */; };
+		125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B52B5CB61F007F0323 /* ImagePicker.swift */; };
+		125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B62B5CB61F007F0323 /* ContactDetailView.swift */; };
 		127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
 		127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
 		127DBA2C2B1D57790031F9F7 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2B2B1D57790031F9F7 /* Shared.swift */; };
@@ -107,6 +116,15 @@
 		12143EAD2B5C8AF1004A168F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwilioSMSManager.swift; sourceTree = "<group>"; };
 		12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		125506AD2B5CB61F007F0323 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		125506AE2B5CB61F007F0323 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		125506B02B5CB61F007F0323 /* ContactListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
+		125506B12B5CB61F007F0323 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		125506B22B5CB61F007F0323 /* ContactRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRow.swift; sourceTree = "<group>"; };
+		125506B32B5CB61F007F0323 /* AddContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
+		125506B42B5CB61F007F0323 /* ContactPickerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactPickerButton.swift; sourceTree = "<group>"; };
+		125506B52B5CB61F007F0323 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		125506B62B5CB61F007F0323 /* ContactDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
 		127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableDataCollection.swift; sourceTree = "<group>"; };
 		127DBA2B2B1D57790031F9F7 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		127DBA2D2B1D57A40031F9F7 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
@@ -235,6 +253,38 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		125506AB2B5CB61F007F0323 /* ContactPage */ = {
+			isa = PBXGroup;
+			children = (
+				125506AC2B5CB61F007F0323 /* ContactModel */,
+				125506AF2B5CB61F007F0323 /* ContactViews */,
+			);
+			path = ContactPage;
+			sourceTree = "<group>";
+		};
+		125506AC2B5CB61F007F0323 /* ContactModel */ = {
+			isa = PBXGroup;
+			children = (
+				125506AD2B5CB61F007F0323 /* ContactsManager.swift */,
+				125506AE2B5CB61F007F0323 /* Contact.swift */,
+			);
+			path = ContactModel;
+			sourceTree = "<group>";
+		};
+		125506AF2B5CB61F007F0323 /* ContactViews */ = {
+			isa = PBXGroup;
+			children = (
+				125506B02B5CB61F007F0323 /* ContactListView.swift */,
+				125506B12B5CB61F007F0323 /* Styles.swift */,
+				125506B22B5CB61F007F0323 /* ContactRow.swift */,
+				125506B32B5CB61F007F0323 /* AddContactView.swift */,
+				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
+				125506B52B5CB61F007F0323 /* ImagePicker.swift */,
+				125506B62B5CB61F007F0323 /* ContactDetailView.swift */,
+			);
+			path = ContactViews;
+			sourceTree = "<group>";
+		};
 		127DBA272B1D571A0031F9F7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +329,7 @@
 				12143EA02B5C8ADE004A168F /* Authentication */,
 				12143EA92B5C8AE9004A168F /* Components */,
 				12143EAC2B5C8AF1004A168F /* Model */,
+				125506AB2B5CB61F007F0323 /* ContactPage */,
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
@@ -592,17 +643,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				125506B82B5CB61F007F0323 /* Contact.swift in Sources */,
+				125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */,
 				127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
 				CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */,
+				125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */,
 				12143EA62B5C8ADE004A168F /* AuthViewModel.swift in Sources */,
+				125506BC2B5CB61F007F0323 /* AddContactView.swift in Sources */,
 				12143EA72B5C8ADE004A168F /* RegistrationView.swift in Sources */,
+				125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */,
+				125506BA2B5CB61F007F0323 /* Styles.swift in Sources */,
 				127DBA302B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
 				127DBA2C2B1D57790031F9F7 /* Shared.swift in Sources */,
 				12143EAB2B5C8AE9004A168F /* InputView.swift in Sources */,
 				12143EA82B5C8ADE004A168F /* LoginView.swift in Sources */,
+				125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */,
 				12143EAE2B5C8AF1004A168F /* User.swift in Sources */,
 				12143EB02B5C8AF7004A168F /* TwilioSMSManager.swift in Sources */,
+				125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */,
 				CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */,
+				125506BB2B5CB61F007F0323 /* ContactRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
