@@ -972,9 +972,9 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app needs access to read user location in order to enact safety measures in case of severe or critical intoxication level";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs access to read user location in order to enact safety measures in case of severe or critical intoxication level";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs access to read user location in order to enact safety measures in case of severe or critical intoxication level";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1013,9 +1013,9 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app needs access to read user location in order to enact safety measures in case of severe or critical intoxication level";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs access to read user location in order to enact safety measures in case of severe or critical intoxication level";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs access to read user location in order to enact safety measures in case of severe or critical intoxication level";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
