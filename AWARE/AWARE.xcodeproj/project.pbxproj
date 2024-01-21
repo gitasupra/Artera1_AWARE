@@ -7,6 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12143EA62B5C8ADE004A168F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EA22B5C8ADE004A168F /* AuthViewModel.swift */; };
+		12143EA72B5C8ADE004A168F /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EA42B5C8ADE004A168F /* RegistrationView.swift */; };
+		12143EA82B5C8ADE004A168F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EA52B5C8ADE004A168F /* LoginView.swift */; };
+		12143EAB2B5C8AE9004A168F /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAA2B5C8AE9004A168F /* InputView.swift */; };
+		12143EAE2B5C8AF1004A168F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAD2B5C8AF1004A168F /* User.swift */; };
+		12143EB02B5C8AF7004A168F /* TwilioSMSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */; };
+		12143EB22B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
+		12143EB32B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
+		12143EB42B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
+		12143EB52B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
+		12143EB62B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
+		12143EB72B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
+		12143EBA2B5C8B41004A168F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EB92B5C8B41004A168F /* FirebaseAnalytics */; };
+		12143EBC2B5C8B41004A168F /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EBB2B5C8B41004A168F /* FirebaseAnalyticsSwift */; };
+		12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EBE2B5C8B52004A168F /* Alamofire */; };
+		12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC12B5C8B68004A168F /* FirebaseDatabase */; };
+		12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC32B5C8B70004A168F /* FirebaseAuth */; };
+		125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AD2B5CB61F007F0323 /* ContactsManager.swift */; };
+		125506B82B5CB61F007F0323 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AE2B5CB61F007F0323 /* Contact.swift */; };
+		125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B02B5CB61F007F0323 /* ContactListView.swift */; };
+		125506BA2B5CB61F007F0323 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B12B5CB61F007F0323 /* Styles.swift */; };
+		125506BB2B5CB61F007F0323 /* ContactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B22B5CB61F007F0323 /* ContactRow.swift */; };
+		125506BC2B5CB61F007F0323 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B32B5CB61F007F0323 /* AddContactView.swift */; };
+		125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B42B5CB61F007F0323 /* ContactPickerButton.swift */; };
+		125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B52B5CB61F007F0323 /* ImagePicker.swift */; };
+		125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B62B5CB61F007F0323 /* ContactDetailView.swift */; };
 		127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
 		127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
 		127DBA2C2B1D57790031F9F7 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2B2B1D57790031F9F7 /* Shared.swift */; };
@@ -28,11 +54,6 @@
 		CC9482C32AF870E300A3A64E /* AWARE_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482C22AF870E300A3A64E /* AWARE_Watch_AppTests.swift */; };
 		CC9482CD2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */; };
 		CC9482CF2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */; };
-		FFC411952B52692C00AE29B9 /* DeviceLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC411922B51157A00AE29B9 /* DeviceLocationService.swift */; };
-		FFC411962B526A4800AE29B9 /* DeviceLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC411922B51157A00AE29B9 /* DeviceLocationService.swift */; };
-		FFC411982B53BCF300AE29B9 /* LocationDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC411972B53BCF300AE29B9 /* LocationDetailsView.swift */; };
-		FFC4119B2B5537E200AE29B9 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC4119A2B5537E200AE29B9 /* LocationRequestView.swift */; };
-		FFC4119D2B55386500AE29B9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC4119C2B55386500AE29B9 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +109,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12143EA22B5C8ADE004A168F /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		12143EA42B5C8ADE004A168F /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		12143EA52B5C8ADE004A168F /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		12143EAA2B5C8AE9004A168F /* InputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		12143EAD2B5C8AF1004A168F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwilioSMSManager.swift; sourceTree = "<group>"; };
+		12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		125506AD2B5CB61F007F0323 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		125506AE2B5CB61F007F0323 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		125506B02B5CB61F007F0323 /* ContactListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
+		125506B12B5CB61F007F0323 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		125506B22B5CB61F007F0323 /* ContactRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRow.swift; sourceTree = "<group>"; };
+		125506B32B5CB61F007F0323 /* AddContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
+		125506B42B5CB61F007F0323 /* ContactPickerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactPickerButton.swift; sourceTree = "<group>"; };
+		125506B52B5CB61F007F0323 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		125506B62B5CB61F007F0323 /* ContactDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
 		127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableDataCollection.swift; sourceTree = "<group>"; };
 		127DBA2B2B1D57790031F9F7 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		127DBA2D2B1D57A40031F9F7 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
@@ -114,11 +151,6 @@
 		CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARE.entitlements; sourceTree = "<group>"; };
-		FFC411912B50EB9000AE29B9 /* AWARE-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "AWARE-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
-		FFC411922B51157A00AE29B9 /* DeviceLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLocationService.swift; sourceTree = "<group>"; };
-		FFC411972B53BCF300AE29B9 /* LocationDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationDetailsView.swift; path = AWARE/LocationDetailsView.swift; sourceTree = SOURCE_ROOT; };
-		FFC4119A2B5537E200AE29B9 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
-		FFC4119C2B55386500AE29B9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +158,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */,
+				12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */,
+				12143EBC2B5C8B41004A168F /* FirebaseAnalyticsSwift in Frameworks */,
+				12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */,
+				12143EBA2B5C8B41004A168F /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,10 +204,90 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12143EA02B5C8ADE004A168F /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				12143EA12B5C8ADE004A168F /* ViewModel */,
+				12143EA32B5C8ADE004A168F /* View */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		12143EA12B5C8ADE004A168F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				12143EA22B5C8ADE004A168F /* AuthViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		12143EA32B5C8ADE004A168F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				12143EA42B5C8ADE004A168F /* RegistrationView.swift */,
+				12143EA52B5C8ADE004A168F /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		12143EA92B5C8AE9004A168F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				12143EAA2B5C8AE9004A168F /* InputView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		12143EAC2B5C8AF1004A168F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				12143EAD2B5C8AF1004A168F /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		12143EC02B5C8B68004A168F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		125506AB2B5CB61F007F0323 /* ContactPage */ = {
+			isa = PBXGroup;
+			children = (
+				125506AC2B5CB61F007F0323 /* ContactModel */,
+				125506AF2B5CB61F007F0323 /* ContactViews */,
+			);
+			path = ContactPage;
+			sourceTree = "<group>";
+		};
+		125506AC2B5CB61F007F0323 /* ContactModel */ = {
+			isa = PBXGroup;
+			children = (
+				125506AD2B5CB61F007F0323 /* ContactsManager.swift */,
+				125506AE2B5CB61F007F0323 /* Contact.swift */,
+			);
+			path = ContactModel;
+			sourceTree = "<group>";
+		};
+		125506AF2B5CB61F007F0323 /* ContactViews */ = {
+			isa = PBXGroup;
+			children = (
+				125506B02B5CB61F007F0323 /* ContactListView.swift */,
+				125506B12B5CB61F007F0323 /* Styles.swift */,
+				125506B22B5CB61F007F0323 /* ContactRow.swift */,
+				125506B32B5CB61F007F0323 /* AddContactView.swift */,
+				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
+				125506B52B5CB61F007F0323 /* ImagePicker.swift */,
+				125506B62B5CB61F007F0323 /* ContactDetailView.swift */,
+			);
+			path = ContactViews;
+			sourceTree = "<group>";
+		};
 		127DBA272B1D571A0031F9F7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				FFC411922B51157A00AE29B9 /* DeviceLocationService.swift */,
 				127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */,
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
 			);
@@ -180,6 +297,7 @@
 		CC94827D2AF870DF00A3A64E = {
 			isa = PBXGroup;
 			children = (
+				12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */,
 				127DBA272B1D571A0031F9F7 /* Shared */,
 				CC9482882AF870DF00A3A64E /* AWARE */,
 				CC9482992AF870E100A3A64E /* AWARETests */,
@@ -188,6 +306,7 @@
 				CC9482C12AF870E300A3A64E /* AWARE Watch AppTests */,
 				CC9482CB2AF870E300A3A64E /* AWARE Watch AppUITests */,
 				CC9482872AF870DF00A3A64E /* Products */,
+				12143EC02B5C8B68004A168F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -207,15 +326,17 @@
 		CC9482882AF870DF00A3A64E /* AWARE */ = {
 			isa = PBXGroup;
 			children = (
+				12143EA02B5C8ADE004A168F /* Authentication */,
+				12143EA92B5C8AE9004A168F /* Components */,
+				12143EAC2B5C8AF1004A168F /* Model */,
+				125506AB2B5CB61F007F0323 /* ContactPage */,
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
-				FFC4119C2B55386500AE29B9 /* LocationManager.swift */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
+				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
 				127DBA2B2B1D57790031F9F7 /* Shared.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
-				FFC411972B53BCF300AE29B9 /* LocationDetailsView.swift */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
-				FFC4119A2B5537E200AE29B9 /* LocationRequestView.swift */,
 			);
 			path = AWARE;
 			sourceTree = "<group>";
@@ -248,7 +369,6 @@
 		CC9482B02AF870E100A3A64E /* AWARE Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				FFC411912B50EB9000AE29B9 /* AWARE-Watch-App-Info.plist */,
 				56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */,
 				CC9482B12AF870E100A3A64E /* AWAREApp.swift */,
 				CC9482B32AF870E100A3A64E /* ContentView.swift */,
@@ -302,6 +422,13 @@
 				CC9482AF2AF870E100A3A64E /* PBXTargetDependency */,
 			);
 			name = AWARE;
+			packageProductDependencies = (
+				12143EB92B5C8B41004A168F /* FirebaseAnalytics */,
+				12143EBB2B5C8B41004A168F /* FirebaseAnalyticsSwift */,
+				12143EBE2B5C8B52004A168F /* Alamofire */,
+				12143EC12B5C8B68004A168F /* FirebaseDatabase */,
+				12143EC32B5C8B70004A168F /* FirebaseAuth */,
+			);
 			productName = AWARE;
 			productReference = CC9482862AF870DF00A3A64E /* AWARE.app */;
 			productType = "com.apple.product-type.application";
@@ -438,6 +565,10 @@
 				Base,
 			);
 			mainGroup = CC94827D2AF870DF00A3A64E;
+			packageReferences = (
+				12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				12143EBD2B5C8B52004A168F /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = CC9482872AF870DF00A3A64E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -459,6 +590,7 @@
 			files = (
 				CC9482912AF870E100A3A64E /* Preview Assets.xcassets in Resources */,
 				CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */,
+				12143EB22B5C8B0A004A168F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +598,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12143EB32B5C8B0A004A168F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +606,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12143EB42B5C8B0A004A168F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +616,7 @@
 			files = (
 				CC9482B92AF870E200A3A64E /* Preview Assets.xcassets in Resources */,
 				CC9482B62AF870E200A3A64E /* Assets.xcassets in Resources */,
+				12143EB52B5C8B0A004A168F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +624,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12143EB62B5C8B0A004A168F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +632,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12143EB72B5C8B0A004A168F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,15 +643,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				125506B82B5CB61F007F0323 /* Contact.swift in Sources */,
+				125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */,
 				127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
-				FFC4119B2B5537E200AE29B9 /* LocationRequestView.swift in Sources */,
 				CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */,
-				FFC411952B52692C00AE29B9 /* DeviceLocationService.swift in Sources */,
+				125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */,
+				12143EA62B5C8ADE004A168F /* AuthViewModel.swift in Sources */,
+				125506BC2B5CB61F007F0323 /* AddContactView.swift in Sources */,
+				12143EA72B5C8ADE004A168F /* RegistrationView.swift in Sources */,
+				125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */,
+				125506BA2B5CB61F007F0323 /* Styles.swift in Sources */,
 				127DBA302B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
-				FFC411982B53BCF300AE29B9 /* LocationDetailsView.swift in Sources */,
 				127DBA2C2B1D57790031F9F7 /* Shared.swift in Sources */,
+				12143EAB2B5C8AE9004A168F /* InputView.swift in Sources */,
+				12143EA82B5C8ADE004A168F /* LoginView.swift in Sources */,
+				125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */,
+				12143EAE2B5C8AF1004A168F /* User.swift in Sources */,
+				12143EB02B5C8AF7004A168F /* TwilioSMSManager.swift in Sources */,
+				125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */,
 				CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */,
-				FFC4119D2B55386500AE29B9 /* LocationManager.swift in Sources */,
+				125506BB2B5CB61F007F0323 /* ContactRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,7 +689,6 @@
 			files = (
 				127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
 				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
-				FFC411962B526A4800AE29B9 /* DeviceLocationService.swift in Sources */,
 				127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
 				127DBA2E2B1D57A40031F9F7 /* Shared.swift in Sources */,
 				CC9482B22AF870E100A3A64E /* AWAREApp.swift in Sources */,
@@ -719,14 +866,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 29QKH548GF;
+				DEVELOPMENT_TEAM = TPAA6G9JYB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "AWARE-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -751,18 +895,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AWARE Watch App/AWARE Watch App.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 29QKH548GF;
+				DEVELOPMENT_TEAM = TPAA6G9JYB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "AWARE-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -772,7 +912,6 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -793,14 +932,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";
-				DEVELOPMENT_TEAM = 29QKH548GF;
+				DEVELOPMENT_TEAM = TPAA6G9JYB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -828,18 +965,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AWARE/AWARE.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AWARE/Preview Content\"";
-				DEVELOPMENT_TEAM = 29QKH548GF;
+				DEVELOPMENT_TEAM = TPAA6G9JYB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs permission to access your location for various in-built safety features corresponding to level of intoxication";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -853,7 +987,6 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWARE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -869,7 +1002,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -890,7 +1022,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -911,7 +1042,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -931,7 +1061,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -953,7 +1082,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppTests";
@@ -974,7 +1102,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppTests";
@@ -995,7 +1122,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppUITests";
@@ -1015,7 +1141,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 29QKH548GF;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "apple.py.AWARE-Watch-AppUITests";
@@ -1097,6 +1222,53 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.20.0;
+			};
+		};
+		12143EBD2B5C8B52004A168F /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		12143EB92B5C8B41004A168F /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		12143EBB2B5C8B41004A168F /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		12143EBE2B5C8B52004A168F /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12143EBD2B5C8B52004A168F /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		12143EC12B5C8B68004A168F /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		12143EC32B5C8B70004A168F /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CC94827E2AF870DF00A3A64E /* Project object */;
 }
