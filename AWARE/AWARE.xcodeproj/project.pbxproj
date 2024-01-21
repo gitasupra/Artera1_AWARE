@@ -33,6 +33,11 @@
 		125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B42B5CB61F007F0323 /* ContactPickerButton.swift */; };
 		125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B52B5CB61F007F0323 /* ImagePicker.swift */; };
 		125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B62B5CB61F007F0323 /* ContactDetailView.swift */; };
+		125506C32B5CC1B3007F0323 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506C22B5CC1B3007F0323 /* LocationRequestView.swift */; };
+		125506C52B5CC1BA007F0323 /* LocationDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506C42B5CC1BA007F0323 /* LocationDetailsView.swift */; };
+		125506C72B5CC1C1007F0323 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506C62B5CC1C1007F0323 /* LocationManager.swift */; };
+		1278BA6A2B5CC3360053DF42 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1278BA692B5CC3360053DF42 /* LocationView.swift */; };
+		1278BA6C2B5CC6D80053DF42 /* DeviceLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1278BA6B2B5CC6D80053DF42 /* DeviceLocationService.swift */; };
 		127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
 		127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
 		127DBA2C2B1D57790031F9F7 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2B2B1D57790031F9F7 /* Shared.swift */; };
@@ -125,6 +130,13 @@
 		125506B42B5CB61F007F0323 /* ContactPickerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactPickerButton.swift; sourceTree = "<group>"; };
 		125506B52B5CB61F007F0323 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		125506B62B5CB61F007F0323 /* ContactDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
+		125506C22B5CC1B3007F0323 /* LocationRequestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationRequestView.swift; path = AWARE/LocationRequestView.swift; sourceTree = SOURCE_ROOT; };
+		125506C42B5CC1BA007F0323 /* LocationDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationDetailsView.swift; path = AWARE/LocationDetailsView.swift; sourceTree = SOURCE_ROOT; };
+		125506C62B5CC1C1007F0323 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationManager.swift; path = AWARE/LocationManager.swift; sourceTree = SOURCE_ROOT; };
+		1278BA692B5CC3360053DF42 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
+		1278BA6B2B5CC6D80053DF42 /* DeviceLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLocationService.swift; sourceTree = "<group>"; };
+		1278BA6D2B5CCCFD0053DF42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1278BA6E2B5CCD2A0053DF42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableDataCollection.swift; sourceTree = "<group>"; };
 		127DBA2B2B1D57790031F9F7 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		127DBA2D2B1D57A40031F9F7 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
@@ -285,9 +297,21 @@
 			path = ContactViews;
 			sourceTree = "<group>";
 		};
+		125506C12B5CC19E007F0323 /* LocationPage */ = {
+			isa = PBXGroup;
+			children = (
+				1278BA692B5CC3360053DF42 /* LocationView.swift */,
+				125506C62B5CC1C1007F0323 /* LocationManager.swift */,
+				125506C42B5CC1BA007F0323 /* LocationDetailsView.swift */,
+				125506C22B5CC1B3007F0323 /* LocationRequestView.swift */,
+			);
+			path = LocationPage;
+			sourceTree = "<group>";
+		};
 		127DBA272B1D571A0031F9F7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				1278BA6B2B5CC6D80053DF42 /* DeviceLocationService.swift */,
 				127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */,
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
 			);
@@ -326,6 +350,8 @@
 		CC9482882AF870DF00A3A64E /* AWARE */ = {
 			isa = PBXGroup;
 			children = (
+				1278BA6E2B5CCD2A0053DF42 /* Info.plist */,
+				125506C12B5CC19E007F0323 /* LocationPage */,
 				12143EA02B5C8ADE004A168F /* Authentication */,
 				12143EA92B5C8AE9004A168F /* Components */,
 				12143EAC2B5C8AF1004A168F /* Model */,
@@ -360,6 +386,7 @@
 		CC9482A32AF870E100A3A64E /* AWAREUITests */ = {
 			isa = PBXGroup;
 			children = (
+				1278BA6D2B5CCCFD0053DF42 /* Info.plist */,
 				CC9482A42AF870E100A3A64E /* AWAREUITests.swift */,
 				CC9482A62AF870E100A3A64E /* AWAREUITestsLaunchTests.swift */,
 			);
@@ -643,13 +670,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1278BA6C2B5CC6D80053DF42 /* DeviceLocationService.swift in Sources */,
 				125506B82B5CB61F007F0323 /* Contact.swift in Sources */,
+				1278BA6A2B5CC3360053DF42 /* LocationView.swift in Sources */,
 				125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */,
 				127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
 				CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */,
 				125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */,
 				12143EA62B5C8ADE004A168F /* AuthViewModel.swift in Sources */,
 				125506BC2B5CB61F007F0323 /* AddContactView.swift in Sources */,
+				125506C72B5CC1C1007F0323 /* LocationManager.swift in Sources */,
 				12143EA72B5C8ADE004A168F /* RegistrationView.swift in Sources */,
 				125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */,
 				125506BA2B5CB61F007F0323 /* Styles.swift in Sources */,
@@ -657,8 +687,10 @@
 				127DBA2C2B1D57790031F9F7 /* Shared.swift in Sources */,
 				12143EAB2B5C8AE9004A168F /* InputView.swift in Sources */,
 				12143EA82B5C8ADE004A168F /* LoginView.swift in Sources */,
+				125506C52B5CC1BA007F0323 /* LocationDetailsView.swift in Sources */,
 				125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */,
 				12143EAE2B5C8AF1004A168F /* User.swift in Sources */,
+				125506C32B5CC1B3007F0323 /* LocationRequestView.swift in Sources */,
 				12143EB02B5C8AF7004A168F /* TwilioSMSManager.swift in Sources */,
 				125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */,
 				CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */,
@@ -935,9 +967,14 @@
 				DEVELOPMENT_TEAM = TPAA6G9JYB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AWARE/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -971,9 +1008,14 @@
 				DEVELOPMENT_TEAM = TPAA6G9JYB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AWARE/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AWARE;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to health data for tracking heart rate, step count, and sleep analysis.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs access to read / update values related to walking steadiness, breathing rate, and heart rate";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1043,6 +1085,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AWAREUITests/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWAREUITests;
@@ -1062,6 +1107,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AWAREUITests/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = apple.py.AWAREUITests;
