@@ -2,9 +2,11 @@ import SwiftUI
 import HealthKit
 import CoreMotion
 import Charts
+import WatchConnectivity
 
 
 struct ContentView: View {
+    
     @EnvironmentObject var motion: CMMotionManager
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @State private var enableDataCollection = false
@@ -19,9 +21,19 @@ struct ContentView: View {
     @State private var isHelpTipsEnabled = true
     @State var showAccChart: Bool = true
     
+    @State public var heartRateList: [HeartRateDataPoint] = []
+    @State private var heartRateIdx: Int = 0
+    
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
     @State private var accIdx: Int = 0
+    
+    // heart rate data struct
+   struct HeartRateDataPoint: Identifiable {
+       let heartRate: Double
+       var myIndex: Int = 0
+       var id: UUID
+   }
     
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
@@ -47,6 +59,7 @@ struct ContentView: View {
                 .padding([.top, .bottom], 2)
         }
     }
+    
     
     func getDatesForCurrentWeek() -> [String] {
         let currentDate = Date()
@@ -157,8 +170,8 @@ struct ContentView: View {
                 if (enableDataCollectionObj.enableDataCollection == 0) {
                     if !self.$shouldHide.wrappedValue {
                         Button(action: {
-                            enableDataCollectionObj.toggleOn()
                             enableDataCollection.toggle()
+                            enableDataCollectionObj.toggleOn()
                         }) {
                             Image(systemName: "touchid")
                                 .font(.system(size: 100))
@@ -170,8 +183,8 @@ struct ContentView: View {
                     }
                 } else {
                     Button(action: {
-                        enableDataCollectionObj.toggleOff()
                         enableDataCollection.toggle()
+                        enableDataCollectionObj.toggleOff()
                     }) {
                         Image(systemName: "touchid")
                             .font(.system(size: 100))
@@ -182,8 +195,8 @@ struct ContentView: View {
                     Spacer()
                 }
             }
-            .onChange(of: enableDataCollection) {
-                if (enableDataCollection) {
+            .onChange(of: enableDataCollectionObj.enableDataCollection) {
+                if (enableDataCollectionObj.enableDataCollection != 0) {
                     startDeviceMotion()
                 } else {
                     self.motion.stopDeviceMotionUpdates()
@@ -325,6 +338,7 @@ struct ContentView: View {
                 }
             }
         }
+    
         func startDeviceMotion() {
                 //var idx = 0
                 
@@ -348,8 +362,11 @@ struct ContentView: View {
                             let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
                             
                             acc.append(new)
+                            print(new)
+                            
                             
                         }
+                        
                         
                         
                     })
@@ -359,7 +376,8 @@ struct ContentView: View {
                 }
                 
             }
-        }
+        } 
+
 
 
 

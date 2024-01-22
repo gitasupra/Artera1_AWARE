@@ -11,17 +11,23 @@ import CoreMotion
 
 @main
 struct AWARE_Watch_AppApp: App {
+    private let healthStore: HKHealthStore
     private let motion: CMMotionManager
         
     init() {
+        guard HKHealthStore.isHealthDataAvailable() else {  fatalError("This app requires a device that supports HealthKit") }
+            healthStore = HKHealthStore()
         motion = CMMotionManager()
     }
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(motion)
+            ContentView()
+            .environmentObject(healthStore)
+            .environmentObject(motion)
         }
     }
 }
 
 extension CMMotionManager: ObservableObject{}
+extension HKHealthStore: ObservableObject{}
