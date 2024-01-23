@@ -230,8 +230,12 @@ struct ContentView: View {
                 .onChange(of: enableDataCollection) {
                     if (enableDataCollection) {
                         startDeviceMotion()
+                        print("device motion started")
                     } else {
                         self.motion.stopDeviceMotionUpdates()
+                        writeAccDataToFile()
+                        print("wrote acc data to txt file")
+
                     }
                 }
                 .tabItem {
@@ -386,7 +390,32 @@ struct ContentView: View {
                 }
             }
     }
+    
+    // Function to write text to a file
+    func writeTextToFile(_ text: String, fileName: String) {
+        // Get the documents directory
+        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            // Create a file URL within the documents directory
+            let fileURL = documentsDirectory.appendingPathComponent(fileName).appendingPathExtension("txt")
 
+            do {
+                // Write the text to the file
+                try text.write(to: fileURL, atomically: false, encoding: .utf8)
+                print(fileURL)
+                print("Text successfully written to \(fileName).txt")
+            } catch {
+                // Handle the error
+                print("Error writing text to file: \(error)")
+            }
+        }
+    }
+    func writeAccDataToFile() {
+        // Convert AccelerometerDataPoint array to a string
+        let accDataString = acc.map { "\($0.x), \($0.y), \($0.z)" }.joined(separator: "\n")
+
+        // Call the function to write text to a file
+        writeTextToFile(accDataString, fileName: "accelerometer_data")
+    }
     func startDeviceMotion() {
         //var idx = 0
         
