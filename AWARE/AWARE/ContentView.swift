@@ -41,6 +41,7 @@ struct ContentView: View {
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @State private var enableDataCollection = false
     @State private var shouldHide = false
+
     
     // setting toggles
     @State private var name = ""
@@ -50,6 +51,9 @@ struct ContentView: View {
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
     @State var showAccChart: Bool = true
+    
+    @State private var fileCounter: Int = 0
+
     
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
@@ -207,10 +211,10 @@ struct ContentView: View {
                             }) {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
-                                    .foregroundColor(.green)
+                                    .foregroundColor(.red)
                                     .controlSize(.extraLarge)
                             }.padding()
-                            Text("Disable Data Collection")
+                            Text("Enable Data Collection")
                             Spacer()
                         }
                     } else {
@@ -220,10 +224,10 @@ struct ContentView: View {
                             }) {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
-                                    .foregroundColor(.red)
+                                    .foregroundColor(.green)
                                     .controlSize(.extraLarge)
                             }.padding()
-                        Text("Enable Data Collection")
+                        Text("Disable Data Collection")
                         Spacer()
                     }
                 }
@@ -399,7 +403,7 @@ struct ContentView: View {
             let fileURL = documentsDirectory.appendingPathComponent(fileName).appendingPathExtension("txt")
 
             do {
-                // Write the text to the file
+                // Append the text to the file
                 try text.write(to: fileURL, atomically: false, encoding: .utf8)
                 print(fileURL)
                 print("Text successfully written to \(fileName).txt")
@@ -411,10 +415,12 @@ struct ContentView: View {
     }
     func writeAccDataToFile() {
         // Convert AccelerometerDataPoint array to a string
-        let accDataString = acc.map { "\($0.x), \($0.y), \($0.z)" }.joined(separator: "\n")
+        fileCounter += 1
+
+        let accDataString = acc.map { "\($0.myIndex), \($0.x), \($0.y), \($0.z)" }.joined(separator: "\n")
 
         // Call the function to write text to a file
-        writeTextToFile(accDataString, fileName: "accelerometer_data")
+        writeTextToFile(accDataString, fileName: "accelerometer_data_lvl2_\(fileCounter)")
     }
     func startDeviceMotion() {
         //var idx = 0
