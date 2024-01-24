@@ -49,7 +49,7 @@ struct Page2View: View {
         VStack {
             if (enableDataCollectionObj.enableDataCollection == 0) {
                 if !self.$shouldHide.wrappedValue {
-                    Text("Disable Data Collection")
+                    Text("Enable Data Collection")
                         .multilineTextAlignment(.center)
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
@@ -57,12 +57,12 @@ struct Page2View: View {
                     }) {
                         Image(systemName: "touchid")
                         .font(.system(size: 50))
-                        .foregroundColor(.green)
+                        .foregroundColor(.red)
                         .controlSize(.extraLarge)
                     }
                 }
             } else {
-                Text("Enable Data Collection")
+                Text("Disable Data Collection")
                     .multilineTextAlignment(.center)
                 Button {
                     enableDataCollectionObj.toggleOff()
@@ -70,7 +70,7 @@ struct Page2View: View {
                 } label: {
                     Image(systemName: "touchid")
                     .font(.system(size: 50))
-                    .foregroundColor(.red)
+                    .foregroundColor(.green)
                     .controlSize(.extraLarge)
                 }
             }

@@ -207,10 +207,10 @@ struct ContentView: View {
                             }) {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
-                                    .foregroundColor(.green)
+                                    .foregroundColor(.red)
                                     .controlSize(.extraLarge)
                             }.padding()
-                            Text("Disable Data Collection")
+                            Text("Enable Data Collection")
                             Spacer()
                         }
                     } else {
@@ -220,10 +220,10 @@ struct ContentView: View {
                             }) {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
-                                    .foregroundColor(.red)
+                                    .foregroundColor(.green)
                                     .controlSize(.extraLarge)
                             }.padding()
-                        Text("Enable Data Collection")
+                        Text("Disable Data Collection")
                         Spacer()
                     }
                 }
