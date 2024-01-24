@@ -244,7 +244,7 @@ struct ContentView: View {
                         Text("Analytics")
                             .font(.system(size: 36))
                         
-                        /*Spacer()
+                        Spacer()
                         
                         VStack {
                             HStack {
@@ -275,15 +275,15 @@ struct ContentView: View {
                                 RoundedRectangle(cornerRadius: 6)
                                     .stroke(Color.accentColor, lineWidth: 1)
                             )
-                        }*/
+                        }
                         
                         LocationView()
                         
                         
-                        /*NavigationLink(destination: Text("View Past Data")) {
+                        NavigationLink(destination: Text("View Past Data")) {
                             Button("View Past Data") {}
                                 .buttonStyle(CustomButtonStyle())
-                        }*/
+                        }
                         
                         Spacer()
                     }
