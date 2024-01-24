@@ -4,20 +4,29 @@ import WatchConnectivity
 final class EnableDataCollection: ObservableObject {
     var session: WCSession
     let delegate: WCSessionDelegate
-    let subject = PassthroughSubject<Int, Never>()
-    let heartSubject = PassthroughSubject<(Double, Int), Never>()
+    var cancellables = Set<AnyCancellable>()
+    let enableDataSubject = PassthroughSubject<Int, Never>()
+    let heartRateSubject = PassthroughSubject<(Double, Int), Never>()
     
     @Published private(set) var enableDataCollection: Int = 0
+    @Published private(set) var heartRateList: [(Double, Int)] = []
     
     init(session: WCSession = .default) {
-        self.delegate = SessionDelegater(enableDataCollectionSubject: subject, heartRateSubject: heartSubject)
+        self.delegate = SessionDelegater(enableDataCollectionSubject: enableDataSubject, heartRateSubject: heartRateSubject)
         self.session = session
         self.session.delegate = self.delegate
         self.session.activate()
         
-        subject
+        enableDataSubject
             .receive(on: DispatchQueue.main)
             .assign(to: &$enableDataCollection)
+        
+        heartRateSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] receivedHeartRate in
+                self?.heartRateList.append(receivedHeartRate)
+            }
+            .store(in: &cancellables)
     }
     
     func toggleOn() {

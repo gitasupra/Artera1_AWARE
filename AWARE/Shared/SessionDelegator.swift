@@ -3,8 +3,6 @@ import WatchConnectivity
 
 class SessionDelegater: NSObject, WCSessionDelegate {
     
-    // heart rate data struct
-    let heartRateIdx: Int = 0
     
     let enableDataCollectionSubject: PassthroughSubject<Int, Never>
     let heartRateSubject: PassthroughSubject<(Double, Int), Never>
@@ -32,7 +30,8 @@ class SessionDelegater: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any]) {
-            if let lastHeartRate = userInfo["lastHeartRate"] as? Double {
+        if let lastHeartRate = userInfo["lastHeartRate"] as? Double,
+            let heartRateIdx = userInfo["heartRateIdx"] as? Int {
                 self.heartRateSubject.send((lastHeartRate, heartRateIdx))
                 print(lastHeartRate)
                 // Append the received heart rate data to the list
@@ -40,9 +39,9 @@ class SessionDelegater: NSObject, WCSessionDelegate {
 
                 // You can use heartRateList as needed for your application
                 //print("Updated heart rate list:", heartRateList)
-            } //else {
-                //print("nooo")
-            //}
+            } else {
+                print("nooo")
+            }
         }
 
     

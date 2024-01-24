@@ -9,6 +9,7 @@ struct ContentView: View {
     
     @EnvironmentObject var motion: CMMotionManager
     @StateObject var enableDataCollectionObj = EnableDataCollection()
+    //@StateObject var heartRateDataObj = HeartRateData()
     @State private var enableDataCollection = false
     @State private var shouldHide = false
     
@@ -20,6 +21,7 @@ struct ContentView: View {
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
     @State var showAccChart: Bool = true
+    @State var showHeartChart: Bool = true
     
     @State public var heartRateList: [HeartRateDataPoint] = []
     @State private var heartRateIdx: Int = 0
@@ -84,13 +86,13 @@ struct ContentView: View {
                     NavigationStack {
                         VStack {
                             Button {
-                                //showHeartChart = true
+                                showHeartChart = true
                             } label: {
                                 Text("View Heart Rate Data")
                             }
                             .navigationDestination(
-                                isPresented: $showAccChart) {
-                                    accelerometerGraph(acc: acc)
+                                isPresented: $showHeartChart) {
+                                    heartRateGraph(heartRate: enableDataCollectionObj.heartRateList)
                                 }
                                 .buttonStyle(CustomButtonStyle())
                             
@@ -317,27 +319,46 @@ struct ContentView: View {
     }
     
     struct accelerometerGraph: View {
-            var acc: [AccelerometerDataPoint]
-            var body: some View {
-                ScrollView {
-                    VStack {
-                        Chart {
-                            ForEach(acc) { element in
-                                LineMark(x: .value("Date", element.myIndex), y: .value("x", element.x))
-                                    .foregroundStyle(by: .value("x", "x"))
-                                LineMark(x: .value("Date", element.myIndex), y: .value("y", element.y))
-                                    .foregroundStyle(by: .value("y", "y"))
-                                LineMark(x: .value("Date", element.myIndex), y: .value("z", element.z))
-                                    .foregroundStyle(by: .value("z", "z"))
-                            }
+        var acc: [AccelerometerDataPoint]
+        var body: some View {
+            ScrollView {
+                VStack {
+                    Chart {
+                        ForEach(acc) { element in
+                            LineMark(x: .value("Date", element.myIndex), y: .value("x", element.x))
+                                .foregroundStyle(by: .value("x", "x"))
+                            LineMark(x: .value("Date", element.myIndex), y: .value("y", element.y))
+                                .foregroundStyle(by: .value("y", "y"))
+                            LineMark(x: .value("Date", element.myIndex), y: .value("z", element.z))
+                                .foregroundStyle(by: .value("z", "z"))
                         }
-                        .chartScrollableAxes(.horizontal)
-                        .chartXVisibleDomain(length: 50)
-                        .padding()
                     }
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 50)
+                    .padding()
                 }
             }
         }
+    }
+    
+    struct heartRateGraph: View {
+        var heartRate: [(Double, Int)]
+        var body: some View {
+            ScrollView {
+                VStack {
+                    Chart {
+                        ForEach(heartRate.indices, id: \.self) { index in
+                            let element = heartRate[index]
+                            LineMark(x: .value("idx", element.1), y: .value("Heart Rate", element.0))
+                        }
+                    }
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 50)
+                    .padding()
+                }
+            }
+        }
+    }
     
         func startDeviceMotion() {
                 //var idx = 0
