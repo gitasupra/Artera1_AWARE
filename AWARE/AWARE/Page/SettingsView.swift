@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @EnvironmentObject var theme: Theme
+    
     // setting toggles
     @State private var name = ""
     @State private var isNotificationEnabled = true
@@ -16,7 +18,6 @@ struct SettingsView: View {
     @State private var isUberEnabled = false
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
-    @State var showAccChart: Bool = true
     
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -24,7 +25,7 @@ struct SettingsView: View {
         Form {
             Section(header: Text("User Profile")) {
                 TextField("Name", text: $name).disableAutocorrection(true)
-            }.tint(accentColor)
+            }.tint(theme.accentColor)
             
             Section(header: Text("Contacts")) {
                 Toggle(isOn: $isContactListEnabled) {
@@ -39,21 +40,21 @@ struct SettingsView: View {
                     Text("Enable emergency services")
                     Text("Call 911 in case of extreme emergencies")
                 }
-            }.tint(accentColor)
+            }.tint(theme.accentColor)
             
             Section(header: Text("Notifications")) {
                 Toggle(isOn: $isNotificationEnabled) {
                     Text("Allow notifications")
                     Text("Receive updates on your intoxication level")
                 }
-            }.tint(accentColor)
+            }.tint(theme.accentColor)
             
             Section(header: Text("Miscellaneous")) {
                 Toggle(isOn: $isHelpTipsEnabled) {
                     Text("Enable help tips")
                     Text("Receive tips on drinking safely")
                 }
-            }.tint(accentColor)
+            }.tint(theme.accentColor)
             
             Section {
                 Button("Reset to default") {
@@ -63,7 +64,7 @@ struct SettingsView: View {
                     isEmergencyContacts = false
                     isHelpTipsEnabled = true
                 }
-            }.tint(accentColor)
+            }.tint(theme.accentColor)
             
             Section {
                 Button("Log out") {

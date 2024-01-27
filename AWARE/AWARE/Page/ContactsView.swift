@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContactsView: View {
+    
+    @EnvironmentObject var theme: Theme
+    
     var body: some View {
         VStack(alignment: .center) {
             Text("Contacts")
@@ -19,17 +22,17 @@ struct ContactsView: View {
             
             NavigationLink(destination: Text("Contact List")) {
                 Button("Edit Contact List") {}
-                    .buttonStyle(CustomButtonStyle())
+                    .buttonStyle(theme.CustomButtonStyle())
             }
             
             NavigationLink(destination: Text("Call Uber")) {
                 Button("Call Uber") {}
-                    .buttonStyle(CustomButtonStyle())
+                    .buttonStyle(theme.CustomButtonStyle())
             }
             
             NavigationLink(destination: Text("Call 911")) {
                 Button("Call Emergency Services") {}
-                    .buttonStyle(CustomButtonStyle())
+                    .buttonStyle(theme.CustomButtonStyle())
             }
             
             Spacer()

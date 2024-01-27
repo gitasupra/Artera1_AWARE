@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import CoreMotion
 
 struct ToggleView: View {
     
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @State private var enableDataCollection = false
-    
+    @State private var shouldHide = false
+
     var body: some View {
         VStack(alignment: .center) {
             Spacer()
@@ -62,6 +64,8 @@ struct ToggleView: View {
                 }
             }
     }
+    
+
 }
 
 
@@ -70,3 +74,5 @@ struct ToggleView_Previews: PreviewProvider {
         ToggleView()
     }
 }
+
+

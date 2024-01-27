@@ -13,8 +13,30 @@ class AppDelegate: NSObject, UIApplicationDelegate{
     }
 }
 
+class Theme: ObservableObject {
+    @Published var accentColor:Color = .purple
+    @Published var backgroundColor:Color = .black
+    
+    struct CustomButtonStyle: ButtonStyle {
+        
+        func makeBody(configuration: Configuration) -> some View {
+
+            configuration.label
+                .padding()
+                .cornerRadius(6)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.accentColor, lineWidth: 1)
+                )
+                .padding([.top, .bottom], 2)
+        }
+    }
+}
+
 @main
 struct AWAREApp: App {
+    
+    @StateObject var currentTheme = Theme()
     
     //create AuthViewModel once to use for all pages
     @StateObject var viewModel = AuthViewModel()
@@ -66,6 +88,7 @@ struct AWAREApp: App {
                 .environmentObject(healthStore)
                 .environmentObject(motion)
                 .environmentObject(viewModel)
+                .environmentObject(currentTheme)
 
         }
     }

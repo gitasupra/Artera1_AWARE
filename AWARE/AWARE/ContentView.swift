@@ -35,7 +35,7 @@ extension View{
 
 struct ContentView: View {
     
-    
+    @EnvironmentObject var theme: Theme
     @EnvironmentObject var motion: CMMotionManager
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var enableDataCollectionObj = EnableDataCollection()
@@ -71,22 +71,7 @@ struct ContentView: View {
     
     
     // style variables
-    let accentColor:Color = .purple
-    let backgroundColor:Color = .black
-    struct CustomButtonStyle: ButtonStyle {
-        
-        func makeBody(configuration: Configuration) -> some View {
-
-            configuration.label
-                .padding()
-                .cornerRadius(6)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color.accentColor, lineWidth: 1)
-                )
-                .padding([.top, .bottom], 2)
-        }
-    }
+    
     
     func getDatesForCurrentWeek() -> [String] {
         let currentDate = Date()
@@ -130,12 +115,14 @@ struct ContentView: View {
                     SettingsView().tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
-                }.accentColor(accentColor)
+                }
+                .accentColor(theme.accentColor)
             }
             else{
                 LoginView()
             }
         }
+        
     }
 
     struct ContentView_Previews: PreviewProvider {
