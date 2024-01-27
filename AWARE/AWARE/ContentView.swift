@@ -23,19 +23,8 @@ struct ContentView: View {
     @State var showAccChart: Bool = true
     @State var showHeartChart: Bool = true
     
-    @State public var heartRateList: [HeartRateDataPoint] = []
-    @State private var heartRateIdx: Int = 0
-    
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
-    @State private var accIdx: Int = 0
-    
-    // heart rate data struct
-   struct HeartRateDataPoint: Identifiable {
-       let heartRate: Double
-       var myIndex: Int = 0
-       var id: UUID
-   }
     
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
@@ -361,7 +350,7 @@ struct ContentView: View {
     }
     
         func startDeviceMotion() {
-                //var idx = 0
+                var accIdx = 0
                 
                 if motion.isDeviceMotionAvailable {
                     self.motion.deviceMotionUpdateInterval = 1.0/50.0
@@ -372,12 +361,8 @@ struct ContentView: View {
                     let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
                                       block: { (timer) in
                         if let data = self.motion.deviceMotion {
-                            // Get attitude data
-                            let attitude = data.attitude
                             // Get accelerometer data
                             let accelerometer = data.userAcceleration
-                            // Get the gyroscope data
-                            let gyro = data.rotationRate
                             accIdx += 1
                             
                             let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
