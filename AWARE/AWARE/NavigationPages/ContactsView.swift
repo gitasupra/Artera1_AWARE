@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContactsView: View {
-    
     @EnvironmentObject var theme: Theme
     
     var body: some View {

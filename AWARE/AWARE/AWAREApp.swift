@@ -35,7 +35,6 @@ class Theme: ObservableObject {
 
 @main
 struct AWAREApp: App {
-    
     @StateObject var currentTheme = Theme()
     
     //create AuthViewModel once to use for all pages
@@ -53,7 +52,6 @@ struct AWAREApp: App {
     }
     
     private func requestHealthkitPermissions() {
-        
         let sampleTypesToReadShare = Set([
             HKObjectType.quantityType(forIdentifier: .heartRate)!,
             HKObjectType.quantityType(forIdentifier: .bloodAlcoholContent)!,
@@ -72,15 +70,11 @@ struct AWAREApp: App {
             HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
             HKObjectType.categoryType(forIdentifier: .shortnessOfBreath)!,
         ])
-        
-        
-
-        
+    
         healthStore.requestAuthorization(toShare: sampleTypesToReadShare, read: sampleTypesToReadOnly) { (success, error) in
             print("Request Authorization -- Success: ", success, " Error: ", error ?? "nil")
         }
     }
-
 
     var body: some Scene {
         WindowGroup {
@@ -94,7 +88,5 @@ struct AWAREApp: App {
     }
 }
 
-
 extension HKHealthStore: ObservableObject{}
 extension CMMotionManager: ObservableObject{}
-

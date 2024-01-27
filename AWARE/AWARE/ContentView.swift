@@ -32,11 +32,8 @@ extension View{
     }
 }
 
-
 struct ContentView: View {
-    
     @EnvironmentObject var theme: Theme
-    
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @State private var enableDataCollection = false
@@ -51,26 +48,9 @@ struct ContentView: View {
     @State private var isHelpTipsEnabled = true
     @State var showAccChart: Bool = true
     
-    
-    
-   
-    
     // database
     //FIXME may be loading DB every time, ideally in .onload
     let ref=Database.database().reference()
-
-    func getDatesForCurrentWeek() -> [String] {
-        let currentDate = Date()
-        let calendar = Calendar.current
-        
-        let lastSunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: currentDate))!
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM'\u{2028}' d"
-        
-        return (0..<7).map { calendar.date(byAdding: .day, value: $0, to: lastSunday)! }
-            .map {formatter.string(from: $0)}
-    }
     
     var body: some View {
         Group{
@@ -108,7 +88,6 @@ struct ContentView: View {
                 LoginView()
             }
         }
-        
     }
 }
 
