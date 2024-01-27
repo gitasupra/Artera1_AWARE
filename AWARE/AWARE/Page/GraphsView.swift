@@ -60,7 +60,7 @@ struct GraphsView: View {
                         isPresented: $showAccChart) {
                             accelerometerGraph(acc: acc)
                         }
-                        .buttonStyle(theme.CustomButtonStyle())
+                        .buttonStyle(Theme.CustomButtonStyle())
                     
                     Button {
                         showAccChart = true
@@ -71,7 +71,7 @@ struct GraphsView: View {
                         isPresented: $showAccChart) {
                             accelerometerGraph(acc: acc)
                         }
-                        .buttonStyle(theme.CustomButtonStyle())
+                        .buttonStyle(Theme.CustomButtonStyle())
                     
                     Button {
                         showAccChart = true
@@ -82,11 +82,12 @@ struct GraphsView: View {
                         isPresented: $showAccChart) {
                             accelerometerGraph(acc: acc)
                         }
-                        .buttonStyle(theme.CustomButtonStyle())
+                        .buttonStyle(Theme.CustomButtonStyle())
                 }
             }
         }
-    }.onLoad{}
+    }
+    
     
     struct accelerometerGraph: View {
             var acc: [AccelerometerDataPoint]

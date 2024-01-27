@@ -22,17 +22,17 @@ struct ContactsView: View {
             
             NavigationLink(destination: Text("Contact List")) {
                 Button("Edit Contact List") {}
-                    .buttonStyle(theme.CustomButtonStyle())
+                    .buttonStyle(Theme.CustomButtonStyle())
             }
             
             NavigationLink(destination: Text("Call Uber")) {
                 Button("Call Uber") {}
-                    .buttonStyle(theme.CustomButtonStyle())
+                    .buttonStyle(Theme.CustomButtonStyle())
             }
             
             NavigationLink(destination: Text("Call 911")) {
                 Button("Call Emergency Services") {}
-                    .buttonStyle(theme.CustomButtonStyle())
+                    .buttonStyle(Theme.CustomButtonStyle())
             }
             
             Spacer()
