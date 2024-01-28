@@ -48,6 +48,7 @@ struct Page2View: View {
     @Binding var enableDataCollection: Bool
     @Binding var shouldHide: Bool
     @EnvironmentObject var motion: CMMotionManager
+    @State private var timer: Timer?
     
     // heart rate data struct
    struct HeartRateDataPoint: Identifiable {
@@ -89,42 +90,27 @@ struct Page2View: View {
         .onChange(of: enableDataCollectionObj.enableDataCollection)
         {
             if (enableDataCollectionObj.enableDataCollection != 0) {
-                startDeviceMotion()
+                startHeartRate()
             } else {
-                self.motion.stopDeviceMotionUpdates()
+                stopHeartRate()
             }
         }
     }
     
-    func startDeviceMotion() {
+    func startHeartRate() {
         
         let heartRateQuantity = HKUnit(from: "count/min")
-        let accIdx = 0
+        var heartRateIdx = 0
             
             
         if motion.isDeviceMotionAvailable {
-            self.motion.deviceMotionUpdateInterval = 1.0 / 50.0
+            self.motion.deviceMotionUpdateInterval = 1.0
             self.motion.showsDeviceMovementDisplay = true
             self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
             
             // Configure a timer to fetch the device motion data
-            let timer = Timer(fire: Date(), interval: (1.0 / 50.0), repeats: true,
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true,
                                block: { (timer) in
-                if let data = self.motion.deviceMotion {
-                    // Get attitude data
-                    let attitudeX = data.attitude.pitch
-                    let attitudeY = data.attitude.roll
-                    let attitudeZ = data.attitude.yaw
-                    // Get accelerometer data
-                    let accelerometerX = data.userAcceleration.x
-                    let accelerometerY = data.userAcceleration.y
-                    let accelerometerZ = data.userAcceleration.z
-                    // Get the gyroscope data
-                    let gyroX = data.rotationRate.x
-                    let gyroY = data.rotationRate.y
-                    let gyroZ = data.rotationRate.z
-                    
-                }
                 let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
 
                 let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
@@ -154,16 +140,16 @@ struct Page2View: View {
 
                 let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: .heartRate)!, predicate: devicePredicate, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: updateHandler)
                 
-                query.updateHandler = updateHandler
-                
                 
                 healthStore.execute(query)
             })
-            
-            // Add the timer to the current run loop
-            RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
         }
         
+    }
+    
+    func stopHeartRate() {
+        timer?.invalidate()
+        timer = nil
     }
 }
 

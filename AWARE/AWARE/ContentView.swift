@@ -23,6 +23,8 @@ struct ContentView: View {
     @State var showAccChart: Bool = true
     @State var showHeartChart: Bool = true
     
+    @State private var timer: Timer!
+    
     @State public var heartRateList: [HeartRateDataPoint] = []
     @State private var heartRateIdx: Int = 0
     
@@ -201,6 +203,7 @@ struct ContentView: View {
                 if (enableDataCollectionObj.enableDataCollection != 0) {
                     startDeviceMotion()
                 } else {
+                    timer.invalidate()
                     self.motion.stopDeviceMotionUpdates()
                 }
             }
@@ -364,12 +367,12 @@ struct ContentView: View {
                 //var idx = 0
                 
                 if motion.isDeviceMotionAvailable {
-                    self.motion.deviceMotionUpdateInterval = 1.0/50.0
+                    self.motion.deviceMotionUpdateInterval = 1.0
                     self.motion.showsDeviceMovementDisplay = true
                     self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
                     
                     // Configure a timer to fetch the device motion data
-                    let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
+                    timer = Timer(fire: Date(), interval: (1.0), repeats: true,
                                       block: { (timer) in
                         if let data = self.motion.deviceMotion {
                             // Get attitude data
