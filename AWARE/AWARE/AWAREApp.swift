@@ -13,29 +13,8 @@ class AppDelegate: NSObject, UIApplicationDelegate{
     }
 }
 
-class Theme: ObservableObject {
-    @Published var accentColor:Color = .purple
-    @Published var backgroundColor:Color = .black
-    
-    struct CustomButtonStyle: ButtonStyle {
-        
-        func makeBody(configuration: Configuration) -> some View {
-
-            configuration.label
-                .padding()
-                .cornerRadius(6)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color.accentColor, lineWidth: 1)
-                )
-                .padding([.top, .bottom], 2)
-        }
-    }
-}
-
 @main
 struct AWAREApp: App {
-    @StateObject var currentTheme = Theme()
     
     //create AuthViewModel once to use for all pages
     @StateObject var viewModel = AuthViewModel()
@@ -52,6 +31,7 @@ struct AWAREApp: App {
     }
     
     private func requestHealthkitPermissions() {
+        
         let sampleTypesToReadShare = Set([
             HKObjectType.quantityType(forIdentifier: .heartRate)!,
             HKObjectType.quantityType(forIdentifier: .bloodAlcoholContent)!,
@@ -70,11 +50,15 @@ struct AWAREApp: App {
             HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
             HKObjectType.categoryType(forIdentifier: .shortnessOfBreath)!,
         ])
-    
+        
+        
+
+        
         healthStore.requestAuthorization(toShare: sampleTypesToReadShare, read: sampleTypesToReadOnly) { (success, error) in
             print("Request Authorization -- Success: ", success, " Error: ", error ?? "nil")
         }
     }
+
 
     var body: some Scene {
         WindowGroup {
@@ -82,11 +66,12 @@ struct AWAREApp: App {
                 .environmentObject(healthStore)
                 .environmentObject(motion)
                 .environmentObject(viewModel)
-                .environmentObject(currentTheme)
 
         }
     }
 }
 
+
 extension HKHealthStore: ObservableObject{}
 extension CMMotionManager: ObservableObject{}
+
