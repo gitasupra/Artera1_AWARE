@@ -16,18 +16,18 @@ struct GraphsView: View {
     @State var showAccChart: Bool = true
 
     // accelerometer data variables
-    @State private var acc: [AccelerometerDataPoint] = []
+    //@State var acc: [ToggleView.AccelerometerDataPoint] = acc
     @State private var accIdx: Int = 0
     
     // accelerometer data struct
-    struct AccelerometerDataPoint: Identifiable {
-        let x: Double
-        let y: Double
-        let z: Double
-        var myIndex: Int = 0
-        var id: UUID
-    }
-    
+//    struct AccelerometerDataPoint: Identifiable {
+//        let x: Double
+//        let y: Double
+//        let z: Double
+//        var myIndex: Int = 0
+//        var id: UUID
+//    }
+//    
     func getDatesForCurrentWeek() -> [String] {
         let currentDate = Date()
         let calendar = Calendar.current
@@ -56,7 +56,7 @@ struct GraphsView: View {
                     }
                     .navigationDestination(
                         isPresented: $showAccChart) {
-                            accelerometerGraph(acc: acc)
+                            accelerometerGraph(acc: ToggleView.acc)
                         }
                         .buttonStyle(Theme.CustomButtonStyle())
                     
@@ -67,7 +67,7 @@ struct GraphsView: View {
                     }
                     .navigationDestination(
                         isPresented: $showAccChart) {
-                            accelerometerGraph(acc: acc)
+                            accelerometerGraph(acc: ToggleView.acc)
                         }
                         .buttonStyle(Theme.CustomButtonStyle())
                     
@@ -78,7 +78,7 @@ struct GraphsView: View {
                     }
                     .navigationDestination(
                         isPresented: $showAccChart) {
-                            accelerometerGraph(acc: acc)
+                            accelerometerGraph(acc: ToggleView.acc)
                         }
                         .buttonStyle(Theme.CustomButtonStyle())
                 }
@@ -87,7 +87,7 @@ struct GraphsView: View {
     }
     
     struct accelerometerGraph: View {
-            var acc: [AccelerometerDataPoint]
+        var acc: [ToggleView.AccelerometerDataPoint]
             var body: some View {
                 ScrollView {
                     VStack {
@@ -129,9 +129,9 @@ struct GraphsView: View {
                     let gyro = data.rotationRate
                     accIdx += 1
                     
-                    let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+                    let new:ToggleView.AccelerometerDataPoint = ToggleView.AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
                     
-                    acc.append(new)
+                    ToggleView.acc.append(new)
                     
                 }
                 

@@ -16,7 +16,7 @@ struct ToggleView: View {
     @State private var shouldHide = false
     
     // accelerometer data variables
-    @State private var acc: [AccelerometerDataPoint] = []
+    @Binding var acc: [AccelerometerDataPoint]
     @State private var accIdx: Int = 0
     
     // accelerometer data struct
@@ -139,6 +139,6 @@ struct ToggleView: View {
 
 struct ToggleView_Previews: PreviewProvider {
     static var previews: some View {
-        ToggleView()
+        ToggleView(acc: ToggleView.$acc)
     }
 }
