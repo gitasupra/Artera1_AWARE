@@ -5,9 +5,11 @@
 //  Created by Jessica Nguyen on 1/18/24.
 //
 
-import Foundation
 import SwiftUI
 import Contacts
+import Firebase
+import FirebaseAuth
+import FirebaseStorage
 
 struct AddContactView: View {
     @ObservedObject var contactsManager: ContactsManager
@@ -180,24 +182,73 @@ struct AddContactView: View {
                 return phoneNumber
             }
         }()
-
+        
         if let formattedPhoneNumber = formatPhoneNumber(name: finalContactName, phoneNumber: finalPhoneNumber, countryCode: selectedCountryCode) {
-            let newContact = Contact(imageName: finalContactName, name: finalContactName, phone: formattedPhoneNumber, image: selectedImage)
-            contactsManager.contacts.append(newContact)
-            
-            // Reset all fields
-            contactName = ""
-            editableContactName = ""
-            editablePhoneNumber = ""
-            importedPhoneNumber = nil
-            importedContact = nil
-            selectedImage = nil
-            showAlert = true
-            
-            // Send success alert
-            alertTitle = "Success"
-            alertMessage = "Added new contact"
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+
+            do {
+                var contact = UserContact(uid: uid, name: finalContactName, phone: formattedPhoneNumber, imageUrl: finalContactName)
+
+                // Get a reference to the user's contacts in the database
+                let contactsRef = Database.database().reference().child("users").child(uid).child("contacts")
+
+                // Generate a unique key for the new contact
+                if let contactKey = contactsRef.childByAutoId().key {
+                    // Save the contact picture
+                    if let selectedImage = selectedImage {
+                        let storageRef = Storage.storage().reference().child("profile_images").child(uid).child(contactKey)
+                        if let imageData = selectedImage.jpegData(compressionQuality: 0.5) {
+                            storageRef.putData(imageData, metadata: nil) { (_, error) in
+                                if let error = error {
+                                    debugPrint("Error uploading image: \(error)")
+                                    return
+                                }
+                                
+                                // Get the image URL after successful upload
+                                storageRef.downloadURL { (url, error) in
+                                    if let imageUrl = url?.absoluteString {
+                                        // Update the image URL in the database
+                                        contactsRef.child(contactKey).child("imageUrl").setValue(imageUrl)
+                                        contact.imageUrl = imageUrl
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Set the contact data under the unique key using setValue
+                    let contactData: [String: Any] = [
+                        "name": contact.name,
+                        "phone": contact.phone,
+                        "imageUrl": contact.imageUrl
+                    ]
+                    
+                    // Set the contact data under the unique key
+                    try contactsRef.child(contactKey).setValue(contactData)
+                }
+
+                let newContact = Contact(imageName: finalContactName, name: finalContactName, phone: formattedPhoneNumber, image: selectedImage)
+                contactsManager.contacts.append(newContact)
+                
+                // Reset all fields
+                contactName = ""
+                editableContactName = ""
+                editablePhoneNumber = ""
+                importedPhoneNumber = nil
+                importedContact = nil
+                selectedImage = nil
+                showAlert = true
+                
+                // Send success alert
+                alertTitle = "Success"
+                alertMessage = "Added new contact"
+            }
+            catch {
+                debugPrint("Error inserting contact: \(error)")
+            }
         }
+        
+        
     }
     
     func formatPhoneNumber(name: String, phoneNumber: String, countryCode: String) -> String? {
