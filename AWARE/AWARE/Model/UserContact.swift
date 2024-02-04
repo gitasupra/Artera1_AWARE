@@ -13,7 +13,7 @@ struct UserContact {
     var name: String
     var phone: String
     var imageUrl: String
-
+    
     init(uid: String, name: String, phone: String, imageUrl: String) {
         self.uid = uid
         self.name = name

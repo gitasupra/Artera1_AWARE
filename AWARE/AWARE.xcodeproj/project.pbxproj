@@ -24,6 +24,8 @@
 		12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EBE2B5C8B52004A168F /* Alamofire */; };
 		12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC12B5C8B68004A168F /* FirebaseDatabase */; };
 		12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC32B5C8B70004A168F /* FirebaseAuth */; };
+		124746D92B6EF1DD002E1AC9 /* UserContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124746D82B6EF1DD002E1AC9 /* UserContact.swift */; };
+		124746DB2B6F0033002E1AC9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 124746DA2B6F0033002E1AC9 /* FirebaseStorage */; };
 		125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AD2B5CB61F007F0323 /* ContactsManager.swift */; };
 		125506B82B5CB61F007F0323 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AE2B5CB61F007F0323 /* Contact.swift */; };
 		125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B02B5CB61F007F0323 /* ContactListView.swift */; };
@@ -121,6 +123,7 @@
 		12143EAD2B5C8AF1004A168F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwilioSMSManager.swift; sourceTree = "<group>"; };
 		12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		124746D82B6EF1DD002E1AC9 /* UserContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContact.swift; sourceTree = "<group>"; };
 		125506AD2B5CB61F007F0323 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 		125506AE2B5CB61F007F0323 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		125506B02B5CB61F007F0323 /* ContactListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
@@ -175,6 +178,7 @@
 				12143EBC2B5C8B41004A168F /* FirebaseAnalyticsSwift in Frameworks */,
 				12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */,
 				12143EBA2B5C8B41004A168F /* FirebaseAnalytics in Frameworks */,
+				124746DB2B6F0033002E1AC9 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				12143EAD2B5C8AF1004A168F /* User.swift */,
+				124746D82B6EF1DD002E1AC9 /* UserContact.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -455,6 +460,7 @@
 				12143EBE2B5C8B52004A168F /* Alamofire */,
 				12143EC12B5C8B68004A168F /* FirebaseDatabase */,
 				12143EC32B5C8B70004A168F /* FirebaseAuth */,
+				124746DA2B6F0033002E1AC9 /* FirebaseStorage */,
 			);
 			productName = AWARE;
 			productReference = CC9482862AF870DF00A3A64E /* AWARE.app */;
@@ -670,6 +676,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				124746D92B6EF1DD002E1AC9 /* UserContact.swift in Sources */,
 				1278BA6C2B5CC6D80053DF42 /* DeviceLocationService.swift in Sources */,
 				125506B82B5CB61F007F0323 /* Contact.swift in Sources */,
 				1278BA6A2B5CC3360053DF42 /* LocationView.swift in Sources */,
@@ -1315,6 +1322,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		124746DA2B6F0033002E1AC9 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

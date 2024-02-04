@@ -28,13 +28,22 @@ class ContactsManager: ObservableObject {
                    let name = contactDict["name"] as? String,
                    let phone = contactDict["phone"] as? String,
                    let imageUrl = contactDict["imageUrl"] as? String {
-                    let contact = Contact(imageName: imageUrl, name: name, phone: phone)
-                    fetchedContacts.append(contact)
-                }
-            }
 
-            DispatchQueue.main.async {
-                self.contacts = fetchedContacts
+                    // Load the image asynchronously
+                    DispatchQueue.global().async {
+                        if let imageURL = URL(string: imageUrl),
+                           let imageData = try? Data(contentsOf: imageURL),
+                           let image = UIImage(data: imageData) {
+                            let contact = Contact(imageName: imageUrl, name: name, phone: phone, image: image)
+
+                            // Update UI on the main thread
+                            DispatchQueue.main.async {
+                                fetchedContacts.append(contact)
+                                self.contacts = fetchedContacts
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -45,3 +54,4 @@ class ContactsManager: ObservableObject {
         }
     }
 }
+
