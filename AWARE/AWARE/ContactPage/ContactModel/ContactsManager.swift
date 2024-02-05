@@ -5,7 +5,6 @@
 //  Created by Jessica Nguyen on 1/18/24.
 //
 
-import Foundation
 import SwiftUI
 import Firebase
 import FirebaseAuth
@@ -25,6 +24,7 @@ class ContactsManager: ObservableObject {
 
             for case let childSnapshot as DataSnapshot in snapshot.children {
                 if let contactDict = childSnapshot.value as? [String: Any],
+                   let id = contactDict["id"] as? String,
                    let name = contactDict["name"] as? String,
                    let phone = contactDict["phone"] as? String,
                    let imageUrl = contactDict["imageUrl"] as? String {
@@ -34,7 +34,7 @@ class ContactsManager: ObservableObject {
                         if let imageURL = URL(string: imageUrl),
                            let imageData = try? Data(contentsOf: imageURL),
                            let image = UIImage(data: imageData) {
-                            let contact = Contact(imageName: imageUrl, name: name, phone: phone, image: image)
+                            let contact = Contact(id: id, imageName: imageUrl, name: name, phone: phone, image: image)
 
                             // Update UI on the main thread
                             DispatchQueue.main.async {
@@ -54,4 +54,3 @@ class ContactsManager: ObservableObject {
         }
     }
 }
-

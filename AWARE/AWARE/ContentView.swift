@@ -156,34 +156,38 @@ struct ContentView: View {
             }
             
             // Page 3 Contacts
-            VStack(alignment: .center) {
-                Text("Contacts")
-                    .font(.system(size: 36))
-                    .multilineTextAlignment(.leading)
-                    .padding()
-                
-                Spacer()
-                
-                NavigationLink(destination: Text("Contact List")) {
-                    Button("Edit Contact List") {}
-                        .buttonStyle(CustomButtonStyle())
+                VStack(alignment: .center) {
+                    NavigationStack {
+                        Text("Contacts")
+                            .font(.system(size: 36))
+                            .multilineTextAlignment(.leading)
+                            .padding()
+                        
+                        Spacer()
+                        
+                        Button(action: {}) {
+                            NavigationLink(destination: ContactListView()) {
+                                Text("Contact List")
+                            }
+                            .buttonStyle(CustomButtonStyle())
+                        }
+                        
+                        NavigationLink(destination: Text("Call Uber")) {
+                            Button("Call Uber") {}
+                                .buttonStyle(CustomButtonStyle())
+                        }
+                        
+                        NavigationLink(destination: Text("Call 911")) {
+                            Button("Call Emergency Services") {}
+                                .buttonStyle(CustomButtonStyle())
+                        }
+                    }
+                    
+                    Spacer()
                 }
-                
-                NavigationLink(destination: Text("Call Uber")) {
-                    Button("Call Uber") {}
-                        .buttonStyle(CustomButtonStyle())
+                .tabItem {
+                    Label("Contacts", systemImage: "person.crop.circle")
                 }
-                
-                NavigationLink(destination: Text("Call 911")) {
-                    Button("Call Emergency Services") {}
-                        .buttonStyle(CustomButtonStyle())
-                }
-                
-                Spacer()
-            }
-            .tabItem {
-                Label("Contacts", systemImage: "person.crop.circle")
-            }
             
             // Page 3 - Home / Toggle
             VStack(alignment: .center) {
@@ -365,26 +369,26 @@ struct ContentView: View {
     }
 
     struct accelerometerGraph: View {
-            var acc: [AccelerometerDataPoint]
-            var body: some View {
-                ScrollView {
-                    VStack {
-                        Chart {
-                            ForEach(acc) { element in
-                                LineMark(x: .value("Date", element.myIndex), y: .value("x", element.x))
-                                    .foregroundStyle(by: .value("x", "x"))
-                                LineMark(x: .value("Date", element.myIndex), y: .value("y", element.y))
-                                    .foregroundStyle(by: .value("y", "y"))
-                                LineMark(x: .value("Date", element.myIndex), y: .value("z", element.z))
-                                    .foregroundStyle(by: .value("z", "z"))
-                            }
+        var acc: [AccelerometerDataPoint]
+        var body: some View {
+            ScrollView {
+                VStack {
+                    Chart {
+                        ForEach(acc) { element in
+                            LineMark(x: .value("Date", element.myIndex), y: .value("x", element.x))
+                                .foregroundStyle(by: .value("x", "x"))
+                            LineMark(x: .value("Date", element.myIndex), y: .value("y", element.y))
+                                .foregroundStyle(by: .value("y", "y"))
+                            LineMark(x: .value("Date", element.myIndex), y: .value("z", element.z))
+                                .foregroundStyle(by: .value("z", "z"))
                         }
-                        .chartScrollableAxes(.horizontal)
-                        .chartXVisibleDomain(length: 50)
-                        .padding()
                     }
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 50)
+                    .padding()
                 }
             }
+        }
     }
 
     func startDeviceMotion() {

@@ -138,19 +138,24 @@ struct AddContactView: View {
                 addContact()
             }
             .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text(alertTitle),
-                    message: Text(alertMessage),
-                    primaryButton: .default(
-                        Text("Done"),
-                        action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    ),
-                    secondaryButton: .default(
-                        Text("Add another")
+                if alertTitle == "Error" {
+                    return Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }
+                else {
+                    return Alert(
+                        title: Text(alertTitle),
+                        message: Text(alertMessage),
+                        primaryButton: .default(
+                            Text("Done"),
+                            action: {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        ),
+                        secondaryButton: .default(
+                            Text("Add another")
+                        )
                     )
-                )
+                }
             }
             
             ContactPickerButton(contact: $importedContact, phoneNumber: $importedPhoneNumber, onCancel: {
@@ -208,7 +213,7 @@ struct AddContactView: View {
         guard let contactKey = contactsRef.childByAutoId().key else { return }
 
         // Initialize imageUrl to an empty string
-        var contact = UserContact(uid: uid, name: finalContactName, phone: formattedPhoneNumber, imageUrl: "")
+        var contact = UserContact(id: contactKey, uid: uid, name: finalContactName, phone: formattedPhoneNumber, imageUrl: "")
 
         // Ensure parent folders in Firebase Storage exist
         let storageRef = Storage.storage().reference()
@@ -217,7 +222,7 @@ struct AddContactView: View {
 
         // Save the contact picture
         if let image = selectedImage, let imageData = image.jpegData(compressionQuality: 0.5) {
-            let profileImgReference = contactRef.child("\(contact.name).png")
+            let profileImgReference = contactRef.child("\(contact.id).png")
 
             let uploadTask = profileImgReference.putData(imageData, metadata: nil) { (metadata, error) in
                 if let error = error {
@@ -226,11 +231,12 @@ struct AddContactView: View {
                     // Wait for the image upload and URL retrieval to complete
                     profileImgReference.downloadURL { (url, error) in
                         if let imageUrl = url?.absoluteString {
-                            // Update the image URL in the contact object
+                            // Update the image URL and id in the contact object
                             contact.imageUrl = imageUrl
 
                             // Set the contact data under the unique key using setValue
                             let contactData: [String: Any] = [
+                                "id": contact.id,
                                 "name": contact.name,
                                 "phone": contact.phone,
                                 "imageUrl": contact.imageUrl
@@ -240,7 +246,7 @@ struct AddContactView: View {
                             contactsRef.child(contactKey).setValue(contactData)
 
                             // Append the contact to the local array
-                            let newContact = Contact(imageName: finalContactName, name: finalContactName, phone: formattedPhoneNumber, image: selectedImage)
+                            let newContact = Contact(id: contactKey, imageName: finalContactName, name: finalContactName, phone: formattedPhoneNumber, image: selectedImage)
                             contactsManager.contacts.append(newContact)
 
                             // Reset all fields
@@ -261,6 +267,7 @@ struct AddContactView: View {
             }
         } else {
             let contactData: [String: Any] = [
+                "id": contact.id,
                 "name": contact.name,
                 "phone": contact.phone,
                 "imageUrl": contact.imageUrl
@@ -269,7 +276,7 @@ struct AddContactView: View {
             contactsRef.child(contactKey).setValue(contactData)
             
             // Append the contact to the local array
-            let newContact = Contact(imageName: finalContactName, name: finalContactName, phone: formattedPhoneNumber, image: selectedImage)
+            let newContact = Contact(id: contactKey, imageName: finalContactName, name: finalContactName, phone: formattedPhoneNumber, image: selectedImage)
             contactsManager.contacts.append(newContact)
             
             // Reset all fields

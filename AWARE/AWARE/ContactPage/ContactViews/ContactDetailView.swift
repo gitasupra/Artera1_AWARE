@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseAuth
+import FirebaseStorage
 
 struct ContactDetailView: View {
     let contact: Contact
@@ -22,6 +25,7 @@ struct ContactDetailView: View {
     @State private var showAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
+    @Environment(\.presentationMode) var presentationMode
     
     var contactIndex: Int
     
@@ -161,60 +165,186 @@ struct ContactDetailView: View {
                     
                     Section {
                         Button(action: {
+                            // TODO: open user's phone app
+                        }) {
+                            Text("Call")
+                        }.disabled(isEditing)
+                        Button(action: {
                             // TODO: open user's messaging app
                         }) {
                             Text("Send message")
                         }.disabled(isEditing)
                         Button(action: {
-                            // TODO: open user's phone app
+                            showAlert = true
+                            alertTitle = "Delete Contact"
+                            alertMessage = "Are you sure you want to delete this contact?"
                         }) {
-                            Text("Call")
-                        }.disabled(isEditing)
+                            Text("Delete")
+                                .foregroundColor(.red)
+                        }
                     }
                 }
-            }
-            .padding()
-            .navigationBarItems(leading: Group {
-                if isEditing {
-                    Button(action: {
-                        isEditing.toggle()
-                        editedImage = contact.image
-                        editedName = contact.name
-                        editedPhone = contact.phone
-                        selectedImage = nil
-                    }) {
-                        Text("Cancel")
-                            .padding(.horizontal)
+                .padding()
+                .navigationBarItems(
+                    leading: Group {
+                        if isEditing {
+                            Button(action: {
+                                isEditing.toggle()
+                                editedImage = contact.image
+                                editedName = contact.name
+                                editedPhone = contact.phone
+                                selectedImage = nil
+                            }) {
+                                Text("Cancel")
+                                    .padding(.horizontal)
+                            }
+                        }
+                    },
+                    trailing: HStack {
+                        Button(action: {
+                            withAnimation {
+                                isEditing.toggle()
+                            }
+                            if !isEditing {
+                                updateContactData()
+                            }
+                        }) {
+                            Text(isEditing ? "Save" : "Edit")
+                                .padding(.horizontal)
+                        }
                     }
-                }
-            }, trailing: Button(action: {
-                if isEditing {
-                    if validateChanges(name: editedName, phoneNumber: editedPhone) {
-                        let formattedPhoneNumber = formatPhoneNumber(phoneNumber: editedPhone)
-                        contactsManager.contacts[contactIndex].image = editedImage
-                        contactsManager.contacts[contactIndex].name = editedName
-                        contactsManager.contacts[contactIndex].phone = formattedPhoneNumber!
-                        showAlert = true
-                        alertTitle = "Success"
-                        alertMessage = "Saved new contact details."
+                )
+                .alert(isPresented: $showAlert) {
+                    if alertTitle == "Delete Contact"{
+                        return Alert(
+                            title: Text(alertTitle),
+                            message: Text(alertMessage),
+                            primaryButton: .destructive (
+                                Text("Delete"),
+                                action: {
+                                    deleteContact()
+                                }
+                            ),
+                            secondaryButton: .cancel()
+                        )
+                    } else if alertMessage == "Contact deleted successfully" {
+                        return Alert(
+                            title: Text(alertTitle),
+                            message: Text(alertMessage),
+                            dismissButton: .default (
+                                Text("OK"),
+                                action: {
+                                    presentationMode.wrappedValue.dismiss()
+                                }
+                            )
+                        )
                     } else {
-                        editedImage = contact.image
-                        editedName = contact.name
-                        editedPhone = contact.phone
-                        selectedImage = nil
+                        return Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                     }
                 }
-                isEditing.toggle()
-            }) {
-                Text(isEditing ? "Save" : "Edit")
-                    .padding(.horizontal)
             }
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-            })
         }
     }
     
+    private func updateContactData() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        // Get a reference to the user's contacts in the database
+        let contactsRef = Database.database().reference().child("users").child(uid).child("contacts")
+        
+        // Create a dictionary to update only changed values
+        var updatedData: [String: Any] = [:]
+        
+        // Update the contact in the local array
+        let index = contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) ?? -1
+            let localContact = contactsManager.contacts[index]
+        
+        
+        // Check for changes and update the dictionary
+        if editedName != contact.name {
+            updatedData["name"] = editedName
+            localContact.name = editedName
+        }
+        
+        
+        if editedImage != contact.image {
+            if let image = editedImage, let imageData = image.jpegData(compressionQuality: 0.5) {
+                let profileImgReference = Storage.storage().reference().child("contact_pics").child(uid).child(contact.id).child("\(contact.id).png")
+                profileImgReference.putData(imageData, metadata: nil) { (metadata, error) in
+                    if let error = error {
+                        print("Error uploading image: \(error.localizedDescription)")
+                    } else {
+                        profileImgReference.downloadURL { (url, error) in
+                            if let imageUrl = url?.absoluteString {
+                                updatedData["imageUrl"] = imageUrl
+                                localContact.imageName = imageUrl
+                                DispatchQueue.global().async {
+                                    localContact.image = UIImage(data: try! Data(contentsOf: url!))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        let formattedPhoneNumber = formatPhoneNumber(phoneNumber: editedPhone)!
+        if formattedPhoneNumber != contact.phone {
+            updatedData["phone"] = formattedPhoneNumber
+            localContact.phone = formattedPhoneNumber
+        }
+        
+        // Update the contact data in the database
+        contactsRef.child(contact.id).updateChildValues(updatedData) { error, _ in
+            DispatchQueue.main.async {
+                if let error = error {
+                    showAlert = true
+                    alertTitle = "Error"
+                    alertMessage = "Failed to update contact: \(error.localizedDescription)"
+                }
+                else {
+                    showAlert = true
+                    alertTitle = "Success"
+                    alertMessage = "Saved new contact details"
+                    
+                    // Update the contact in the local array
+                    if let index = contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
+                        contactsManager.contacts[index] = localContact
+                    }
+                }
+            }
+        }
+    }
+    
+    private func deleteContact() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        // Get a reference to the user's contacts in the database
+        let contactsRef = Database.database().reference().child("users").child(uid).child("contacts")
+        
+        // Remove the contact from the database
+        contactsRef.child(contact.id).removeValue { error, _ in
+            if let error = error {
+                showAlert = true
+                alertTitle = "Error"
+                alertMessage = "Failed to delete contact: \(error.localizedDescription)"
+            } else {
+                showAlert = true
+                alertTitle = "Success"
+                alertMessage = "Contact deleted successfully"
+                
+                // Remove the contact from the local array
+                if let index = contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
+                    contactsManager.contacts.remove(at: index)
+                }
+            }
+        }
+    }
+                        
     private func formatPhoneNumber(phoneNumber: String) -> String? {
         let numericPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
         let formattedPhoneNumber = "+\(numericPhoneNumber.dropLast(10))(\(numericPhoneNumber.suffix(10).dropLast(7)))-\(numericPhoneNumber.suffix(7))"

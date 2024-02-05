@@ -8,13 +8,15 @@
 import SwiftUI
 import Contacts
 
-struct UserContact {
+struct UserContact: Identifiable {
+    let id: String
     let uid: String
     var name: String
     var phone: String
     var imageUrl: String
     
-    init(uid: String, name: String, phone: String, imageUrl: String) {
+    init(id: String, uid: String, name: String, phone: String, imageUrl: String) {
+        self.id = id
         self.uid = uid
         self.name = name
         self.phone = phone
@@ -23,6 +25,7 @@ struct UserContact {
 }
 
 extension UserContact {
-    static var MOCK_USERCONTACT=UserContact(uid: NSUUID().uuidString, name: "First Last", phone: "+1234567890", imageUrl: "testImage")
+    static var MOCK_USERCONTACT: UserContact {
+        UserContact(id: "123", uid: NSUUID().uuidString, name: "First Last", phone: "+1234567890", imageUrl: "testImage")
+    }
 }
-
