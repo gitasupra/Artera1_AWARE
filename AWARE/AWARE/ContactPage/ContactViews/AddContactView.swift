@@ -32,6 +32,7 @@ struct AddContactView: View {
     @State private var showAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
@@ -137,7 +138,19 @@ struct AddContactView: View {
                 addContact()
             }
             .alert(isPresented: $showAlert) {
-                Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    primaryButton: .default(
+                        Text("Done"),
+                        action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    ),
+                    secondaryButton: .default(
+                        Text("Add another")
+                    )
+                )
             }
             
             ContactPickerButton(contact: $importedContact, phoneNumber: $importedPhoneNumber, onCancel: {
