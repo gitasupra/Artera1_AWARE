@@ -224,7 +224,7 @@ struct AddContactView: View {
         if let image = selectedImage, let imageData = image.jpegData(compressionQuality: 0.5) {
             let profileImgReference = contactRef.child("\(contact.id).png")
 
-            let uploadTask = profileImgReference.putData(imageData, metadata: nil) { (metadata, error) in
+            profileImgReference.putData(imageData, metadata: nil) { (metadata, error) in
                 if let error = error {
                     print("Error uploading image: \(error.localizedDescription)")
                 } else {
