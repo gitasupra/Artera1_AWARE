@@ -10,6 +10,7 @@ import CoreLocation
 import Combine
 import MapKit
 
+
 struct LocationView: View {
     // User Location
     @ObservedObject var locationManager = LocationManager.shared
