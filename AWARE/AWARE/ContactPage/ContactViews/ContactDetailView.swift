@@ -259,7 +259,7 @@ struct ContactDetailView: View {
         
         // Update the contact in the local array
         if let index = contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
-            var localContact = contactsManager.contacts[index]
+            let localContact = contactsManager.contacts[index]
             
             // Check for changes and update the dictionary
             if editedName != contact.name {
