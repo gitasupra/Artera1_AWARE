@@ -70,7 +70,7 @@ class AuthViewModel: ObservableObject{
         guard let uid = Auth.auth().currentUser?.uid else {return}
         
         guard let snapshot = try? await Database.database().reference().child("users").child(uid).getData() else {return}
-        print(snapshot)
+//        print(snapshot)
         //use Codable protocol: map JSON data to User object
         self.currentUser = try? snapshot.data(as: User.self)
         //print("DEBUG: Current user is \(String(describing: self.currentUser))")
