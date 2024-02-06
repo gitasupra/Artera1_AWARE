@@ -356,7 +356,7 @@ struct ContentView: View {
             else{
                 LoginView()
             }
-        }
+        }.preferredColorScheme(.dark)
     }
 
     struct ContentView_Previews: PreviewProvider {
