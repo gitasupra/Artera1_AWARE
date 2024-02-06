@@ -9,7 +9,9 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 
+
 class ContactsManager: ObservableObject {
+    static let shared=ContactsManager()
     @Published var contacts: [Contact] = []
 
     init() {
@@ -19,6 +21,8 @@ class ContactsManager: ObservableObject {
     func fetchContacts() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let databaseRef = Database.database().reference().child("users").child(uid).child("contacts")
+        let dispatchGroup = DispatchGroup() // Create a dispatch group
+
         databaseRef.observeSingleEvent(of: .value) { snapshot in
             var fetchedContacts: [Contact] = []
 
@@ -29,21 +33,54 @@ class ContactsManager: ObservableObject {
                    let phone = contactDict["phone"] as? String,
                    let imageUrl = contactDict["imageUrl"] as? String {
 
+                    dispatchGroup.enter() // Enter the dispatch group
+
                     // Load the image asynchronously
                     DispatchQueue.global().async {
-                        if let imageURL = URL(string: imageUrl),
-                           let imageData = try? Data(contentsOf: imageURL),
-                           let image = UIImage(data: imageData) {
-                            let contact = Contact(id: id, imageName: imageUrl, name: name, phone: phone, image: image)
+                        if !imageUrl.isEmpty{
+                            if let imageURL = URL(string: imageUrl) {
+                                do {
+                                    let imageData = try Data(contentsOf: imageURL)
+                                    if let image = UIImage(data: imageData) {
+                                        let contact = Contact(id: id, imageName: imageUrl, name: name, phone: phone, image: image)
+
+                                        // Update UI on the main thread
+                                        DispatchQueue.main.async {
+                                            fetchedContacts.append(contact)
+                                            dispatchGroup.leave() // Leave the dispatch group
+                                        }
+                                    } else {
+                                        print("Failed to create UIImage from data")
+                                        dispatchGroup.leave() // Leave the dispatch group even if image creation fails
+                                    }
+                                } catch {
+                                    print("Error loading image data:", error)
+                                    dispatchGroup.leave() // Leave the dispatch group if there's an error loading image data
+                                }
+                            } else {
+                                print("Invalid image URL:", imageUrl)
+                                dispatchGroup.leave() // Leave the dispatch group for invalid image URLs
+                            }
+                        }
+                        else{
+                            let contact = Contact(id: id, imageName: "", name: name, phone: phone)
 
                             // Update UI on the main thread
                             DispatchQueue.main.async {
                                 fetchedContacts.append(contact)
-                                self.contacts = fetchedContacts
+                                dispatchGroup.leave() // Leave the dispatch group
                             }
                         }
+
                     }
                 }
+            }
+            
+            dispatchGroup.notify(queue: .main) {
+                self.contacts = fetchedContacts
+                print("contacts added")
+                print(fetchedContacts)
+                print(self.contacts)
             }
         }
     }

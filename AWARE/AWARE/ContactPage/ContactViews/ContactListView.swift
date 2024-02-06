@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ContactListView: View {
-    @ObservedObject private var contactsManager = ContactsManager()
+    @ObservedObject private var contactsManager = ContactsManager.shared
     
     var body: some View {
         NavigationView {
