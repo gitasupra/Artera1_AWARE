@@ -258,66 +258,65 @@ struct ContactDetailView: View {
         var updatedData: [String: Any] = [:]
         
         // Update the contact in the local array
-        let index = contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) ?? -1
-            let localContact = contactsManager.contacts[index]
-        
-        
-        // Check for changes and update the dictionary
-        if editedName != contact.name {
-            updatedData["name"] = editedName
-            localContact.name = editedName
-        }
-        
-        
-        if editedImage != contact.image {
-            if let image = editedImage, let imageData = image.jpegData(compressionQuality: 0.5) {
-                let profileImgReference = Storage.storage().reference().child("contact_pics").child(uid).child(contact.id).child("\(contact.id).png")
-                profileImgReference.putData(imageData, metadata: nil) { (metadata, error) in
-                    if let error = error {
-                        print("Error uploading image: \(error.localizedDescription)")
-                    } else {
-                        profileImgReference.downloadURL { (url, error) in
-                            if let imageUrl = url?.absoluteString {
-                                updatedData["imageUrl"] = imageUrl
-                                localContact.imageName = imageUrl
-                                DispatchQueue.global().async {
-                                    localContact.image = UIImage(data: try! Data(contentsOf: url!))
+        if let index = contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
+            var localContact = contactsManager.contacts[index]
+            
+            // Check for changes and update the dictionary
+            if editedName != contact.name {
+                updatedData["name"] = editedName
+                localContact.name = editedName
+            }
+            
+            if editedImage != contact.image {
+                if let image = editedImage, let imageData = image.jpegData(compressionQuality: 0.5) {
+                    let profileimgref = Storage.storage().reference().child("contact_pics").child(uid).child("\(contact.id).png")
+                    profileimgref.putData(imageData, metadata: nil) { (metadata, error) in
+                        if let error = error {
+                            print("Error uploading image: \(error.localizedDescription)")
+                            showAlertWithError(error)
+                        } else {
+                            profileimgref.downloadURL { (url, error) in
+                                if let imageUrl = url?.absoluteString {
+                                    localContact.imageName = imageUrl
+                                    // Update the contact data in the database
+                                    DispatchQueue.global().async {
+                                        localContact.image = UIImage(data: try! Data(contentsOf: url!))
+                                        // Update the contact data in the database
+                                        contactsRef.child(contact.id).updateChildValues(["imageUrl":imageUrl]) { error, _ in
+                                            DispatchQueue.main.async {
+                                                if let error = error {
+                                                    showAlertWithError(error)
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
-        
-        let formattedPhoneNumber = formatPhoneNumber(phoneNumber: editedPhone)!
-        if formattedPhoneNumber != contact.phone {
-            updatedData["phone"] = formattedPhoneNumber
-            localContact.phone = formattedPhoneNumber
-        }
-        
-        // Update the contact data in the database
-        contactsRef.child(contact.id).updateChildValues(updatedData) { error, _ in
-            DispatchQueue.main.async {
-                if let error = error {
-                    showAlert = true
-                    alertTitle = "Error"
-                    alertMessage = "Failed to update contact: \(error.localizedDescription)"
-                }
-                else {
-                    showAlert = true
-                    alertTitle = "Success"
-                    alertMessage = "Saved new contact details"
-                    
-                    // Update the contact in the local array
-                    if let index = contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
+            
+            let formattedPhoneNumber = formatPhoneNumber(phoneNumber: editedPhone)!
+            if formattedPhoneNumber != contact.phone {
+                updatedData["phone"] = formattedPhoneNumber
+                localContact.phone = formattedPhoneNumber
+            }
+            
+            contactsRef.child(contact.id).updateChildValues(updatedData) { error, _ in
+                DispatchQueue.main.async {
+                    if let error = error {
+                        showAlertWithError(error)
+                    } else {
+                        showAlertWithSuccess("Saved new contact details")
+                        // Update the contact in the local array
                         contactsManager.contacts[index] = localContact
                     }
                 }
             }
         }
     }
-    
+
     private func deleteContact() {
         guard let uid = Auth.auth().currentUser?.uid else {
             return
@@ -326,23 +325,43 @@ struct ContactDetailView: View {
         // Get a reference to the user's contacts in the database
         let contactsRef = Database.database().reference().child("users").child(uid).child("contacts")
         
+        // Get a reference to the contact image in the storage
+        let profileImgRef = Storage.storage().reference().child("contact_pics").child(uid).child("\(contact.id).png")
+        
         // Remove the contact from the database
-        contactsRef.child(contact.id).removeValue { error, _ in
+        contactsRef.child(contact.id).removeValue { [self] error, _ in
             if let error = error {
-                showAlert = true
-                alertTitle = "Error"
-                alertMessage = "Failed to delete contact: \(error.localizedDescription)"
+                self.showAlertWithError(error)
             } else {
-                showAlert = true
-                alertTitle = "Success"
-                alertMessage = "Contact deleted successfully"
-                
-                // Remove the contact from the local array
-                if let index = contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
-                    contactsManager.contacts.remove(at: index)
+                profileImgRef.delete { error in
+                    if let error = error {
+                        self.showAlertWithError(error)
+                    } else {
+                        self.showAlertWithSuccess("Contact deleted successfully")
+                        
+                        // Remove the contact from the local array
+                        if let index = self.contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
+                            self.contactsManager.contacts.remove(at: index)
+                        }
+                    }
                 }
             }
         }
+        
+        // Reset contact detail page
+        editedImage = nil
+    }
+    
+    func showAlertWithError(_ error: Error) {
+        showAlert = true
+        alertTitle = "Error"
+        alertMessage = "Failed to delete contact: \(error.localizedDescription)"
+    }
+
+    func showAlertWithSuccess(_ message: String) {
+        showAlert = true
+        alertTitle = "Success"
+        alertMessage = message
     }
                         
     private func formatPhoneNumber(phoneNumber: String) -> String? {

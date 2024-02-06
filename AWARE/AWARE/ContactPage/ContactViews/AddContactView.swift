@@ -215,14 +215,9 @@ struct AddContactView: View {
         // Initialize imageUrl to an empty string
         var contact = UserContact(id: contactKey, uid: uid, name: finalContactName, phone: formattedPhoneNumber, imageUrl: "")
 
-        // Ensure parent folders in Firebase Storage exist
-        let storageRef = Storage.storage().reference()
-        let userRef = storageRef.child("contact_pics").child(uid)
-        let contactRef = userRef.child(contactKey)
-
         // Save the contact picture
         if let image = selectedImage, let imageData = image.jpegData(compressionQuality: 0.5) {
-            let profileImgReference = contactRef.child("\(contact.id).png")
+            let profileImgReference = Storage.storage().reference().child("contact_pics").child(uid).child("\(contact.id).png")
 
             profileImgReference.putData(imageData, metadata: nil) { (metadata, error) in
                 if let error = error {
