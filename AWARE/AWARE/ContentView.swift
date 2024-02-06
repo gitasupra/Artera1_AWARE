@@ -61,6 +61,7 @@ struct ContentView: View {
     
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
+        let timestamp: Int64
         let x: Double
         let y: Double
         let z: Double
@@ -417,10 +418,11 @@ struct ContentView: View {
         // Convert AccelerometerDataPoint array to a string
         fileCounter += 1
 
-        let accDataString = acc.map { "\($0.myIndex), \($0.x), \($0.y), \($0.z)" }.joined(separator: "\n")
-
+        let accDataString = acc.map {
+            "\($0.myIndex), \($0.timestamp), \($0.x), \($0.y), \($0.z)"
+        }.joined(separator: "\n")
         // Call the function to write text to a file
-        writeTextToFile(accDataString, fileName: "accelerometer_data_lvl2_\(fileCounter)")
+        writeTextToFile(accDataString, fileName: "accDataTimed")
     }
     func startDeviceMotion() {
         //var idx = 0
@@ -431,7 +433,7 @@ struct ContentView: View {
             self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
             
             // Configure a timer to fetch the device motion data
-            let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
+            let timer = Timer(fire: Date(), interval: (1.0/40.0), repeats: true,
                                 block: { (timer) in
                 if let data = self.motion.deviceMotion {
                     // Get attitude data
@@ -441,9 +443,9 @@ struct ContentView: View {
                     // Get the gyroscope data
                     let gyro = data.rotationRate
                     accIdx += 1
-                    
-                    let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
-                    
+                    let timestampInMilliseconds = Int64(Date().timeIntervalSince1970 * 1000)
+                    let new: AccelerometerDataPoint = AccelerometerDataPoint(timestamp: timestampInMilliseconds, x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+
                     acc.append(new)
                     
                 }
