@@ -298,6 +298,7 @@
 				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
 				125506B52B5CB61F007F0323 /* ImagePicker.swift */,
 				125506B62B5CB61F007F0323 /* ContactDetailView.swift */,
+				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
 			);
 			path = ContactViews;
 			sourceTree = "<group>";
@@ -364,7 +365,6 @@
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
-				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
 				127DBA2B2B1D57790031F9F7 /* Shared.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
@@ -840,6 +840,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TWILIO_ACCOUNT_SID = ACf11ccb3b3093b45e54c92c88bd41f142;
+				TWILIO_AUTH_TOKEN = d7d6f0eef79203d2dcd0bcb998e6b280;
 			};
 			name = Debug;
 		};
@@ -893,6 +895,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				TWILIO_ACCOUNT_SID = ACf11ccb3b3093b45e54c92c88bd41f142;
+				TWILIO_AUTH_TOKEN = d7d6f0eef79203d2dcd0bcb998e6b280;
 			};
 			name = Release;
 		};
