@@ -35,7 +35,6 @@ extension View{
 
 struct ContentView: View {
     
-    
     @EnvironmentObject var motion: CMMotionManager
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var enableDataCollectionObj = EnableDataCollection()
@@ -55,8 +54,15 @@ struct ContentView: View {
     @State private var acc: [AccelerometerDataPoint] = []
     @State private var accIdx: Int = 0
     
+    @State private var windowData: [AccelerometerDataPoint] = []
+    
+    //FIXME not sure about type here, just want helper methods
+    private var predictLevel = PredictLevel.init()
+    let windowFile : String = "window_data.csv"
+    
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
+        let timestamp: Int64
         let x: Double
         let y: Double
         let z: Double
@@ -393,6 +399,8 @@ struct ContentView: View {
 
     func startDeviceMotion() {
         //var idx = 0
+        var windowFileURL : String = ""
+        var processedURL : String = ""
         
         if motion.isDeviceMotionAvailable {
             self.motion.deviceMotionUpdateInterval = 1.0/50.0
@@ -409,11 +417,29 @@ struct ContentView: View {
                     let accelerometer = data.userAcceleration
                     // Get the gyroscope data
                     let gyro = data.rotationRate
-                    accIdx += 1
                     
-                    let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+                    let timestampInMilliseconds = Int64(Date().timeIntervalSince1970 * 1000)
+
+                    
+                    let new: AccelerometerDataPoint = AccelerometerDataPoint(timestamp: timestampInMilliseconds, x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+
                     
                     acc.append(new)
+                    windowData.append(new)
+                    
+                    //FIXME this might get messed up by start/stop data collection, timer might be better
+                    //FIXME corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
+                    if (accIdx > 0 ) && (accIdx % 500 == 0){
+                        //At multiple of (data points per second) * 10 seconds
+                        windowFileURL = writeAccDataToCSV(data: windowData)!
+                        print(windowFileURL)
+                        processedURL = predictLevel.processData(pidFilename: windowFileURL)
+                        //FIXME call prediction func here
+                    }
+                        
+                        
+                    accIdx += 1
+
                     
                 }
                 
@@ -425,4 +451,36 @@ struct ContentView: View {
         }
         
     }
+    
+    func writeAccDataToCSV(data: [AccelerometerDataPoint]) -> String? {
+        // Create a CSV string header
+        var csvString = "time,x,y,z\n"
+        
+        // Append each data point to the CSV string
+        for dataPoint in data {
+            let timestamp = dataPoint.timestamp
+            let x = dataPoint.x
+            let y = dataPoint.y
+            let z = dataPoint.z
+            csvString.append("\(timestamp),\(x),\(y),\(z)\n")
+        }
+        
+        // Create a file URL for saving the CSV file
+        let fileName = windowFile
+        guard let fileURL = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName) else {
+            print("Failed to create file URL")
+            return nil
+        }
+        
+        // Write the CSV string to the file
+        do {
+            try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+            print("CSV file saved successfully")
+            return fileURL.path
+        } catch {
+            print("Error writing CSV file: \(error)")
+            return nil
+        }
+    }
+
 }
