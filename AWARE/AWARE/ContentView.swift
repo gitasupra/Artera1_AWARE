@@ -7,6 +7,7 @@ import FirebaseCore
 import FirebaseAnalytics
 import FirebaseAnalyticsSwift
 import FirebaseDatabase
+import CoreML
 
 struct viewDidLoadModifier: ViewModifier{
     @State private var didLoad = false
@@ -59,6 +60,8 @@ struct ContentView: View {
     //FIXME not sure about type here, just want helper methods
     private var predictLevel = PredictLevel.init()
     let windowFile : String = "window_data.csv"
+    
+
     
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
@@ -480,6 +483,27 @@ struct ContentView: View {
         } catch {
             print("Error writing CSV file: \(error)")
             return nil
+        }
+    }
+    func predictFromFile(inputFilename: String){
+        do{
+            let config=MLModelConfiguration()
+            let model = try alcohol_time_3(configuration:config)
+            
+            
+            // Load data from the file
+            guard let fileURL = URL(string: inputFilename) else {
+                print("Invalid file URL.")
+                return
+            }
+            let inputData = try Data(contentsOf: fileURL)
+            
+            // Perform prediction using the model
+            let input = try alcohol_time_3Input(data: inputData)
+            let prediction = try model.prediction(input: input)
+        }
+        catch{
+            
         }
     }
 
