@@ -64,6 +64,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		12006B032B73786200348DE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC9482AB2AF870E100A3A64E;
+			remoteInfo = "AWARE Watch App";
+		};
 		CC9482972AF870E100A3A64E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
@@ -77,13 +84,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = CC9482852AF870DF00A3A64E;
 			remoteInfo = AWARE;
-		};
-		CC9482AE2AF870E100A3A64E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC9482AB2AF870E100A3A64E;
-			remoteInfo = "AWARE Watch App";
 		};
 		CC9482BF2AF870E300A3A64E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -451,7 +451,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				CC9482AF2AF870E100A3A64E /* PBXTargetDependency */,
+				12006B042B73786200348DE3 /* PBXTargetDependency */,
 			);
 			name = AWARE;
 			packageProductDependencies = (
@@ -563,7 +563,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					CC9482852AF870DF00A3A64E = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -754,6 +754,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		12006B042B73786200348DE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC9482AB2AF870E100A3A64E /* AWARE Watch App */;
+			targetProxy = 12006B032B73786200348DE3 /* PBXContainerItemProxy */;
+		};
 		CC9482982AF870E100A3A64E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC9482852AF870DF00A3A64E /* AWARE */;
@@ -763,11 +768,6 @@
 			isa = PBXTargetDependency;
 			target = CC9482852AF870DF00A3A64E /* AWARE */;
 			targetProxy = CC9482A12AF870E100A3A64E /* PBXContainerItemProxy */;
-		};
-		CC9482AF2AF870E100A3A64E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC9482AB2AF870E100A3A64E /* AWARE Watch App */;
-			targetProxy = CC9482AE2AF870E100A3A64E /* PBXContainerItemProxy */;
 		};
 		CC9482C02AF870E300A3A64E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -816,6 +816,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -834,6 +835,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -842,6 +844,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TWILIO_ACCOUNT_SID = ACf11ccb3b3093b45e54c92c88bd41f142;
 				TWILIO_AUTH_TOKEN = d7d6f0eef79203d2dcd0bcb998e6b280;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -879,6 +882,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -891,12 +895,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				TWILIO_ACCOUNT_SID = ACf11ccb3b3093b45e54c92c88bd41f142;
 				TWILIO_AUTH_TOKEN = d7d6f0eef79203d2dcd0bcb998e6b280;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -916,6 +922,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -948,6 +955,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
