@@ -5,18 +5,18 @@
 //  Created by Jessica Nguyen on 1/18/24.
 //
 
-import Foundation
 import SwiftUI
 import Contacts
 
 class Contact: ObservableObject, Identifiable {
-    let id = UUID()
+    @Published var id: String
     @Published var imageName: String
     @Published var name: String
     @Published var phone: String
     @Published var image: UIImage?
     
-    init(imageName: String, name: String, phone: String, image: UIImage? = nil) {
+    init(id: String, imageName: String, name: String, phone: String, image: UIImage? = nil) {
+        self.id = id
         self.imageName = imageName
         self.name = name
         self.phone = phone
