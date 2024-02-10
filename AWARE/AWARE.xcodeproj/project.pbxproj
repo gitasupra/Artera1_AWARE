@@ -44,6 +44,7 @@
 		127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
 		127DBA302B1D58040031F9F7 /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */; };
 		127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */; };
+		8D3737912B782E13001191B2 /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3737902B782E13001191B2 /* InputFunctions.swift */; };
 		77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */; };
 		AD5ECFF3F4D796166139E335 /* libPods-AWARE Watch AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
@@ -151,6 +152,7 @@
 		49D48D2DEEE2EA7196441BDF /* Pods-AWARE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE.release.xcconfig"; path = "Target Support Files/Pods-AWARE/Pods-AWARE.release.xcconfig"; sourceTree = "<group>"; };
 		5655CFE3C3F087D173B7F6F0 /* Pods-AWARE Watch AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE Watch AppTests.release.xcconfig"; path = "Target Support Files/Pods-AWARE Watch AppTests/Pods-AWARE Watch AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AWARE Watch App.entitlements"; sourceTree = "<group>"; };
+		8D3737902B782E13001191B2 /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
 		825C0DD259AE3933A18F8425 /* Pods-AWARETests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARETests.debug.xcconfig"; path = "Target Support Files/Pods-AWARETests/Pods-AWARETests.debug.xcconfig"; sourceTree = "<group>"; };
 		93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARE Watch AppUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A229487241DA802E293FF595 /* libPods-AWARE Watch AppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARE Watch AppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -401,6 +403,7 @@
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
 				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
+				8D3737902B782E13001191B2 /* InputFunctions.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
 			);
@@ -835,6 +838,7 @@
 				125506BC2B5CB61F007F0323 /* AddContactView.swift in Sources */,
 				125506C72B5CC1C1007F0323 /* LocationManager.swift in Sources */,
 				12143EA72B5C8ADE004A168F /* RegistrationView.swift in Sources */,
+				8D3737912B782E13001191B2 /* InputFunctions.swift in Sources */,
 				125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */,
 				125506BA2B5CB61F007F0323 /* Styles.swift in Sources */,
 				127DBA302B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
