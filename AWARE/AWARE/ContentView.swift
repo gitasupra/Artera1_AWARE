@@ -56,8 +56,14 @@ struct ContentView: View {
     @State private var acc: [AccelerometerDataPoint] = []
     @State private var accIdx: Int = 0
     
+    //accelerometer 10-second window data variables
+    @State private var windowAccData: [AccelerometerDataPoint] = []
+    @State private var windowFile: String = "window_data.csv"
+    @State private var windowFileURL: String = ""
+    
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
+        let timestamp: Int64
         let x: Double
         let y: Double
         let z: Double
@@ -396,12 +402,13 @@ struct ContentView: View {
         //var idx = 0
         
         if motion.isDeviceMotionAvailable {
-            self.motion.deviceMotionUpdateInterval = 1.0/50.0
+            //Bar Crawl dataset sampled at 40Hz
+            self.motion.deviceMotionUpdateInterval = 1.0/40.0
             self.motion.showsDeviceMovementDisplay = true
             self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
             
             // Configure a timer to fetch the device motion data
-            let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
+            let timer = Timer(fire: Date(), interval: (1.0/40.0), repeats: true,
                                 block: { (timer) in
                 if let data = self.motion.deviceMotion {
                     // Get attitude data
@@ -410,11 +417,29 @@ struct ContentView: View {
                     let accelerometer = data.userAcceleration
                     // Get the gyroscope data
                     let gyro = data.rotationRate
-                    accIdx += 1
                     
-                    let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+                    let timestampInMilliseconds = Int64(Date().timeIntervalSince1970 * 1000)
+                    
+                    
+                    
+                    let new:AccelerometerDataPoint = AccelerometerDataPoint(timestamp: timestampInMilliseconds, x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
                     
                     acc.append(new)
+                    windowAccData.append(new)
+                    
+                    //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
+                    //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
+                    
+                    if (accIdx > 0 ) && (accIdx % 400 == 0){
+                        //At multiple of (data points per second) * 10 seconds
+                        windowFileURL = writeAccDataToCSV(data: windowAccData)!
+                        print("Window data saved to: \(windowFileURL)")
+                        
+                        //reset window data array
+                        windowAccData=[]
+                    }
+                    
+                    accIdx += 1
                     
                 }
                 
@@ -426,4 +451,41 @@ struct ContentView: View {
         }
         
     }
+    func writeAccDataToCSV(data: [AccelerometerDataPoint]) -> String? {
+        // Create a CSV string header
+        var csvString = "time,x,y,z\n"
+
+        // Append each data point to the CSV string
+        for dataPoint in data {
+            let timestamp = dataPoint.timestamp
+            let x = dataPoint.x
+            let y = dataPoint.y
+            let z = dataPoint.z
+            csvString.append("\(timestamp),\(x),\(y),\(z)\n")
+        }
+        
+//        if let firstTimestamp = data.first?.timestamp,
+//            let lastTimestamp = data.last?.timestamp {
+//             print("First timestamp: \(firstTimestamp), Last timestamp: \(lastTimestamp)")
+//         }
+
+        // Create a file URL for saving the CSV file
+        let fileName = windowFile
+        guard let fileURL = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName) else {
+            print("Failed to create file URL")
+            return nil
+        }
+
+        // Write the CSV string to the file
+        do {
+            try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+//            print("CSV file saved successfully")
+            return fileURL.path
+        } catch {
+            print("Error writing CSV file: \(error)")
+            return nil
+        }
+    }
+
+    
 }
