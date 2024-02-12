@@ -61,6 +61,8 @@ struct ContentView: View {
     @State private var windowFile: String = "window_data.csv"
     @State private var windowFileURL: String = ""
     
+    private var inputFunctions: InputFunctions
+    
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
         let timestamp: Int64
@@ -434,6 +436,8 @@ struct ContentView: View {
                         //At multiple of (data points per second) * 10 seconds
                         windowFileURL = writeAccDataToCSV(data: windowAccData)!
                         print("Window data saved to: \(windowFileURL)")
+                        
+                        inputFunctions.processData(windowFile: windowFileURL)
                         
                         //reset window data array
                         windowAccData=[]
