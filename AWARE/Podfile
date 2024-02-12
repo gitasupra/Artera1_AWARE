@@ -1,0 +1,28 @@
+# platform :ios, '9.0'
+
+target 'AWARE' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+  pod 'UberRides', '~> 0.9'
+end
+
+# Pods for AWARE
+
+target 'AWARE Watch AppTests' do
+  inherit! :search_paths
+  # Pods for testing
+end
+
+target 'AWARE Watch AppUITests' do
+  # Pods for testing
+end
+
+target 'AWARETests' do
+  inherit! :search_paths
+  # Pods for testing
+end
+
+  
+  
+
+ 

@@ -7,6 +7,7 @@ import FirebaseCore
 import FirebaseAnalytics
 import FirebaseAnalyticsSwift
 import FirebaseDatabase
+//import UberRides
 
 struct viewDidLoadModifier: ViewModifier{
     @State private var didLoad = false
