@@ -192,7 +192,6 @@
 				12143EBA2B5C8B41004A168F /* FirebaseAnalytics in Frameworks */,
 				77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */,
 				124746DB2B6F0033002E1AC9 /* FirebaseStorage in Frameworks */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +482,6 @@
 				CC9482832AF870DF00A3A64E /* Frameworks */,
 				CC9482842AF870DF00A3A64E /* Resources */,
 				CC9482D52AF870E300A3A64E /* Embed Watch Content */,
-				FF7860E32B71ABA400542D84 /* ShellScript */,
 				952ED251C61D1DC3FAC0F8EA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -817,24 +815,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AWARE/Pods-AWARE-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		FF7860E32B71ABA400542D84 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/UberRides.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
