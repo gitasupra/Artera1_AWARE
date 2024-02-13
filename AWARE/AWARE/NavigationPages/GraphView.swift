@@ -70,7 +70,7 @@ struct GraphView: View {
                 }
             }
         }.onChange(of: enableDataCollectionObj.enableDataCollection) {
-            if (enableDataCollectionObj.enableDataCollection == 0) {
+            if (enableDataCollectionObj.enableDataCollection == 1) {
                 startDeviceMotion()
             } else {
                 self.motion.stopDeviceMotionUpdates()
