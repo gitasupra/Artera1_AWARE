@@ -237,7 +237,6 @@ struct ContentView: View {
                     if (enableDataCollection) {
                         startDeviceMotion()
                     } else {
-                        timer.invalidate()
                         self.motion.stopDeviceMotionUpdates()
                     }
                 }
