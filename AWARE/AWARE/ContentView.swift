@@ -51,6 +51,7 @@ struct ContentView: View {
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
     @State var showAccChart: Bool = true
+    @State var showHeartChart: Bool = true
     
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
@@ -114,13 +115,13 @@ struct ContentView: View {
                     NavigationStack {
                         VStack {
                             Button {
-                                //showHeartChart = true
+                                showHeartChart = true
                             } label: {
                                 Text("View Heart Rate Data")
                             }
                             .navigationDestination(
-                                isPresented: $showAccChart) {
-                                    accelerometerGraph(acc: acc)
+                                isPresented: $showHeartChart) {
+                                    heartRateGraph(heartRate: enableDataCollectionObj.heartRateList)
                                 }
                                 .buttonStyle(CustomButtonStyle())
                             
@@ -236,6 +237,7 @@ struct ContentView: View {
                     if (enableDataCollection) {
                         startDeviceMotion()
                     } else {
+                        timer.invalidate()
                         self.motion.stopDeviceMotionUpdates()
                     }
                 }
@@ -382,6 +384,25 @@ struct ContentView: View {
                                 .foregroundStyle(by: .value("y", "y"))
                             LineMark(x: .value("Date", element.myIndex), y: .value("z", element.z))
                                 .foregroundStyle(by: .value("z", "z"))
+                        }
+                    }
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 50)
+                    .padding()
+                }
+            }
+        }
+    }
+    
+    struct heartRateGraph: View {
+        var heartRate: [(Double, Int)]
+        var body: some View {
+            ScrollView {
+                VStack {
+                    Chart {
+                        ForEach(heartRate.indices, id: \.self) { index in
+                            let element = heartRate[index]
+                            LineMark(x: .value("idx", element.1), y: .value("Heart Rate", element.0))
                         }
                     }
                     .chartScrollableAxes(.horizontal)
