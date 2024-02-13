@@ -53,6 +53,7 @@ struct ContentView: View {
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
     @State var showAccChart: Bool = true
+    @State var showHeartChart: Bool = true
     
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
@@ -116,13 +117,13 @@ struct ContentView: View {
                     NavigationStack {
                         VStack {
                             Button {
-                                //showHeartChart = true
+                                showHeartChart = true
                             } label: {
                                 Text("View Heart Rate Data")
                             }
                             .navigationDestination(
-                                isPresented: $showAccChart) {
-                                    accelerometerGraph(acc: acc)
+                                isPresented: $showHeartChart) {
+                                    heartRateGraph(heartRate: enableDataCollectionObj.heartRateList)
                                 }
                                 .buttonStyle(CustomButtonStyle())
                             
@@ -192,54 +193,53 @@ struct ContentView: View {
             }
             
             // Page 3 - Home / Toggle
-                NavigationView {
-                    VStack(alignment: .center) {
-                        Spacer()
-                        Image("testlogo")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 300, height: 100)
-                        Image("testicon")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                        
-                        Spacer()
-                        
-                        if (enableDataCollectionObj.enableDataCollection == 0) {
-                            if !self.$shouldHide.wrappedValue {
-                                Button(action: {
-                                    enableDataCollectionObj.toggleOn()
-                                    enableDataCollection.toggle()
-                                    alertManager.intoxLevel = 0
-                                }) {
-                                    Image(systemName: "touchid")
-                                        .font(.system(size: 100))
-                                        .foregroundColor(.red)
-                                        .controlSize(.extraLarge)
-                                }.padding()
-                                Text("Enable Data Collection")
-                                Spacer()
-                            }} else {
-                                Button(action: {
-                                    enableDataCollectionObj.toggleOff()
-                                    enableDataCollection.toggle()
-                                }) {
-                                    Image(systemName: "touchid")
-                                        .font(.system(size: 100))
-                                        .foregroundColor(.green)
-                                        .controlSize(.extraLarge)
-                                }.padding()
-                                Text("Disable Data Collection")
-                                Spacer()
-                            }
-                    }
-                    .onChange(of: enableDataCollection) {
-                        if (enableDataCollection) {
-                            startDeviceMotion()
-                        } else {
-                            self.motion.stopDeviceMotionUpdates()
+            VStack(alignment: .center) {
+                Spacer()
+                Image("testlogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 300, height: 100)
+                Image("testicon")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 150, height: 150)
+                
+                Spacer()
+                
+                if (enableDataCollectionObj.enableDataCollection == 0) {
+                    if !self.$shouldHide.wrappedValue {
+                        Button(action: {
+                                enableDataCollectionObj.toggleOn()
+                                enableDataCollection.toggle()
+                            }) {
+                                Image(systemName: "touchid")
+                                    .font(.system(size: 100))
+                                    .foregroundColor(.red)
+                                    .controlSize(.extraLarge)
+                            }.padding()
+                            Text("Enable Data Collection")
+                            Spacer()
                         }
+                    } else {
+                        Button(action: {
+                                enableDataCollectionObj.toggleOff()
+                                enableDataCollection.toggle()
+                            }) {
+                                Image(systemName: "touchid")
+                                    .font(.system(size: 100))
+                                    .foregroundColor(.green)
+                                    .controlSize(.extraLarge)
+                            }.padding()
+                        Text("Disable Data Collection")
+                        Spacer()
+                    }
+                }
+                .onChange(of: enableDataCollection) {
+                    if (enableDataCollection) {
+                        startDeviceMotion()
+                    } else {
+                        timer.invalidate()
+                        self.motion.stopDeviceMotionUpdates()
                     }
                 }
                 .tabItem {
@@ -394,6 +394,25 @@ struct ContentView: View {
                                 .foregroundStyle(by: .value("y", "y"))
                             LineMark(x: .value("Date", element.myIndex), y: .value("z", element.z))
                                 .foregroundStyle(by: .value("z", "z"))
+                        }
+                    }
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 50)
+                    .padding()
+                }
+            }
+        }
+    }
+    
+    struct heartRateGraph: View {
+        var heartRate: [(Double, Int)]
+        var body: some View {
+            ScrollView {
+                VStack {
+                    Chart {
+                        ForEach(heartRate.indices, id: \.self) { index in
+                            let element = heartRate[index]
+                            LineMark(x: .value("idx", element.1), y: .value("Heart Rate", element.0))
                         }
                     }
                     .chartScrollableAxes(.horizontal)
