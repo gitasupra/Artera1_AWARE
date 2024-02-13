@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GraphView: View {
+struct ContactsView: View {
     var body: some View {
         VStack(alignment: .center) {
             NavigationStack {

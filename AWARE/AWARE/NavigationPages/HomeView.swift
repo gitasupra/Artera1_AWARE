@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var enableDataCollectionObj: EnableDataCollection
-    @State static var enableDataCollection = false
+    @State var enableDataCollection = false
     @State private var shouldHide = false
     
     var body: some View {
@@ -30,27 +30,27 @@ struct HomeView: View {
                 if !self.$shouldHide.wrappedValue {
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
-                        HomeView.enableDataCollection.toggle()
+                        enableDataCollection.toggle()
                     }) {
                         Image(systemName: "touchid")
                             .font(.system(size: 100))
                             .foregroundColor(.red)
                             .controlSize(.extraLarge)
                     }.padding()
-                    Text("Enable Data Collection")
+                    Text("Enable Drinking Mode")
                     Spacer()
                 }
             } else {
                 Button(action: {
                     enableDataCollectionObj.toggleOff()
-                    HomeView.enableDataCollection.toggle()
+                    enableDataCollection.toggle()
                 }) {
                     Image(systemName: "touchid")
                         .font(.system(size: 100))
                         .foregroundColor(.green)
                         .controlSize(.extraLarge)
                 }.padding()
-                Text("Disable Data Collection")
+                Text("Disable Drinking Mode")
                 Spacer()
             }
         }

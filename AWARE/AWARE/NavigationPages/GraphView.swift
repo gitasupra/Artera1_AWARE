@@ -13,7 +13,6 @@ struct GraphView: View {
     @EnvironmentObject var enableDataCollectionObj: EnableDataCollection
     @EnvironmentObject var motion: CMMotionManager
     @State var showAccChart: Bool = true
-    @State var enableDataCollection = HomeView.enableDataCollection
     
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
@@ -70,8 +69,8 @@ struct GraphView: View {
                     }
                 }
             }
-        }.onChange(of: enableDataCollection) {
-            if (enableDataCollection) {
+        }.onChange(of: enableDataCollectionObj.enableDataCollection) {
+            if (enableDataCollectionObj.enableDataCollection == 0) {
                 startDeviceMotion()
             } else {
                 self.motion.stopDeviceMotionUpdates()

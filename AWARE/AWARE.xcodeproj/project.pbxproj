@@ -43,6 +43,7 @@
 		1263EE512B7AD97A0080C08A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263EE502B7AD97A0080C08A /* HomeView.swift */; };
 		1263EE532B7ADB250080C08A /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263EE522B7ADB250080C08A /* ContactsView.swift */; };
 		1263EE552B7ADB650080C08A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263EE542B7ADB650080C08A /* SettingsView.swift */; };
+		1263EE572B7C2EC80080C08A /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263EE562B7C2EC80080C08A /* AnalyticsView.swift */; };
 		1278BA6A2B5CC3360053DF42 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1278BA692B5CC3360053DF42 /* LocationView.swift */; };
 		1278BA6C2B5CC6D80053DF42 /* DeviceLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1278BA6B2B5CC6D80053DF42 /* DeviceLocationService.swift */; };
 		127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
@@ -148,6 +149,7 @@
 		1263EE502B7AD97A0080C08A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1263EE522B7ADB250080C08A /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		1263EE542B7ADB650080C08A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1263EE562B7C2EC80080C08A /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		1278BA692B5CC3360053DF42 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		1278BA6B2B5CC6D80053DF42 /* DeviceLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLocationService.swift; sourceTree = "<group>"; };
 		1278BA6D2B5CCCFD0053DF42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				1263EE502B7AD97A0080C08A /* HomeView.swift */,
 				1263EE522B7ADB250080C08A /* ContactsView.swift */,
 				1263EE542B7ADB650080C08A /* SettingsView.swift */,
+				1263EE562B7C2EC80080C08A /* AnalyticsView.swift */,
 			);
 			path = NavigationPages;
 			sourceTree = "<group>";
@@ -846,6 +849,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1263EE572B7C2EC80080C08A /* AnalyticsView.swift in Sources */,
 				124746D92B6EF1DD002E1AC9 /* UserContact.swift in Sources */,
 				1278BA6C2B5CC6D80053DF42 /* DeviceLocationService.swift in Sources */,
 				125506B82B5CB61F007F0323 /* Contact.swift in Sources */,
@@ -1085,6 +1089,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1117,6 +1122,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

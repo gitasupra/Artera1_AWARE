@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct Style {
-    let accentColor:Color = .purple
-    let backgroundColor:Color = .black
+class Style {
+    static let accentColor:Color = .purple
+    static let backgroundColor:Color = .black
     struct CustomButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
