@@ -61,7 +61,7 @@ struct ContentView: View {
     @State private var windowFile: String = "window_data.csv"
     @State private var windowFileURL: String = ""
     
-    private var inputFunctions: InputFunctions
+    @State private var inputFunctions = InputFunctions()
     
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {

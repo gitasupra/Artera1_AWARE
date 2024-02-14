@@ -46,6 +46,7 @@
 		127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */; };
 		77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */; };
 		8D3737912B782E13001191B2 /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3737902B782E13001191B2 /* InputFunctions.swift */; };
+		8DE519472B7C1D5F00389F5E /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 8DE519462B7C1D5F00389F5E /* SwiftCSV */; };
 		AD5ECFF3F4D796166139E335 /* libPods-AWARE Watch AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
 		CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC94828B2AF870DF00A3A64E /* ContentView.swift */; };
@@ -188,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */,
+				8DE519472B7C1D5F00389F5E /* SwiftCSV in Frameworks */,
 				12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */,
 				12143EBC2B5C8B41004A168F /* FirebaseAnalyticsSwift in Frameworks */,
 				12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */,
@@ -500,6 +502,7 @@
 				12143EC12B5C8B68004A168F /* FirebaseDatabase */,
 				12143EC32B5C8B70004A168F /* FirebaseAuth */,
 				124746DA2B6F0033002E1AC9 /* FirebaseStorage */,
+				8DE519462B7C1D5F00389F5E /* SwiftCSV */,
 			);
 			productName = AWARE;
 			productReference = CC9482862AF870DF00A3A64E /* AWARE.app */;
@@ -643,6 +646,7 @@
 			packageReferences = (
 				12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				12143EBD2B5C8B52004A168F /* XCRemoteSwiftPackageReference "Alamofire" */,
+				8DE519452B7C1D5F00389F5E /* XCRemoteSwiftPackageReference "SwiftCSV" */,
 			);
 			productRefGroup = CC9482872AF870DF00A3A64E /* Products */;
 			projectDirPath = "";
@@ -1465,6 +1469,14 @@
 				minimumVersion = 5.8.1;
 			};
 		};
+		8DE519452B7C1D5F00389F5E /* XCRemoteSwiftPackageReference "SwiftCSV" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftcsv/SwiftCSV";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1497,6 +1509,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		8DE519462B7C1D5F00389F5E /* SwiftCSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DE519452B7C1D5F00389F5E /* XCRemoteSwiftPackageReference "SwiftCSV" */;
+			productName = SwiftCSV;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

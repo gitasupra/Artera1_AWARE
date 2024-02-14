@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import SwiftCSV
+import TabularData
 
 
-class InputFunctions{
+class InputFunctions : ObservableObject{
     enum Features: Int, CaseIterable {
         case Mean = 0
         case Median = 1
@@ -96,6 +98,114 @@ class InputFunctions{
     }
     func create_per_window_data(file: String, metric_no: Int) -> String{
         //FIXME implement create_per_window_data to write to processed window data file and return file URL
+        
+        // Read the CSV file using SwiftCSV
+        do{
+            
+            let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
+            
+            // Extract data from the CSV file
+            var mean_all: [[Double]] = []
+            for row in csvFile.rows {
+                let rowData: [Double] = [Double(row["timestamp"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
+                mean_all.append(rowData)
+            }
+            
+            // Perform calculations for each 10-second window
+            var full_frame: [[Double]] = []
+            var single_row: [Double] = []
+            var i = 0
+            let tot_rows = mean_all.count
+            
+            while i + 10 < tot_rows{
+                single_row.append(mean_all[i+9][0])
+                for col in 1...3{
+                    let sub_frame = mean_all[i..<i+10][col]
+                    //FIXME append single_row metrics here
+                }
+                
+                full_frame.append(single_row)
+                single_row = []
+                i += 10
+            }
+            
+            let col_names = ["xMe", "xVr", "xMx", "xMi", "xUM", "xLM", "yMe", "yVr", "yMx", "yMn", "yUM", "yLM", "zMe", "zVr", "zMx", "zMi", "zUM", "zLM"]
+            
+            
+            // let columnNames = ["t"] + col_names.map{"\(metric_no)\($0)"}
+            
+            //FIXME not doing df1 creation efficiently
+            var df1=DataFrame()
+            let tColumn = Column(name:"t", contents: full_frame.map{$0[0]})
+            let xMeColumn = Column(name: "\(metric_no)xMe", contents: full_frame.map{$0[1]})
+            let xVrColumn = Column(name: "\(metric_no)xVr", contents: full_frame.map{$0[2]})
+            let xMxColumn = Column(name: "\(metric_no)xMx", contents: full_frame.map{$0[3]})
+            let xMiColumn = Column(name: "\(metric_no)xMi", contents: full_frame.map{$0[4]})
+            let xUMColumn = Column(name: "\(metric_no)xUM", contents: full_frame.map{$0[5]})
+            let xLMColumn = Column(name: "\(metric_no)xLM", contents: full_frame.map{$0[6]})
+            let yMeColumn = Column(name: "\(metric_no)yMe", contents: full_frame.map{$0[7]})
+            let yVrColumn = Column(name: "\(metric_no)yVr", contents: full_frame.map{$0[8]})
+            let yMxColumn = Column(name: "\(metric_no)yMx", contents: full_frame.map{$0[9]})
+            let yMnColumn = Column(name: "\(metric_no)yMn", contents: full_frame.map{$0[10]})
+            let yUMColumn = Column(name: "\(metric_no)yUM", contents: full_frame.map{$0[11]})
+            let yLMColumn = Column(name: "\(metric_no)yLM", contents: full_frame.map{$0[12]})
+            let zMeColumn = Column(name: "\(metric_no)zMe", contents: full_frame.map{$0[13]})
+            let zVrColumn = Column(name: "\(metric_no)zVr", contents: full_frame.map{$0[14]})
+            let zMxColumn = Column(name: "\(metric_no)zMx", contents: full_frame.map{$0[15]})
+            let zMiColumn = Column(name: "\(metric_no)zMi", contents: full_frame.map{$0[16]})
+            let zUMColumn = Column(name: "\(metric_no)zUM", contents: full_frame.map{$0[17]})
+            let zLMColumn = Column(name: "\(metric_no)zLM", contents: full_frame.map{$0[18]})
+
+            df1.append(column: tColumn)
+            df1.append(column: xMeColumn)
+            df1.append(column: xVrColumn)
+            df1.append(column: xMxColumn)
+            df1.append(column: xMiColumn)
+            df1.append(column: xUMColumn)
+            df1.append(column: xLMColumn)
+            df1.append(column: yMeColumn)
+            df1.append(column: yVrColumn)
+            df1.append(column: yMxColumn)
+            df1.append(column: yMnColumn)
+            df1.append(column: yUMColumn)
+            df1.append(column: yLMColumn)
+            df1.append(column: zMeColumn)
+            df1.append(column: zVrColumn)
+            df1.append(column: zMxColumn)
+            df1.append(column: zMiColumn)
+            df1.append(column: zUMColumn)
+            df1.append(column: zLMColumn)
+
+            if metric_no <= 14{
+                var diff_frame: [Double] = []
+                for i in 1...full_frame.count{
+                    if i==0{
+                        //append to full frame the first row of full frame without the first column
+                        //FIXME
+                        // diff_frame.append(full_frame[i][1:])
+                        
+                    }
+                    else{
+                        //FIXME
+                    }
+                    
+                }
+
+
+            }
+            
+            
+            //create each column
+            //append each column
+            
+            //iterate through columns and append to dataframe
+                        
+        }
+        catch{
+            //FIXME
+            print("Error: \(error.localizedDescription)")
+            return ""
+        }
         return ""
     }
     
