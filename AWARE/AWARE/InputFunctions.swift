@@ -29,6 +29,67 @@ class InputFunctions{
             .Min_Abs : "Min_Abs",
     ]
     
+    // helper function to calculate the mean
+    func calculateMean(values: [Double]) -> Double? {
+        guard !values.isEmpty else {
+            return nil // Return nil for an empty array
+        }
+
+        let sum = values.reduce(0, +)
+        let mean = sum / Double(values.count)
+        
+        return mean
+    }
+
+    // helper function to calculate the median
+    func calculateMedian(values: [Double]) -> Double? {
+        guard !values.isEmpty else {
+            return nil // Return nil for an empty array
+        }
+
+        let sortedValues = values.sorted()
+        let count = sortedValues.count
+
+        if count % 2 == 0 {
+            // For an even number of elements, take the average of the two middle values
+            let middle1 = sortedValues[count / 2 - 1]
+            let middle2 = sortedValues[count / 2]
+            return (middle1 + middle2) / 2.0
+        } else {
+            // For an odd number of elements, return the middle value
+            return sortedValues[count / 2]
+        }
+    }
+
+    // helper function to calculate the standard deviation
+    func calculateStandardDeviation(values: [Double]) -> Double? {
+        guard let mean = calculateMean(values: values) else {
+            return nil // Return nil if mean calculation fails
+        }
+
+        let squaredDifferences = values.map { pow($0 - mean, 2) }
+        let sumOfSquaredDifferences = squaredDifferences.reduce(0, +)
+        let variance = sumOfSquaredDifferences / Double(values.count)
+        let standardDeviation = sqrt(variance)
+
+        return standardDeviation
+    }
+
+    // helper function to calculate minimum and maximum values
+    func calculateMinimum(values: [Double]) -> Double? {
+        guard let minValue = values.min() else {
+            return nil // Return nil for an empty array
+        }
+        return minValue
+    }
+
+    func calculateMaximum(values: [Double]) -> Double? {
+        guard let maxValue = values.max() else {
+            return nil // Return nil for an empty array
+        }
+        return maxValue
+    }
+
     func create_per_second_data(file: String, metric_no: Int) -> String{
         //FIXME implement create_per_second_data to write to processed second data to file and return file URL
         return ""
@@ -45,4 +106,5 @@ class InputFunctions{
         }
         return ""
     }
+
 }
