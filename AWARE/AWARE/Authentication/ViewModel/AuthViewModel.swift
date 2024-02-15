@@ -42,6 +42,12 @@ class AuthViewModel: ObservableObject{
         do{
             
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
+            
+            // add user display name 
+            let changeRequest = result.user.createProfileChangeRequest()
+            changeRequest.displayName = fullname
+            try await changeRequest.commitChanges()
+            
             print("Success")
             self.userSession = result.user
             //use Codable protocol: map User object to JSON data

@@ -12,7 +12,6 @@
 		12143EA82B5C8ADE004A168F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EA52B5C8ADE004A168F /* LoginView.swift */; };
 		12143EAB2B5C8AE9004A168F /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAA2B5C8AE9004A168F /* InputView.swift */; };
 		12143EAE2B5C8AF1004A168F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAD2B5C8AF1004A168F /* User.swift */; };
-		12143EB02B5C8AF7004A168F /* TwilioSMSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */; };
 		12143EB22B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
 		12143EB32B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
 		12143EB42B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
@@ -24,6 +23,7 @@
 		12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EBE2B5C8B52004A168F /* Alamofire */; };
 		12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC12B5C8B68004A168F /* FirebaseDatabase */; };
 		12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC32B5C8B70004A168F /* FirebaseAuth */; };
+		122D23F32B7D9FAE001A1A18 /* TwilioSMSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */; };
 		124746D92B6EF1DD002E1AC9 /* UserContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124746D82B6EF1DD002E1AC9 /* UserContact.swift */; };
 		124746DB2B6F0033002E1AC9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 124746DA2B6F0033002E1AC9 /* FirebaseStorage */; };
 		125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AD2B5CB61F007F0323 /* ContactsManager.swift */; };
@@ -66,6 +66,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		12006B032B73786200348DE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC9482AB2AF870E100A3A64E;
+			remoteInfo = "AWARE Watch App";
+		};
 		CC9482972AF870E100A3A64E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
@@ -79,13 +86,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = CC9482852AF870DF00A3A64E;
 			remoteInfo = AWARE;
-		};
-		CC9482AE2AF870E100A3A64E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC94827E2AF870DF00A3A64E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC9482AB2AF870E100A3A64E;
-			remoteInfo = "AWARE Watch App";
 		};
 		CC9482BF2AF870E300A3A64E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -123,8 +123,8 @@
 		12143EA52B5C8ADE004A168F /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		12143EAA2B5C8AE9004A168F /* InputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		12143EAD2B5C8AF1004A168F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwilioSMSManager.swift; sourceTree = "<group>"; };
 		12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwilioSMSManager.swift; sourceTree = "<group>"; };
 		124746D82B6EF1DD002E1AC9 /* UserContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContact.swift; sourceTree = "<group>"; };
 		125506AD2B5CB61F007F0323 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 		125506AE2B5CB61F007F0323 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
@@ -318,6 +318,7 @@
 				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
 				125506B52B5CB61F007F0323 /* ImagePicker.swift */,
 				125506B62B5CB61F007F0323 /* ContactDetailView.swift */,
+				122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */,
 			);
 			path = ContactViews;
 			sourceTree = "<group>";
@@ -400,7 +401,6 @@
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
-				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
 			);
@@ -487,7 +487,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				CC9482AF2AF870E100A3A64E /* PBXTargetDependency */,
+				12006B042B73786200348DE3 /* PBXTargetDependency */,
 			);
 			name = AWARE;
 			packageProductDependencies = (
@@ -602,7 +602,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					CC9482852AF870DF00A3A64E = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -833,6 +833,7 @@
 				125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */,
 				12143EA62B5C8ADE004A168F /* AuthViewModel.swift in Sources */,
 				125506BC2B5CB61F007F0323 /* AddContactView.swift in Sources */,
+				122D23F32B7D9FAE001A1A18 /* TwilioSMSManager.swift in Sources */,
 				125506C72B5CC1C1007F0323 /* LocationManager.swift in Sources */,
 				12143EA72B5C8ADE004A168F /* RegistrationView.swift in Sources */,
 				125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */,
@@ -844,7 +845,6 @@
 				125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */,
 				12143EAE2B5C8AF1004A168F /* User.swift in Sources */,
 				125506C32B5CC1B3007F0323 /* LocationRequestView.swift in Sources */,
-				12143EB02B5C8AF7004A168F /* TwilioSMSManager.swift in Sources */,
 				125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */,
 				CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */,
 				125506BB2B5CB61F007F0323 /* ContactRow.swift in Sources */,
@@ -899,6 +899,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		12006B042B73786200348DE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC9482AB2AF870E100A3A64E /* AWARE Watch App */;
+			targetProxy = 12006B032B73786200348DE3 /* PBXContainerItemProxy */;
+		};
 		CC9482982AF870E100A3A64E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC9482852AF870DF00A3A64E /* AWARE */;
@@ -908,11 +913,6 @@
 			isa = PBXTargetDependency;
 			target = CC9482852AF870DF00A3A64E /* AWARE */;
 			targetProxy = CC9482A12AF870E100A3A64E /* PBXContainerItemProxy */;
-		};
-		CC9482AF2AF870E100A3A64E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC9482AB2AF870E100A3A64E /* AWARE Watch App */;
-			targetProxy = CC9482AE2AF870E100A3A64E /* PBXContainerItemProxy */;
 		};
 		CC9482C02AF870E300A3A64E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -961,6 +961,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -979,12 +980,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -1022,6 +1025,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1034,10 +1038,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -1057,6 +1063,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1089,6 +1096,7 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app needs permission to access/update values relating to breathing, walking steadiness, and heart rate";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = apple.py.AWARE;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
