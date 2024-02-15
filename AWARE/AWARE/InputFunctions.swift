@@ -103,6 +103,7 @@ class InputFunctions : ObservableObject{
         do{
             
             let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
+            var outputFileName = ""
             
             // Extract data from the CSV file
             var mean_all: [[Double]] = []
@@ -178,27 +179,69 @@ class InputFunctions : ObservableObject{
 
             if metric_no <= 14{
                 var diff_frame: [Double] = []
+                
                 for i in 1...full_frame.count{
                     if i==0{
                         //append to full frame the first row of full frame without the first column
-                        //FIXME
-                        // diff_frame.append(full_frame[i][1:])
-                        
+                        diff_frame.append(contentsOf: full_frame[i][1...])
+                                
                     }
                     else{
-                        //FIXME
+                        //append to full frame the difference between the current row and the previous row
+                        diff_frame.append(contentsOf: full_frame[i][1...].enumerated().map{$0.1 - full_frame[i-1][$0+1]})
                     }
                     
                 }
+                //FIXME put correct output file name here
 
 
             }
+            else{
+                //put correct output file name here
+            }
             
+            //FIXME not using df2 for diff rows, instead appending to df1
+            // var df2=DataFrame()
             
-            //create each column
-            //append each column
-            
-            //iterate through columns and append to dataframe
+            let dxMeColumn = Column(name: "\(metric_no)dxMe", contents: diff_frame.map{$0[0]})
+            let dxVrColumn = Column(name: "\(metric_no)dxVr", contents: diff_frame.map{$0[1]})
+            let dxMxColumn = Column(name: "\(metric_no)dxMx", contents: diff_frame.map{$0[2]})
+            let dxMiColumn = Column(name: "\(metric_no)dxMi", contents: diff_frame.map{$0[3]})
+            let dxUMColumn = Column(name: "\(metric_no)dxUM", contents: diff_frame.map{$0[4]})
+            let dxLMColumn = Column(name: "\(metric_no)dxLM", contents: diff_frame.map{$0[5]})
+            let dyMeColumn = Column(name: "\(metric_no)dyMe", contents: diff_frame.map{$0[6]})
+            let dyVrColumn = Column(name: "\(metric_no)dyVr", contents: diff_frame.map{$0[7]})
+            let dyMxColumn = Column(name: "\(metric_no)dyMx", contents: diff_frame.map{$0[8]})
+            let dyMnColumn = Column(name: "\(metric_no)dyMn", contents: diff_frame.map{$0[9]})
+            let dyUMColumn = Column(name: "\(metric_no)dyUM", contents: diff_frame.map{$0[10]})
+            let dyLMColumn = Column(name: "\(metric_no)dyLM", contents: diff_frame.map{$0[11]})
+            let dzMeColumn = Column(name: "\(metric_no)dzMe", contents: diff_frame.map{$0[12]})
+            let dzVrColumn = Column(name: "\(metric_no)dzVr", contents: diff_frame.map{$0[13]})
+            let dzMxColumn = Column(name: "\(metric_no)dzMx", contents: diff_frame.map{$0[14]})
+            let dzMiColumn = Column(name: "\(metric_no)dzMi", contents: diff_frame.map{$0[15]})
+            let dzUMColumn = Column(name: "\(metric_no)dzUM", contents: diff_frame.map{$0[16]})
+            let dzLMColumn = Column(name: "\(metric_no)dzLM", contents: diff_frame.map{$0[17]})
+
+            df1.append(column: dxMeColumn)
+            df1.append(column: dxVrColumn)
+            df1.append(column: dxMxColumn)
+            df1.append(column: dxMiColumn)
+            df1.append(column: dxUMColumn)
+            df1.append(column: dxLMColumn)
+            df1.append(column: dyMeColumn)
+            df1.append(column: dyVrColumn)
+            df1.append(column: dyMxColumn)
+            df1.append(column: dyMnColumn)
+            df1.append(column: dyUMColumn)
+            df1.append(column: dyLMColumn)
+            df1.append(column: dzMeColumn)
+            df1.append(column: dzVrColumn)
+            df1.append(column: dzMxColumn)
+            df1.append(column: dzMiColumn)
+            df1.append(column: dzUMColumn)
+            df1.append(column: dzLMColumn)
+
+            //FIXME write to output file
                         
         }
         catch{
