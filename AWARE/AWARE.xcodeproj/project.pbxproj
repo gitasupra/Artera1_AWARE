@@ -12,7 +12,6 @@
 		12143EA82B5C8ADE004A168F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EA52B5C8ADE004A168F /* LoginView.swift */; };
 		12143EAB2B5C8AE9004A168F /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAA2B5C8AE9004A168F /* InputView.swift */; };
 		12143EAE2B5C8AF1004A168F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAD2B5C8AF1004A168F /* User.swift */; };
-		12143EB02B5C8AF7004A168F /* TwilioSMSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */; };
 		12143EB22B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
 		12143EB32B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
 		12143EB42B5C8B0A004A168F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */; };
@@ -24,6 +23,7 @@
 		12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EBE2B5C8B52004A168F /* Alamofire */; };
 		12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC12B5C8B68004A168F /* FirebaseDatabase */; };
 		12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 12143EC32B5C8B70004A168F /* FirebaseAuth */; };
+		122D23F32B7D9FAE001A1A18 /* TwilioSMSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */; };
 		124746D92B6EF1DD002E1AC9 /* UserContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124746D82B6EF1DD002E1AC9 /* UserContact.swift */; };
 		124746DB2B6F0033002E1AC9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 124746DA2B6F0033002E1AC9 /* FirebaseStorage */; };
 		125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AD2B5CB61F007F0323 /* ContactsManager.swift */; };
@@ -123,8 +123,8 @@
 		12143EA52B5C8ADE004A168F /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		12143EAA2B5C8AE9004A168F /* InputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		12143EAD2B5C8AF1004A168F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwilioSMSManager.swift; sourceTree = "<group>"; };
 		12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwilioSMSManager.swift; sourceTree = "<group>"; };
 		124746D82B6EF1DD002E1AC9 /* UserContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContact.swift; sourceTree = "<group>"; };
 		125506AD2B5CB61F007F0323 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 		125506AE2B5CB61F007F0323 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
 				125506B52B5CB61F007F0323 /* ImagePicker.swift */,
 				125506B62B5CB61F007F0323 /* ContactDetailView.swift */,
-				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
+				122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */,
 			);
 			path = ContactViews;
 			sourceTree = "<group>";
@@ -401,8 +401,6 @@
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
-				127DBA2B2B1D57790031F9F7 /* Shared.swift */,
-				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
 			);
@@ -835,6 +833,7 @@
 				125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */,
 				12143EA62B5C8ADE004A168F /* AuthViewModel.swift in Sources */,
 				125506BC2B5CB61F007F0323 /* AddContactView.swift in Sources */,
+				122D23F32B7D9FAE001A1A18 /* TwilioSMSManager.swift in Sources */,
 				125506C72B5CC1C1007F0323 /* LocationManager.swift in Sources */,
 				12143EA72B5C8ADE004A168F /* RegistrationView.swift in Sources */,
 				125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */,
@@ -846,7 +845,6 @@
 				125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */,
 				12143EAE2B5C8AF1004A168F /* User.swift in Sources */,
 				125506C32B5CC1B3007F0323 /* LocationRequestView.swift in Sources */,
-				12143EB02B5C8AF7004A168F /* TwilioSMSManager.swift in Sources */,
 				125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */,
 				CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */,
 				125506BB2B5CB61F007F0323 /* ContactRow.swift in Sources */,
@@ -989,8 +987,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TWILIO_ACCOUNT_SID = ACf11ccb3b3093b45e54c92c88bd41f142;
-				TWILIO_AUTH_TOKEN = d7d6f0eef79203d2dcd0bcb998e6b280;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
@@ -1047,8 +1043,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				TWILIO_ACCOUNT_SID = ACf11ccb3b3093b45e54c92c88bd41f142;
-				TWILIO_AUTH_TOKEN = d7d6f0eef79203d2dcd0bcb998e6b280;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
