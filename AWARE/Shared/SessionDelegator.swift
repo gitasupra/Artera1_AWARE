@@ -30,7 +30,7 @@ class SessionDelegater: NSObject, WCSessionDelegate {
         if let lastHeartRate = userInfo["lastHeartRate"] as? Double,
            let heartRateIdx = userInfo["heartRateIdx"] as? Int {
             self.heartRateSubject.send((lastHeartRate, heartRateIdx))
-            print(lastHeartRate)
+            print("last heart rate: \(lastHeartRate)")
             // Append the received heart rate data to the list
             //heartRateList.append(HeartRateDataPoint(heartRate: lastHeartRate, myIndex: heartRateIdx, id: UUID()))
             

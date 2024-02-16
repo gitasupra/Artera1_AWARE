@@ -81,8 +81,10 @@ struct Page2View: View {
         .onChange(of: enableDataCollection)
         {
             if (enableDataCollection) {
+                print("start heart rate")
                 startHeartRate()
             } else {
+                print("stop heart rate")
                 stopHeartRate()
             }
         }

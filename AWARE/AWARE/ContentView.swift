@@ -104,6 +104,8 @@ struct ContentView: View {
     }
     
     var body: some View {
+        let _ = Self._printChanges()
+
         Group{
             if viewModel.userSession != nil{
             TabView {
@@ -235,8 +237,10 @@ struct ContentView: View {
                 }
                 .onChange(of: enableDataCollection) {
                     if (enableDataCollection) {
+                        print("data is being collected")
                         startDeviceMotion()
                     } else {
+                        print("stop data collection")
                         self.motion.stopDeviceMotionUpdates()
                     }
                 }
