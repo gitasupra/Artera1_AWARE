@@ -44,6 +44,10 @@
 		127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */; };
 		127DBA302B1D58040031F9F7 /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */; };
 		127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */; };
+		12C1CC412B7DA525009AA8FE /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C1CC402B7DA525009AA8FE /* AlertManager.swift */; };
+		12C1CC432B7DB05D009AA8FE /* EmergencySOSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C1CC422B7DB05D009AA8FE /* EmergencySOSView.swift */; };
+		12C1CC452B7EFB6E009AA8FE /* Calling911View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C1CC442B7EFB6E009AA8FE /* Calling911View.swift */; };
+		12C1CC482B7F09FA009AA8FE /* TwilioVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 12C1CC472B7F09FA009AA8FE /* TwilioVoice */; };
 		77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */; };
 		AD5ECFF3F4D796166139E335 /* libPods-AWARE Watch AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
@@ -144,6 +148,9 @@
 		1278BA6E2B5CCD2A0053DF42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableDataCollection.swift; sourceTree = "<group>"; };
 		127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDelegator.swift; sourceTree = "<group>"; };
+		12C1CC402B7DA525009AA8FE /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		12C1CC422B7DB05D009AA8FE /* EmergencySOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencySOSView.swift; sourceTree = "<group>"; };
+		12C1CC442B7EFB6E009AA8FE /* Calling911View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calling911View.swift; sourceTree = "<group>"; };
 		3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWARE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D561D5D149A38A31A02F63C /* Pods-AWARE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE.debug.xcconfig"; path = "Target Support Files/Pods-AWARE/Pods-AWARE.debug.xcconfig"; sourceTree = "<group>"; };
 		405C03793B373ABC3F7F9CB8 /* Pods-AWARETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARETests.release.xcconfig"; path = "Target Support Files/Pods-AWARETests/Pods-AWARETests.release.xcconfig"; sourceTree = "<group>"; };
@@ -186,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */,
+				12C1CC482B7F09FA009AA8FE /* TwilioVoice in Frameworks */,
 				12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */,
 				12143EBC2B5C8B41004A168F /* FirebaseAnalyticsSwift in Frameworks */,
 				12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */,
@@ -401,6 +409,9 @@
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
+				12C1CC402B7DA525009AA8FE /* AlertManager.swift */,
+				12C1CC422B7DB05D009AA8FE /* EmergencySOSView.swift */,
+				12C1CC442B7EFB6E009AA8FE /* Calling911View.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
 			);
@@ -497,6 +508,7 @@
 				12143EC12B5C8B68004A168F /* FirebaseDatabase */,
 				12143EC32B5C8B70004A168F /* FirebaseAuth */,
 				124746DA2B6F0033002E1AC9 /* FirebaseStorage */,
+				12C1CC472B7F09FA009AA8FE /* TwilioVoice */,
 			);
 			productName = AWARE;
 			productReference = CC9482862AF870DF00A3A64E /* AWARE.app */;
@@ -640,6 +652,7 @@
 			packageReferences = (
 				12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				12143EBD2B5C8B52004A168F /* XCRemoteSwiftPackageReference "Alamofire" */,
+				12C1CC462B7F09FA009AA8FE /* XCRemoteSwiftPackageReference "twilio-voice-ios" */,
 			);
 			productRefGroup = CC9482872AF870DF00A3A64E /* Products */;
 			projectDirPath = "";
@@ -825,6 +838,7 @@
 			files = (
 				124746D92B6EF1DD002E1AC9 /* UserContact.swift in Sources */,
 				1278BA6C2B5CC6D80053DF42 /* DeviceLocationService.swift in Sources */,
+				12C1CC432B7DB05D009AA8FE /* EmergencySOSView.swift in Sources */,
 				125506B82B5CB61F007F0323 /* Contact.swift in Sources */,
 				1278BA6A2B5CC3360053DF42 /* LocationView.swift in Sources */,
 				125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */,
@@ -837,10 +851,12 @@
 				125506C72B5CC1C1007F0323 /* LocationManager.swift in Sources */,
 				12143EA72B5C8ADE004A168F /* RegistrationView.swift in Sources */,
 				125506BE2B5CB61F007F0323 /* ImagePicker.swift in Sources */,
+				12C1CC452B7EFB6E009AA8FE /* Calling911View.swift in Sources */,
 				125506BA2B5CB61F007F0323 /* Styles.swift in Sources */,
 				127DBA302B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
 				12143EAB2B5C8AE9004A168F /* InputView.swift in Sources */,
 				12143EA82B5C8ADE004A168F /* LoginView.swift in Sources */,
+				12C1CC412B7DA525009AA8FE /* AlertManager.swift in Sources */,
 				125506C52B5CC1BA007F0323 /* LocationDetailsView.swift in Sources */,
 				125506BD2B5CB61F007F0323 /* ContactPickerButton.swift in Sources */,
 				12143EAE2B5C8AF1004A168F /* User.swift in Sources */,
@@ -1462,6 +1478,14 @@
 				minimumVersion = 5.8.1;
 			};
 		};
+		12C1CC462B7F09FA009AA8FE /* XCRemoteSwiftPackageReference "twilio-voice-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twilio/twilio-voice-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.10.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1494,6 +1518,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		12C1CC472B7F09FA009AA8FE /* TwilioVoice */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12C1CC462B7F09FA009AA8FE /* XCRemoteSwiftPackageReference "twilio-voice-ios" */;
+			productName = TwilioVoice;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
