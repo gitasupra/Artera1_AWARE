@@ -40,6 +40,7 @@ struct ContentView: View {
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @State private var enableDataCollection = false
     @State private var shouldHide = false
+    
     @StateObject var alertManager = AlertManager()
     @State private var showEmergencySOS = false
     @State private var showCalling911 = false
@@ -378,6 +379,7 @@ struct ContentView: View {
             }
             .fullScreenCover(isPresented: $showCalling911) {
                 Calling911View()
+                    .environmentObject(alertManager)
             }
             .accentColor(accentColor)
             } else {

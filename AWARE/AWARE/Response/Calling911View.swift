@@ -9,7 +9,10 @@ import SwiftUI
 
 struct Calling911View: View {
     @State private var isShaking = false
+    @EnvironmentObject var alertManager: AlertManager
     @Environment(\.presentationMode) var presentationMode
+    
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack {
@@ -49,7 +52,6 @@ struct Calling911View: View {
                         }
                     }
                 
-                
                 Image(systemName: "wave.3.right")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -75,11 +77,11 @@ struct Calling911View: View {
             }
             .padding(.bottom, 50)
         }
-    }
-}
-
-struct Calling911View_Previews: PreviewProvider {
-    static var previews: some View {
-        Calling911View()
+        .onReceive(timer) { _ in
+            presentationMode.wrappedValue.dismiss()
+        }
+        .onAppear {
+            alertManager.sendUpdate(level: 3)
+        }
     }
 }

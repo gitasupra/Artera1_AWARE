@@ -9,19 +9,18 @@ import SwiftUI
 import CoreHaptics
 
 class AlertManager: ObservableObject {
-    let contactManager = ContactsManager()
-    let twilioManager = TwilioSMSManager()
+    public let contactManager = ContactsManager()
+    public let twilioManager = TwilioSMSManager()
     @Published var intoxLevel: Int = 0 {
         didSet {
             if intoxLevel == 0 {
-                twilioManager.sendSMS(level: 0, contactsManager: contactManager)
+                sendUpdate(level: 0)
             } else if intoxLevel == 1 {
-                twilioManager.sendSMS(level: 1, contactsManager: contactManager)
+                sendUpdate(level: 1)
             } else if intoxLevel == 2 {
-                twilioManager.sendSMS(level: 2, contactsManager: contactManager)
+                sendUpdate(level: 2)
             } else if intoxLevel == 3 {
                 AlertManager.triggerHapticFeedback()
-                //twilioManager.sendSMS(level: 3, contactsManager: contactManager)
             }
         }
     }
@@ -29,5 +28,9 @@ class AlertManager: ObservableObject {
     static func triggerHapticFeedback() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
+    }
+    
+    func sendUpdate(level: Int) {
+        twilioManager.sendSMS(level: level, contactsManager: contactManager)
     }
 }

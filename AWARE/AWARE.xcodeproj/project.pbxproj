@@ -326,7 +326,6 @@
 				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
 				125506B52B5CB61F007F0323 /* ImagePicker.swift */,
 				125506B62B5CB61F007F0323 /* ContactDetailView.swift */,
-				122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */,
 			);
 			path = ContactViews;
 			sourceTree = "<group>";
@@ -350,6 +349,17 @@
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		12C1CC492B7F1135009AA8FE /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */,
+				12C1CC402B7DA525009AA8FE /* AlertManager.swift */,
+				12C1CC422B7DB05D009AA8FE /* EmergencySOSView.swift */,
+				12C1CC442B7EFB6E009AA8FE /* Calling911View.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		A30E0BA88A455E9A1858A649 /* Pods */ = {
@@ -406,12 +416,10 @@
 				12143EA92B5C8AE9004A168F /* Components */,
 				12143EAC2B5C8AF1004A168F /* Model */,
 				125506AB2B5CB61F007F0323 /* ContactPage */,
+				12C1CC492B7F1135009AA8FE /* Response */,
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
-				12C1CC402B7DA525009AA8FE /* AlertManager.swift */,
-				12C1CC422B7DB05D009AA8FE /* EmergencySOSView.swift */,
-				12C1CC442B7EFB6E009AA8FE /* Calling911View.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
 			);
