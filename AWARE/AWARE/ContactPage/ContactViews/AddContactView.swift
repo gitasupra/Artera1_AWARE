@@ -102,6 +102,7 @@ struct AddContactView: View {
                 }
             ))
             .padding()
+            .disableAutocorrection(true)
             .textFieldStyle(RoundBorderStyle())
             
             HStack {

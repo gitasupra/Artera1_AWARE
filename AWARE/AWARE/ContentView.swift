@@ -168,19 +168,6 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    Button("Level 1") {
-                        alertManager.intoxLevel = 1
-                    }.buttonStyle(CustomButtonStyle())
-                    
-                    Button("Level 2") {
-                        alertManager.intoxLevel = 2
-                    }.buttonStyle(CustomButtonStyle())
-                    
-                    Button("Level 3") {
-                        alertManager.intoxLevel = 3
-                    }.buttonStyle(CustomButtonStyle())
-                    
-                    
                     Button(action: {}) {
                         NavigationLink(destination: ContactListView()) {
                             Text("Contact List")
