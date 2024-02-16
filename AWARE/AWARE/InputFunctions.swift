@@ -92,12 +92,23 @@ class InputFunctions : ObservableObject{
         return maxValue
     }
 
+
+    func calculateVariance(values: [Double]) -> Double? {
+        guard let mean = calculateMean(values: values) else {
+            return nil // Return nil if mean calculation fails
+        }
+        let squaredDifferences = values.map { pow($0 - mean, 2) }
+        let sumOfSquaredDifferences = squaredDifferences.reduce(0, +)
+        let variance = sumOfSquaredDifferences / Double(values.count)
+        return variance
+    }
+
     func create_per_second_data(file: String, metric_no: Int) -> String{
         //FIXME implement create_per_second_data to write to processed second data to file and return file URL
         return ""
     }
     func create_per_window_data(file: String, metric_no: Int) -> String{
-        //FIXME implement create_per_window_data to write to processed window data file and return file URL
+        //TODO: test on input file
         
         // Read the CSV file using SwiftCSV
         do{
@@ -118,11 +129,29 @@ class InputFunctions : ObservableObject{
             var i = 0
             let tot_rows = mean_all.count
             
+            
             while i + 10 < tot_rows{
                 single_row.append(mean_all[i+9][0])
                 for col in 1...3{
                     let sub_frame = mean_all[i..<i+10][col]
-                    //FIXME append single_row metrics here
+                    //append mean of sub_frame
+                    single_row.append(calculateMean(values: sub_frame)!)
+
+                    //append variance of sub_frame
+                    single_row.append(calculateVariance(values: sub_frame)!)
+
+                    //append max of sub_frame
+                    single_row.append(calculateMaximum(values: sub_frame)!)
+
+                    //append min of sub_frame
+                    single_row.append(calculateMinimum(values: sub_frame)!)
+
+                    //sort sub_frame from low to high
+                    let sorted_sub_frame = sub_frame.sorted()
+                    //append mean of lower half of sub_frame
+                    single_row.append(calculateMean(values: Array(sorted_sub_frame[0..<4]))!)
+                    //append mean of upper half of sub_frame from 8 to 10
+                    single_row.append(calculateMean(values: Array(sorted_sub_frame[8..<10]))!)
                 }
                 
                 full_frame.append(single_row)
@@ -135,7 +164,7 @@ class InputFunctions : ObservableObject{
             
             // let columnNames = ["t"] + col_names.map{"\(metric_no)\($0)"}
             
-            //FIXME not doing df1 creation efficiently
+            //not doing df1 creation efficiently
             var df1=DataFrame()
             let tColumn = Column(name:"t", contents: full_frame.map{$0[0]})
             let xMeColumn = Column(name: "\(metric_no)xMe", contents: full_frame.map{$0[1]})
@@ -178,74 +207,102 @@ class InputFunctions : ObservableObject{
             df1.append(column: zLMColumn)
 
             if metric_no <= 14{
-                var diff_frame: [Double] = []
+                var diff_frame: [[Double]] = []
+                //declare a row variable
+                var diff_row: [Double] = []
+                var curr_row: [Double] = []
+                var prev_row: [Double] = []
                 
                 for i in 1...full_frame.count{
                     if i==0{
                         //append to full frame the first row of full frame without the first column
-                        diff_frame.append(contentsOf: full_frame[i][1...])
+                        //make diff_row equal to the first row of full frame without the first column
+                        diff_row = Array(full_frame[i].dropFirst())
+                        diff_frame.append(diff_row)
                                 
                     }
                     else{
                         //append to full frame the difference between the current row and the previous row
-                        diff_frame.append(contentsOf: full_frame[i][1...].enumerated().map{$0.1 - full_frame[i-1][$0+1]})
+
+                        curr_row = Array(full_frame[i][1...])
+                        prev_row = Array(full_frame[i-1][1...])
+                        diff_row = zip(curr_row, prev_row).map{$0.0 - $0.1}
+
+
+
+                        diff_frame.append(diff_row)
                     }
                     
                 }
-                //FIXME put correct output file name here
+
+
+                let dxMeColumn = Column(name: "\(metric_no)dxMe", contents: diff_frame.map{$0[0]})
+                let dxVrColumn = Column(name: "\(metric_no)dxVr", contents: diff_frame.map{$0[1]})
+                let dxMxColumn = Column(name: "\(metric_no)dxMx", contents: diff_frame.map{$0[2]})
+                let dxMiColumn = Column(name: "\(metric_no)dxMi", contents: diff_frame.map{$0[3]})
+                let dxUMColumn = Column(name: "\(metric_no)dxUM", contents: diff_frame.map{$0[4]})
+                let dxLMColumn = Column(name: "\(metric_no)dxLM", contents: diff_frame.map{$0[5]})
+                let dyMeColumn = Column(name: "\(metric_no)dyMe", contents: diff_frame.map{$0[6]})
+                let dyVrColumn = Column(name: "\(metric_no)dyVr", contents: diff_frame.map{$0[7]})
+                let dyMxColumn = Column(name: "\(metric_no)dyMx", contents: diff_frame.map{$0[8]})
+                let dyMnColumn = Column(name: "\(metric_no)dyMn", contents: diff_frame.map{$0[9]})
+                let dyUMColumn = Column(name: "\(metric_no)dyUM", contents: diff_frame.map{$0[10]})
+                let dyLMColumn = Column(name: "\(metric_no)dyLM", contents: diff_frame.map{$0[11]})
+                let dzMeColumn = Column(name: "\(metric_no)dzMe", contents: diff_frame.map{$0[12]})
+                let dzVrColumn = Column(name: "\(metric_no)dzVr", contents: diff_frame.map{$0[13]})
+                let dzMxColumn = Column(name: "\(metric_no)dzMx", contents: diff_frame.map{$0[14]})
+                let dzMiColumn = Column(name: "\(metric_no)dzMi", contents: diff_frame.map{$0[15]})
+                let dzUMColumn = Column(name: "\(metric_no)dzUM", contents: diff_frame.map{$0[16]})
+                let dzLMColumn = Column(name: "\(metric_no)dzLM", contents: diff_frame.map{$0[17]})
+
+                df1.append(column: dxMeColumn)
+                df1.append(column: dxVrColumn)
+                df1.append(column: dxMxColumn)
+                df1.append(column: dxMiColumn)
+                df1.append(column: dxUMColumn)
+                df1.append(column: dxLMColumn)
+                df1.append(column: dyMeColumn)
+                df1.append(column: dyVrColumn)
+                df1.append(column: dyMxColumn)
+                df1.append(column: dyMnColumn)
+                df1.append(column: dyUMColumn)
+                df1.append(column: dyLMColumn)
+                df1.append(column: dzMeColumn)
+                df1.append(column: dzVrColumn)
+                df1.append(column: dzMxColumn)
+                df1.append(column: dzMiColumn)
+                df1.append(column: dzUMColumn)
+                df1.append(column: dzLMColumn)
+
+
+                outputFileName = "Metric_\(metric_no)_36.csv"
 
 
             }
             else{
-                //put correct output file name here
+                outputFileName = "Metric_\(metric_no)_18.csv"
             }
             
-            //FIXME not using df2 for diff rows, instead appending to df1
-            // var df2=DataFrame()
+
+
+            //write the dataframe to a csv file, atomically = should overwrite the file if it already exists
+    
+            do{
+                
+                try df1.writeCSV(to: URL(fileURLWithPath: outputFileName))
+                
+            }
+            catch{
+                print("Error: \(error.localizedDescription)")
+            }
             
-            let dxMeColumn = Column(name: "\(metric_no)dxMe", contents: diff_frame.map{$0[0]})
-            let dxVrColumn = Column(name: "\(metric_no)dxVr", contents: diff_frame.map{$0[1]})
-            let dxMxColumn = Column(name: "\(metric_no)dxMx", contents: diff_frame.map{$0[2]})
-            let dxMiColumn = Column(name: "\(metric_no)dxMi", contents: diff_frame.map{$0[3]})
-            let dxUMColumn = Column(name: "\(metric_no)dxUM", contents: diff_frame.map{$0[4]})
-            let dxLMColumn = Column(name: "\(metric_no)dxLM", contents: diff_frame.map{$0[5]})
-            let dyMeColumn = Column(name: "\(metric_no)dyMe", contents: diff_frame.map{$0[6]})
-            let dyVrColumn = Column(name: "\(metric_no)dyVr", contents: diff_frame.map{$0[7]})
-            let dyMxColumn = Column(name: "\(metric_no)dyMx", contents: diff_frame.map{$0[8]})
-            let dyMnColumn = Column(name: "\(metric_no)dyMn", contents: diff_frame.map{$0[9]})
-            let dyUMColumn = Column(name: "\(metric_no)dyUM", contents: diff_frame.map{$0[10]})
-            let dyLMColumn = Column(name: "\(metric_no)dyLM", contents: diff_frame.map{$0[11]})
-            let dzMeColumn = Column(name: "\(metric_no)dzMe", contents: diff_frame.map{$0[12]})
-            let dzVrColumn = Column(name: "\(metric_no)dzVr", contents: diff_frame.map{$0[13]})
-            let dzMxColumn = Column(name: "\(metric_no)dzMx", contents: diff_frame.map{$0[14]})
-            let dzMiColumn = Column(name: "\(metric_no)dzMi", contents: diff_frame.map{$0[15]})
-            let dzUMColumn = Column(name: "\(metric_no)dzUM", contents: diff_frame.map{$0[16]})
-            let dzLMColumn = Column(name: "\(metric_no)dzLM", contents: diff_frame.map{$0[17]})
+            
+            //may need to return full path (outputURL.path)
+            return outputFileName
 
-            df1.append(column: dxMeColumn)
-            df1.append(column: dxVrColumn)
-            df1.append(column: dxMxColumn)
-            df1.append(column: dxMiColumn)
-            df1.append(column: dxUMColumn)
-            df1.append(column: dxLMColumn)
-            df1.append(column: dyMeColumn)
-            df1.append(column: dyVrColumn)
-            df1.append(column: dyMxColumn)
-            df1.append(column: dyMnColumn)
-            df1.append(column: dyUMColumn)
-            df1.append(column: dyLMColumn)
-            df1.append(column: dzMeColumn)
-            df1.append(column: dzVrColumn)
-            df1.append(column: dzMxColumn)
-            df1.append(column: dzMiColumn)
-            df1.append(column: dzUMColumn)
-            df1.append(column: dzLMColumn)
-
-            //FIXME write to output file
                         
         }
         catch{
-            //FIXME
             print("Error: \(error.localizedDescription)")
             return ""
         }
