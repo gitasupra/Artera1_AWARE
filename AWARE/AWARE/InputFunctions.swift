@@ -104,92 +104,140 @@ class InputFunctions : ObservableObject{
     }
     
     func create_per_second_data(file: String, metric_no: Int) -> String {
-           var prevTs = 0
-           var fullFrame: [[String: Any]] = []
+        var prevTs = 0
+        var fullFrame: [[String: Any]] = []
 
-           // Read the CSV file using SwiftCSV
-           do {
-               let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
-               var outputFileName = ""
+        // Read the CSV file using SwiftCSV
+        do {
+            let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
+            var outputFileName = ""
 
-               // Extract data from the CSV file
-               var mean_all: [[Double]] = []
+            // Extract data from the CSV file
+            var mean_all: [[Double]] = []
 
-               for row in csvFile.rows {
-                   guard
-                       let timestamp = Double(row["timestamp"]!),
-                       let x = Double(row["x"]!),
-                       let y = Double(row["y"]!),
-                       let z = Double(row["z"]!)
-                   else {
-                       // Handle the case where parsing to Double fails
-                       continue
-                   }
-                   let rowData: [Double] = [timestamp, x, y, z]
-                   mean_all.append(rowData)
-               }
+            for row in csvFile.rows {
+                guard
+                    let timestamp = Double(row["timestamp"]!),
+                    let x = Double(row["x"]!),
+                    let y = Double(row["y"]!),
+                    let z = Double(row["z"]!)
+                else {
+                    // Handle the case where parsing to Double fails
+                    continue
+                }
+                let rowData: [Double] = [timestamp, x, y, z]
+                mean_all.append(rowData)
+            }
 
-               // Perform calculations for each 10-second window
-               var full_frame: [[Double]] = []
-               var single_row: [Double] = []
-               var i = 0
-               let tot_rows = mean_all.count
+            // Perform calculations for each 10-second window
+            var full_frame: [[Double]] = []
+            var single_row: [Double] = []
+            var i = 0
+            let tot_rows = mean_all.count
 
-               while i + 10 < tot_rows {
-                   single_row.append(mean_all[i + 9][0])
+            while i + 10 < tot_rows {
+                single_row.append(mean_all[i + 9][0])
 
-                   for col in 1...3 {
-                       let sub_frame = mean_all[i..<i + 10][col]
-                       
-                       // Append mean of sub_frame
-                       if let meanValue = calculateMean(values: sub_frame) {
-                           single_row.append(meanValue)
-                       } else {
-                           // Handle the case where calculation fails
-                           continue
-                       }
+                for col in 1...3 {
+                    let sub_frame = mean_all[i..<i + 10][col]
+                    
+                    // Append mean of sub_frame
+                    if let meanValue = calculateMean(values: sub_frame) {
+                        single_row.append(meanValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
 
-                       // Append variance of sub_frame
-                       if let varianceValue = calculateVariance(values: sub_frame) {
-                           single_row.append(varianceValue)
-                       } else {
-                           // Handle the case where calculation fails
-                           continue
-                       }
+                    // Append variance of sub_frame
+                    if let varianceValue = calculateVariance(values: sub_frame) {
+                        single_row.append(varianceValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
 
-                       // Append max of sub_frame
-                       if let maxValue = calculateMaximum(values: sub_frame) {
-                           single_row.append(maxValue)
-                       } else {
-                           // Handle the case where calculation fails
-                           continue
-                       }
+                    // Append max of sub_frame
+                    if let maxValue = calculateMaximum(values: sub_frame) {
+                        single_row.append(maxValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
 
-                       // Append min of sub_frame
-                       if let minValue = calculateMinimum(values: sub_frame) {
-                           single_row.append(minValue)
-                       } else {
-                           // Handle the case where calculation fails
-                           continue
-                       }
-                   }
+                    // Append min of sub_frame
+                    if let minValue = calculateMinimum(values: sub_frame) {
+                        single_row.append(minValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
+                }
 
-                   full_frame.append(single_row)
-                   single_row = []
-                   i += 10
-               }
+                full_frame.append(single_row)
+                single_row = []
+                i += 10
+            }
 
-               // Processing data code FIXME
+            // Create a DataFrame
+            var df1 = DataFrame()
+            let tColumn = Column(name: "t", contents: full_frame.map { $0[0] })
+            let xMeColumn = Column(name: "\(metric_no)xMe", contents: full_frame.map { $0[1] })
+            let xVrColumn = Column(name: "\(metric_no)xVr", contents: full_frame.map { $0[2] })
+            let xMxColumn = Column(name: "\(metric_no)xMx", contents: full_frame.map { $0[3] })
+            let xMiColumn = Column(name: "\(metric_no)xMi", contents: full_frame.map { $0[4] })
+            let xUMColumn = Column(name: "\(metric_no)xUM", contents: full_frame.map { $0[5] })
+            let xLMColumn = Column(name: "\(metric_no)xLM", contents: full_frame.map { $0[6] })
+            let yMeColumn = Column(name: "\(metric_no)yMe", contents: full_frame.map { $0[7] })
+            let yVrColumn = Column(name: "\(metric_no)yVr", contents: full_frame.map { $0[8] })
+            let yMxColumn = Column(name: "\(metric_no)yMx", contents: full_frame.map { $0[9] })
+            let yMnColumn = Column(name: "\(metric_no)yMn", contents: full_frame.map { $0[10] })
+            let yUMColumn = Column(name: "\(metric_no)yUM", contents: full_frame.map { $0[11] })
+            let yLMColumn = Column(name: "\(metric_no)yLM", contents: full_frame.map { $0[12] })
+            let zMeColumn = Column(name: "\(metric_no)zMe", contents: full_frame.map { $0[13] })
+            let zVrColumn = Column(name: "\(metric_no)zVr", contents: full_frame.map { $0[14] })
+            let zMxColumn = Column(name: "\(metric_no)zMx", contents: full_frame.map { $0[15] })
+            let zMiColumn = Column(name: "\(metric_no)zMi", contents: full_frame.map { $0[16] })
+            let zUMColumn = Column(name: "\(metric_no)zUM", contents: full_frame.map { $0[17] })
+            let zLMColumn = Column(name: "\(metric_no)zLM", contents: full_frame.map { $0[18] })
 
-               // Create a DataFrame if needed
+            df1.append(column: tColumn)
+            df1.append(column: xMeColumn)
+            df1.append(column: xVrColumn)
+            df1.append(column: xMxColumn)
+            df1.append(column: xMiColumn)
+            df1.append(column: xUMColumn)
+            df1.append(column: xLMColumn)
+            df1.append(column: yMeColumn)
+            df1.append(column: yVrColumn)
+            df1.append(column: yMxColumn)
+            df1.append(column: yMnColumn)
+            df1.append(column: yUMColumn)
+            df1.append(column: yLMColumn)
+            df1.append(column: zMeColumn)
+            df1.append(column: zVrColumn)
+            df1.append(column: zMxColumn)
+            df1.append(column: zMiColumn)
+            df1.append(column: zUMColumn)
+            df1.append(column: zLMColumn)
 
-               return outputFileName
-           } catch {
-               // Handle the error
-               print("Error: \(error.localizedDescription)")
-               return ""
-           }
-       }
+            // Write the DataFrame to a CSV file
+            do {
+                outputFileName = "\(metric_no)_per_second_data.csv"
+                try df1.writeCSV(to: URL(fileURLWithPath: outputFileName))
+            } catch {
+                print("Error writing CSV: \(error.localizedDescription)")
+                return ""
+            }
+
+            return outputFileName
+        } catch {
+            // Handle the error
+            print("Error: \(error.localizedDescription)")
+            return ""
+        }
+    }
+
 
 
     
