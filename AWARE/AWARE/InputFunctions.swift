@@ -21,14 +21,14 @@ class InputFunctions : ObservableObject{
         case Min_Abs = 6
     }
     var featureType: [Features: String] = [
-
+        
         .Mean : "Mean",
         .Median : "Median",
         .Std_Dev : "Std_Dev",
         .Max_Raw  : "Max_Raw",
         .Min_Raw : "Min_Raw",
         .Max_Abs : "Max_Abs",
-            .Min_Abs : "Min_Abs",
+        .Min_Abs : "Min_Abs",
     ]
     
     // helper function to calculate the mean
@@ -36,22 +36,22 @@ class InputFunctions : ObservableObject{
         guard !values.isEmpty else {
             return nil // Return nil for an empty array
         }
-
+        
         let sum = values.reduce(0, +)
         let mean = sum / Double(values.count)
         
         return mean
     }
-
+    
     // helper function to calculate the median
     func calculateMedian(values: [Double]) -> Double? {
         guard !values.isEmpty else {
             return nil // Return nil for an empty array
         }
-
+        
         let sortedValues = values.sorted()
         let count = sortedValues.count
-
+        
         if count % 2 == 0 {
             // For an even number of elements, take the average of the two middle values
             let middle1 = sortedValues[count / 2 - 1]
@@ -62,21 +62,21 @@ class InputFunctions : ObservableObject{
             return sortedValues[count / 2]
         }
     }
-
+    
     // helper function to calculate the standard deviation
     func calculateStandardDeviation(values: [Double]) -> Double? {
         guard let mean = calculateMean(values: values) else {
             return nil // Return nil if mean calculation fails
         }
-
+        
         let squaredDifferences = values.map { pow($0 - mean, 2) }
         let sumOfSquaredDifferences = squaredDifferences.reduce(0, +)
         let variance = sumOfSquaredDifferences / Double(values.count)
         let standardDeviation = sqrt(variance)
-
+        
         return standardDeviation
     }
-
+    
     // helper function to calculate minimum and maximum values
     func calculateMinimum(values: [Double]) -> Double? {
         guard let minValue = values.min() else {
@@ -84,15 +84,15 @@ class InputFunctions : ObservableObject{
         }
         return minValue
     }
-
+    
     func calculateMaximum(values: [Double]) -> Double? {
         guard let maxValue = values.max() else {
             return nil // Return nil for an empty array
         }
         return maxValue
     }
-
-
+    
+    
     func calculateVariance(values: [Double]) -> Double? {
         guard let mean = calculateMean(values: values) else {
             return nil // Return nil if mean calculation fails
@@ -102,272 +102,319 @@ class InputFunctions : ObservableObject{
         let variance = sumOfSquaredDifferences / Double(values.count)
         return variance
     }
-
-    func create_per_second_data(file: String, metric_no: Int) -> String{
-        guard let csv = try? CSV(url: URL(fileURLWithPath: file)) else {
-            return ""
-        }
-
+    
+    func create_per_second_data(file: String, metric_no: Int) -> String {
         var prevTs = 0
         var fullFrame: [[String: Any]] = []
         var subFrame: [[String: Any]] = []
 
-        for idx in 0..<csv.rows.count {
-            if idx % 10000 == 0 {
-                print(idx, "**")
-            }
-
-            let r = csv.rows[idx]
-            let currTs = r["time"]! % 1000
-
-            if idx != 0 {
-                prevTs = csv.rows[idx - 1]["time"]! % 1000
-            }
-
-            if currTs > prevTs {
-                subFrame.append(["time": r["time"]!, "x": r["x"]!, "y": r["y"]!, "z": r["z"]!])
-            } else {
-                subFrame = subFrame.map { $0.mapValues { $0! } }
-                var metricsAxis: [Any] = [subFrame.last!["time"]!]
-
-                for col in 1...3 {
-                    if let colValues = subFrame.map({ Double($0[String(col)])! }) {
-                        switch Features(rawValue: metric_no)! {
-                        case .Mean:
-                            metricsAxis.append(calculateMean(values: colValues)!)
-                        case .Median:
-                            metricsAxis.append(calculateMedian(values: colValues)!)
-                        case .Std_Dev:
-                            metricsAxis.append(calculateStandardDeviation(values: colValues)!)
-                        case .Max_Raw:
-                            metricsAxis.append(calculateMaximum(values: colValues)!)
-                        case .Min_Raw:
-                            metricsAxis.append(calculateMinimum(values: colValues)!)
-                        case .Max_Abs:
-                            metricsAxis.append(calculateMaximum(values: colValues.map { abs($0) })!)
-                        case .Min_Abs:
-                            metricsAxis.append(calculateMinimum(values: colValues.map { abs($0) })!)
-                        }
-                    }
-                }
-
-                fullFrame.append(metricsAxis)
-                subFrame = []
-            }
-        }
-
-        // processing data code FIXME
-
-        return ""
-    }
-    func create_per_window_data(file: String, metric_no: Int) -> String{
-        //TODO: test on input file
-        
         // Read the CSV file using SwiftCSV
-        do{
-            
+        do {
             let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
             var outputFileName = ""
-            
+
             // Extract data from the CSV file
             var mean_all: [[Double]] = []
             for row in csvFile.rows {
-                let rowData: [Double] = [Double(row["timestamp"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
+                guard
+                    let timestamp = Double(row["timestamp"]!),
+                    let x = Double(row["x"]!),
+                    let y = Double(row["y"]!),
+                    let z = Double(row["z"]!)
+                else {
+                    // Handle the case where parsing to Double fails
+                    continue
+                }
+                let rowData: [Double] = [timestamp, x, y, z]
                 mean_all.append(rowData)
             }
-            
+
             // Perform calculations for each 10-second window
             var full_frame: [[Double]] = []
             var single_row: [Double] = []
             var i = 0
             let tot_rows = mean_all.count
-            
-            
-            while i + 10 < tot_rows{
-                single_row.append(mean_all[i+9][0])
-                for col in 1...3{
-                    let sub_frame = mean_all[i..<i+10][col]
-                    //append mean of sub_frame
-                    single_row.append(calculateMean(values: sub_frame)!)
 
-                    //append variance of sub_frame
-                    single_row.append(calculateVariance(values: sub_frame)!)
+            while i + 10 < tot_rows {
+                single_row.append(mean_all[i + 9][0])
+                for col in 1...3 {
+                    let sub_frame = mean_all[i..<i + 10][col]
+                    // Append mean of sub_frame
+                    if let meanValue = calculateMean(values: sub_frame) {
+                        single_row.append(meanValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
 
-                    //append max of sub_frame
-                    single_row.append(calculateMaximum(values: sub_frame)!)
+                    // Append variance of sub_frame
+                    if let varianceValue = calculateVariance(values: sub_frame) {
+                        single_row.append(varianceValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
 
-                    //append min of sub_frame
-                    single_row.append(calculateMinimum(values: sub_frame)!)
+                    // Append max of sub_frame
+                    if let maxValue = calculateMaximum(values: sub_frame) {
+                        single_row.append(maxValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
 
-                    //sort sub_frame from low to high
+                    // Append min of sub_frame
+                    if let minValue = calculateMinimum(values: sub_frame) {
+                        single_row.append(minValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
+
+                    // Sort sub_frame from low to high
                     let sorted_sub_frame = sub_frame.sorted()
-                    //append mean of lower half of sub_frame
-                    single_row.append(calculateMean(values: Array(sorted_sub_frame[0..<4]))!)
-                    //append mean of upper half of sub_frame from 8 to 10
-                    single_row.append(calculateMean(values: Array(sorted_sub_frame[8..<10]))!)
+                    // Append mean of lower half of sub_frame
+                    if let lowerMeanValue = calculateMean(values: Array(sorted_sub_frame[0..<4])) {
+                        single_row.append(lowerMeanValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
+                    // Append mean of upper half of sub_frame from 8 to 10
+                    if let upperMeanValue = calculateMean(values: Array(sorted_sub_frame[8..<10])) {
+                        single_row.append(upperMeanValue)
+                    } else {
+                        // Handle the case where calculation fails
+                        continue
+                    }
                 }
-                
+
                 full_frame.append(single_row)
                 single_row = []
                 i += 10
             }
-            
-            let col_names = ["xMe", "xVr", "xMx", "xMi", "xUM", "xLM", "yMe", "yVr", "yMx", "yMn", "yUM", "yLM", "zMe", "zVr", "zMx", "zMi", "zUM", "zLM"]
-            
-            
-            // let columnNames = ["t"] + col_names.map{"\(metric_no)\($0)"}
-            
-            //not doing df1 creation efficiently
-            var df1=DataFrame()
-            let tColumn = Column(name:"t", contents: full_frame.map{$0[0]})
-            let xMeColumn = Column(name: "\(metric_no)xMe", contents: full_frame.map{$0[1]})
-            let xVrColumn = Column(name: "\(metric_no)xVr", contents: full_frame.map{$0[2]})
-            let xMxColumn = Column(name: "\(metric_no)xMx", contents: full_frame.map{$0[3]})
-            let xMiColumn = Column(name: "\(metric_no)xMi", contents: full_frame.map{$0[4]})
-            let xUMColumn = Column(name: "\(metric_no)xUM", contents: full_frame.map{$0[5]})
-            let xLMColumn = Column(name: "\(metric_no)xLM", contents: full_frame.map{$0[6]})
-            let yMeColumn = Column(name: "\(metric_no)yMe", contents: full_frame.map{$0[7]})
-            let yVrColumn = Column(name: "\(metric_no)yVr", contents: full_frame.map{$0[8]})
-            let yMxColumn = Column(name: "\(metric_no)yMx", contents: full_frame.map{$0[9]})
-            let yMnColumn = Column(name: "\(metric_no)yMn", contents: full_frame.map{$0[10]})
-            let yUMColumn = Column(name: "\(metric_no)yUM", contents: full_frame.map{$0[11]})
-            let yLMColumn = Column(name: "\(metric_no)yLM", contents: full_frame.map{$0[12]})
-            let zMeColumn = Column(name: "\(metric_no)zMe", contents: full_frame.map{$0[13]})
-            let zVrColumn = Column(name: "\(metric_no)zVr", contents: full_frame.map{$0[14]})
-            let zMxColumn = Column(name: "\(metric_no)zMx", contents: full_frame.map{$0[15]})
-            let zMiColumn = Column(name: "\(metric_no)zMi", contents: full_frame.map{$0[16]})
-            let zUMColumn = Column(name: "\(metric_no)zUM", contents: full_frame.map{$0[17]})
-            let zLMColumn = Column(name: "\(metric_no)zLM", contents: full_frame.map{$0[18]})
 
-            df1.append(column: tColumn)
-            df1.append(column: xMeColumn)
-            df1.append(column: xVrColumn)
-            df1.append(column: xMxColumn)
-            df1.append(column: xMiColumn)
-            df1.append(column: xUMColumn)
-            df1.append(column: xLMColumn)
-            df1.append(column: yMeColumn)
-            df1.append(column: yVrColumn)
-            df1.append(column: yMxColumn)
-            df1.append(column: yMnColumn)
-            df1.append(column: yUMColumn)
-            df1.append(column: yLMColumn)
-            df1.append(column: zMeColumn)
-            df1.append(column: zVrColumn)
-            df1.append(column: zMxColumn)
-            df1.append(column: zMiColumn)
-            df1.append(column: zUMColumn)
-            df1.append(column: zLMColumn)
+            // Processing data code FIXME
 
-            if metric_no <= 14{
-                var diff_frame: [[Double]] = []
-                //declare a row variable
-                var diff_row: [Double] = []
-                var curr_row: [Double] = []
-                var prev_row: [Double] = []
-                
-                for i in 1...full_frame.count{
-                    if i==0{
-                        //append to full frame the first row of full frame without the first column
-                        //make diff_row equal to the first row of full frame without the first column
-                        diff_row = Array(full_frame[i].dropFirst())
-                        diff_frame.append(diff_row)
-                                
-                    }
-                    else{
-                        //append to full frame the difference between the current row and the previous row
+            return ""
+        } catch {
+            // Handle the error
+            print("Error: \(error.localizedDescription)")
+            return ""
+        }
+    }
 
-                        curr_row = Array(full_frame[i][1...])
-                        prev_row = Array(full_frame[i-1][1...])
-                        diff_row = zip(curr_row, prev_row).map{$0.0 - $0.1}
-
-
-
-                        diff_frame.append(diff_row)
-                    }
-                    
-                }
-
-
-                let dxMeColumn = Column(name: "\(metric_no)dxMe", contents: diff_frame.map{$0[0]})
-                let dxVrColumn = Column(name: "\(metric_no)dxVr", contents: diff_frame.map{$0[1]})
-                let dxMxColumn = Column(name: "\(metric_no)dxMx", contents: diff_frame.map{$0[2]})
-                let dxMiColumn = Column(name: "\(metric_no)dxMi", contents: diff_frame.map{$0[3]})
-                let dxUMColumn = Column(name: "\(metric_no)dxUM", contents: diff_frame.map{$0[4]})
-                let dxLMColumn = Column(name: "\(metric_no)dxLM", contents: diff_frame.map{$0[5]})
-                let dyMeColumn = Column(name: "\(metric_no)dyMe", contents: diff_frame.map{$0[6]})
-                let dyVrColumn = Column(name: "\(metric_no)dyVr", contents: diff_frame.map{$0[7]})
-                let dyMxColumn = Column(name: "\(metric_no)dyMx", contents: diff_frame.map{$0[8]})
-                let dyMnColumn = Column(name: "\(metric_no)dyMn", contents: diff_frame.map{$0[9]})
-                let dyUMColumn = Column(name: "\(metric_no)dyUM", contents: diff_frame.map{$0[10]})
-                let dyLMColumn = Column(name: "\(metric_no)dyLM", contents: diff_frame.map{$0[11]})
-                let dzMeColumn = Column(name: "\(metric_no)dzMe", contents: diff_frame.map{$0[12]})
-                let dzVrColumn = Column(name: "\(metric_no)dzVr", contents: diff_frame.map{$0[13]})
-                let dzMxColumn = Column(name: "\(metric_no)dzMx", contents: diff_frame.map{$0[14]})
-                let dzMiColumn = Column(name: "\(metric_no)dzMi", contents: diff_frame.map{$0[15]})
-                let dzUMColumn = Column(name: "\(metric_no)dzUM", contents: diff_frame.map{$0[16]})
-                let dzLMColumn = Column(name: "\(metric_no)dzLM", contents: diff_frame.map{$0[17]})
-
-                df1.append(column: dxMeColumn)
-                df1.append(column: dxVrColumn)
-                df1.append(column: dxMxColumn)
-                df1.append(column: dxMiColumn)
-                df1.append(column: dxUMColumn)
-                df1.append(column: dxLMColumn)
-                df1.append(column: dyMeColumn)
-                df1.append(column: dyVrColumn)
-                df1.append(column: dyMxColumn)
-                df1.append(column: dyMnColumn)
-                df1.append(column: dyUMColumn)
-                df1.append(column: dyLMColumn)
-                df1.append(column: dzMeColumn)
-                df1.append(column: dzVrColumn)
-                df1.append(column: dzMxColumn)
-                df1.append(column: dzMiColumn)
-                df1.append(column: dzUMColumn)
-                df1.append(column: dzLMColumn)
-
-
-                outputFileName = "Metric_\(metric_no)_36.csv"
-
-
-            }
-            else{
-                outputFileName = "Metric_\(metric_no)_18.csv"
-            }
-            
-
-
-            //write the dataframe to a csv file, atomically = should overwrite the file if it already exists
     
+   
+        func create_per_window_data(file: String, metric_no: Int) -> String{
+            //TODO: test on input file
+            
+            // Read the CSV file using SwiftCSV
             do{
                 
-                try df1.writeCSV(to: URL(fileURLWithPath: outputFileName))
+                let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
+                var outputFileName = ""
+                
+                // Extract data from the CSV file
+                var mean_all: [[Double]] = []
+                for row in csvFile.rows {
+                    let rowData: [Double] = [Double(row["timestamp"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
+                    mean_all.append(rowData)
+                }
+                
+                // Perform calculations for each 10-second window
+                var full_frame: [[Double]] = []
+                var single_row: [Double] = []
+                var i = 0
+                let tot_rows = mean_all.count
+                
+                
+                while i + 10 < tot_rows{
+                    single_row.append(mean_all[i+9][0])
+                    for col in 1...3{
+                        let sub_frame = mean_all[i..<i+10][col]
+                        //append mean of sub_frame
+                        single_row.append(calculateMean(values: sub_frame)!)
+                        
+                        //append variance of sub_frame
+                        single_row.append(calculateVariance(values: sub_frame)!)
+                        
+                        //append max of sub_frame
+                        single_row.append(calculateMaximum(values: sub_frame)!)
+                        
+                        //append min of sub_frame
+                        single_row.append(calculateMinimum(values: sub_frame)!)
+                        
+                        //sort sub_frame from low to high
+                        let sorted_sub_frame = sub_frame.sorted()
+                        //append mean of lower half of sub_frame
+                        single_row.append(calculateMean(values: Array(sorted_sub_frame[0..<4]))!)
+                        //append mean of upper half of sub_frame from 8 to 10
+                        single_row.append(calculateMean(values: Array(sorted_sub_frame[8..<10]))!)
+                    }
+                    
+                    full_frame.append(single_row)
+                    single_row = []
+                    i += 10
+                }
+                
+                let col_names = ["xMe", "xVr", "xMx", "xMi", "xUM", "xLM", "yMe", "yVr", "yMx", "yMn", "yUM", "yLM", "zMe", "zVr", "zMx", "zMi", "zUM", "zLM"]
+                
+                
+                // let columnNames = ["t"] + col_names.map{"\(metric_no)\($0)"}
+                
+                //not doing df1 creation efficiently
+                var df1=DataFrame()
+                let tColumn = Column(name:"t", contents: full_frame.map{$0[0]})
+                let xMeColumn = Column(name: "\(metric_no)xMe", contents: full_frame.map{$0[1]})
+                let xVrColumn = Column(name: "\(metric_no)xVr", contents: full_frame.map{$0[2]})
+                let xMxColumn = Column(name: "\(metric_no)xMx", contents: full_frame.map{$0[3]})
+                let xMiColumn = Column(name: "\(metric_no)xMi", contents: full_frame.map{$0[4]})
+                let xUMColumn = Column(name: "\(metric_no)xUM", contents: full_frame.map{$0[5]})
+                let xLMColumn = Column(name: "\(metric_no)xLM", contents: full_frame.map{$0[6]})
+                let yMeColumn = Column(name: "\(metric_no)yMe", contents: full_frame.map{$0[7]})
+                let yVrColumn = Column(name: "\(metric_no)yVr", contents: full_frame.map{$0[8]})
+                let yMxColumn = Column(name: "\(metric_no)yMx", contents: full_frame.map{$0[9]})
+                let yMnColumn = Column(name: "\(metric_no)yMn", contents: full_frame.map{$0[10]})
+                let yUMColumn = Column(name: "\(metric_no)yUM", contents: full_frame.map{$0[11]})
+                let yLMColumn = Column(name: "\(metric_no)yLM", contents: full_frame.map{$0[12]})
+                let zMeColumn = Column(name: "\(metric_no)zMe", contents: full_frame.map{$0[13]})
+                let zVrColumn = Column(name: "\(metric_no)zVr", contents: full_frame.map{$0[14]})
+                let zMxColumn = Column(name: "\(metric_no)zMx", contents: full_frame.map{$0[15]})
+                let zMiColumn = Column(name: "\(metric_no)zMi", contents: full_frame.map{$0[16]})
+                let zUMColumn = Column(name: "\(metric_no)zUM", contents: full_frame.map{$0[17]})
+                let zLMColumn = Column(name: "\(metric_no)zLM", contents: full_frame.map{$0[18]})
+                
+                df1.append(column: tColumn)
+                df1.append(column: xMeColumn)
+                df1.append(column: xVrColumn)
+                df1.append(column: xMxColumn)
+                df1.append(column: xMiColumn)
+                df1.append(column: xUMColumn)
+                df1.append(column: xLMColumn)
+                df1.append(column: yMeColumn)
+                df1.append(column: yVrColumn)
+                df1.append(column: yMxColumn)
+                df1.append(column: yMnColumn)
+                df1.append(column: yUMColumn)
+                df1.append(column: yLMColumn)
+                df1.append(column: zMeColumn)
+                df1.append(column: zVrColumn)
+                df1.append(column: zMxColumn)
+                df1.append(column: zMiColumn)
+                df1.append(column: zUMColumn)
+                df1.append(column: zLMColumn)
+                
+                if metric_no <= 14{
+                    var diff_frame: [[Double]] = []
+                    //declare a row variable
+                    var diff_row: [Double] = []
+                    var curr_row: [Double] = []
+                    var prev_row: [Double] = []
+                    
+                    for i in 1...full_frame.count{
+                        if i==0{
+                            //append to full frame the first row of full frame without the first column
+                            //make diff_row equal to the first row of full frame without the first column
+                            diff_row = Array(full_frame[i].dropFirst())
+                            diff_frame.append(diff_row)
+                            
+                        }
+                        else{
+                            //append to full frame the difference between the current row and the previous row
+                            
+                            curr_row = Array(full_frame[i][1...])
+                            prev_row = Array(full_frame[i-1][1...])
+                            diff_row = zip(curr_row, prev_row).map{$0.0 - $0.1}
+                            
+                            
+                            
+                            diff_frame.append(diff_row)
+                        }
+                        
+                    }
+                    
+                    
+                    let dxMeColumn = Column(name: "\(metric_no)dxMe", contents: diff_frame.map{$0[0]})
+                    let dxVrColumn = Column(name: "\(metric_no)dxVr", contents: diff_frame.map{$0[1]})
+                    let dxMxColumn = Column(name: "\(metric_no)dxMx", contents: diff_frame.map{$0[2]})
+                    let dxMiColumn = Column(name: "\(metric_no)dxMi", contents: diff_frame.map{$0[3]})
+                    let dxUMColumn = Column(name: "\(metric_no)dxUM", contents: diff_frame.map{$0[4]})
+                    let dxLMColumn = Column(name: "\(metric_no)dxLM", contents: diff_frame.map{$0[5]})
+                    let dyMeColumn = Column(name: "\(metric_no)dyMe", contents: diff_frame.map{$0[6]})
+                    let dyVrColumn = Column(name: "\(metric_no)dyVr", contents: diff_frame.map{$0[7]})
+                    let dyMxColumn = Column(name: "\(metric_no)dyMx", contents: diff_frame.map{$0[8]})
+                    let dyMnColumn = Column(name: "\(metric_no)dyMn", contents: diff_frame.map{$0[9]})
+                    let dyUMColumn = Column(name: "\(metric_no)dyUM", contents: diff_frame.map{$0[10]})
+                    let dyLMColumn = Column(name: "\(metric_no)dyLM", contents: diff_frame.map{$0[11]})
+                    let dzMeColumn = Column(name: "\(metric_no)dzMe", contents: diff_frame.map{$0[12]})
+                    let dzVrColumn = Column(name: "\(metric_no)dzVr", contents: diff_frame.map{$0[13]})
+                    let dzMxColumn = Column(name: "\(metric_no)dzMx", contents: diff_frame.map{$0[14]})
+                    let dzMiColumn = Column(name: "\(metric_no)dzMi", contents: diff_frame.map{$0[15]})
+                    let dzUMColumn = Column(name: "\(metric_no)dzUM", contents: diff_frame.map{$0[16]})
+                    let dzLMColumn = Column(name: "\(metric_no)dzLM", contents: diff_frame.map{$0[17]})
+                    
+                    df1.append(column: dxMeColumn)
+                    df1.append(column: dxVrColumn)
+                    df1.append(column: dxMxColumn)
+                    df1.append(column: dxMiColumn)
+                    df1.append(column: dxUMColumn)
+                    df1.append(column: dxLMColumn)
+                    df1.append(column: dyMeColumn)
+                    df1.append(column: dyVrColumn)
+                    df1.append(column: dyMxColumn)
+                    df1.append(column: dyMnColumn)
+                    df1.append(column: dyUMColumn)
+                    df1.append(column: dyLMColumn)
+                    df1.append(column: dzMeColumn)
+                    df1.append(column: dzVrColumn)
+                    df1.append(column: dzMxColumn)
+                    df1.append(column: dzMiColumn)
+                    df1.append(column: dzUMColumn)
+                    df1.append(column: dzLMColumn)
+                    
+                    
+                    outputFileName = "Metric_\(metric_no)_36.csv"
+                    
+                    
+                }
+                else{
+                    outputFileName = "Metric_\(metric_no)_18.csv"
+                }
+                
+                
+                
+                //write the dataframe to a csv file, atomically = should overwrite the file if it already exists
+                
+                do{
+                    
+                    try df1.writeCSV(to: URL(fileURLWithPath: outputFileName))
+                    
+                }
+                catch{
+                    print("Error: \(error.localizedDescription)")
+                }
+                
+                
+                //may need to return full path (outputURL.path)
+                return outputFileName
+                
                 
             }
             catch{
                 print("Error: \(error.localizedDescription)")
+                return ""
             }
-            
-            
-            //may need to return full path (outputURL.path)
-            return outputFileName
-
-                        
-        }
-        catch{
-            print("Error: \(error.localizedDescription)")
             return ""
         }
-        return ""
-    }
-    
-    func processData(windowFile: String) -> String {
-        for metricNum in Features.allCases{
-            let perSecondDataFile = create_per_second_data(file: windowFile, metric_no: metricNum.rawValue)
-            let perWindowDataFile = create_per_window_data(file: perSecondDataFile, metric_no: metricNum.rawValue)
+        
+        func processData(windowFile: String) -> String {
+            for metricNum in Features.allCases{
+                let perSecondDataFile = create_per_second_data(file: windowFile, metric_no: metricNum.rawValue)
+                let perWindowDataFile = create_per_window_data(file: perSecondDataFile, metric_no: metricNum.rawValue)
+            }
+            return ""
         }
-        return ""
+        
     }
 
-}
