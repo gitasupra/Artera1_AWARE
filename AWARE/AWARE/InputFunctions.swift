@@ -104,105 +104,93 @@ class InputFunctions : ObservableObject{
     }
     
     func create_per_second_data(file: String, metric_no: Int) -> String {
-        var prevTs = 0
-        var fullFrame: [[String: Any]] = []
-        var subFrame: [[String: Any]] = []
+           var prevTs = 0
+           var fullFrame: [[String: Any]] = []
 
-        // Read the CSV file using SwiftCSV
-        do {
-            let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
-            var outputFileName = ""
+           // Read the CSV file using SwiftCSV
+           do {
+               let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
+               var outputFileName = ""
 
-            // Extract data from the CSV file
-            var mean_all: [[Double]] = []
-            for row in csvFile.rows {
-                guard
-                    let timestamp = Double(row["timestamp"]!),
-                    let x = Double(row["x"]!),
-                    let y = Double(row["y"]!),
-                    let z = Double(row["z"]!)
-                else {
-                    // Handle the case where parsing to Double fails
-                    continue
-                }
-                let rowData: [Double] = [timestamp, x, y, z]
-                mean_all.append(rowData)
-            }
+               // Extract data from the CSV file
+               var mean_all: [[Double]] = []
 
-            // Perform calculations for each 10-second window
-            var full_frame: [[Double]] = []
-            var single_row: [Double] = []
-            var i = 0
-            let tot_rows = mean_all.count
+               for row in csvFile.rows {
+                   guard
+                       let timestamp = Double(row["timestamp"]!),
+                       let x = Double(row["x"]!),
+                       let y = Double(row["y"]!),
+                       let z = Double(row["z"]!)
+                   else {
+                       // Handle the case where parsing to Double fails
+                       continue
+                   }
+                   let rowData: [Double] = [timestamp, x, y, z]
+                   mean_all.append(rowData)
+               }
 
-            while i + 10 < tot_rows {
-                single_row.append(mean_all[i + 9][0])
-                for col in 1...3 {
-                    let sub_frame = mean_all[i..<i + 10][col]
-                    // Append mean of sub_frame
-                    if let meanValue = calculateMean(values: sub_frame) {
-                        single_row.append(meanValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
+               // Perform calculations for each 10-second window
+               var full_frame: [[Double]] = []
+               var single_row: [Double] = []
+               var i = 0
+               let tot_rows = mean_all.count
 
-                    // Append variance of sub_frame
-                    if let varianceValue = calculateVariance(values: sub_frame) {
-                        single_row.append(varianceValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
+               while i + 10 < tot_rows {
+                   single_row.append(mean_all[i + 9][0])
 
-                    // Append max of sub_frame
-                    if let maxValue = calculateMaximum(values: sub_frame) {
-                        single_row.append(maxValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
+                   for col in 1...3 {
+                       let sub_frame = mean_all[i..<i + 10][col]
+                       
+                       // Append mean of sub_frame
+                       if let meanValue = calculateMean(values: sub_frame) {
+                           single_row.append(meanValue)
+                       } else {
+                           // Handle the case where calculation fails
+                           continue
+                       }
 
-                    // Append min of sub_frame
-                    if let minValue = calculateMinimum(values: sub_frame) {
-                        single_row.append(minValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
+                       // Append variance of sub_frame
+                       if let varianceValue = calculateVariance(values: sub_frame) {
+                           single_row.append(varianceValue)
+                       } else {
+                           // Handle the case where calculation fails
+                           continue
+                       }
 
-                    // Sort sub_frame from low to high
-                    let sorted_sub_frame = sub_frame.sorted()
-                    // Append mean of lower half of sub_frame
-                    if let lowerMeanValue = calculateMean(values: Array(sorted_sub_frame[0..<4])) {
-                        single_row.append(lowerMeanValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
-                    // Append mean of upper half of sub_frame from 8 to 10
-                    if let upperMeanValue = calculateMean(values: Array(sorted_sub_frame[8..<10])) {
-                        single_row.append(upperMeanValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
-                }
+                       // Append max of sub_frame
+                       if let maxValue = calculateMaximum(values: sub_frame) {
+                           single_row.append(maxValue)
+                       } else {
+                           // Handle the case where calculation fails
+                           continue
+                       }
 
-                full_frame.append(single_row)
-                single_row = []
-                i += 10
-            }
+                       // Append min of sub_frame
+                       if let minValue = calculateMinimum(values: sub_frame) {
+                           single_row.append(minValue)
+                       } else {
+                           // Handle the case where calculation fails
+                           continue
+                       }
+                   }
 
-            // Processing data code FIXME
+                   full_frame.append(single_row)
+                   single_row = []
+                   i += 10
+               }
 
-            return ""
-        } catch {
-            // Handle the error
-            print("Error: \(error.localizedDescription)")
-            return ""
-        }
-    }
+               // Processing data code FIXME
+
+               // Create a DataFrame if needed
+
+               return outputFileName
+           } catch {
+               // Handle the error
+               print("Error: \(error.localizedDescription)")
+               return ""
+           }
+       }
+
 
     
    
