@@ -104,7 +104,60 @@ class InputFunctions : ObservableObject{
     }
 
     func create_per_second_data(file: String, metric_no: Int) -> String{
-        //FIXME implement create_per_second_data to write to processed second data to file and return file URL
+        guard let csv = try? CSV(url: URL(fileURLWithPath: file)) else {
+            return ""
+        }
+
+        var prevTs = 0
+        var fullFrame: [[String: Any]] = []
+        var subFrame: [[String: Any]] = []
+
+        for idx in 0..<csv.rows.count {
+            if idx % 10000 == 0 {
+                print(idx, "**")
+            }
+
+            let r = csv.rows[idx]
+            let currTs = r["time"]! % 1000
+
+            if idx != 0 {
+                prevTs = csv.rows[idx - 1]["time"]! % 1000
+            }
+
+            if currTs > prevTs {
+                subFrame.append(["time": r["time"]!, "x": r["x"]!, "y": r["y"]!, "z": r["z"]!])
+            } else {
+                subFrame = subFrame.map { $0.mapValues { $0! } }
+                var metricsAxis: [Any] = [subFrame.last!["time"]!]
+
+                for col in 1...3 {
+                    if let colValues = subFrame.map({ Double($0[String(col)])! }) {
+                        switch Features(rawValue: metric_no)! {
+                        case .Mean:
+                            metricsAxis.append(calculateMean(values: colValues)!)
+                        case .Median:
+                            metricsAxis.append(calculateMedian(values: colValues)!)
+                        case .Std_Dev:
+                            metricsAxis.append(calculateStandardDeviation(values: colValues)!)
+                        case .Max_Raw:
+                            metricsAxis.append(calculateMaximum(values: colValues)!)
+                        case .Min_Raw:
+                            metricsAxis.append(calculateMinimum(values: colValues)!)
+                        case .Max_Abs:
+                            metricsAxis.append(calculateMaximum(values: colValues.map { abs($0) })!)
+                        case .Min_Abs:
+                            metricsAxis.append(calculateMinimum(values: colValues.map { abs($0) })!)
+                        }
+                    }
+                }
+
+                fullFrame.append(metricsAxis)
+                subFrame = []
+            }
+        }
+
+        // processing data code FIXME
+
         return ""
     }
     func create_per_window_data(file: String, metric_no: Int) -> String{
