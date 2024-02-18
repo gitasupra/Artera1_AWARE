@@ -105,8 +105,14 @@ class InputFunctions : ObservableObject{
     
     func create_per_second_data(file: String, metric_no: Int) -> String {
         var prevTs = 0
-        var sub_frame: [[Any]] = []
-
+        var sub_frame: [[Double]] = []
+        var full_frame: [[Double]] = []
+        var mean_all: [[Double]] = []
+        let totalRows = 0
+        
+   
+        
+        
         // Read the CSV file using SwiftCSV
         do {
             let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
@@ -127,6 +133,8 @@ class InputFunctions : ObservableObject{
                 }
                 let rowData: [Double] = [timestamp, x, y, z]
                 mean_all.append(rowData)
+                let tot_rows = mean_all.count
+
             }
 
             // Perform calculations for each 10-second window
@@ -178,11 +186,12 @@ class InputFunctions : ObservableObject{
                 sub_frame = []
                 i += 10
             }
-            full_frame += full_frame
+            full_frame += full_frame  //     full_frame = np.array(full_frame)
+
 
             // Create a DataFrame
             var df1 = DataFrame()
-            
+//            
       
 
             // Write the DataFrame to a CSV file
