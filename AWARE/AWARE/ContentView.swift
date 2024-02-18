@@ -1,6 +1,7 @@
 import SwiftUI
 import HealthKit
 import CoreMotion
+import CoreML
 import Charts
 import Firebase
 import FirebaseCore
@@ -491,5 +492,21 @@ struct ContentView: View {
         }
     }
 
+    func predictLevel() {
+        do{
+            let config = MLModelConfiguration()
+            let model = try alcohol(configuration: config)
+            
+            //        guard let p = try? model.prediction(
+            //            // feature input
+            //        )
+            //        else {
+            //            fatalError("Unexpected runtime error.")
+            //        }
+        }
+        catch{
+            
+        }
+    }
     
 }
