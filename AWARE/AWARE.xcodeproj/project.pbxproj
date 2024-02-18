@@ -63,6 +63,7 @@
 		CC9482C32AF870E300A3A64E /* AWARE_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482C22AF870E300A3A64E /* AWARE_Watch_AppTests.swift */; };
 		CC9482CD2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */; };
 		CC9482CF2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */; };
+		CCB690D12B81708E007EB9B0 /* alcohol.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CCB690D02B81708E007EB9B0 /* alcohol.mlmodel */; };
 		F809440712D5552AD1CBC86E /* libPods-AWARE Watch AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A229487241DA802E293FF595 /* libPods-AWARE Watch AppTests.a */; };
 		FAF1F4F66BD82F33710C5059 /* libPods-AWARETests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D98461CACC3AD1EA9CF8B9 /* libPods-AWARETests.a */; };
 /* End PBXBuildFile section */
@@ -178,6 +179,7 @@
 		CC9482C82AF870E300A3A64E /* AWARE Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AWARE Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9482CC2AF870E300A3A64E /* AWARE_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARE_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CCB690D02B81708E007EB9B0 /* alcohol.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = alcohol.mlmodel; sourceTree = "<group>"; };
 		EB0008F7A11C779E46FB4E69 /* Pods-AWARE Watch AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE Watch AppTests.debug.xcconfig"; path = "Target Support Files/Pods-AWARE Watch AppTests/Pods-AWARE Watch AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F8DF0414AC456B27C7FA0F2B /* Pods-AWARE Watch AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE Watch AppUITests.release.xcconfig"; path = "Target Support Files/Pods-AWARE Watch AppUITests/Pods-AWARE Watch AppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARE.entitlements; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				12143EAC2B5C8AF1004A168F /* Model */,
 				125506AB2B5CB61F007F0323 /* ContactPage */,
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
+				CCB690D02B81708E007EB9B0 /* alcohol.mlmodel */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
 				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
@@ -835,6 +838,7 @@
 				125506B82B5CB61F007F0323 /* Contact.swift in Sources */,
 				1278BA6A2B5CC3360053DF42 /* LocationView.swift in Sources */,
 				125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */,
+				CCB690D12B81708E007EB9B0 /* alcohol.mlmodel in Sources */,
 				127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
 				CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */,
 				125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */,
