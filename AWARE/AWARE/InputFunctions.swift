@@ -115,64 +115,94 @@ class InputFunctions : ObservableObject{
 
             for row in csvFile.rows {
                 let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
-                mean_all.append(rowData)
+                acc_data.append(rowData)
             }
 
             // Perform calculations for each 10-second window
             var full_frame: [[Double]] = []
-            var metrics_axis: [Double] = []
             var i = 0
-            
             var prev_ts = 0
             var sub_frame: [[Double]] = []
-            var full_frame: [[Double]] = []
             let tot_rows =  acc_data.count
 
-            while i + 10 < tot_rows {
-                metrics_axis.append(mean_all[i + 9][0])
+            //loop from 0 to tot_rows
+            for idx in 0..<tot_rows {
+                if idx%1000 == 0 {
+                    //FIXME remove this, will make the console messy
+                    print(" \(idx) **")
+                }   
+                
+                let curr_row = acc_data[idx]
+                //FIXME assuming the 0th column is the timestamp
+                print(" \(curr_row[0]) is the current timestamp, or \(curr_row[1])")
+                let curr_ts = Int(curr_row[0].truncatingRemainder(dividingBy: 1000))
 
-                for col in 1...3 {
-                    let sub_frame = mean_all[i..<i + 10][col]
-                    
-                    // Append mean of sub_frame
-                    if let meanValue = calculateMean(values: sub_frame) {
-                        metrics_axis.append(meanValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
-
-                    // Append variance of sub_frame
-                    if let varianceValue = calculateVariance(values: sub_frame) {
-                        metrics_axis.append(varianceValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
-
-                    // Append max of sub_frame
-                    if let maxValue = calculateMaximum(values: sub_frame) {
-                        metrics_axis.append(maxValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
-
-                    // Append min of sub_frame
-                    if let minValue = calculateMinimum(values: sub_frame) {
-                        metrics_axis.append(minValue)
-                    } else {
-                        // Handle the case where calculation fails
-                        continue
-                    }
+                if idx != 0{
+                    //FIXME assuming the 0th column is the timestamp
+                    prev_ts = Int(acc_data[idx-1][0].truncatingRemainder(dividingBy: 1000))
                 }
 
-                full_frame.append(metrics_axis)
-                sub_frame = []
-                i += 10
-            }
-            full_frame += full_frame  //     full_frame = np.array(full_frame)
+                if curr_ts > prev_ts{
+                    sub_frame.append(curr_row)
+                }
+                else{
+                    //TODO: do calculations
+                    
+                }
 
+            }
+
+            //TODO: write to file here
+
+
+
+            //FIXME change the below
+//            while i + 10 < tot_rows {
+//                metrics_axis.append(mean_all[i + 9][0])
+//
+//                for col in 1...3 {
+//                    let sub_frame = mean_all[i..<i + 10][col]
+//                    
+//                    // Append mean of sub_frame
+//                    if let meanValue = calculateMean(values: sub_frame) {
+//                        metrics_axis.append(meanValue)
+//                    } else {
+//                        // Handle the case where calculation fails
+//                        continue
+//                    }
+//
+//                    // Append variance of sub_frame
+//                    if let varianceValue = calculateVariance(values: sub_frame) {
+//                        metrics_axis.append(varianceValue)
+//                    } else {
+//                        // Handle the case where calculation fails
+//                        continue
+//                    }
+//
+//                    // Append max of sub_frame
+//                    if let maxValue = calculateMaximum(values: sub_frame) {
+//                        metrics_axis.append(maxValue)
+//                    } else {
+//                        // Handle the case where calculation fails
+//                        continue
+//                    }
+//
+//                    // Append min of sub_frame
+//                    if let minValue = calculateMinimum(values: sub_frame) {
+//                        metrics_axis.append(minValue)
+//                    } else {
+//                        // Handle the case where calculation fails
+//                        continue
+//                    }
+//                }
+//
+//                full_frame.append(metrics_axis)
+//                sub_frame = []
+//                i += 10
+//            }
+//            full_frame += full_frame  //     full_frame = np.array(full_frame)
+
+            //end old code
 
             // Create a DataFrame
             var df1 = DataFrame()
