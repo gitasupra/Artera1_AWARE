@@ -46,6 +46,7 @@
 		127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */; };
 		77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */; };
 		8D3737912B782E13001191B2 /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3737902B782E13001191B2 /* InputFunctions.swift */; };
+		8D83F4EE2B82CEE100D0DBCF /* BK7610.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8D83F4ED2B82CEE100D0DBCF /* BK7610.csv */; };
 		8DE519472B7C1D5F00389F5E /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 8DE519462B7C1D5F00389F5E /* SwiftCSV */; };
 		AD5ECFF3F4D796166139E335 /* libPods-AWARE Watch AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
@@ -156,6 +157,7 @@
 		56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AWARE Watch App.entitlements"; sourceTree = "<group>"; };
 		825C0DD259AE3933A18F8425 /* Pods-AWARETests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARETests.debug.xcconfig"; path = "Target Support Files/Pods-AWARETests/Pods-AWARETests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D3737902B782E13001191B2 /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
+		8D83F4ED2B82CEE100D0DBCF /* BK7610.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BK7610.csv; sourceTree = "<group>"; };
 		93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARE Watch AppUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A229487241DA802E293FF595 /* libPods-AWARE Watch AppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARE Watch AppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D98461CACC3AD1EA9CF8B9 /* libPods-AWARETests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARETests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -408,6 +410,7 @@
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
 				12143EAF2B5C8AF7004A168F /* TwilioSMSManager.swift */,
+				8D83F4ED2B82CEE100D0DBCF /* BK7610.csv */,
 				8D3737902B782E13001191B2 /* InputFunctions.swift */,
 				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
@@ -671,6 +674,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC9482912AF870E100A3A64E /* Preview Assets.xcassets in Resources */,
+				8D83F4EE2B82CEE100D0DBCF /* BK7610.csv in Resources */,
 				CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */,
 				12143EB22B5C8B0A004A168F /* GoogleService-Info.plist in Resources */,
 			);
