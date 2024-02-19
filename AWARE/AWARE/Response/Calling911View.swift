@@ -11,10 +11,10 @@ struct Calling911View: View {
     @State private var isShaking = false
     @EnvironmentObject var alertManager: AlertManager
     @Environment(\.presentationMode) var presentationMode
-    
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+
 
     var body: some View {
-        let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
         VStack {
             Spacer()

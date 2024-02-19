@@ -12,9 +12,10 @@ struct EmergencySOSView: View {
     @Binding var showCalling911: Bool
     @Environment(\.presentationMode) var presentationMode
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
+        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
         VStack {
             Spacer()
             Text("EMERGENCY SOS")
