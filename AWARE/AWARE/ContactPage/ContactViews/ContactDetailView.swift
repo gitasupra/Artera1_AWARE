@@ -303,6 +303,16 @@ struct ContactDetailView: View {
                 localContact.phone = formattedPhoneNumber
             }
             
+            // Validate changes
+            if let validationError = validateChanges(name: editedName, phoneNumber: editedPhone) {
+                showAlertWithError(validationError)
+                editedName = contact.name
+                editedImage = contact.image
+                editedPhone = contact.phone
+                isEditing = true
+                return
+            }
+            
             contactsRef.child(contact.id).updateChildValues(updatedData) { error, _ in
                 DispatchQueue.main.async {
                     if let error = error {
@@ -370,30 +380,21 @@ struct ContactDetailView: View {
         return formattedPhoneNumber
     }
     
-    private func validateChanges(name: String, phoneNumber: String) -> Bool {
+    private func validateChanges(name: String, phoneNumber: String) -> Error? {
         let numericPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
         
         guard name != "" else {
-            showAlert = true
-            alertTitle = "Error"
-            alertMessage = "Contact name cannot be blank."
-            return false
+            return NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Contact name cannot be blank."])
         }
         
         guard !numericPhoneNumber.isEmpty else {
-            showAlert = true
-            alertTitle = "Error"
-            alertMessage = "Phone number cannot be blank."
-            return false
+            return NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Phone number cannot be blank."])
         }
         
         guard numericPhoneNumber.count > 10 else {
-            showAlert = true
-            alertTitle = "Error"
-            alertMessage = "Phone number must have country code and 10 digits."
-            return false
+            return NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Phone number must have country code and 10 digits."])
         }
         
-        return true
+        return nil
     }
 }

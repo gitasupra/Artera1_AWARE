@@ -7,7 +7,7 @@ import FirebaseCore
 import FirebaseAnalytics
 import FirebaseAnalyticsSwift
 import FirebaseDatabase
-//import UberRides
+
 
 struct viewDidLoadModifier: ViewModifier{
     @State private var didLoad = false
@@ -35,13 +35,15 @@ extension View{
 
 
 struct ContentView: View {
-    
-    
     @EnvironmentObject var motion: CMMotionManager
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @State private var enableDataCollection = false
     @State private var shouldHide = false
+    
+    @StateObject var alertManager = AlertManager()
+    @State private var showEmergencySOS = false
+    @State private var showCalling911 = false
     
     // setting toggles
     @State private var name = ""
@@ -104,7 +106,7 @@ struct ContentView: View {
     
     var body: some View {
         Group{
-            if viewModel.userSession != nil{
+            if viewModel.userSession != nil {
             TabView {
             // Page 1 Graphs
             NavigationView {
@@ -157,86 +159,87 @@ struct ContentView: View {
             }
             
             // Page 3 Contacts
+            NavigationStack {
                 VStack(alignment: .center) {
-                    NavigationStack {
-                        Text("Contacts")
-                            .font(.system(size: 36))
-                            .multilineTextAlignment(.leading)
-                            .padding()
-                        
-                        Spacer()
-                        
-                        Button(action: {}) {
-                            NavigationLink(destination: ContactListView()) {
-                                Text("Contact List")
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                        }
-                        
-                        NavigationLink(destination: Text("Call Uber")) {
-                            Button("Call Uber") {}
-                                .buttonStyle(CustomButtonStyle())
-                        }
-                        
-                        NavigationLink(destination: Text("Call 911")) {
-                            Button("Call Emergency Services") {}
-                                .buttonStyle(CustomButtonStyle())
-                        }
-                    }
+                    Text("Contacts")
+                        .font(.system(size: 36))
+                        .multilineTextAlignment(.leading)
+                        .padding()
                     
                     Spacer()
-                }
-                .tabItem {
-                    Label("Contacts", systemImage: "person.crop.circle")
-                }
-            
-            // Page 3 - Home / Toggle
-            VStack(alignment: .center) {
-                Spacer()
-                Image("testlogo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 300, height: 100)
-                Image("testicon")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 150, height: 150)
-                
-                Spacer()
-                
-                if (enableDataCollectionObj.enableDataCollection == 0) {
-                    if !self.$shouldHide.wrappedValue {
-                        Button(action: {
-                                enableDataCollectionObj.toggleOn()
-                                enableDataCollection.toggle()
-                            }) {
-                                Image(systemName: "touchid")
-                                    .font(.system(size: 100))
-                                    .foregroundColor(.red)
-                                    .controlSize(.extraLarge)
-                            }.padding()
-                            Text("Enable Data Collection")
-                            Spacer()
+                    
+                    Button(action: {}) {
+                        NavigationLink(destination: ContactListView()) {
+                            Text("Contact List")
                         }
-                    } else {
-                        Button(action: {
-                                enableDataCollectionObj.toggleOff()
-                                enableDataCollection.toggle()
-                            }) {
-                                Image(systemName: "touchid")
-                                    .font(.system(size: 100))
-                                    .foregroundColor(.green)
-                                    .controlSize(.extraLarge)
-                            }.padding()
-                        Text("Disable Data Collection")
-                        Spacer()
+                        .buttonStyle(CustomButtonStyle())
+                    }
+                    
+                    NavigationLink(destination: Text("Call Uber")) {
+                        Button("Call Uber") {}
+                            .buttonStyle(CustomButtonStyle())
+                    }
+                    
+                    NavigationLink(destination: Text("Call 911")) {
+                        Button("Call Emergency Services") {}
+                            .buttonStyle(CustomButtonStyle())
                     }
                 }
-                .onChange(of: enableDataCollection) {
-                    if (enableDataCollection) {
-                        startDeviceMotion()
-                    } else {
-                        self.motion.stopDeviceMotionUpdates()
+                Spacer()
+            }
+            .tabItem {
+                Label("Contacts", systemImage: "person.crop.circle")
+            }
+            
+            // Page 3 - Home / Toggle
+                NavigationView {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        Image("testlogo")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 300, height: 100)
+                        Image("testicon")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                        
+                        Spacer()
+                        
+                        if (enableDataCollectionObj.enableDataCollection == 0) {
+                            if !self.$shouldHide.wrappedValue {
+                                Button(action: {
+                                    enableDataCollectionObj.toggleOn()
+                                    enableDataCollection.toggle()
+                                    alertManager.intoxLevel = 0
+                                }) {
+                                    Image(systemName: "touchid")
+                                        .font(.system(size: 100))
+                                        .foregroundColor(.red)
+                                        .controlSize(.extraLarge)
+                                }.padding()
+                                Text("Enable Data Collection")
+                                Spacer()
+                            }} else {
+                                Button(action: {
+                                    enableDataCollectionObj.toggleOff()
+                                    enableDataCollection.toggle()
+                                }) {
+                                    Image(systemName: "touchid")
+                                        .font(.system(size: 100))
+                                        .foregroundColor(.green)
+                                        .controlSize(.extraLarge)
+                                }.padding()
+                                Text("Disable Data Collection")
+                                Spacer()
+                            }
+                    }
+                    .onChange(of: enableDataCollection) {
+                        if (enableDataCollection) {
+                            startDeviceMotion()
+                        } else {
+                            self.motion.stopDeviceMotionUpdates()
+                        }
                     }
                 }
                 .tabItem {
@@ -283,7 +286,6 @@ struct ContentView: View {
                         }
                         
                         LocationView()
-                        
                         
                         NavigationLink(destination: Text("View Past Data")) {
                             Button("View Past Data") {}
@@ -348,16 +350,26 @@ struct ContentView: View {
                                 viewModel.signOut()
                             }
                         }.tint(.red)
-                    }
-                    .navigationBarTitle(Text("Settings"))
+                    }.navigationBarTitle(Text("Settings"))
                 }
                 .tabItem {
                     Label("Settings", systemImage: "gearshape.fill")
                 }
-            }.accentColor(accentColor)
-        }
-            
-            else{
+            }
+            .onReceive(alertManager.$intoxLevel) { newIntoxLevel in
+                if newIntoxLevel == 3 {
+                    showEmergencySOS = true
+                }
+            }
+            .fullScreenCover(isPresented: $showEmergencySOS) {
+                EmergencySOSView(showCalling911: $showCalling911)
+            }
+            .fullScreenCover(isPresented: $showCalling911) {
+                Calling911View()
+                    .environmentObject(alertManager)
+            }
+            .accentColor(accentColor)
+            } else {
                 LoginView()
             }
         }.preferredColorScheme(.dark)
@@ -393,8 +405,6 @@ struct ContentView: View {
     }
 
     func startDeviceMotion() {
-        //var idx = 0
-        
         if motion.isDeviceMotionAvailable {
             self.motion.deviceMotionUpdateInterval = 1.0/50.0
             self.motion.showsDeviceMovementDisplay = true
@@ -417,8 +427,6 @@ struct ContentView: View {
                     acc.append(new)
                     
                 }
-                
-                
             })
             
             // Add the timer to the current run loop
