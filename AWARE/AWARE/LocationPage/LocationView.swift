@@ -45,46 +45,19 @@ struct LocationView: View {
     @State var tokens: Set<AnyCancellable> = []
     @State var coordinates: (lat: Double, lon: Double) = (0,0)
     var body: some View {
-        VStack {
-            Text("Current Location:")
-                .font(.title2)
-        
-            Text("Latitude: \(coordinates.lat)")
-                .font(.subheadline) //.largeTitle
-            Text("Longitude: \(coordinates.lon)")
-                .font(.subheadline)
-        }
-        HStack {
-            // Spacer to center the button
-            Spacer()
-            HStack {
-                Text("Feelin Tipsy?")
-                    .italic()
-                    .font(.subheadline)
+        VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Current Location")
+                    .font(.title)
                 
-                Image(systemName: "wineglass")
-                    .foregroundColor(.purple)
+                HStack {
+                    Text("Latitude: \(coordinates.lat)")
+                    Text("Longitude: \(coordinates.lon)")
+                }
+                .font(.subheadline)
+                .foregroundColor(.secondary)
             }
-            HStack {
-                // Ride request button
-                UberRideRequestButton()
-                    .frame(width: 240, height: 40)
-            }
-            
-            // Spacer to center the button
-            Spacer()
         }
-        
-        .onAppear {
-            observeCoordinateUpdates()
-            observeLocationAccessDenied()
-            deviceLocationService.requestLocationUpdates()
-        }
-        .cornerRadius(6)
-        .overlay(
-            RoundedRectangle(cornerRadius: 6)
-                .stroke(Color.accentColor, lineWidth: 1)
-        )
         Spacer()
         Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
             .ignoresSafeArea()
@@ -95,6 +68,35 @@ struct LocationView: View {
                 MapCompass()
                 MapUserLocationButton()
             }
+            .frame(height: 500)
+            .cornerRadius(10)
+        Spacer()
+
+        HStack {
+            Text("Feelin Tipsy?")
+                .italic()
+                .font(.subheadline)
+            
+            Image(systemName: "wineglass")
+                .foregroundColor(.purple)
+        }
+        HStack {
+            // Ride request button
+            UberRideRequestButton()
+                .frame(width: 240, height: 40)
+        }
+        .onAppear {
+            observeCoordinateUpdates()
+            observeLocationAccessDenied()
+            deviceLocationService.requestLocationUpdates()
+        }
+        .cornerRadius(6)
+        .background(Color.accentColor)
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color.accentColor, lineWidth: 1)
+        )
+        Spacer()
     }
     
     // Coordinates ================

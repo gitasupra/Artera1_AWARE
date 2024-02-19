@@ -30,7 +30,7 @@ struct ContactListView: View {
                     }
                 }
             }
+            .navigationBarTitle("Contact List", displayMode: .large) // Set the navigation bar title here
         }
-        .navigationBarTitle("Contact List", displayMode: .large)
     }
 }
