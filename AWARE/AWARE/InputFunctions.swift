@@ -102,20 +102,34 @@ class InputFunctions : ObservableObject{
         let variance = sumOfSquaredDifferences / Double(values.count)
         return variance
     }
-
-
+    
+    
     func combineFeatures() {
-        let csvPath = "/path/to/your/csv/file/"  // change to actual csv file path
+        let csvPath = "/path/to/your/csv/file/"
         let csvFileName = "Metric_0_36.csv"
-
+        
         guard let csvURL = URL(string: csvPath + csvFileName),
               let csvFile = try? CSV<Named>(url: csvURL) else {
             print("Error: Unable to read CSV file.")
             return
         }
-
-        var df = DataFrame(slice: csvFile)
-
+        
+        // Manually define column types based on your data
+        let columnTypes: [String: CSVType] = [
+            "t": .string,   // Assuming timestamp is of type String
+            "x": .double,
+            "y": .double,
+            "z": .double
+            // Add other columns and their types as needed
+        ]
+        
+        var df = try! DataFrame(
+            contentsOfCSVFile: csvURL,
+            columns: csvFile.header,
+            rows: nil, // You can specify a range of rows if needed
+            types: columnTypes
+        )
+        
         for i in 1..<18 where i != 12 {
             let fileName: String
             if i < 14 {
@@ -123,157 +137,170 @@ class InputFunctions : ObservableObject{
             } else {
                 fileName = "Metric_\(i)_18.csv"
             }
-
+            
             guard let fileURL = URL(string: csvPath + fileName),
                   let fileCSV = try? CSV<Named>(url: fileURL) else {
                 print("Error: Unable to read CSV file \(fileName).")
                 continue
             }
-
-            let x = DataFrame(csvFile.slice)
-            df.join(x, on: "t")
-        }
-
-        df.removeColumn("t")
-
-        let outputFileName = "X.csv"
-        let outputURL = URL(string: csvPath + outputFileName)!
-
-        do {
-            try df.writeCSV(to: outputURL)
-            print("Combined DataFrame saved to CSV: \(outputURL.path)")
-        } catch {
-            print("Error: \(error.localizedDescription)")
-        }
-    }
-    
-    func create_per_second_data(file: String, metric_no: Int) -> String {
-       
-        // Read the CSV file using SwiftCSV
-        do {
-            let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
-            var outputFileName = ""
-
-            // Extract data from the CSV file
-            var acc_data: [[Double]] = []
-
-            for row in csvFile.rows {
-                let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
-                acc_data.append(rowData)
+            
+            // Assuming the columns in fileCSV have similar types to the original CSV
+            let xColumnTypes: [String: CSVType] = [
+                "t": .string,   // Assuming timestamp is of type String
+                "x": .double,
+                "y": .double,
+                "z": .double
+                // Add other columns and their types as needed
+            ]
+            
+            let x = try! DataFrame(
+                contentsOfCSVFile: fileURL,
+                columns: fileCSV.header,
+                rows: nil, // You can specify a range of rows if needed
+                types: xColumnTypes
+            )
+            df = try! df.joined(x, on: ("t", "t"), kind: .inner)
+            
+            df.removeColumn("t")
+            
+            let outputFileName = "X.csv"
+            let outputURL = URL(string: csvPath + outputFileName)!
+            
+            do {
+                try df.writeCSV(to: outputURL)
+                print("Combined DataFrame saved to CSV: \(outputURL.path)")
+            } catch {
+                print("Error: \(error.localizedDescription)")
             }
-
-            // Perform calculations for each 10-second window
-            var full_frame: [[Double]] = []
-            var i = 0
-            var prev_ts = 0
-            var sub_frame: [[Double]] = []
-            let tot_rows =  acc_data.count
-
-            //loop from 0 to tot_rows
-            for idx in 0..<tot_rows {
-                if idx%1000 == 0 {
-                    //FIXME remove this, will make the console messy
-                    print(" \(idx) **")
-                }   
+        }
+        
+        func create_per_second_data(file: String, metric_no: Int) -> String {
+            
+            // Read the CSV file using SwiftCSV
+            do {
+                let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
+                var outputFileName = ""
                 
-                let curr_row = acc_data[idx]
-                //FIXME assuming the 0th column is the timestamp
-                print(" \(curr_row[0]) is the current timestamp, or \(curr_row[1])")
-                let curr_ts = Int(curr_row[0].truncatingRemainder(dividingBy: 1000))
-
-                if idx != 0{
+                // Extract data from the CSV file
+                var acc_data: [[Double]] = []
+                
+                for row in csvFile.rows {
+                    let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
+                    acc_data.append(rowData)
+                }
+                
+                // Perform calculations for each 10-second window
+                var full_frame: [[Double]] = []
+                var i = 0
+                var prev_ts = 0
+                var sub_frame: [[Double]] = []
+                let tot_rows =  acc_data.count
+                
+                //loop from 0 to tot_rows
+                for idx in 0..<tot_rows {
+                    if idx%1000 == 0 {
+                        //FIXME remove this, will make the console messy
+                        print(" \(idx) **")
+                    }   
+                    
+                    let curr_row = acc_data[idx]
                     //FIXME assuming the 0th column is the timestamp
-                    prev_ts = Int(acc_data[idx-1][0].truncatingRemainder(dividingBy: 1000))
-                }
-
-                if curr_ts > prev_ts{
-                    sub_frame.append(curr_row)
-                }
-                else{
-                    //TODO: do calculations
+                    print(" \(curr_row[0]) is the current timestamp, or \(curr_row[1])")
+                    let curr_ts = Int(curr_row[0].truncatingRemainder(dividingBy: 1000))
+                    
+                    if idx != 0{
+                        //FIXME assuming the 0th column is the timestamp
+                        prev_ts = Int(acc_data[idx-1][0].truncatingRemainder(dividingBy: 1000))
+                    }
+                    
+                    if curr_ts > prev_ts{
+                        sub_frame.append(curr_row)
+                    }
+                    else{
+                        //TODO: do calculations
+                        
+                    }
                     
                 }
-
-            }
-
-            //TODO: write to file here
-
-
-
-            //FIXME change the below
-//            while i + 10 < tot_rows {
-//                metrics_axis.append(mean_all[i + 9][0])
-//
-//                for col in 1...3 {
-//                    let sub_frame = mean_all[i..<i + 10][col]
-//                    
-//                    // Append mean of sub_frame
-//                    if let meanValue = calculateMean(values: sub_frame) {
-//                        metrics_axis.append(meanValue)
-//                    } else {
-//                        // Handle the case where calculation fails
-//                        continue
-//                    }
-//
-//                    // Append variance of sub_frame
-//                    if let varianceValue = calculateVariance(values: sub_frame) {
-//                        metrics_axis.append(varianceValue)
-//                    } else {
-//                        // Handle the case where calculation fails
-//                        continue
-//                    }
-//
-//                    // Append max of sub_frame
-//                    if let maxValue = calculateMaximum(values: sub_frame) {
-//                        metrics_axis.append(maxValue)
-//                    } else {
-//                        // Handle the case where calculation fails
-//                        continue
-//                    }
-//
-//                    // Append min of sub_frame
-//                    if let minValue = calculateMinimum(values: sub_frame) {
-//                        metrics_axis.append(minValue)
-//                    } else {
-//                        // Handle the case where calculation fails
-//                        continue
-//                    }
-//                }
-//
-//                full_frame.append(metrics_axis)
-//                sub_frame = []
-//                i += 10
-//            }
-//            full_frame += full_frame  //     full_frame = np.array(full_frame)
-
-            //end old code
-
-            // Create a DataFrame
-            var df1 = DataFrame()
-//            
-      
-
-            // Write the DataFrame to a CSV file
-            do {
-                outputFileName = "\(metric_no)_per_second_data.csv"
-                try df1.writeCSV(to: URL(fileURLWithPath: outputFileName))
+                
+                //TODO: write to file here
+                
+                
+                
+                //FIXME change the below
+                //            while i + 10 < tot_rows {
+                //                metrics_axis.append(mean_all[i + 9][0])
+                //
+                //                for col in 1...3 {
+                //                    let sub_frame = mean_all[i..<i + 10][col]
+                //                    
+                //                    // Append mean of sub_frame
+                //                    if let meanValue = calculateMean(values: sub_frame) {
+                //                        metrics_axis.append(meanValue)
+                //                    } else {
+                //                        // Handle the case where calculation fails
+                //                        continue
+                //                    }
+                //
+                //                    // Append variance of sub_frame
+                //                    if let varianceValue = calculateVariance(values: sub_frame) {
+                //                        metrics_axis.append(varianceValue)
+                //                    } else {
+                //                        // Handle the case where calculation fails
+                //                        continue
+                //                    }
+                //
+                //                    // Append max of sub_frame
+                //                    if let maxValue = calculateMaximum(values: sub_frame) {
+                //                        metrics_axis.append(maxValue)
+                //                    } else {
+                //                        // Handle the case where calculation fails
+                //                        continue
+                //                    }
+                //
+                //                    // Append min of sub_frame
+                //                    if let minValue = calculateMinimum(values: sub_frame) {
+                //                        metrics_axis.append(minValue)
+                //                    } else {
+                //                        // Handle the case where calculation fails
+                //                        continue
+                //                    }
+                //                }
+                //
+                //                full_frame.append(metrics_axis)
+                //                sub_frame = []
+                //                i += 10
+                //            }
+                //            full_frame += full_frame  //     full_frame = np.array(full_frame)
+                
+                //end old code
+                
+                // Create a DataFrame
+                var df1 = DataFrame()
+                //            
+                
+                
+                // Write the DataFrame to a CSV file
+                do {
+                    outputFileName = "\(metric_no)_per_second_data.csv"
+                    try df1.writeCSV(to: URL(fileURLWithPath: outputFileName))
+                } catch {
+                    print("Error writing CSV: \(error.localizedDescription)")
+                    return ""
+                }
+                
+                return outputFileName
             } catch {
-                print("Error writing CSV: \(error.localizedDescription)")
+                // Handle the error
+                print("Error: \(error.localizedDescription)")
                 return ""
             }
-
-            return outputFileName
-        } catch {
-            // Handle the error
-            print("Error: \(error.localizedDescription)")
-            return ""
         }
-    }
-
-
-
-    
-   
+        
+        
+        
+        
+        
         func create_per_window_data(file: String, metric_no: Int) -> String{
             //TODO: test on input file
             
@@ -495,4 +522,4 @@ class InputFunctions : ObservableObject{
         }
         
     }
-
+}
