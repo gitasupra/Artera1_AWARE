@@ -104,44 +104,29 @@ class InputFunctions : ObservableObject{
     }
     
     func create_per_second_data(file: String, metric_no: Int) -> String {
-        var prevTs = 0
-        var sub_frame: [[Double]] = []
-        var full_frame: [[Double]] = []
-        var mean_all: [[Double]] = []
-        let totalRows = 0
-        
-   
-        
-        
+       
         // Read the CSV file using SwiftCSV
         do {
             let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
             var outputFileName = ""
 
             // Extract data from the CSV file
-            var mean_all: [[Double]] = []
+            var acc_data: [[Double]] = []
 
             for row in csvFile.rows {
-                guard
-                    let timestamp = Double(row["timestamp"]!),
-                    let x = Double(row["x"]!),
-                    let y = Double(row["y"]!),
-                    let z = Double(row["z"]!)
-                else {
-                    // Handle the case where parsing to Double fails
-                    continue
-                }
-                let rowData: [Double] = [timestamp, x, y, z]
+                let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
                 mean_all.append(rowData)
-                let tot_rows = mean_all.count
-
             }
 
             // Perform calculations for each 10-second window
             var full_frame: [[Double]] = []
             var metrics_axis: [Double] = []
             var i = 0
-            let tot_rows = mean_all.count
+            
+            var prev_ts = 0
+            var sub_frame: [[Double]] = []
+            var full_frame: [[Double]] = []
+            let tot_rows =  acc_data.count
 
             while i + 10 < tot_rows {
                 metrics_axis.append(mean_all[i + 9][0])
@@ -418,8 +403,18 @@ class InputFunctions : ObservableObject{
         }
         
         func processData(windowFile: String) -> String {
+            print("processing data!")
+            //FIXME: temporarily changing create_per_second to have test file name
+            var testfile: String = ""
+            do{
+                testfile = Bundle.main.path(forResource: "BK7610", ofType: "csv")!
+            }
+            catch{
+                print("Error: \(error.localizedDescription)")
+                print("could not get file")
+            }
             for metricNum in Features.allCases{
-                let perSecondDataFile = create_per_second_data(file: windowFile, metric_no: metricNum.rawValue)
+                let perSecondDataFile = create_per_second_data(file: testfile, metric_no: metricNum.rawValue)
                 let perWindowDataFile = create_per_window_data(file: perSecondDataFile, metric_no: metricNum.rawValue)
             }
             return ""
