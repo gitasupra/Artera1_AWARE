@@ -75,8 +75,7 @@ struct Page2View: View {
                 }
             }
         }
-        .onChange(of: enableDataCollection)
-        {
+        .onChange(of: enableDataCollection) {
             if (enableDataCollection) {
                 startDeviceMotion()
             } else {

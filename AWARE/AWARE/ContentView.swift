@@ -7,6 +7,7 @@ import FirebaseCore
 import FirebaseAnalytics
 import FirebaseAnalyticsSwift
 import FirebaseDatabase
+import FirebaseAuth
 
 struct viewDidLoadModifier: ViewModifier{
     @State private var didLoad = false
@@ -45,14 +46,13 @@ struct ContentView: View {
     @State private var showCalling911 = false
     
     // setting toggles
-    @State private var name = ""
+    @State private var name: String
     @State private var isNotificationEnabled = true
     @State private var isContactListEnabled = true
     @State private var isUberEnabled = false
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
     @State var showAccChart: Bool = true
-    @State private var selectedTab = 1
     
     // accelerometer data variables
     @State private var acc: [AccelerometerDataPoint] = []
@@ -93,18 +93,24 @@ struct ContentView: View {
     init() {
         // UINavigationBar.appearance().backgroundColor = UIColor(primaryColor)
         UITabBar.appearance().backgroundColor = UIColor(primaryColor)
+        if let user = Auth.auth().currentUser {
+            name = user.displayName ?? "user"
+        }
+        else {
+            name = "user"
+        }
     }
     
     var body: some View {
         Group{
             if viewModel.userSession != nil{
-                TabView(selection: $selectedTab) {
+                TabView {
                     // Page 1 Analytics
                     NavigationView {
-                        VStack {
-                            CalendarView()
-                            
+                        VStack(spacing: 20) {
                             NavigationStack {
+                                CalendarView()
+                                    .padding(.bottom, 50)
                                 VStack {
                                     Button {
                                         //showHeartChart = true
@@ -160,7 +166,7 @@ struct ContentView: View {
                         }
                         .background(primaryColor)
                         
-                        Text("Hello, Name!")
+                        Text("Hello, \(name)!")
                             .font(.largeTitle)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             
@@ -180,7 +186,7 @@ struct ContentView: View {
                                 Text("Estimated Intoxication Level:")
                                     .font(.headline)
                                     .foregroundColor(.white)
-                                Text("0")
+                                Text("\(alertManager.intoxLevel)")
                                     .font(.largeTitle)
                                     .foregroundColor(.white)
                             }
@@ -369,6 +375,20 @@ struct ContentView: View {
                     accIdx += 1
                     
                     let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+                    
+                    // static thresholds for intoxication
+                    let tipsy:AccelerometerDataPoint = AccelerometerDataPoint(x: 0.05, y: 0.05, z: 0.05, myIndex: accIdx, id: UUID())
+                    let drunk:AccelerometerDataPoint = AccelerometerDataPoint(x: 0.1, y: 0.1, z: 0.1, myIndex: accIdx, id: UUID())
+   
+                    if alertManager.intoxLevel == 0 {
+                        if (new.x > tipsy.x || new.y > tipsy.y || new.z > tipsy.z) {
+                            alertManager.intoxLevel = 1
+                        }
+                    } else if alertManager.intoxLevel == 1 && new.x > drunk.x {
+                        if (new.x > drunk.x || new.y > drunk.y || new.z > drunk.z) {
+                            alertManager.intoxLevel = 2
+                        }
+                    }
                     
                     acc.append(new)
                     

@@ -31,6 +31,7 @@ class AlertManager: ObservableObject {
     }
     
     func sendUpdate(level: Int) {
-        twilioManager.sendSMS(level: level, contactsManager: contactManager)
+        //twilioManager.sendSMS(level: level, contactsManager: contactManager)
+        print(level)
     }
 }
