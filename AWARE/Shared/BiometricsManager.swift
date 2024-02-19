@@ -46,6 +46,7 @@ class BiometricsManager: ObservableObject {
                     let new: AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: self.accIdx, id: UUID())
                     
                     self.acc.append(new)
+                    print("append to acc")
                 }
             }
             // Add the timer to the current run loop

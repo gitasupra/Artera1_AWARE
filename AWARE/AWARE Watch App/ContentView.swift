@@ -4,7 +4,6 @@ import CoreMotion
 import WatchConnectivity
 
 struct ContentView: View {
-    @State private var enableDataCollection = false
     @State private var shouldHide = false
 
     var body: some View {
@@ -17,7 +16,7 @@ struct ContentView: View {
                     }
 
                 // Page 2
-                Page2View(enableDataCollection: $enableDataCollection, shouldHide: $shouldHide)
+                Page2View(shouldHide: $shouldHide)
                     .tabItem {
                         Label("Page 2", systemImage: "info.circle")
                     }
@@ -43,7 +42,6 @@ struct Page1View: View {
 struct Page2View: View {
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @StateObject var biometricsManager = BiometricsManager()
-    @Binding var enableDataCollection: Bool
     @Binding var shouldHide: Bool
     
     var body: some View {
@@ -54,7 +52,6 @@ struct Page2View: View {
                         .multilineTextAlignment(.center)
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
-                        enableDataCollection.toggle()
                     }) {
                         Image(systemName: "touchid")
                             .font(.system(size: 50))
@@ -67,7 +64,6 @@ struct Page2View: View {
                     .multilineTextAlignment(.center)
                 Button {
                     enableDataCollectionObj.toggleOff()
-                    enableDataCollection.toggle()
                 } label: {
                     Image(systemName: "touchid")
                         .font(.system(size: 50))
@@ -76,8 +72,8 @@ struct Page2View: View {
                 }
             }
         }
-        .onChange(of: enableDataCollection) {
-            if (enableDataCollection) {
+        .onChange(of: enableDataCollectionObj.enableDataCollection) {
+            if (enableDataCollectionObj.enableDataCollection == 1) {
                 biometricsManager.startDeviceMotion()
                 biometricsManager.startHeartRate()
             } else {

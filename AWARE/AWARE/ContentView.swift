@@ -37,7 +37,6 @@ extension View{
 struct ContentView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var enableDataCollectionObj = EnableDataCollection()
-    @State private var enableDataCollection = false
     @State private var shouldHide = false
     
     @StateObject var alertManager = AlertManager()
@@ -198,7 +197,6 @@ struct ContentView: View {
                     if !self.$shouldHide.wrappedValue {
                         Button(action: {
                                 enableDataCollectionObj.toggleOn()
-                                enableDataCollection.toggle()
                             }) {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
@@ -211,7 +209,6 @@ struct ContentView: View {
                     } else {
                         Button(action: {
                                 enableDataCollectionObj.toggleOff()
-                                enableDataCollection.toggle()
                             }) {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
@@ -222,8 +219,8 @@ struct ContentView: View {
                         Spacer()
                     }
                 }
-                .onChange(of: enableDataCollection) {
-                    if (enableDataCollection) {
+                .onChange(of: enableDataCollectionObj.enableDataCollection) {
+                    if (enableDataCollectionObj.enableDataCollection == 1) {
                         biometricsManager.startDeviceMotion()
                         biometricsManager.startHeartRate()
                     } else {
