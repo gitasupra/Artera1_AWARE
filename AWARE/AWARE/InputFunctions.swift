@@ -8,6 +8,7 @@
 import Foundation
 import SwiftCSV
 import TabularData
+import CSV
 
 
 class InputFunctions : ObservableObject{
@@ -20,7 +21,7 @@ class InputFunctions : ObservableObject{
         case Max_Abs = 5
         case Min_Abs = 6
     }
-    var featureType: [Features: String] = [
+    var FeatureType: [Features: String] = [
         
         .Mean : "Mean",
         .Median : "Median",
@@ -109,7 +110,7 @@ class InputFunctions : ObservableObject{
         let csvFileName = "Metric_0_36.csv"
         
         guard let csvURL = URL(string: csvPath + csvFileName),
-              let csvFile = try? CSV<Named>(url: csvURL) else {
+              let csvFile = try? SwiftCSV.CSV<Named>(url: csvURL) else {
             print("Error: Unable to read CSV file.")
             return
         }
@@ -139,7 +140,7 @@ class InputFunctions : ObservableObject{
             }
             
             guard let fileURL = URL(string: csvPath + fileName),
-                  let fileCSV = try? CSV<Named>(url: fileURL) else {
+                  let fileCSV = try? SwiftCSV.CSV<Named>(url: fileURL) else {
                 print("Error: Unable to read CSV file \(fileName).")
                 continue
             }
@@ -160,7 +161,7 @@ class InputFunctions : ObservableObject{
                 types: xColumnTypes
             )
             df = try! df.joined(x, on: ("t", "t"), kind: .inner)
-            
+        }
             df.removeColumn("t")
             
             let outputFileName = "X.csv"
@@ -173,13 +174,21 @@ class InputFunctions : ObservableObject{
                 print("Error: \(error.localizedDescription)")
             }
         }
+    
+    func createFileDirectoryIfNeeded(at url: URL) {
+        let directoryURL = url.deletingLastPathComponent()
+        do {
+            try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("Error creating directory: \(error.localizedDescription)")
+        }
+    }
         
         func create_per_second_data(file: String, metric_no: Int) -> String {
             
             // Read the CSV file using SwiftCSV
             do {
-                let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
-                var outputFileName = ""
+                let csvFile = try! SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: file))
                 
                 // Extract data from the CSV file
                 var acc_data: [[Double]] = []
@@ -201,11 +210,9 @@ class InputFunctions : ObservableObject{
                     if idx%1000 == 0 {
                         //FIXME remove this, will make the console messy
                         print(" \(idx) **")
-                    }   
+                    }
                     
                     let curr_row = acc_data[idx]
-                    //FIXME assuming the 0th column is the timestamp
-                    print(" \(curr_row[0]) is the current timestamp, or \(curr_row[1])")
                     let curr_ts = Int(curr_row[0].truncatingRemainder(dividingBy: 1000))
                     
                     if idx != 0{
@@ -218,79 +225,78 @@ class InputFunctions : ObservableObject{
                     }
                     else{
                         //TODO: do calculations
-                        
+                        var metrics_axis: [Double] = []
+
+                        //add last timestamp (last row, first column)
+                        metrics_axis.append(sub_frame[sub_frame.count - 1][0])
+
+                        //iterate over col from 1 to 4
+                        for col in 1..<4 {
+                            //if statements for each metric number in Features
+                            let columnValues = sub_frame.map { $0[col] }
+
+                            if metric_no == Features.Mean.rawValue{
+                                metrics_axis.append(calculateMean(values: columnValues)!)
+                            }
+                            else if metric_no == Features.Median.rawValue{
+                                metrics_axis.append(calculateMedian(values: columnValues)!)
+                            }
+                            else if metric_no == Features.Std_Dev.rawValue{
+                                metrics_axis.append(calculateStandardDeviation(values: columnValues)!)
+                            }
+                            else if metric_no == Features.Max_Raw.rawValue{
+                                metrics_axis.append(calculateMaximum(values: columnValues)!)
+                            }
+                            else if metric_no == Features.Min_Raw.rawValue{
+                                metrics_axis.append(calculateMinimum(values: columnValues)!)
+
+                            }
+                            else if metric_no == Features.Max_Abs.rawValue{
+                                //get the absolute value of each element in the column
+                                let abs_columnValues = columnValues.map { abs($0) }
+                                metrics_axis.append(calculateMaximum(values: abs_columnValues)!)
+                            }
+                            else if metric_no == Features.Min_Abs.rawValue{
+                                //get the absolute value of each element in the column
+                                let abs_columnValues = columnValues.map { abs($0) }
+                                metrics_axis.append(calculateMinimum(values: abs_columnValues)!)
+                            }
+                        }
+                        full_frame.append(metrics_axis)
+                        sub_frame = []
                     }
                     
                 }
                 
-                //TODO: write to file here
+                var outputFileName = "\(FeatureType[Features(rawValue: metric_no)!]!)_all_per_sec_all_axis.csv"
+
+//
+//                    }
+                
+                guard let outputFileURL = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent(outputFileName) else {
+                    print("Failed to create file URL")
+                    return ""
+                }
                 
                 
-                
-                //FIXME change the below
-                //            while i + 10 < tot_rows {
-                //                metrics_axis.append(mean_all[i + 9][0])
-                //
-                //                for col in 1...3 {
-                //                    let sub_frame = mean_all[i..<i + 10][col]
-                //                    
-                //                    // Append mean of sub_frame
-                //                    if let meanValue = calculateMean(values: sub_frame) {
-                //                        metrics_axis.append(meanValue)
-                //                    } else {
-                //                        // Handle the case where calculation fails
-                //                        continue
-                //                    }
-                //
-                //                    // Append variance of sub_frame
-                //                    if let varianceValue = calculateVariance(values: sub_frame) {
-                //                        metrics_axis.append(varianceValue)
-                //                    } else {
-                //                        // Handle the case where calculation fails
-                //                        continue
-                //                    }
-                //
-                //                    // Append max of sub_frame
-                //                    if let maxValue = calculateMaximum(values: sub_frame) {
-                //                        metrics_axis.append(maxValue)
-                //                    } else {
-                //                        // Handle the case where calculation fails
-                //                        continue
-                //                    }
-                //
-                //                    // Append min of sub_frame
-                //                    if let minValue = calculateMinimum(values: sub_frame) {
-                //                        metrics_axis.append(minValue)
-                //                    } else {
-                //                        // Handle the case where calculation fails
-                //                        continue
-                //                    }
-                //                }
-                //
-                //                full_frame.append(metrics_axis)
-                //                sub_frame = []
-                //                i += 10
-                //            }
-                //            full_frame += full_frame  //     full_frame = np.array(full_frame)
-                
-                //end old code
-                
-                // Create a DataFrame
-                var df1 = DataFrame()
-                //            
-                
-                
-                // Write the DataFrame to a CSV file
                 do {
-                    outputFileName = "\(metric_no)_per_second_data.csv"
-                    try df1.writeCSV(to: URL(fileURLWithPath: outputFileName))
+                    let stream = OutputStream(toFileAtPath: outputFileURL.path, append: false)!
+                    let csv = try! CSVWriter(stream: stream)
+                    //write all rows of full_frame to csv
+                    for row in full_frame {
+                        //convert row to string that can be written to csv
+                        let stringRow = row.map { String(describing: $0) }
+                        try csv.write(row: stringRow)
+                    }
                 } catch {
                     print("Error writing CSV: \(error.localizedDescription)")
                     return ""
                 }
-                
-                return outputFileName
-            } catch {
+
+                print("create_per_second SUCCESS: \(metric_no)")
+                return outputFileURL.path
+            }
+            catch {
                 // Handle the error
                 print("Error: \(error.localizedDescription)")
                 return ""
@@ -307,13 +313,23 @@ class InputFunctions : ObservableObject{
             // Read the CSV file using SwiftCSV
             do{
                 
-                let csvFile = try CSV<Named>(url: URL(fileURLWithPath: file))
+                let csvFile = try SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: file))
                 var outputFileName = ""
                 
                 // Extract data from the CSV file
                 var mean_all: [[Double]] = []
+            
                 for row in csvFile.rows {
-                    let rowData: [Double] = [Double(row["timestamp"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
+                    var rowData: [Double] = []
+                    for (_, value) in row { // Iterate over each key-value pair in the row
+                        if let doubleValue = Double(value) {
+                            rowData.append(doubleValue)
+                        } else {
+                            // Handle the case where conversion to Double fails
+                            // For example, you might want to skip this row or handle the error differently
+                            print("Failed to convert value '\(value)' to Double")
+                        }
+                    }
                     mean_all.append(rowData)
                 }
                 
@@ -327,7 +343,9 @@ class InputFunctions : ObservableObject{
                 while i + 10 < tot_rows{
                     single_row.append(mean_all[i+9][0])
                     for col in 1...3{
-                        let sub_frame = mean_all[i..<i+10][col]
+
+                        let sub_frameSlice = mean_all[i..<i+10]
+                        let sub_frame = sub_frameSlice.map { $0[col] }
                         //append mean of sub_frame
                         single_row.append(calculateMean(values: sub_frame)!)
                         
@@ -343,9 +361,15 @@ class InputFunctions : ObservableObject{
                         //sort sub_frame from low to high
                         let sorted_sub_frame = sub_frame.sorted()
                         //append mean of lower half of sub_frame
-                        single_row.append(calculateMean(values: Array(sorted_sub_frame[0..<4]))!)
+                        let lowerQuarterStartIndex = 0
+                        let lowerQuarterEndIndex = sorted_sub_frame.count / 4
+
+                        let upperQuarterStartIndex = 3 * sorted_sub_frame.count / 4
+                        let upperQuarterEndIndex = sorted_sub_frame.count
+                        
+                        single_row.append(calculateMean(values: Array(sorted_sub_frame[lowerQuarterStartIndex..<lowerQuarterEndIndex]))!)
                         //append mean of upper half of sub_frame from 8 to 10
-                        single_row.append(calculateMean(values: Array(sorted_sub_frame[8..<10]))!)
+                        single_row.append(calculateMean(values: Array(sorted_sub_frame[upperQuarterStartIndex..<upperQuarterEndIndex]))!)
                     }
                     
                     full_frame.append(single_row)
@@ -407,7 +431,7 @@ class InputFunctions : ObservableObject{
                     var curr_row: [Double] = []
                     var prev_row: [Double] = []
                     
-                    for i in 1...full_frame.count{
+                    for i in 0...full_frame.count-1{
                         if i==0{
                             //append to full frame the first row of full frame without the first column
                             //make diff_row equal to the first row of full frame without the first column
@@ -477,22 +501,27 @@ class InputFunctions : ObservableObject{
                     outputFileName = "Metric_\(metric_no)_18.csv"
                 }
                 
+                guard let outputFileURL = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent(outputFileName) else {
+                    print("Failed to create file URL")
+                    return ""
+                }
                 
-                
-                //write the dataframe to a csv file, atomically = should overwrite the file if it already exists
+//                
                 
                 do{
                     
-                    try df1.writeCSV(to: URL(fileURLWithPath: outputFileName))
+                    try df1.writeCSV(to: URL(fileURLWithPath: outputFileURL.path))
                     
                 }
                 catch{
                     print("Error: \(error.localizedDescription)")
+                    return ""
                 }
                 
                 
                 //may need to return full path (outputURL.path)
-                return outputFileName
+                print("create_per_window SUCCESS \(metric_no)")
+                return outputFileURL.path
                 
                 
             }
@@ -502,7 +531,8 @@ class InputFunctions : ObservableObject{
             }
             return ""
         }
-        
+
+    
         func processData(windowFile: String) -> String {
             print("processing data!")
             //FIXME: temporarily changing create_per_second to have test file name
@@ -518,8 +548,8 @@ class InputFunctions : ObservableObject{
                 let perSecondDataFile = create_per_second_data(file: testfile, metric_no: metricNum.rawValue)
                 let perWindowDataFile = create_per_window_data(file: perSecondDataFile, metric_no: metricNum.rawValue)
             }
+            print("process_data SUCCESS")
             return ""
         }
         
     }
-}
