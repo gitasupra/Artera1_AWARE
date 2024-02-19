@@ -102,6 +102,50 @@ class InputFunctions : ObservableObject{
         let variance = sumOfSquaredDifferences / Double(values.count)
         return variance
     }
+
+
+    func combineFeatures() {
+        let csvPath = "/path/to/your/csv/file/"  // change to actual csv file path
+        let csvFileName = "Metric_0_36.csv"
+
+        guard let csvURL = URL(string: csvPath + csvFileName),
+              let csvFile = try? CSV<Named>(url: csvURL) else {
+            print("Error: Unable to read CSV file.")
+            return
+        }
+
+        var df = DataFrame(slice: csvFile)
+
+        for i in 1..<18 where i != 12 {
+            let fileName: String
+            if i < 14 {
+                fileName = "Metric_\(i)_36.csv"
+            } else {
+                fileName = "Metric_\(i)_18.csv"
+            }
+
+            guard let fileURL = URL(string: csvPath + fileName),
+                  let fileCSV = try? CSV<Named>(url: fileURL) else {
+                print("Error: Unable to read CSV file \(fileName).")
+                continue
+            }
+
+            let x = DataFrame(csvFile.slice)
+            df.join(x, on: "t")
+        }
+
+        df.removeColumn("t")
+
+        let outputFileName = "X.csv"
+        let outputURL = URL(string: csvPath + outputFileName)!
+
+        do {
+            try df.writeCSV(to: outputURL)
+            print("Combined DataFrame saved to CSV: \(outputURL.path)")
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+    }
     
     func create_per_second_data(file: String, metric_no: Int) -> String {
         var prevTs = 0
