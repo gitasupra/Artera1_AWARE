@@ -40,9 +40,12 @@ struct Page1View: View {
 }
 
 struct Page2View: View {
+    
     @StateObject var enableDataCollectionObj = EnableDataCollection()
-    @StateObject var biometricsManager = BiometricsManager()
     @Binding var shouldHide: Bool
+    @State private var timer: Timer?
+    let motion = CMMotionManager()
+    let healthStore = HKHealthStore()
     
     var body: some View {
         VStack {
@@ -74,13 +77,59 @@ struct Page2View: View {
         }
         .onChange(of: enableDataCollectionObj.enableDataCollection) {
             if (enableDataCollectionObj.enableDataCollection == 1) {
-                biometricsManager.startDeviceMotion()
-                biometricsManager.startHeartRate()
+                    startHeartRate()
             } else {
-                biometricsManager.stopDeviceMotion()
-                biometricsManager.stopHeartRate()
+                stopHeartRate()
             }
         }
+    }
+    func startHeartRate() {
+        print("start heart rate called")
+        let heartRateQuantity = HKUnit(from: "count/min")
+        var heartRateIdx = 0
+        
+        if motion.isDeviceMotionAvailable {
+            self.motion.deviceMotionUpdateInterval = 1.0
+            self.motion.showsDeviceMovementDisplay = true
+            self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
+            
+            // Configure a timer to fetch the device motion data
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true,
+                                         block: { (timer) in
+                let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
+                
+                let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
+                    query, samples, deletedObjects, queryAnchor, error in
+                    
+                    
+                    guard let samples = samples as? [HKQuantitySample] else {
+                        return
+                    }
+                    
+                    var lastHeartRate = 0.0
+                    
+                    for sample in samples {
+                        
+                        lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
+
+                    }
+                    
+                    heartRateIdx += 1
+                    WCSession.default.transferUserInfo(["lastHeartRate": lastHeartRate, "heartRateIdx": heartRateIdx])
+                }
+                
+                let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: .heartRate)!, predicate: devicePredicate, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: updateHandler)
+                     
+                self.healthStore.execute(query)
+            })
+        }
+        
+    }
+    
+    func stopHeartRate() {
+        print("stop heart rate called")
+        timer?.invalidate()
+        timer = nil
     }
 }
 

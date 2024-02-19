@@ -26,8 +26,6 @@
 		122D23F32B7D9FAE001A1A18 /* TwilioSMSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */; };
 		124746D92B6EF1DD002E1AC9 /* UserContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124746D82B6EF1DD002E1AC9 /* UserContact.swift */; };
 		124746DB2B6F0033002E1AC9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 124746DA2B6F0033002E1AC9 /* FirebaseStorage */; };
-		124AF8AB2B816B19004A7483 /* BiometricsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124AF8AA2B816B19004A7483 /* BiometricsManager.swift */; };
-		124AF8AC2B816B19004A7483 /* BiometricsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124AF8AA2B816B19004A7483 /* BiometricsManager.swift */; };
 		125506B72B5CB61F007F0323 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AD2B5CB61F007F0323 /* ContactsManager.swift */; };
 		125506B82B5CB61F007F0323 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506AE2B5CB61F007F0323 /* Contact.swift */; };
 		125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125506B02B5CB61F007F0323 /* ContactListView.swift */; };
@@ -132,7 +130,6 @@
 		12143EB12B5C8B0A004A168F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwilioSMSManager.swift; sourceTree = "<group>"; };
 		124746D82B6EF1DD002E1AC9 /* UserContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContact.swift; sourceTree = "<group>"; };
-		124AF8AA2B816B19004A7483 /* BiometricsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsManager.swift; sourceTree = "<group>"; };
 		125506AD2B5CB61F007F0323 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 		125506AE2B5CB61F007F0323 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		125506B02B5CB61F007F0323 /* ContactListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
@@ -350,7 +347,6 @@
 				1278BA6B2B5CC6D80053DF42 /* DeviceLocationService.swift */,
 				127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */,
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
-				124AF8AA2B816B19004A7483 /* BiometricsManager.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -866,7 +862,6 @@
 				12C1CC452B7EFB6E009AA8FE /* Calling911View.swift in Sources */,
 				125506BA2B5CB61F007F0323 /* Styles.swift in Sources */,
 				127DBA302B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
-				124AF8AB2B816B19004A7483 /* BiometricsManager.swift in Sources */,
 				12143EAB2B5C8AE9004A168F /* InputView.swift in Sources */,
 				12143EA82B5C8ADE004A168F /* LoginView.swift in Sources */,
 				12C1CC412B7DA525009AA8FE /* AlertManager.swift in Sources */,
@@ -903,7 +898,6 @@
 			files = (
 				127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
 				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
-				124AF8AC2B816B19004A7483 /* BiometricsManager.swift in Sources */,
 				127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
 				CC9482B22AF870E100A3A64E /* AWAREApp.swift in Sources */,
 			);
