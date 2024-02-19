@@ -34,13 +34,15 @@ extension View{
 
 
 struct ContentView: View {
-    
-    
     @EnvironmentObject var motion: CMMotionManager
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @State private var enableDataCollection = false
     @State private var shouldHide = false
+    
+    @StateObject var alertManager = AlertManager()
+    @State private var showEmergencySOS = false
+    @State private var showCalling911 = false
     
     // setting toggles
     @State private var name = ""
@@ -190,12 +192,12 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        
                         if (enableDataCollectionObj.enableDataCollection == 0) {
                             if !self.$shouldHide.wrappedValue {
                                 Button(action: {
                                     enableDataCollectionObj.toggleOn()
                                     enableDataCollection.toggle()
+                                    alertManager.intoxLevel = 0
                                 }) {
                                     Image(systemName: "touchid")
                                         .font(.system(size: 100))
@@ -218,7 +220,6 @@ struct ContentView: View {
                             Text("Disable Drinking Mode")
                             Spacer()
                         }
-                        
                         Spacer()
                     }
                     .onChange(of: enableDataCollection) {
@@ -300,9 +301,20 @@ struct ContentView: View {
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
-                }.accentColor(accentColor)
+                }.onReceive(alertManager.$intoxLevel) { newIntoxLevel in
+                    if newIntoxLevel == 3 {
+                        showEmergencySOS = true
+                    }
+                }
+                .fullScreenCover(isPresented: $showEmergencySOS) {
+                    EmergencySOSView(showCalling911: $showCalling911)
+                }
+                .fullScreenCover(isPresented: $showCalling911) {
+                    Calling911View()
+                        .environmentObject(alertManager)
+                }
+                .accentColor(accentColor)
             }
-            
             else{
                 LoginView()
             }
@@ -339,8 +351,6 @@ struct ContentView: View {
     }
 
     func startDeviceMotion() {
-        //var idx = 0
-        
         if motion.isDeviceMotionAvailable {
             self.motion.deviceMotionUpdateInterval = 1.0/50.0
             self.motion.showsDeviceMovementDisplay = true
@@ -363,8 +373,6 @@ struct ContentView: View {
                     acc.append(new)
                     
                 }
-                
-                
             })
             
             // Add the timer to the current run loop

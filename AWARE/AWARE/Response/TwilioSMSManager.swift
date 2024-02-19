@@ -93,7 +93,6 @@ class TwilioSMSManager {
                         }
                     }
             }
-            RunLoop.main.run()
         } else {
             debugPrint("ERROR: Unable to get TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN from environment variables")
         }
