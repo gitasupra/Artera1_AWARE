@@ -107,10 +107,10 @@ struct ContentView: View {
                 TabView {
                     // Page 1 Analytics
                     NavigationView {
-                        VStack(spacing: 20) {
+                        VStack(spacing: 10) {
                             NavigationStack {
                                 CalendarView()
-                                    .padding(.bottom, 50)
+                                    .padding(.bottom, 10)
                                 VStack {
                                     Button {
                                         //showHeartChart = true
@@ -242,7 +242,7 @@ struct ContentView: View {
                     // Page 4 Navigation
                     NavigationView {
                         VStack(alignment: .center) {
-                            Spacer().frame(height: 20)
+                            Spacer().frame(height: 10)
                             LocationView()
                         }.navigationBarTitle("Navigation Services", displayMode: .large)
                     }
@@ -477,7 +477,7 @@ struct CalendarView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Today")
                 .font(.title)
-                .padding(.bottom, 10)
+                .padding(.top, 5)
                 HStack {
                     let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
                     let datesForCurrentWeek = getDatesForCurrentWeek()
@@ -506,7 +506,6 @@ struct CalendarView: View {
                     RoundedRectangle(cornerRadius: 6)
                         .stroke(Color.accentColor, lineWidth: 1)
                 )
-                .padding(.bottom, 20)
             
             Text("Intoxication History")
                 .font(.title)
