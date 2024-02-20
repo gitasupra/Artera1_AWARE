@@ -35,11 +35,11 @@ extension View{
 
 
 struct ContentView: View {
-    @EnvironmentObject var motion: CMMotionManager
     @EnvironmentObject var viewModel: AuthViewModel
     @StateObject var enableDataCollectionObj = EnableDataCollection()
-    @State private var enableDataCollection = false
     @State private var shouldHide = false
+    var timer: Timer?
+    let motion = CMMotionManager()
     
     @StateObject var alertManager = AlertManager()
     @State private var showEmergencySOS = false
@@ -52,6 +52,10 @@ struct ContentView: View {
     @State private var isUberEnabled = false
     @State private var isEmergencyContacts = false
     @State private var isHelpTipsEnabled = true
+    
+    // biometric data collection and graphs
+    //@StateObject var biometricsManager = BiometricsManager()
+    @State var showHeartChart: Bool = true
     @State var showAccChart: Bool = true
     
     // accelerometer data variables
@@ -113,13 +117,13 @@ struct ContentView: View {
                                     .padding(.bottom, 10)
                                 VStack {
                                     Button {
-                                        //showHeartChart = true
+                                        showHeartChart = true
                                     } label: {
                                         Text("View Heart Rate Data")
                                     }
                                     .navigationDestination(
-                                        isPresented: $showAccChart) {
-                                            accelerometerGraph(acc: acc)
+                                        isPresented: $showHeartChart) {
+                                            heartRateGraph(heartRate: enableDataCollectionObj.heartRateList)
                                         }
                                         .buttonStyle(CustomButtonStyle())
                                     
@@ -198,12 +202,11 @@ struct ContentView: View {
                         
                         Spacer()
                         
+                        
                         if (enableDataCollectionObj.enableDataCollection == 0) {
                             if !self.$shouldHide.wrappedValue {
                                 Button(action: {
                                     enableDataCollectionObj.toggleOn()
-                                    enableDataCollection.toggle()
-                                    alertManager.intoxLevel = 0
                                 }) {
                                     Image(systemName: "touchid")
                                         .font(.system(size: 100))
@@ -216,7 +219,6 @@ struct ContentView: View {
                         } else {
                             Button(action: {
                                 enableDataCollectionObj.toggleOff()
-                                enableDataCollection.toggle()
                             }) {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
@@ -226,14 +228,15 @@ struct ContentView: View {
                             Text("Disable Drinking Mode")
                             Spacer()
                         }
+                        
                         Spacer()
                     }
-                    .onChange(of: enableDataCollection) {
-                        if (enableDataCollection) {
-                            startDeviceMotion()
-                        } else {
-                            self.motion.stopDeviceMotionUpdates()
-                        }
+                    .onChange(of: enableDataCollectionObj.enableDataCollection) {
+                    if (enableDataCollectionObj.enableDataCollection == 1) {
+                        startDeviceMotion()
+                    } else {
+                        stopDeviceMotion()
+                    }
                     }.tag(1)
                         .tabItem {
                             Label("Home", systemImage: "house.fill")
@@ -326,13 +329,51 @@ struct ContentView: View {
             }
         }.preferredColorScheme(.dark)
     }
-
-    struct ContentView_Previews: PreviewProvider {
-        static var previews: some View {
-            ContentView()
+    
+    func startDeviceMotion() {
+        print("start device motion called")
+        if motion.isDeviceMotionAvailable {
+            self.motion.deviceMotionUpdateInterval = 1.0/50.0
+            self.motion.showsDeviceMovementDisplay = true
+            self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
+            
+            // Configure a timer to fetch the device motion data
+            let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true) { (timer) in
+                if let data = self.motion.deviceMotion {
+                    // Get accelerometer data
+                    let accelerometer = data.userAcceleration
+                    accIdx += 1
+                    
+                    let new: AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
+                    
+                    // static thresholds for intoxication
+                    let tipsy:AccelerometerDataPoint = AccelerometerDataPoint(x: 0.05, y: 0.05, z: 0.05, myIndex: accIdx, id: UUID())
+                    let drunk:AccelerometerDataPoint = AccelerometerDataPoint(x: 0.1, y: 0.1, z: 0.1, myIndex: accIdx, id: UUID())
+   
+                    if alertManager.intoxLevel == 0 {
+                        if (new.x > tipsy.x || new.y > tipsy.y || new.z > tipsy.z) {
+                            alertManager.intoxLevel = 1
+                        }
+                    } else if alertManager.intoxLevel == 1 && new.x > drunk.x {
+                        if (new.x > drunk.x || new.y > drunk.y || new.z > drunk.z) {
+                            alertManager.intoxLevel = 2
+                        }
+                    }
+                    
+                    acc.append(new)
+                    print("append to acc")
+                }
+            }
+            // Add the timer to the current run loop
+            RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
         }
     }
-
+    
+    func stopDeviceMotion() {
+        print("stop device motion called")
+        motion.stopDeviceMotionUpdates()
+    }
+    
     struct accelerometerGraph: View {
         var acc: [AccelerometerDataPoint]
         var body: some View {
@@ -355,50 +396,30 @@ struct ContentView: View {
             }
         }
     }
-
-    func startDeviceMotion() {
-        if motion.isDeviceMotionAvailable {
-            self.motion.deviceMotionUpdateInterval = 1.0/50.0
-            self.motion.showsDeviceMovementDisplay = true
-            self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
-            
-            // Configure a timer to fetch the device motion data
-            let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true,
-                                block: { (timer) in
-                if let data = self.motion.deviceMotion {
-                    // Get attitude data
-                    let attitude = data.attitude
-                    // Get accelerometer data
-                    let accelerometer = data.userAcceleration
-                    // Get the gyroscope data
-                    let gyro = data.rotationRate
-                    accIdx += 1
-                    
-                    let new:AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: accIdx, id: UUID())
-                    
-                    // static thresholds for intoxication
-                    let tipsy:AccelerometerDataPoint = AccelerometerDataPoint(x: 0.05, y: 0.05, z: 0.05, myIndex: accIdx, id: UUID())
-                    let drunk:AccelerometerDataPoint = AccelerometerDataPoint(x: 0.1, y: 0.1, z: 0.1, myIndex: accIdx, id: UUID())
-   
-                    if alertManager.intoxLevel == 0 {
-                        if (new.x > tipsy.x || new.y > tipsy.y || new.z > tipsy.z) {
-                            alertManager.intoxLevel = 1
-                        }
-                    } else if alertManager.intoxLevel == 1 && new.x > drunk.x {
-                        if (new.x > drunk.x || new.y > drunk.y || new.z > drunk.z) {
-                            alertManager.intoxLevel = 2
+    
+    struct heartRateGraph: View {
+        var heartRate: [(Double, Int)]
+        var body: some View {
+            ScrollView {
+                VStack {
+                    Chart {
+                        ForEach(heartRate.indices, id: \.self) { index in
+                            let element = heartRate[index]
+                            LineMark(x: .value("idx", element.1), y: .value("Heart Rate", element.0))
                         }
                     }
-                    
-                    acc.append(new)
-                    
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 50)
+                    .padding()
                 }
-            })
-            
-            // Add the timer to the current run loop
-            RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
+            }
         }
-        
+    }
+
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
 }
 
