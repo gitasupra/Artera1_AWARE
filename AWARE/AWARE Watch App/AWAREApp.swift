@@ -10,18 +10,12 @@ import HealthKit
 import CoreMotion
 
 @main
-struct AWARE_Watch_AppApp: App {
-    private let motion: CMMotionManager
-        
-    init() {
-        motion = CMMotionManager()
-    }
+struct AWARE_Watch_AppApp: App {        
+    init() {}
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(motion)
+            ContentView()
         }
     }
 }
-
-extension CMMotionManager: ObservableObject{}
