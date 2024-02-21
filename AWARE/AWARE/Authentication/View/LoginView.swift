@@ -16,6 +16,19 @@ struct LoginView: View {
     var body: some View {
         NavigationStack{
             VStack{
+                Spacer()
+                
+                // AWARE logo
+                Image("testlogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
+                Image("testicon")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 75)
+                    .padding(.bottom, 20)
+                
                 //form fields
                 VStack(spacing: 24){
                     InputView(text: $email, title: "Email Address", placeholder:"name@example.com")
@@ -43,7 +56,7 @@ struct LoginView: View {
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                     
                 }
-                .background(Color(.systemBlue))
+                .background(Color.accentColor)
                 .cornerRadius(10)
                 .padding(.top, 24)
 
