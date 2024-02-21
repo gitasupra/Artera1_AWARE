@@ -52,7 +52,7 @@ class AuthViewModel: ObservableObject{
             self.userSession = result.user
             //use Codable protocol: map User object to JSON data
             let user = User(id: result.user.uid, fullname: fullname, email: email)
-            try await Database.database().reference().child("users").child(user.id).setValue(from:user)
+            try Database.database().reference().child("users").child(user.id).setValue(from:user)
             
         }
         catch{

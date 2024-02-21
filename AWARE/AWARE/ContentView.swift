@@ -1,6 +1,10 @@
 import SwiftUI
 import HealthKit
 import Firebase
+import FirebaseCore
+import FirebaseAnalytics
+import FirebaseAnalyticsSwift
+import FirebaseDatabase
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: AuthViewModel
@@ -73,12 +77,8 @@ struct ContentView: View {
                 Calling911View()
                     .environmentObject(alertManager)
             }
-            .accentColor(Style.accentColor)
-            .preferredColorScheme(.dark)
         } else {
             LoginView()
-                .accentColor(Style.accentColor)
-                .preferredColorScheme(.dark)
         }
     }
 

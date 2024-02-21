@@ -59,14 +59,14 @@ struct AWAREApp: App {
         }
     }
 
-
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(healthStore)
                 .environmentObject(motion)
                 .environmentObject(viewModel)
-
+                .accentColor(Style.accentColor)
+                .preferredColorScheme(.dark)
         }
     }
 }
