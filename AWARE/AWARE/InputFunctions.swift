@@ -282,6 +282,8 @@ class InputFunctions : ObservableObject{
                 do {
                     let stream = OutputStream(toFileAtPath: outputFileURL.path, append: false)!
                     let csv = try! CSVWriter(stream: stream)
+                    let headers: [String] = ["time", "x", "y", "z"] // Add or modify headers based on your specific metrics and calculations
+                    try csv.write(row: headers)
                     //write all rows of full_frame to csv
                     for row in full_frame {
                         //convert row to string that can be written to csv
@@ -320,16 +322,7 @@ class InputFunctions : ObservableObject{
                 var mean_all: [[Double]] = []
             
                 for row in csvFile.rows {
-                    var rowData: [Double] = []
-                    for (_, value) in row { // Iterate over each key-value pair in the row
-                        if let doubleValue = Double(value) {
-                            rowData.append(doubleValue)
-                        } else {
-                            // Handle the case where conversion to Double fails
-                            // For example, you might want to skip this row or handle the error differently
-                            print("Failed to convert value '\(value)' to Double")
-                        }
-                    }
+                    let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
                     mean_all.append(rowData)
                 }
                 
