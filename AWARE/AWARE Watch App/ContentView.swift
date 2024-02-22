@@ -2,6 +2,9 @@ import SwiftUI
 import HealthKit
 import CoreMotion
 import WatchConnectivity
+import Foundation
+
+
 
 struct ContentView: View {
     @State private var shouldHide = false
