@@ -10,40 +10,35 @@ import Foundation
 import Firebase
 import FirebaseAuth
 
-
-//publish UI changes on main thread
 @MainActor
-class AuthViewModel: ObservableObject{
+class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     
-    //custom user class, not Firebase's
     @Published var currentUser: User?
     
-    init(){
+    init() {
         self.userSession=Auth.auth().currentUser
         
-        Task{
+        Task {
             await fetchUser()
         }
     }
     
-    func signIn(withEmail email: String, password: String) async throws{
-        do{
+    func signIn(withEmail email: String, password: String) async throws {
+        do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession=result.user
             await fetchUser()
-        }catch{
+        } catch {
             print("DEBUG: Failed to log in with error \(error.localizedDescription)")
         }
-        
     }
     
-    func createUser(withEmail email: String, password: String, fullname: String) async throws{
-        do{
-            
+    func createUser(withEmail email: String, password: String, fullname: String) async throws {
+        do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             
-            // add user display name 
+            // add user display name
             let changeRequest = result.user.createProfileChangeRequest()
             changeRequest.displayName = fullname
             try await changeRequest.commitChanges()
@@ -53,15 +48,13 @@ class AuthViewModel: ObservableObject{
             //use Codable protocol: map User object to JSON data
             let user = User(id: result.user.uid, fullname: fullname, email: email)
             try Database.database().reference().child("users").child(user.id).setValue(from:user)
-            
-        }
-        catch{
+        } catch {
             print("DEBUG: Failed to create user \(error.localizedDescription)")
         }
-        
     }
-    func signOut(){
-        do{
+    
+    func signOut() {
+        do {
             try Auth.auth().signOut() //signs out user on backend
             self.userSession = nil //wipes out user session --> take back to login screen
             self.currentUser = nil //wipes out current user data model
@@ -69,17 +62,25 @@ class AuthViewModel: ObservableObject{
             print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
         }
     }
-    func deleteAccount(){
-        
+    
+    func deleteAccount() async {
+        guard let currentUser = Auth.auth().currentUser else {
+            return
+        }
+        do {
+            try await currentUser.delete()
+            self.userSession = nil
+            self.currentUser = nil
+        } catch {
+            print("Failed to delete user account with error: \(error.localizedDescription)")
+        }
     }
-    func fetchUser() async{
+    
+    func fetchUser() async {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         
         guard let snapshot = try? await Database.database().reference().child("users").child(uid).getData() else {return}
-//        print(snapshot)
         //use Codable protocol: map JSON data to User object
         self.currentUser = try? snapshot.data(as: User.self)
-        //print("DEBUG: Current user is \(String(describing: self.currentUser))")
-        
     }
 }

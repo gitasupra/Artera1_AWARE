@@ -18,7 +18,7 @@ struct ContentView: View {
 
     init() {
         UITabBar.appearance().backgroundColor = UIColor(Style.primaryColor)
-        name = Auth.auth().currentUser?.displayName ?? "user"
+        name = Auth.auth().currentUser?.displayName ?? ""
     }
     
     var body: some View {

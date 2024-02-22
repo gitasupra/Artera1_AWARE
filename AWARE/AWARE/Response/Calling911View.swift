@@ -13,7 +13,6 @@ struct Calling911View: View {
     @Environment(\.presentationMode) var presentationMode
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
-
     var body: some View {
 
         VStack {

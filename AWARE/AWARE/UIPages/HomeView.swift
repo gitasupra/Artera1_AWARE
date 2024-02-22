@@ -31,11 +31,18 @@ struct HomeView: View {
             }
             .background(Style.primaryColor)
             
-            Text("Hello, \(name)!")
-                .font(.largeTitle)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-                .padding()
+            if name == "" {
+                Text("Hello, user!")
+                    .font(.largeTitle)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+            } else {
+                Text("Hello, \(name)!")
+                    .font(.largeTitle)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+            }
+  
             Text("Welcome to AWARE")
                 .font(.title)
                 .padding()

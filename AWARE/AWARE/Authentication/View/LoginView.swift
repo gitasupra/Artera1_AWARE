@@ -12,7 +12,7 @@ struct LoginView: View {
     @State private var email=""
     @State private var password=""
     @EnvironmentObject var viewModel: AuthViewModel
-
+    
     var body: some View {
         NavigationStack{
             VStack{
@@ -38,9 +38,7 @@ struct LoginView: View {
                 }
                 .padding(.horizontal)
                 
-                
                 //sign in button
-                
                 Button{
                     //async/await must be wrapped in Task
                     Task{
@@ -59,7 +57,7 @@ struct LoginView: View {
                 .background(Color.accentColor)
                 .cornerRadius(10)
                 .padding(.top, 24)
-
+                
                 Spacer()
                 
                 //sign up
@@ -74,7 +72,6 @@ struct LoginView: View {
                     }
                     .font(.system(size:14))
                 }
-
             }
         }
     }
