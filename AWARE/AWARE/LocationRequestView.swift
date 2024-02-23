@@ -10,8 +10,9 @@ import SwiftUI
 
 struct LocationRequestView: View {
     var body: some View {
+//        Text("Request location from user!")
         ZStack {
-            Color(Color.accentColor).ignoresSafeArea()
+            Color(.systemBlue).ignoresSafeArea() //.systemBlue
             VStack {
                 Spacer()
                 
@@ -31,12 +32,13 @@ struct LocationRequestView: View {
                 Spacer()
                 VStack {
                     Button {
+//                        print("Request location from user")
                         LocationManager.shared.requestLocation()
                     } label: {
                         Text("Allow location")
                             .padding()
                             .font(.headline)
-                            .foregroundColor(Color.accentColor)
+                            .foregroundColor(Color(.systemBlue)) //.systemBlue
                     }
                     .frame(width: UIScreen.main.bounds.width)
                     .padding(.horizontal, -32)

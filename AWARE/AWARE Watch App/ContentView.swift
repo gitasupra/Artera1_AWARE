@@ -48,7 +48,7 @@ struct Page2View: View {
         VStack {
             if (enableDataCollectionObj.enableDataCollection == 0) {
                 if !self.$shouldHide.wrappedValue {
-                    Text("Enable Drinking Mode")
+                    Text("Enable Data Collection")
                         .multilineTextAlignment(.center)
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
@@ -60,7 +60,7 @@ struct Page2View: View {
                     }
                 }
             } else {
-                Text("Disable Drinking Mode")
+                Text("Disable Data Collection")
                     .multilineTextAlignment(.center)
                 Button {
                     enableDataCollectionObj.toggleOff()
@@ -87,4 +87,3 @@ struct Page2View: View {
 #Preview{
     ContentView()
 }
-
