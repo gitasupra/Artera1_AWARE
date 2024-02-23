@@ -52,8 +52,6 @@ class DeviceLocationService: NSObject, CLLocationManagerDelegate, ObservableObje
         }
     }
     
-    
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         coordinatesPublisher.send(location.coordinate)
@@ -62,8 +60,6 @@ class DeviceLocationService: NSObject, CLLocationManagerDelegate, ObservableObje
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         coordinatesPublisher.send(completion: .failure(error))
     }
-    
-    
 }
 
 
