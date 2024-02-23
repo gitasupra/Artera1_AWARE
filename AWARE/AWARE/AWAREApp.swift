@@ -4,6 +4,7 @@ import CoreMotion
 import Firebase
 import FirebaseCore
 
+
 class AppDelegate: NSObject, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool{
         FirebaseApp.configure()
@@ -14,6 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate{
 
 @main
 struct AWAREApp: App {
+    
     //create AuthViewModel once to use for all pages
     @StateObject var viewModel = AuthViewModel()
     
@@ -49,10 +51,14 @@ struct AWAREApp: App {
             HKObjectType.categoryType(forIdentifier: .shortnessOfBreath)!,
         ])
         
+        
+
+        
         healthStore.requestAuthorization(toShare: sampleTypesToReadShare, read: sampleTypesToReadOnly) { (success, error) in
             print("Request Authorization -- Success: ", success, " Error: ", error ?? "nil")
         }
     }
+
 
     var body: some Scene {
         WindowGroup {
@@ -60,11 +66,12 @@ struct AWAREApp: App {
                 .environmentObject(healthStore)
                 .environmentObject(motion)
                 .environmentObject(viewModel)
-                .accentColor(Style.accentColor)
-                .preferredColorScheme(.dark)
+
         }
     }
 }
 
+
 extension HKHealthStore: ObservableObject{}
 extension CMMotionManager: ObservableObject{}
+

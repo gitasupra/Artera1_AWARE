@@ -17,8 +17,8 @@ struct RegistrationView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
-        VStack {
-            VStack(spacing: 24) {
+        VStack{
+            VStack(spacing: 24){
                 InputView(text: $email, title: "Email Address", placeholder:"name@example.com")
                     .autocapitalization(.none)
                 
@@ -32,8 +32,8 @@ struct RegistrationView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             
-            Button {
-                Task {
+            Button{
+                Task{
                     try await viewModel.createUser(withEmail:email,password:password,fullname:fullname)
                 }
             } label: {
@@ -46,13 +46,13 @@ struct RegistrationView: View {
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                 
             }
-            .background(Color.accentColor)
+            .background(Color(.systemBlue))
             .cornerRadius(10)
             .padding(.top, 24)
             
             Spacer()
             
-            Button {
+            Button{
                 dismiss()
             } label: {
                 HStack(spacing: 3){

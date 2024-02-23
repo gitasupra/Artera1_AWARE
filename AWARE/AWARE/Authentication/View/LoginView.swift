@@ -12,23 +12,10 @@ struct LoginView: View {
     @State private var email=""
     @State private var password=""
     @EnvironmentObject var viewModel: AuthViewModel
-    
+
     var body: some View {
         NavigationStack{
             VStack{
-                Spacer()
-                
-                // AWARE logo
-                Image("testlogo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 48)
-                Image("testicon")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 75)
-                    .padding(.bottom, 20)
-                
                 //form fields
                 VStack(spacing: 24){
                     InputView(text: $email, title: "Email Address", placeholder:"name@example.com")
@@ -38,7 +25,9 @@ struct LoginView: View {
                 }
                 .padding(.horizontal)
                 
+                
                 //sign in button
+                
                 Button{
                     //async/await must be wrapped in Task
                     Task{
@@ -54,10 +43,10 @@ struct LoginView: View {
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                     
                 }
-                .background(Color.accentColor)
+                .background(Color(.systemBlue))
                 .cornerRadius(10)
                 .padding(.top, 24)
-                
+
                 Spacer()
                 
                 //sign up
@@ -72,6 +61,7 @@ struct LoginView: View {
                     }
                     .font(.system(size:14))
                 }
+
             }
         }
     }

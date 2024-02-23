@@ -29,7 +29,8 @@ struct ContactListView: View {
                         }
                     }
                 }
-            }.navigationBarTitle("Contact List", displayMode: .large)
+            }
         }
+        .navigationBarTitle("Contact List", displayMode: .large)
     }
 }
