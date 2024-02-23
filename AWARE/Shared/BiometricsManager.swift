@@ -77,7 +77,6 @@ class BiometricsManager: ObservableObject {
                 let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
                     query, samples, deletedObjects, queryAnchor, error in
                     
-                    
                     guard let samples = samples as? [HKQuantitySample] else {
                         return
                     }
@@ -85,9 +84,7 @@ class BiometricsManager: ObservableObject {
                     var lastHeartRate = 0.0
                     
                     for sample in samples {
-                        
                         lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
-
                     }
                     
                     heartRateIdx += 1
@@ -99,7 +96,6 @@ class BiometricsManager: ObservableObject {
                 self.healthStore.execute(query)
             })
         }
-        
     }
     
     func stopHeartRate() {

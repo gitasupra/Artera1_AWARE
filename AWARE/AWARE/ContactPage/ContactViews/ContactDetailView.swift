@@ -326,7 +326,7 @@ struct ContactDetailView: View {
             }
         }
     }
-
+    
     private func deleteContact() {
         guard let uid = Auth.auth().currentUser?.uid else {
             return
@@ -367,13 +367,13 @@ struct ContactDetailView: View {
         alertTitle = "Error"
         alertMessage = "Failed to delete contact: \(error.localizedDescription)"
     }
-
+    
     func showAlertWithSuccess(_ message: String) {
         showAlert = true
         alertTitle = "Success"
         alertMessage = message
     }
-                        
+    
     private func formatPhoneNumber(phoneNumber: String) -> String? {
         let numericPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
         let formattedPhoneNumber = "+\(numericPhoneNumber.dropLast(10))(\(numericPhoneNumber.suffix(10).dropLast(7)))-\(numericPhoneNumber.suffix(7))"
