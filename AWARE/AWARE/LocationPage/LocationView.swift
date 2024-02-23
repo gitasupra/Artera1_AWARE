@@ -45,46 +45,19 @@ struct LocationView: View {
     @State var tokens: Set<AnyCancellable> = []
     @State var coordinates: (lat: Double, lon: Double) = (0,0)
     var body: some View {
-        VStack {
-            Text("Current Location:")
-                .font(.title2)
-        
-            Text("Latitude: \(coordinates.lat)")
-                .font(.subheadline) //.largeTitle
-            Text("Longitude: \(coordinates.lon)")
-                .font(.subheadline)
-        }
-        HStack {
-            // Spacer to center the button
-            Spacer()
-            HStack {
-                Text("Feelin Tipsy?")
-                    .italic()
-                    .font(.subheadline)
+        VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Current Location")
+                    .font(.title)
                 
-                Image(systemName: "wineglass")
-                    .foregroundColor(.purple)
+                HStack {
+                    Text("Latitude: \(coordinates.lat)")
+                    Text("Longitude: \(coordinates.lon)")
+                }
+                .font(.subheadline)
+                .foregroundColor(.secondary)
             }
-            HStack {
-                // Ride request button
-                UberRideRequestButton()
-                    .frame(width: 240, height: 40)
-            }
-            
-            // Spacer to center the button
-            Spacer()
         }
-        
-        .onAppear {
-            observeCoordinateUpdates()
-            observeLocationAccessDenied()
-            deviceLocationService.requestLocationUpdates()
-        }
-        .cornerRadius(6)
-        .overlay(
-            RoundedRectangle(cornerRadius: 6)
-                .stroke(Color.accentColor, lineWidth: 1)
-        )
         Spacer()
         Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
             .ignoresSafeArea()
@@ -95,6 +68,35 @@ struct LocationView: View {
                 MapCompass()
                 MapUserLocationButton()
             }
+            .frame(height: 400)
+            .cornerRadius(10)
+        Spacer()
+
+        HStack {
+            Text("Feelin Tipsy?")
+                .italic()
+                .font(.subheadline)
+            
+            Image(systemName: "wineglass")
+                .foregroundColor(.purple)
+        }
+        HStack {
+            // Ride request button
+            UberRideRequestButton()
+                .frame(width: 240, height: 40)
+        }
+        .onAppear {
+            observeCoordinateUpdates()
+            observeLocationAccessDenied()
+            deviceLocationService.requestLocationUpdates()
+        }
+        .cornerRadius(6)
+        .background(Color.accentColor)
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color.accentColor, lineWidth: 1)
+        )
+        Spacer()
     }
     
     // Coordinates ================
@@ -155,8 +157,6 @@ extension LocationView {
     }
 }
 
-
-
 extension CLLocationCoordinate2D {
     static var userLocation: CLLocationCoordinate2D {
         return .init(latitude: 25.7602, longitude: -80.1959)
@@ -168,17 +168,24 @@ extension MKCoordinateRegion {
         return .init(center: .userLocation, latitudinalMeters: 10000, longitudinalMeters: 10000)
     }
 }
+
 final class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager: CLLocationManager?
     
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)) //latitude: 37.221516, longitude: -121.891854
     
     func checkIfLocationServicesIsEnabled() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager = CLLocationManager()
-            locationManager!.delegate = self
-        } else {
-            print("Show an alert letting them know this is off and to go turn it on")
+        DispatchQueue.global().async {
+            let isLocationServicesEnabled = CLLocationManager.locationServicesEnabled()
+            DispatchQueue.main.async {
+                if isLocationServicesEnabled {
+                    self.locationManager = CLLocationManager()
+                    self.locationManager!.delegate = self
+                    self.checkLocationAuthorization()
+                } else {
+                    print("Show an alert letting them know this is off and to go turn it on")
+                }
+            }
         }
     }
     
@@ -196,7 +203,10 @@ final class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDeleg
             print("You have denied this app location permission. Please go into settings to change it.")
             
         case .authorizedAlways, .authorizedWhenInUse:
-            region = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+            DispatchQueue.main.async {
+                self.region = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+            }
+            
         @unknown default:
             break
         }

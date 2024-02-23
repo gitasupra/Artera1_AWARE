@@ -34,7 +34,7 @@ struct ContactPickerButton<Label: View>: UIViewControllerRepresentable {
                 hostingController.view!.heightAnchor.constraint(equalToConstant: $0.height).isActive = true
                 viewController.preferredContentSize = $0.size
             }
-                
+            
             hostingController.willMove(toParent: viewController)
             viewController.addChild(hostingController)
             viewController.view.addSubview(hostingController.view)
@@ -53,7 +53,7 @@ struct ContactPickerButton<Label: View>: UIViewControllerRepresentable {
             self.contact = contact
             self.phoneNumber = contact.phoneNumbers.first?.value.stringValue ?? ""
         }
-
+        
         func makeUIViewController() -> UIViewController {
             return viewController
         }
@@ -67,7 +67,7 @@ struct ContactPickerButton<Label: View>: UIViewControllerRepresentable {
     
     @ViewBuilder
     var content: () -> Label
-
+    
     var onCancel: () -> Void
     
     init(contact: Binding<CNContact?>, phoneNumber: Binding<String?>, onCancel: @escaping () -> Void, @ViewBuilder content: @escaping () -> Label) {
