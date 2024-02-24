@@ -20,47 +20,40 @@ struct Response: Codable {
     let predict: Int
 }
 
-func sendCSVToServer(accData: String) { // accData is filename, type stirng
+func sendCSVToServer(accData: String) -> Int { // accData is filename, type stirng
     guard let url = URL(string: "http://jessicalieu.pythonanywhere.com/uploadCSV") else {
         print("Invalid URL")
-        return
+        return -1
     }
     
-
-        let csvFile = try! SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: accData))
-        
-
+    
+    let csvFile = try! SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: accData))
+    
+    
     
     URLSession.shared.uploadTask(with: URLRequest(url: url, method: .post), from: csvFile) { data, response, error in{
         
         let predict = try! JSONDecoder().decode(Response.self, from: json)
         
-    }.resume()
+    }()
         
         return (Response.predict)
     }
+}
 
     
     class AlertManager: ObservableObject {
-        let prediction_result = sendCSVToServer(accData: "BK7610")
+        //let prediction_result = sendCSVToServer(accData: "BK7610")
         public let contactManager = ContactsManager()
         public let twilioManager = TwilioSMSManager()
-        @Published var intoxLevel: Int = prediction_result {
-            print("Printing intoxication level: ")
-            didSet {
-                if intoxLevel == 0 {
-                    print(intoxLevel)
-                    sendUpdate(level: 0)
-                } else if intoxLevel == 1 {
-                    print(intoxLevel)
-                    sendUpdate(level: 1)
-                } else if intoxLevel == 2 {
-                    print(intoxLevel)
-                    sendUpdate(level: 2)
-                } else if intoxLevel == 3 {
-                    AlertManager.triggerHapticFeedback()
-                }
-            }
+        
+        let prediction_result: Int
+        
+        @Published var intoxLevel: Int
+        
+        init() {
+            prediction_result = sendCSVToServer(accData: "BK7610")
+            self.intoxLevel = prediction_result
         }
         
         static func triggerHapticFeedback() {
@@ -71,5 +64,19 @@ func sendCSVToServer(accData: String) { // accData is filename, type stirng
         func sendUpdate(level: Int) {
             twilioManager.sendSMS(level: level, contactsManager: contactManager)
         }
+        
+        private func handleIntoxLevelChange() {
+            if intoxLevel == 0 {
+                print(intoxLevel)
+                sendUpdate(level: 0)
+            } else if intoxLevel == 1 {
+                print(intoxLevel)
+                sendUpdate(level: 1)
+            } else if intoxLevel == 2 {
+                print(intoxLevel)
+                sendUpdate(level: 2)
+            } else if intoxLevel == 3 {
+                AlertManager.triggerHapticFeedback()
+            }
+        }
     }
-}
