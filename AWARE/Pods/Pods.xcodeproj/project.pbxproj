@@ -959,7 +959,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/UberCore/UberCore-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/UberCore/UberCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1056,7 +1056,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/UberCore/UberCore-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/UberCore/UberCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1111,7 +1111,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/UberRides/UberRides-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/UberRides/UberRides-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1249,7 +1249,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/UberRides/UberRides-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/UberRides/UberRides-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
