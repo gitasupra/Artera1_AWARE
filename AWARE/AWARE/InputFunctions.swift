@@ -105,74 +105,129 @@ class InputFunctions : ObservableObject{
     }
     
     
-    func combineFeatures() {
-        let csvPath = "/path/to/your/csv/file/"
-        let csvFileName = "Metric_0_36.csv"
+    func combine_features(csvPath: String) -> String? {
+        let metric_no=0;
+        let csvFileName = "/Metric_0_36.csv"
         
-        guard let csvURL = URL(string: csvPath + csvFileName),
-              let csvFile = try? SwiftCSV.CSV<Named>(url: csvURL) else {
-            print("Error: Unable to read CSV file.")
-            return
-        }
+         let csvURL = URL(fileURLWithPath: csvPath + csvFileName)
+           let csvFile = try? SwiftCSV.CSV<Named>(url: csvURL)
+//        else {
+//             print("Error: Unable to read CSV file from \(csvPath + csvFileName).")
+//             return
+//         }
+
+        do{
+//            let csvFile=try SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: csvPath + csvFileName))
+
         
-        // Manually define column types based on your data
-        let columnTypes: [String: CSVType] = [
-            "t": .string,   // Assuming timestamp is of type String
-            "x": .double,
-            "y": .double,
-            "z": .double
-            // Add other columns and their types as needed
-        ]
-        
-        var df = try! DataFrame(
-            contentsOfCSVFile: csvURL,
-            columns: csvFile.header,
-            rows: nil, // You can specify a range of rows if needed
-            types: columnTypes
-        )
-        
-        for i in 1..<18 where i != 12 {
-            let fileName: String
-            if i < 14 {
-                fileName = "Metric_\(i)_36.csv"
-            } else {
-                fileName = "Metric_\(i)_18.csv"
-            }
-            
-            guard let fileURL = URL(string: csvPath + fileName),
-                  let fileCSV = try? SwiftCSV.CSV<Named>(url: fileURL) else {
-                print("Error: Unable to read CSV file \(fileName).")
-                continue
-            }
-            
-            // Assuming the columns in fileCSV have similar types to the original CSV
-            let xColumnTypes: [String: CSVType] = [
+            // Manually define column types based on your data
+            let columnTypes: [String: CSVType] = [
                 "t": .string,   // Assuming timestamp is of type String
-                "x": .double,
-                "y": .double,
-                "z": .double
+                "\(metric_no)xMe": .double, 
+                "\(metric_no)xVr": .double, 
+                "\(metric_no)xMx": .double, 
+                "\(metric_no)xMi": .double,
+                "\(metric_no)xUM": .double,
+                "\(metric_no)xLM": .double,
+                "\(metric_no)yMe": .double,
+                "\(metric_no)yVr": .double,
+                "\(metric_no)yMx": .double,
+                "\(metric_no)yMn": .double,
+                "\(metric_no)yUM": .double,
+                "\(metric_no)yLM": .double,
+                "\(metric_no)zMe": .double,
+                "\(metric_no)zVr": .double,
+                "\(metric_no)zMx": .double,
+                "\(metric_no)zMi": .double,
+                "\(metric_no)zUM": .double,
+                "\(metric_no)zLM": .double,
                 // Add other columns and their types as needed
             ]
             
-            let x = try! DataFrame(
-                contentsOfCSVFile: fileURL,
-                columns: fileCSV.header,
+            var df = try! DataFrame(
+                contentsOfCSVFile: csvURL,
+                columns: csvFile?.header,
                 rows: nil, // You can specify a range of rows if needed
-                types: xColumnTypes
+                types: columnTypes
             )
-            df = try! df.joined(x, on: ("t", "t"), kind: .inner)
-        }
-            df.removeColumn("t")
             
-            let outputFileName = "X.csv"
-            let outputURL = URL(string: csvPath + outputFileName)!
-            
-            do {
-                try df.writeCSV(to: outputURL)
-                print("Combined DataFrame saved to CSV: \(outputURL.path)")
-            } catch {
-                print("Error: \(error.localizedDescription)")
+            //if want to add more features, fix the range of the loop
+            for i in 1..<7 where i != 12 {
+                let fileName: String
+                if i < 14 {
+                    fileName = "/Metric_\(i)_36.csv"
+                } else {
+                    fileName = "/Metric_\(i)_18.csv"
+                }
+                
+                 let fileURL = URL(fileURLWithPath: csvPath + fileName)
+                 let fileCSV = try? SwiftCSV.CSV<Named>(url: fileURL)
+//                else {
+//                     print("Error: Unable to read CSV file \(fileName).")
+//                     continue
+//                 }
+
+//                guard let fileCSV=try SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: csvPath + fileName)) else{
+//                    print("Error: Unable to read CSV file \(fileName).")
+//                }
+                
+                // Assuming the columns in fileCSV have similar types to the original CSV
+                let finalColumnTypes: [String: CSVType] = [
+                    "t": .string,   // Assuming timestamp is of type String
+                    "\(i)xMe": .double, 
+                    "\(i)xVr": .double, 
+                    "\(i)xMx": .double, 
+                    "\(i)xMi": .double,
+                    "\(i)xUM": .double,
+                    "\(i)xLM": .double,
+                    "\(i)yMe": .double,
+                    "\(i)yVr": .double,
+                    "\(i)yMx": .double,
+                    "\(i)yMn": .double,
+                    "\(i)yUM": .double,
+                    "\(i)yLM": .double,
+                    "\(i)zMe": .double,
+                    "\(i)zVr": .double,
+                    "\(i)zMx": .double,
+                    "\(i)zMi": .double,
+                    "\(i)zUM": .double,
+                    "\(i)zLM": .double,
+                    // Add other columns and their types as needed
+                ]
+                
+                let joinColumns = [
+                    "t",
+                    "\(i)xMe", "\(i)xVr", "\(i)xMx", "\(i)xMi", "\(i)xUM", "\(i)xLM",
+                    "\(i)yMe", "\(i)yVr", "\(i)yMx", "\(i)yMn", "\(i)yUM", "\(i)yLM",
+                    "\(i)zMe", "\(i)zVr", "\(i)zMx", "\(i)zMi", "\(i)zUM", "\(i)zLM"
+                ]
+                
+                let x = try! DataFrame(
+                    contentsOfCSVFile: fileURL,
+                    columns: joinColumns,
+                    rows: nil, // You can specify a range of rows if needed
+                    types: finalColumnTypes
+                )
+                df = try! df.joined(x, on: ("t", "t"), kind: .inner)
             }
+                df.removeColumn("t")
+                
+                let outputFileName = "/X.csv"
+            let outputURL = URL(fileURLWithPath: csvPath + outputFileName)
+                
+                do {
+                    try df.writeCSV(to: outputURL)
+                    print("Combined DataFrame saved to CSV: \(outputURL.path)")
+                    return outputURL.path
+                } catch {
+                    print("Error: \(error.localizedDescription)")
+                }
+                        }
+        catch{
+            print("Error:\(error.localizedDescription)")
+        }
+        return nil
+
         }
     
     func createFileDirectoryIfNeeded(at url: URL) {
@@ -514,7 +569,8 @@ class InputFunctions : ObservableObject{
                 
                 //may need to return full path (outputURL.path)
                 print("create_per_window SUCCESS \(metric_no)")
-                return outputFileURL.path
+//                print(outputFileURL.path)
+                return outputFileURL.deletingLastPathComponent().path
                 
                 
             }
@@ -528,8 +584,10 @@ class InputFunctions : ObservableObject{
     
         func processData(windowFile: String) -> String {
             print("processing data!")
+            
             //FIXME: temporarily changing create_per_second to have test file name
             var testfile: String = ""
+            var perWindowDataDir: String = ""
             do{
                 testfile = Bundle.main.path(forResource: "BK7610", ofType: "csv")!
             }
@@ -539,9 +597,16 @@ class InputFunctions : ObservableObject{
             }
             for metricNum in Features.allCases{
                 let perSecondDataFile = create_per_second_data(file: testfile, metric_no: metricNum.rawValue)
-                let perWindowDataFile = create_per_window_data(file: perSecondDataFile, metric_no: metricNum.rawValue)
+                perWindowDataDir = create_per_window_data(file: perSecondDataFile, metric_no: metricNum.rawValue)
             }
-            print("process_data SUCCESS")
+            
+            print("SUCCESS creating all window data")
+            
+            print("Window data in: \(perWindowDataDir)")
+            
+            combine_features(csvPath: perWindowDataDir)
+            print("combining features success")
+            
             return ""
         }
         

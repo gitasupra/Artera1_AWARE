@@ -436,16 +436,16 @@ struct ContentView: View {
                     //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
                     //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
                     
-                    if (accIdx > 0 ) && (accIdx % 400 == 0){
-                        //At multiple of (data points per second) * 10 seconds
-                        windowFileURL = writeAccDataToCSV(data: windowAccData)!
-                        print("Window data saved to: \(windowFileURL)")
-                        
-                        inputFunctions.processData(windowFile: windowFileURL)
-                        
-                        //reset window data array
-                        windowAccData=[]
-                    }
+//                    if (accIdx == 400){
+//                        //At multiple of (data points per second) * 10 seconds
+//                        windowFileURL = writeAccDataToCSV(data: windowAccData)!
+//                        print("Window data saved to: \(windowFileURL)")
+//                        
+//                        inputFunctions.processData(windowFile: windowFileURL)
+//                        
+//                        //reset window data array
+//                        windowAccData=[]
+//                    }
                     
                     accIdx += 1
                     
