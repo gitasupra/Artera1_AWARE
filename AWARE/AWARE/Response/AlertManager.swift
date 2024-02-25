@@ -49,12 +49,13 @@ func sendCSVToServer(accData: String, completion: @escaping (Int) -> Void) {
     }
 
     do {
-        let csvFile = try SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: accData))
+        //let csvFile = try SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: accData))
+        
         
         // Get the raw CSV data
-        let csvData = try Data(contentsOf: csvFile.named.url)
+        let csvData = try Data(contentsOf: URL(fileURLWithPath: accData))
 
-        URLSession.shared.uploadTask(with: URLRequest(url: url, method: .post), from: csvData) { data, response, error in
+        URLSession.shared.uploadTask(with: try URLRequest(url: url, method: .post), from: csvData) { data, response, error in
             guard let data = data, error == nil else {
                 // Handle error
                 completion(-1)
@@ -82,7 +83,7 @@ class AlertManager: ObservableObject {
     public let contactManager = ContactsManager()
     public let twilioManager = TwilioSMSManager()
     
-    @Published var intoxLevel: Int
+    @Published var intoxLevel = 0
     
     init() {
         sendCSVToServer(accData: "BK7610") { [weak self] predictionResult in

@@ -58,6 +58,9 @@
 		12C1CC482B7F09FA009AA8FE /* TwilioVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 12C1CC472B7F09FA009AA8FE /* TwilioVoice */; };
 		77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */; };
 		AD5ECFF3F4D796166139E335 /* libPods-AWARE Watch AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */; };
+		CC650D282B8ABD430050504A /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = CC650D272B8ABD430050504A /* SwiftCSV */; };
+		CC650D2B2B8ABD820050504A /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = CC650D2A2B8ABD820050504A /* CSV */; };
+		CC650D2D2B8AC2090050504A /* BK7610.csv in Resources */ = {isa = PBXBuildFile; fileRef = CC650D2C2B8AC2090050504A /* BK7610.csv */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
 		CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC94828B2AF870DF00A3A64E /* ContentView.swift */; };
 		CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC94828D2AF870E100A3A64E /* Assets.xcassets */; };
@@ -177,6 +180,7 @@
 		93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARE Watch AppUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A229487241DA802E293FF595 /* libPods-AWARE Watch AppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARE Watch AppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D98461CACC3AD1EA9CF8B9 /* libPods-AWARETests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARETests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC650D2C2B8AC2090050504A /* BK7610.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BK7610.csv; sourceTree = "<group>"; };
 		CC9482862AF870DF00A3A64E /* AWARE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWARE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9482892AF870DF00A3A64E /* AWAREApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREApp.swift; sourceTree = "<group>"; };
 		CC94828B2AF870DF00A3A64E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -208,11 +212,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				12143EBF2B5C8B52004A168F /* Alamofire in Frameworks */,
+				CC650D2B2B8ABD820050504A /* CSV in Frameworks */,
 				12C1CC482B7F09FA009AA8FE /* TwilioVoice in Frameworks */,
 				12143EC42B5C8B70004A168F /* FirebaseAuth in Frameworks */,
 				12143EBC2B5C8B41004A168F /* FirebaseAnalyticsSwift in Frameworks */,
 				12143EC22B5C8B68004A168F /* FirebaseDatabase in Frameworks */,
 				12143EBA2B5C8B41004A168F /* FirebaseAnalytics in Frameworks */,
+				CC650D282B8ABD430050504A /* SwiftCSV in Frameworks */,
 				77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */,
 				124746DB2B6F0033002E1AC9 /* FirebaseStorage in Frameworks */,
 			);
@@ -391,6 +397,7 @@
 		12C1CC492B7F1135009AA8FE /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				CC650D2C2B8AC2090050504A /* BK7610.csv */,
 				122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */,
 				12C1CC402B7DA525009AA8FE /* AlertManager.swift */,
 				12C1CC422B7DB05D009AA8FE /* EmergencySOSView.swift */,
@@ -555,6 +562,8 @@
 				12143EC32B5C8B70004A168F /* FirebaseAuth */,
 				124746DA2B6F0033002E1AC9 /* FirebaseStorage */,
 				12C1CC472B7F09FA009AA8FE /* TwilioVoice */,
+				CC650D272B8ABD430050504A /* SwiftCSV */,
+				CC650D2A2B8ABD820050504A /* CSV */,
 			);
 			productName = AWARE;
 			productReference = CC9482862AF870DF00A3A64E /* AWARE.app */;
@@ -699,6 +708,8 @@
 				12143EB82B5C8B41004A168F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				12143EBD2B5C8B52004A168F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				12C1CC462B7F09FA009AA8FE /* XCRemoteSwiftPackageReference "twilio-voice-ios" */,
+				CC650D262B8ABD430050504A /* XCRemoteSwiftPackageReference "SwiftCSV" */,
+				CC650D292B8ABD820050504A /* XCRemoteSwiftPackageReference "CSV.swift" */,
 			);
 			productRefGroup = CC9482872AF870DF00A3A64E /* Products */;
 			projectDirPath = "";
@@ -722,6 +733,7 @@
 				CC9482912AF870E100A3A64E /* Preview Assets.xcassets in Resources */,
 				CC94828E2AF870E100A3A64E /* Assets.xcassets in Resources */,
 				12143EB22B5C8B0A004A168F /* GoogleService-Info.plist in Resources */,
+				CC650D2D2B8AC2090050504A /* BK7610.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1540,6 +1552,22 @@
 				minimumVersion = 6.10.1;
 			};
 		};
+		CC650D262B8ABD430050504A /* XCRemoteSwiftPackageReference "SwiftCSV" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftcsv/SwiftCSV.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.1;
+			};
+		};
+		CC650D292B8ABD820050504A /* XCRemoteSwiftPackageReference "CSV.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yaslab/CSV.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1577,6 +1605,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 12C1CC462B7F09FA009AA8FE /* XCRemoteSwiftPackageReference "twilio-voice-ios" */;
 			productName = TwilioVoice;
+		};
+		CC650D272B8ABD430050504A /* SwiftCSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC650D262B8ABD430050504A /* XCRemoteSwiftPackageReference "SwiftCSV" */;
+			productName = SwiftCSV;
+		};
+		CC650D2A2B8ABD820050504A /* CSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC650D292B8ABD820050504A /* XCRemoteSwiftPackageReference "CSV.swift" */;
+			productName = CSV;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
