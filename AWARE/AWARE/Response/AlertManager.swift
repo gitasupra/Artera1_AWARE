@@ -56,7 +56,14 @@ func sendCSVToServer(accData: String, completion: @escaping (Int) -> Void) {
     }
 
     // Use Alamofire to upload the CSV file
-    AF.upload(fileURL, to: url, method: .post)
+    AF.upload(
+            multipartFormData: { multipartFormData in
+                // Append the CSV file to the multipart form data
+                multipartFormData.append(fileURL, withName: "file", fileName: "uploaded_file.csv", mimeType: "text/csv")
+            },
+            to: url,
+            method: .post
+        )
         .uploadProgress { progress in
             // Handle upload progress if needed
             print("Upload Progress: \(progress.fractionCompleted)")
