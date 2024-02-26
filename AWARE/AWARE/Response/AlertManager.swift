@@ -9,6 +9,7 @@ import SwiftUI
 import CoreHaptics
 import SwiftCSV
 import CSV
+import Alamofire
 
 
 //struct CSVFileRead {
@@ -16,7 +17,7 @@ import CSV
 //}
 
 
-struct Response: Codable {
+struct APIResponse: Codable {
     let predict: Int
 }
 
@@ -42,38 +43,37 @@ struct Response: Codable {
 //    }
 //}
 func sendCSVToServer(accData: String, completion: @escaping (Int) -> Void) {
-    guard let url = URL(string: "http://jessicalieu.pythonanywhere.com/uploadCSV") else {
+    guard let url = URL(string: "https://jessicalieu.pythonanywhere.com/uploadCSV") else {
         print("Invalid URL")
         completion(-1)
         return
     }
 
-    do {
-        //let csvFile = try SwiftCSV.CSV<Named>(url: URL(fileURLWithPath: accData))
-        
-        
-        // Get the raw CSV data
-        let csvData = try Data(contentsOf: URL(fileURLWithPath: accData))
-
-        URLSession.shared.uploadTask(with: try URLRequest(url: url, method: .post), from: csvData) { data, response, error in
-            guard let data = data, error == nil else {
-                // Handle error
-                completion(-1)
-                return
-            }
-
-            do {
-                let predict = try JSONDecoder().decode(Response.self, from: data)
-                completion(predict.predict)
-            } catch {
-                // Handle decoding error
-                completion(-1)
-            }
-        }.resume()
-    } catch {
-        // Handle CSV parsing error
-        completion(-1)
+    guard let fileURL = Bundle.main.url(forResource: accData, withExtension: "csv") else {
+        print("CSV file not found.")
+        completion(-2)
+        return
     }
+
+    // Use Alamofire to upload the CSV file
+    AF.upload(fileURL, to: url, method: .post)
+        .uploadProgress { progress in
+            // Handle upload progress if needed
+            print("Upload Progress: \(progress.fractionCompleted)")
+        }
+        .responseDecodable(of: APIResponse.self) { response in
+            switch response.result {
+            case .success(let value):
+                // Handle successful response
+                print("Parsed Response: \(value)")
+                // You can access response properties directly using value.key1, value.key2, etc.
+                completion(0) // or pass appropriate success code
+            case .failure(let error):
+                // Handle error
+                print("Upload failed: \(error)")
+                completion(-3) // or pass appropriate error code
+            }
+        }
 }
 
 
