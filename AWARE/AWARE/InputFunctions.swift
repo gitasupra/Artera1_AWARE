@@ -16,10 +16,10 @@ class InputFunctions : ObservableObject{
         case Mean = 0
         case Median = 1
         case Std_Dev = 2
-        case Max_Raw = 3
-        case Min_Raw = 4
-        case Max_Abs = 5
-        case Min_Abs = 6
+        case Max_Raw = 4
+        case Min_Raw = 5
+        case Max_Abs = 6
+        case Min_Abs = 7
     }
     var FeatureType: [Features: String] = [
         
@@ -587,7 +587,7 @@ class InputFunctions : ObservableObject{
         }
 
     
-        func processData(windowFile: String) -> String {
+        func processData() -> String {
             print("processing data!")
             
             //FIXME: temporarily changing create_per_second to have test file name
@@ -609,10 +609,10 @@ class InputFunctions : ObservableObject{
             
             print("Window data in: \(perWindowDataDir)")
             
-            combine_features(csvPath: perWindowDataDir)
+            let result = combine_features(csvPath: perWindowDataDir)!
             print("combining features success")
             
-            return ""
+            return result
         }
         
     }
