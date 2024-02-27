@@ -54,15 +54,23 @@ func sendCSVToServer(accData: String, completion: @escaping (Int) -> Void) {
         completion(-2)
         return
     }
-
-    // Use Alamofire to upload the CSV file
-    AF.upload(
+    
+    
+    // Create URLRequest
+    // Create URLRequest with error handling
+    do {
+        var urlRequest = try URLRequest(url: url, method: .post)
+        
+        // Set custom timeout interval (e.g., 60 seconds)
+        urlRequest.timeoutInterval = 60
+        
+        // Upload request with custom timeout
+        AF.upload(
             multipartFormData: { multipartFormData in
                 // Append the CSV file to the multipart form data
                 multipartFormData.append(fileURL, withName: "file", fileName: "uploaded_file.csv", mimeType: "text/csv")
             },
-            to: url,
-            method: .post
+            with: urlRequest // Use the custom URLRequest
         )
         .uploadProgress { progress in
             // Handle upload progress if needed
@@ -81,6 +89,13 @@ func sendCSVToServer(accData: String, completion: @escaping (Int) -> Void) {
                 completion(-3) // or pass appropriate error code
             }
         }
+    } catch {
+        // Handle URLRequest creation error
+        print("Error creating URLRequest: \(error)")
+        completion(-4) // or pass appropriate error code
+    }
+
+
 }
 
 
