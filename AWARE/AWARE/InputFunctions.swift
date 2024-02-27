@@ -152,7 +152,7 @@ class InputFunctions : ObservableObject{
             )
             
             //if want to add more features, fix the range of the loop
-            for i in 1..<7 where i != 12 {
+            for i in 1..<8 where i != 3 {
                 let fileName: String
                 if i < 14 {
                     fileName = "/Metric_\(i)_36.csv"
@@ -209,8 +209,13 @@ class InputFunctions : ObservableObject{
                     types: finalColumnTypes
                 )
                 df = try! df.joined(x, on: ("t", "t"), kind: .inner)
+                
             }
                 df.removeColumn("t")
+            for column in df.columns.map ({ col in col.name })  {
+                let newColumnName = column.replacingOccurrences(of: "left.", with: "").replacingOccurrences(of: "right.", with: "")
+                df.renameColumn(column, to: newColumnName)// Assuming you can access column data like this
+            }
                 
                 let outputFileName = "/X.csv"
             let outputURL = URL(fileURLWithPath: csvPath + outputFileName)
