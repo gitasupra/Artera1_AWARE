@@ -34,7 +34,7 @@ struct AnalyticsView: View {
                         Button {
                             showAccChart = true
                         } label: {
-                            Text("View Breathing Rate Data")
+                            Text("View Walking Steadiness Data")
                         }
                         .navigationDestination(
                             isPresented: $showAccChart) {
