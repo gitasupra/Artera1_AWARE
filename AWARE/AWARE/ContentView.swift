@@ -220,8 +220,6 @@ struct ContentView: View {
                         Button(action: {
                                 enableDataCollectionObj.toggleOn()
                                 enableDataCollection.toggle()
-                            let file = inputFunctions.processData()
-                            predictLevel(file: file)
                             }) {
                                 Image(systemName: "touchid")
                                     .font(.system(size: 100))
@@ -437,16 +435,19 @@ struct ContentView: View {
                     //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
                     //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
                     
-//                    if (accIdx == 400){
-//                        //At multiple of (data points per second) * 10 seconds
-//                        windowFileURL = writeAccDataToCSV(data: windowAccData)!
-//                        print("Window data saved to: \(windowFileURL)")
+                    if (accIdx == 800){
+                        //At multiple of (data points per second) * 10 seconds
+                        windowFileURL = writeAccDataToCSV(data: windowAccData)!
+                        print("Window data saved to: \(windowFileURL)")
 //                        
 //                        inputFunctions.processData(windowFile: windowFileURL)
 //                        
-//                        //reset window data array
-//                        windowAccData=[]
-//                    }
+                        let file = inputFunctions.processData(datafile: windowFileURL)
+                        predictLevel(file: file)
+                        
+                        //reset window data array
+                        windowAccData=[]
+                    }
                     
                     accIdx += 1
                     
@@ -773,9 +774,8 @@ struct ContentView: View {
                     if let dzMiValue7 = row["d7zMi"].flatMap(Double.init) { featureDictionary["d7zMi"] = dzMiValue7 }
                     if let dzUMValue7 = row["d7zUM"].flatMap(Double.init) { featureDictionary["d7zUM"] = dzUMValue7 }
                     if let dzLMValue7 = row["d7zLM"].flatMap(Double.init) { featureDictionary["d7zLM"] = dzLMValue7 }
-                }
-                
-                let modelInput = alcoholInput(
+
+                                    let modelInput = alcoholInput(
                     _0xMe: featureDictionary["0xMe"] ?? 0.0,
                     _0xVr: featureDictionary["0xVr"] ?? 0.0,
                     _0xMx: featureDictionary["0xMx"] ?? 0.0,
@@ -1030,7 +1030,10 @@ struct ContentView: View {
                     d7zLM: featureDictionary["d7zLM"] ?? 0.0)
         
                     let prediction = try! model.prediction(input: modelInput)
-                    print("Current Level: ", prediction)
+                print("Current Level: ", prediction.TAC_Reading)
+                }
+                
+
                 }
             }
     

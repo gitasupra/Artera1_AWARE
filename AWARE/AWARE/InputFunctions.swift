@@ -587,21 +587,21 @@ class InputFunctions : ObservableObject{
         }
 
     
-        func processData() -> String {
+    func processData(datafile: String) -> String {
             print("processing data!")
             
             //FIXME: temporarily changing create_per_second to have test file name
-            var testfile: String = ""
+//            var testfile: String = ""
             var perWindowDataDir: String = ""
-            do{
-                testfile = Bundle.main.path(forResource: "BK7610", ofType: "csv")!
-            }
-            catch{
-                print("Error: \(error.localizedDescription)")
-                print("could not get file")
-            }
+//            do{
+//                testfile = Bundle.main.path(forResource: "BK7610", ofType: "csv")!
+//            }
+//            catch{
+//                print("Error: \(error.localizedDescription)")
+//                print("could not get file")
+//            }
             for metricNum in Features.allCases{
-                let perSecondDataFile = create_per_second_data(file: testfile, metric_no: metricNum.rawValue)
+                let perSecondDataFile = create_per_second_data(file: datafile, metric_no: metricNum.rawValue)
                 perWindowDataDir = create_per_window_data(file: perSecondDataFile, metric_no: metricNum.rawValue)
             }
             
