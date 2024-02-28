@@ -22,7 +22,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        if viewModel.userSession != nil {
+        if $viewModel.userSession != nil {
             TabView {
                 // Page 1 Analytics
                 AnalyticsView()

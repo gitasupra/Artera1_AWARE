@@ -11,6 +11,7 @@ import HealthKit
 import CoreMotion
 import WatchConnectivity
 
+
 class BiometricsManager: ObservableObject {
     let motion = CMMotionManager()
     let healthStore = HKHealthStore()
@@ -20,8 +21,14 @@ class BiometricsManager: ObservableObject {
     var acc: [AccelerometerDataPoint] = []
     var accIdx: Int = 0
     
+    //accelerometer 10-second window data variables
+    @State private var windowAccData: [AccelerometerDataPoint] = []
+    var windowFile: String = "window_data.csv"
+    var windowFileURL: String = ""
+    
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
+        let timestamp: Int64
         let x: Double
         let y: Double
         let z: Double
@@ -41,11 +48,26 @@ class BiometricsManager: ObservableObject {
                 if let data = self.motion.deviceMotion {
                     // Get accelerometer data
                     let accelerometer = data.userAcceleration
+                    
+                    let timestampinMilliseconds = Int64(Date().timeIntervalSince1970 * 1000)
+                    
+                    let new: AccelerometerDataPoint = AccelerometerDataPoint(timestamp: timestampinMilliseconds, x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: self.accIdx, id: UUID())
+                    
+                    
+                    //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
+                    //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
+                    
+                    if (self.accIdx > 0 ) && (self.accIdx % 400 == 0){
+                        //At multiple of (data points per second) * 10 seconds
+                        self.windowFileURL = self.writeAccDataToCSV(data: self.windowAccData)!
+                        print("Window data saved to: \(self.windowFileURL)")
+                        //reset window data array
+                        self.windowAccData=[]
+                    }
+                    
                     self.accIdx += 1
-                    
-                    let new: AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: self.accIdx, id: UUID())
-                    
                     self.acc.append(new)
+                    self.windowAccData.append(new)
                     print("append to acc")
                 }
             }
@@ -103,6 +125,44 @@ class BiometricsManager: ObservableObject {
         timer?.invalidate()
         timer = nil
     }
+    
+    func writeAccDataToCSV(data: [BiometricsManager.AccelerometerDataPoint]) -> String? {
+        // Create a CSV string header
+        var csvString = "time,x,y,z\n"
+        
+        // Append each data point to the CSV string
+        for dataPoint in data {
+            let timestamp = dataPoint.timestamp
+            let x = dataPoint.x
+            let y = dataPoint.y
+            let z = dataPoint.z
+            csvString.append("\(timestamp),\(x),\(y),\(z)\n")
+        }
+        
+        //        if let firstTimestamp = data.first?.timestamp,
+        //            let lastTimestamp = data.last?.timestamp {
+        //             print("First timestamp: \(firstTimestamp), Last timestamp: \(lastTimestamp)")
+        //         }
+        
+        // Create a file URL for saving the CSV file
+        let fileName = "windowFile"
+        guard let fileURL = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName) else {
+            print("Failed to create file URL")
+            return nil
+        }
+        
+        // Write the CSV string to the file
+        do {
+            try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+            //            print("CSV file saved successfully")
+            return fileURL.path
+        } catch {
+            print("Error writing CSV file: \(error)")
+            return nil
+            
+        }
+    }
+
 }
 
 struct accelerometerGraph: View {
@@ -146,3 +206,7 @@ struct heartRateGraph: View {
         }
     }
 }
+
+
+
+
