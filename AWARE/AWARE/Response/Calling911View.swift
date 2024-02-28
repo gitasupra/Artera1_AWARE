@@ -82,6 +82,7 @@ struct Calling911View: View {
         }
         .onAppear {
             alertManager.sendUpdate(level: 3)
+            // alertManager.contactEmergencyServices()
         }
     }
 }
