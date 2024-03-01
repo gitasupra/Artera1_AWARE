@@ -435,7 +435,7 @@ struct ContentView: View {
                     //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
                     //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
                     
-                    if (accIdx == 800){
+                    if (accIdx > 0 && accIdx % 840 == 0){
                         //At multiple of (data points per second) * 10 seconds
                         windowFileURL = writeAccDataToCSV(data: windowAccData)!
                         print("Window data saved to: \(windowFileURL)")
@@ -528,24 +528,24 @@ struct ContentView: View {
                     if let zUMValue0 = row["0zUM"].flatMap(Double.init) { featureDictionary["0zUM"] = zUMValue0 }
                     if let zLMValue0 = row["0zLM"].flatMap(Double.init) { featureDictionary["0zLM"] = zLMValue0 }
                     
-                    if let dxMeValue0 = row["d0xMe"].flatMap(Double.init) { featureDictionary["d0xMe"] = dxMeValue0 }
-                    if let dxVrValue0 = row["d0xVr"].flatMap(Double.init) { featureDictionary["d0xVr"] = dxVrValue0 }
-                    if let dxMxValue0 = row["d0xMx"].flatMap(Double.init) { featureDictionary["d0xMx"] = dxMxValue0 }
-                    if let dxMiValue0 = row["d0xMi"].flatMap(Double.init) { featureDictionary["d0xMi"] = dxMiValue0 }
-                    if let dxUMValue0 = row["d0xUM"].flatMap(Double.init) { featureDictionary["d0xUM"] = dxUMValue0 }
-                    if let dxLMValue0 = row["d0xLM"].flatMap(Double.init) { featureDictionary["d0xLM"] = dxLMValue0 }
-                    if let dyMeValue0 = row["d0yMe"].flatMap(Double.init) { featureDictionary["d0yMe"] = dyMeValue0 }
-                    if let dyVrValue0 = row["d0yVr"].flatMap(Double.init) { featureDictionary["d0yVr"] = dyVrValue0 }
-                    if let dyMxValue0 = row["d0yMx"].flatMap(Double.init) { featureDictionary["d0yMx"] = dyMxValue0 }
-                    if let dyMnValue0 = row["d0yMn"].flatMap(Double.init) { featureDictionary["d0yMn"] = dyMnValue0 }
-                    if let dyUMValue0 = row["d0yUM"].flatMap(Double.init) { featureDictionary["d0yUM"] = dyUMValue0 }
-                    if let dyLMValue0 = row["d0yLM"].flatMap(Double.init) { featureDictionary["d0yLM"] = dyLMValue0 }
-                    if let dzMeValue0 = row["d0zMe"].flatMap(Double.init) { featureDictionary["d0zMe"] = dzMeValue0 }
-                    if let dzVrValue0 = row["d0zVr"].flatMap(Double.init) { featureDictionary["d0zVr"] = dzVrValue0 }
-                    if let dzMxValue0 = row["d0zMx"].flatMap(Double.init) { featureDictionary["d0zMx"] = dzMxValue0 }
-                    if let dzMiValue0 = row["d0zMi"].flatMap(Double.init) { featureDictionary["d0zMi"] = dzMiValue0 }
-                    if let dzUMValue0 = row["d0zUM"].flatMap(Double.init) { featureDictionary["d0zUM"] = dzUMValue0 }
-                    if let dzLMValue0 = row["d0zLM"].flatMap(Double.init) { featureDictionary["d0zLM"] = dzLMValue0 }
+                    if let dxMeValue0 = row["0dxMe"].flatMap(Double.init) { featureDictionary["0dxMe"] = dxMeValue0 }
+                    if let dxVrValue0 = row["0dxVr"].flatMap(Double.init) { featureDictionary["0dxVr"] = dxVrValue0 }
+                    if let dxMxValue0 = row["0dxMx"].flatMap(Double.init) { featureDictionary["0dxMx"] = dxMxValue0 }
+                    if let dxMiValue0 = row["0dxMi"].flatMap(Double.init) { featureDictionary["0dxMi"] = dxMiValue0 }
+                    if let dxUMValue0 = row["0dxUM"].flatMap(Double.init) { featureDictionary["0dxUM"] = dxUMValue0 }
+                    if let dxLMValue0 = row["0dxLM"].flatMap(Double.init) { featureDictionary["0dxLM"] = dxLMValue0 }
+                    if let dyMeValue0 = row["0dyMe"].flatMap(Double.init) { featureDictionary["0dyMe"] = dyMeValue0 }
+                    if let dyVrValue0 = row["0dyVr"].flatMap(Double.init) { featureDictionary["0dyVr"] = dyVrValue0 }
+                    if let dyMxValue0 = row["0dyMx"].flatMap(Double.init) { featureDictionary["0dyMx"] = dyMxValue0 }
+                    if let dyMnValue0 = row["0dyMn"].flatMap(Double.init) { featureDictionary["0dyMn"] = dyMnValue0 }
+                    if let dyUMValue0 = row["0dyUM"].flatMap(Double.init) { featureDictionary["0dyUM"] = dyUMValue0 }
+                    if let dyLMValue0 = row["0dyLM"].flatMap(Double.init) { featureDictionary["0dyLM"] = dyLMValue0 }
+                    if let dzMeValue0 = row["0dzMe"].flatMap(Double.init) { featureDictionary["0dzMe"] = dzMeValue0 }
+                    if let dzVrValue0 = row["0dzVr"].flatMap(Double.init) { featureDictionary["0dzVr"] = dzVrValue0 }
+                    if let dzMxValue0 = row["0dzMx"].flatMap(Double.init) { featureDictionary["0dzMx"] = dzMxValue0 }
+                    if let dzMiValue0 = row["0dzMi"].flatMap(Double.init) { featureDictionary["0dzMi"] = dzMiValue0 }
+                    if let dzUMValue0 = row["0dzUM"].flatMap(Double.init) { featureDictionary["0dzUM"] = dzUMValue0 }
+                    if let dzLMValue0 = row["0dzLM"].flatMap(Double.init) { featureDictionary["0dzLM"] = dzLMValue0 }
                     
                     if let xMeValue1 = row["1xMe"].flatMap(Double.init) { featureDictionary["1xMe"] = xMeValue1 }
                     if let xVrValue1 = row["1xVr"].flatMap(Double.init) { featureDictionary["1xVr"] = xVrValue1 }
@@ -566,24 +566,24 @@ struct ContentView: View {
                     if let zUMValue1 = row["1zUM"].flatMap(Double.init) { featureDictionary["1zUM"] = zUMValue1 }
                     if let zLMValue1 = row["1zLM"].flatMap(Double.init) { featureDictionary["1zLM"] = zLMValue1 }
                     
-                    if let dxMeValue1 = row["d1xMe"].flatMap(Double.init) { featureDictionary["d1xMe"] = dxMeValue1 }
-                    if let dxVrValue1 = row["d1xVr"].flatMap(Double.init) { featureDictionary["d1xVr"] = dxVrValue1 }
-                    if let dxMxValue1 = row["d1xMx"].flatMap(Double.init) { featureDictionary["d1xMx"] = dxMxValue1 }
-                    if let dxMiValue1 = row["d1xMi"].flatMap(Double.init) { featureDictionary["d1xMi"] = dxMiValue1 }
-                    if let dxUMValue1 = row["d1xUM"].flatMap(Double.init) { featureDictionary["d1xUM"] = dxUMValue1 }
-                    if let dxLMValue1 = row["d1xLM"].flatMap(Double.init) { featureDictionary["d1xLM"] = dxLMValue1 }
-                    if let dyMeValue1 = row["d1yMe"].flatMap(Double.init) { featureDictionary["d1yMe"] = dyMeValue1 }
-                    if let dyVrValue1 = row["d1yVr"].flatMap(Double.init) { featureDictionary["d1yVr"] = dyVrValue1 }
-                    if let dyMxValue1 = row["d1yMx"].flatMap(Double.init) { featureDictionary["d1yMx"] = dyMxValue1 }
-                    if let dyMnValue1 = row["d1yMn"].flatMap(Double.init) { featureDictionary["d1yMn"] = dyMnValue1 }
-                    if let dyUMValue1 = row["d1yUM"].flatMap(Double.init) { featureDictionary["d1yUM"] = dyUMValue1 }
-                    if let dyLMValue1 = row["d1yLM"].flatMap(Double.init) { featureDictionary["d1yLM"] = dyLMValue1 }
-                    if let dzMeValue1 = row["d1zMe"].flatMap(Double.init) { featureDictionary["d1zMe"] = dzMeValue1 }
-                    if let dzVrValue1 = row["d1zVr"].flatMap(Double.init) { featureDictionary["d1zVr"] = dzVrValue1 }
-                    if let dzMxValue1 = row["d1zMx"].flatMap(Double.init) { featureDictionary["d1zMx"] = dzMxValue1 }
-                    if let dzMiValue1 = row["d1zMi"].flatMap(Double.init) { featureDictionary["d1zMi"] = dzMiValue1 }
-                    if let dzUMValue1 = row["d1zUM"].flatMap(Double.init) { featureDictionary["d1zUM"] = dzUMValue1 }
-                    if let dzLMValue1 = row["d1zLM"].flatMap(Double.init) { featureDictionary["d1zLM"] = dzLMValue1 }
+                    if let dxMeValue1 = row["1dxMe"].flatMap(Double.init) { featureDictionary["1dxMe"] = dxMeValue1 }
+                    if let dxVrValue1 = row["1dxVr"].flatMap(Double.init) { featureDictionary["1dxVr"] = dxVrValue1 }
+                    if let dxMxValue1 = row["1dxMx"].flatMap(Double.init) { featureDictionary["1dxMx"] = dxMxValue1 }
+                    if let dxMiValue1 = row["1dxMi"].flatMap(Double.init) { featureDictionary["1dxMi"] = dxMiValue1 }
+                    if let dxUMValue1 = row["1dxUM"].flatMap(Double.init) { featureDictionary["1dxUM"] = dxUMValue1 }
+                    if let dxLMValue1 = row["1dxLM"].flatMap(Double.init) { featureDictionary["1dxLM"] = dxLMValue1 }
+                    if let dyMeValue1 = row["1dyMe"].flatMap(Double.init) { featureDictionary["1dyMe"] = dyMeValue1 }
+                    if let dyVrValue1 = row["1dyVr"].flatMap(Double.init) { featureDictionary["1dyVr"] = dyVrValue1 }
+                    if let dyMxValue1 = row["1dyMx"].flatMap(Double.init) { featureDictionary["1dyMx"] = dyMxValue1 }
+                    if let dyMnValue1 = row["1dyMn"].flatMap(Double.init) { featureDictionary["1dyMn"] = dyMnValue1 }
+                    if let dyUMValue1 = row["1dyUM"].flatMap(Double.init) { featureDictionary["1dyUM"] = dyUMValue1 }
+                    if let dyLMValue1 = row["1dyLM"].flatMap(Double.init) { featureDictionary["1dyLM"] = dyLMValue1 }
+                    if let dzMeValue1 = row["1dzMe"].flatMap(Double.init) { featureDictionary["1dzMe"] = dzMeValue1 }
+                    if let dzVrValue1 = row["1dzVr"].flatMap(Double.init) { featureDictionary["1dzVr"] = dzVrValue1 }
+                    if let dzMxValue1 = row["1dzMx"].flatMap(Double.init) { featureDictionary["1dzMx"] = dzMxValue1 }
+                    if let dzMiValue1 = row["1dzMi"].flatMap(Double.init) { featureDictionary["1dzMi"] = dzMiValue1 }
+                    if let dzUMValue1 = row["1dzUM"].flatMap(Double.init) { featureDictionary["1dzUM"] = dzUMValue1 }
+                    if let dzLMValue1 = row["1dzLM"].flatMap(Double.init) { featureDictionary["1dzLM"] = dzLMValue1 }
                     
                     if let xMeValue2 = row["2xMe"].flatMap(Double.init) { featureDictionary["2xMe"] = xMeValue2 }
                     if let xVrValue2 = row["2xVr"].flatMap(Double.init) { featureDictionary["2xVr"] = xVrValue2 }
@@ -604,24 +604,24 @@ struct ContentView: View {
                     if let zUMValue2 = row["2zUM"].flatMap(Double.init) { featureDictionary["2zUM"] = zUMValue2 }
                     if let zLMValue2 = row["2zLM"].flatMap(Double.init) { featureDictionary["2zLM"] = zLMValue2 }
                     
-                    if let dxMeValue2 = row["d2xMe"].flatMap(Double.init) { featureDictionary["d2xMe"] = dxMeValue2 }
-                    if let dxVrValue2 = row["d2xVr"].flatMap(Double.init) { featureDictionary["d2xVr"] = dxVrValue2 }
-                    if let dxMxValue2 = row["d2xMx"].flatMap(Double.init) { featureDictionary["d2xMx"] = dxMxValue2 }
-                    if let dxMiValue2 = row["d2xMi"].flatMap(Double.init) { featureDictionary["d2xMi"] = dxMiValue2 }
-                    if let dxUMValue2 = row["d2xUM"].flatMap(Double.init) { featureDictionary["d2xUM"] = dxUMValue2 }
-                    if let dxLMValue2 = row["d2xLM"].flatMap(Double.init) { featureDictionary["d2xLM"] = dxLMValue2 }
-                    if let dyMeValue2 = row["d2yMe"].flatMap(Double.init) { featureDictionary["d2yMe"] = dyMeValue2 }
-                    if let dyVrValue2 = row["d2yVr"].flatMap(Double.init) { featureDictionary["d2yVr"] = dyVrValue2 }
-                    if let dyMxValue2 = row["d2yMx"].flatMap(Double.init) { featureDictionary["d2yMx"] = dyMxValue2 }
-                    if let dyMnValue2 = row["d2yMn"].flatMap(Double.init) { featureDictionary["d2yMn"] = dyMnValue2 }
-                    if let dyUMValue2 = row["d2yUM"].flatMap(Double.init) { featureDictionary["d2yUM"] = dyUMValue2 }
-                    if let dyLMValue2 = row["d2yLM"].flatMap(Double.init) { featureDictionary["d2yLM"] = dyLMValue2 }
-                    if let dzMeValue2 = row["d2zMe"].flatMap(Double.init) { featureDictionary["d2zMe"] = dzMeValue2 }
-                    if let dzVrValue2 = row["d2zVr"].flatMap(Double.init) { featureDictionary["d2zVr"] = dzVrValue2 }
-                    if let dzMxValue2 = row["d2zMx"].flatMap(Double.init) { featureDictionary["d2zMx"] = dzMxValue2 }
-                    if let dzMiValue2 = row["d2zMi"].flatMap(Double.init) { featureDictionary["d2zMi"] = dzMiValue2 }
-                    if let dzUMValue2 = row["d2zUM"].flatMap(Double.init) { featureDictionary["d2zUM"] = dzUMValue2 }
-                    if let dzLMValue2 = row["d2zLM"].flatMap(Double.init) { featureDictionary["d2zLM"] = dzLMValue2 }
+                    if let dxMeValue2 = row["2dxMe"].flatMap(Double.init) { featureDictionary["2dxMe"] = dxMeValue2 }
+                    if let dxVrValue2 = row["2dxVr"].flatMap(Double.init) { featureDictionary["2dxVr"] = dxVrValue2 }
+                    if let dxMxValue2 = row["2dxMx"].flatMap(Double.init) { featureDictionary["2dxMx"] = dxMxValue2 }
+                    if let dxMiValue2 = row["2dxMi"].flatMap(Double.init) { featureDictionary["2dxMi"] = dxMiValue2 }
+                    if let dxUMValue2 = row["2dxUM"].flatMap(Double.init) { featureDictionary["2dxUM"] = dxUMValue2 }
+                    if let dxLMValue2 = row["2dxLM"].flatMap(Double.init) { featureDictionary["2dxLM"] = dxLMValue2 }
+                    if let dyMeValue2 = row["2dyMe"].flatMap(Double.init) { featureDictionary["2dyMe"] = dyMeValue2 }
+                    if let dyVrValue2 = row["2dyVr"].flatMap(Double.init) { featureDictionary["2dyVr"] = dyVrValue2 }
+                    if let dyMxValue2 = row["2dyMx"].flatMap(Double.init) { featureDictionary["2dyMx"] = dyMxValue2 }
+                    if let dyMnValue2 = row["2dyMn"].flatMap(Double.init) { featureDictionary["2dyMn"] = dyMnValue2 }
+                    if let dyUMValue2 = row["2dyUM"].flatMap(Double.init) { featureDictionary["2dyUM"] = dyUMValue2 }
+                    if let dyLMValue2 = row["2dyLM"].flatMap(Double.init) { featureDictionary["2dyLM"] = dyLMValue2 }
+                    if let dzMeValue2 = row["2dzMe"].flatMap(Double.init) { featureDictionary["2dzMe"] = dzMeValue2 }
+                    if let dzVrValue2 = row["2dzVr"].flatMap(Double.init) { featureDictionary["2dzVr"] = dzVrValue2 }
+                    if let dzMxValue2 = row["2dzMx"].flatMap(Double.init) { featureDictionary["2dzMx"] = dzMxValue2 }
+                    if let dzMiValue2 = row["2dzMi"].flatMap(Double.init) { featureDictionary["2dzMi"] = dzMiValue2 }
+                    if let dzUMValue2 = row["2dzUM"].flatMap(Double.init) { featureDictionary["2dzUM"] = dzUMValue2 }
+                    if let dzLMValue2 = row["2dzLM"].flatMap(Double.init) { featureDictionary["2dzLM"] = dzLMValue2 }
                     
                     if let xMeValue4 = row["4xMe"].flatMap(Double.init) { featureDictionary["4xMe"] = xMeValue4 }
                     if let xVrValue4 = row["4xVr"].flatMap(Double.init) { featureDictionary["4xVr"] = xVrValue4 }
@@ -642,24 +642,24 @@ struct ContentView: View {
                     if let zUMValue4 = row["4zUM"].flatMap(Double.init) { featureDictionary["4zUM"] = zUMValue4 }
                     if let zLMValue4 = row["4zLM"].flatMap(Double.init) { featureDictionary["4zLM"] = zLMValue4 }
                     
-                    if let dxMeValue4 = row["d4xMe"].flatMap(Double.init) { featureDictionary["d4xMe"] = dxMeValue4 }
-                    if let dxVrValue4 = row["d4xVr"].flatMap(Double.init) { featureDictionary["d4xVr"] = dxVrValue4 }
-                    if let dxMxValue4 = row["d4xMx"].flatMap(Double.init) { featureDictionary["d4xMx"] = dxMxValue4 }
-                    if let dxMiValue4 = row["d4xMi"].flatMap(Double.init) { featureDictionary["d4xMi"] = dxMiValue4 }
-                    if let dxUMValue4 = row["d4xUM"].flatMap(Double.init) { featureDictionary["d4xUM"] = dxUMValue4 }
-                    if let dxLMValue4 = row["d4xLM"].flatMap(Double.init) { featureDictionary["d4xLM"] = dxLMValue4 }
-                    if let dyMeValue4 = row["d4yMe"].flatMap(Double.init) { featureDictionary["d4yMe"] = dyMeValue4 }
-                    if let dyVrValue4 = row["d4yVr"].flatMap(Double.init) { featureDictionary["d4yVr"] = dyVrValue4 }
-                    if let dyMxValue4 = row["d4yMx"].flatMap(Double.init) { featureDictionary["d4yMx"] = dyMxValue4 }
-                    if let dyMnValue4 = row["d4yMn"].flatMap(Double.init) { featureDictionary["d4yMn"] = dyMnValue4 }
-                    if let dyUMValue4 = row["d4yUM"].flatMap(Double.init) { featureDictionary["d4yUM"] = dyUMValue4 }
-                    if let dyLMValue4 = row["d4yLM"].flatMap(Double.init) { featureDictionary["d4yLM"] = dyLMValue4 }
-                    if let dzMeValue4 = row["d4zMe"].flatMap(Double.init) { featureDictionary["d4zMe"] = dzMeValue4 }
-                    if let dzVrValue4 = row["d4zVr"].flatMap(Double.init) { featureDictionary["d4zVr"] = dzVrValue4 }
-                    if let dzMxValue4 = row["d4zMx"].flatMap(Double.init) { featureDictionary["d4zMx"] = dzMxValue4 }
-                    if let dzMiValue4 = row["d4zMi"].flatMap(Double.init) { featureDictionary["d4zMi"] = dzMiValue4 }
-                    if let dzUMValue4 = row["d4zUM"].flatMap(Double.init) { featureDictionary["d4zUM"] = dzUMValue4 }
-                    if let dzLMValue4 = row["d4zLM"].flatMap(Double.init) { featureDictionary["d4zLM"] = dzLMValue4 }
+                    if let dxMeValue4 = row["4dxMe"].flatMap(Double.init) { featureDictionary["4dxMe"] = dxMeValue4 }
+                    if let dxVrValue4 = row["4dxVr"].flatMap(Double.init) { featureDictionary["4dxVr"] = dxVrValue4 }
+                    if let dxMxValue4 = row["4dxMx"].flatMap(Double.init) { featureDictionary["4dxMx"] = dxMxValue4 }
+                    if let dxMiValue4 = row["4dxMi"].flatMap(Double.init) { featureDictionary["4dxMi"] = dxMiValue4 }
+                    if let dxUMValue4 = row["4dxUM"].flatMap(Double.init) { featureDictionary["4dxUM"] = dxUMValue4 }
+                    if let dxLMValue4 = row["4dxLM"].flatMap(Double.init) { featureDictionary["4dxLM"] = dxLMValue4 }
+                    if let dyMeValue4 = row["4dyMe"].flatMap(Double.init) { featureDictionary["4dyMe"] = dyMeValue4 }
+                    if let dyVrValue4 = row["4dyVr"].flatMap(Double.init) { featureDictionary["4dyVr"] = dyVrValue4 }
+                    if let dyMxValue4 = row["4dyMx"].flatMap(Double.init) { featureDictionary["4dyMx"] = dyMxValue4 }
+                    if let dyMnValue4 = row["4dyMn"].flatMap(Double.init) { featureDictionary["4dyMn"] = dyMnValue4 }
+                    if let dyUMValue4 = row["4dyUM"].flatMap(Double.init) { featureDictionary["4dyUM"] = dyUMValue4 }
+                    if let dyLMValue4 = row["4dyLM"].flatMap(Double.init) { featureDictionary["4dyLM"] = dyLMValue4 }
+                    if let dzMeValue4 = row["4dzMe"].flatMap(Double.init) { featureDictionary["4dzMe"] = dzMeValue4 }
+                    if let dzVrValue4 = row["4dzVr"].flatMap(Double.init) { featureDictionary["4dzVr"] = dzVrValue4 }
+                    if let dzMxValue4 = row["4dzMx"].flatMap(Double.init) { featureDictionary["4dzMx"] = dzMxValue4 }
+                    if let dzMiValue4 = row["4dzMi"].flatMap(Double.init) { featureDictionary["4dzMi"] = dzMiValue4 }
+                    if let dzUMValue4 = row["4dzUM"].flatMap(Double.init) { featureDictionary["4dzUM"] = dzUMValue4 }
+                    if let dzLMValue4 = row["4dzLM"].flatMap(Double.init) { featureDictionary["4dzLM"] = dzLMValue4 }
                     
                     if let xMeValue5 = row["5xMe"].flatMap(Double.init) { featureDictionary["5xMe"] = xMeValue5 }
                     if let xVrValue5 = row["5xVr"].flatMap(Double.init) { featureDictionary["5xVr"] = xVrValue5 }
@@ -680,24 +680,24 @@ struct ContentView: View {
                     if let zUMValue5 = row["5zUM"].flatMap(Double.init) { featureDictionary["5zUM"] = zUMValue5 }
                     if let zLMValue5 = row["5zLM"].flatMap(Double.init) { featureDictionary["5zLM"] = zLMValue5 }
                     
-                    if let dxMeValue5 = row["d5xMe"].flatMap(Double.init) { featureDictionary["d5xMe"] = dxMeValue5 }
-                    if let dxVrValue5 = row["d5xVr"].flatMap(Double.init) { featureDictionary["d5xVr"] = dxVrValue5 }
-                    if let dxMxValue5 = row["d5xMx"].flatMap(Double.init) { featureDictionary["d5xMx"] = dxMxValue5 }
-                    if let dxMiValue5 = row["d5xMi"].flatMap(Double.init) { featureDictionary["d5xMi"] = dxMiValue5 }
-                    if let dxUMValue5 = row["d5xUM"].flatMap(Double.init) { featureDictionary["d5xUM"] = dxUMValue5 }
-                    if let dxLMValue5 = row["d5xLM"].flatMap(Double.init) { featureDictionary["d5xLM"] = dxLMValue5 }
-                    if let dyMeValue5 = row["d5yMe"].flatMap(Double.init) { featureDictionary["d5yMe"] = dyMeValue5 }
-                    if let dyVrValue5 = row["d5yVr"].flatMap(Double.init) { featureDictionary["d5yVr"] = dyVrValue5 }
-                    if let dyMxValue5 = row["d5yMx"].flatMap(Double.init) { featureDictionary["d5yMx"] = dyMxValue5 }
-                    if let dyMnValue5 = row["d5yMn"].flatMap(Double.init) { featureDictionary["d5yMn"] = dyMnValue5 }
-                    if let dyUMValue5 = row["d5yUM"].flatMap(Double.init) { featureDictionary["d5yUM"] = dyUMValue5 }
-                    if let dyLMValue5 = row["d5yLM"].flatMap(Double.init) { featureDictionary["d5yLM"] = dyLMValue5 }
-                    if let dzMeValue5 = row["d5zMe"].flatMap(Double.init) { featureDictionary["d5zMe"] = dzMeValue5 }
-                    if let dzVrValue5 = row["d5zVr"].flatMap(Double.init) { featureDictionary["d5zVr"] = dzVrValue5 }
-                    if let dzMxValue5 = row["d5zMx"].flatMap(Double.init) { featureDictionary["d5zMx"] = dzMxValue5 }
-                    if let dzMiValue5 = row["d5zMi"].flatMap(Double.init) { featureDictionary["d5zMi"] = dzMiValue5 }
-                    if let dzUMValue5 = row["d5zUM"].flatMap(Double.init) { featureDictionary["d5zUM"] = dzUMValue5 }
-                    if let dzLMValue5 = row["d5zLM"].flatMap(Double.init) { featureDictionary["d5zLM"] = dzLMValue5 }
+                    if let dxMeValue5 = row["5dxMe"].flatMap(Double.init) { featureDictionary["5dxMe"] = dxMeValue5 }
+                    if let dxVrValue5 = row["5dxVr"].flatMap(Double.init) { featureDictionary["5dxVr"] = dxVrValue5 }
+                    if let dxMxValue5 = row["5dxMx"].flatMap(Double.init) { featureDictionary["5dxMx"] = dxMxValue5 }
+                    if let dxMiValue5 = row["5dxMi"].flatMap(Double.init) { featureDictionary["5dxMi"] = dxMiValue5 }
+                    if let dxUMValue5 = row["5dxUM"].flatMap(Double.init) { featureDictionary["5dxUM"] = dxUMValue5 }
+                    if let dxLMValue5 = row["5dxLM"].flatMap(Double.init) { featureDictionary["5dxLM"] = dxLMValue5 }
+                    if let dyMeValue5 = row["5dyMe"].flatMap(Double.init) { featureDictionary["5dyMe"] = dyMeValue5 }
+                    if let dyVrValue5 = row["5dyVr"].flatMap(Double.init) { featureDictionary["5dyVr"] = dyVrValue5 }
+                    if let dyMxValue5 = row["5dyMx"].flatMap(Double.init) { featureDictionary["5dyMx"] = dyMxValue5 }
+                    if let dyMnValue5 = row["5dyMn"].flatMap(Double.init) { featureDictionary["5dyMn"] = dyMnValue5 }
+                    if let dyUMValue5 = row["5dyUM"].flatMap(Double.init) { featureDictionary["5dyUM"] = dyUMValue5 }
+                    if let dyLMValue5 = row["5dyLM"].flatMap(Double.init) { featureDictionary["5dyLM"] = dyLMValue5 }
+                    if let dzMeValue5 = row["5dzMe"].flatMap(Double.init) { featureDictionary["5dzMe"] = dzMeValue5 }
+                    if let dzVrValue5 = row["5dzVr"].flatMap(Double.init) { featureDictionary["5dzVr"] = dzVrValue5 }
+                    if let dzMxValue5 = row["5dzMx"].flatMap(Double.init) { featureDictionary["5dzMx"] = dzMxValue5 }
+                    if let dzMiValue5 = row["5dzMi"].flatMap(Double.init) { featureDictionary["5dzMi"] = dzMiValue5 }
+                    if let dzUMValue5 = row["5dzUM"].flatMap(Double.init) { featureDictionary["5dzUM"] = dzUMValue5 }
+                    if let dzLMValue5 = row["5dzLM"].flatMap(Double.init) { featureDictionary["5dzLM"] = dzLMValue5 }
                     
                     if let xMeValue6 = row["6xMe"].flatMap(Double.init) { featureDictionary["6xMe"] = xMeValue6 }
                     if let xVrValue6 = row["6xVr"].flatMap(Double.init) { featureDictionary["6xVr"] = xVrValue6 }
@@ -718,24 +718,24 @@ struct ContentView: View {
                     if let zUMValue6 = row["6zUM"].flatMap(Double.init) { featureDictionary["6zUM"] = zUMValue6 }
                     if let zLMValue6 = row["6zLM"].flatMap(Double.init) { featureDictionary["6zLM"] = zLMValue6 }
                     
-                    if let dxMeValue6 = row["d6xMe"].flatMap(Double.init) { featureDictionary["d6xMe"] = dxMeValue6 }
-                    if let dxVrValue6 = row["d6xVr"].flatMap(Double.init) { featureDictionary["d6xVr"] = dxVrValue6 }
-                    if let dxMxValue6 = row["d6xMx"].flatMap(Double.init) { featureDictionary["d6xMx"] = dxMxValue6 }
-                    if let dxMiValue6 = row["d6xMi"].flatMap(Double.init) { featureDictionary["d6xMi"] = dxMiValue6 }
-                    if let dxUMValue6 = row["d6xUM"].flatMap(Double.init) { featureDictionary["d6xUM"] = dxUMValue6 }
-                    if let dxLMValue6 = row["d6xLM"].flatMap(Double.init) { featureDictionary["d6xLM"] = dxLMValue6 }
-                    if let dyMeValue6 = row["d6yMe"].flatMap(Double.init) { featureDictionary["d6yMe"] = dyMeValue6 }
-                    if let dyVrValue6 = row["d6yVr"].flatMap(Double.init) { featureDictionary["d6yVr"] = dyVrValue6 }
-                    if let dyMxValue6 = row["d6yMx"].flatMap(Double.init) { featureDictionary["d6yMx"] = dyMxValue6 }
-                    if let dyMnValue6 = row["d6yMn"].flatMap(Double.init) { featureDictionary["d6yMn"] = dyMnValue6 }
-                    if let dyUMValue6 = row["d6yUM"].flatMap(Double.init) { featureDictionary["d6yUM"] = dyUMValue6 }
-                    if let dyLMValue6 = row["d6yLM"].flatMap(Double.init) { featureDictionary["d6yLM"] = dyLMValue6 }
-                    if let dzMeValue6 = row["d6zMe"].flatMap(Double.init) { featureDictionary["d6zMe"] = dzMeValue6 }
-                    if let dzVrValue6 = row["d6zVr"].flatMap(Double.init) { featureDictionary["d6zVr"] = dzVrValue6 }
-                    if let dzMxValue6 = row["d6zMx"].flatMap(Double.init) { featureDictionary["d6zMx"] = dzMxValue6 }
-                    if let dzMiValue6 = row["d6zMi"].flatMap(Double.init) { featureDictionary["d6zMi"] = dzMiValue6 }
-                    if let dzUMValue6 = row["d6zUM"].flatMap(Double.init) { featureDictionary["d6zUM"] = dzUMValue6 }
-                    if let dzLMValue6 = row["d6zLM"].flatMap(Double.init) { featureDictionary["d6zLM"] = dzLMValue6 }
+                    if let dxMeValue6 = row["6dxMe"].flatMap(Double.init) { featureDictionary["6dxMe"] = dxMeValue6 }
+                    if let dxVrValue6 = row["6dxVr"].flatMap(Double.init) { featureDictionary["6dxVr"] = dxVrValue6 }
+                    if let dxMxValue6 = row["6dxMx"].flatMap(Double.init) { featureDictionary["6dxMx"] = dxMxValue6 }
+                    if let dxMiValue6 = row["6dxMi"].flatMap(Double.init) { featureDictionary["6dxMi"] = dxMiValue6 }
+                    if let dxUMValue6 = row["6dxUM"].flatMap(Double.init) { featureDictionary["6dxUM"] = dxUMValue6 }
+                    if let dxLMValue6 = row["6dxLM"].flatMap(Double.init) { featureDictionary["6dxLM"] = dxLMValue6 }
+                    if let dyMeValue6 = row["6dyMe"].flatMap(Double.init) { featureDictionary["6dyMe"] = dyMeValue6 }
+                    if let dyVrValue6 = row["6dyVr"].flatMap(Double.init) { featureDictionary["6dyVr"] = dyVrValue6 }
+                    if let dyMxValue6 = row["6dyMx"].flatMap(Double.init) { featureDictionary["6dyMx"] = dyMxValue6 }
+                    if let dyMnValue6 = row["6dyMn"].flatMap(Double.init) { featureDictionary["6dyMn"] = dyMnValue6 }
+                    if let dyUMValue6 = row["6dyUM"].flatMap(Double.init) { featureDictionary["6dyUM"] = dyUMValue6 }
+                    if let dyLMValue6 = row["6dyLM"].flatMap(Double.init) { featureDictionary["6dyLM"] = dyLMValue6 }
+                    if let dzMeValue6 = row["6dzMe"].flatMap(Double.init) { featureDictionary["6dzMe"] = dzMeValue6 }
+                    if let dzVrValue6 = row["6dzVr"].flatMap(Double.init) { featureDictionary["6dzVr"] = dzVrValue6 }
+                    if let dzMxValue6 = row["6dzMx"].flatMap(Double.init) { featureDictionary["6dzMx"] = dzMxValue6 }
+                    if let dzMiValue6 = row["6dzMi"].flatMap(Double.init) { featureDictionary["6dzMi"] = dzMiValue6 }
+                    if let dzUMValue6 = row["6dzUM"].flatMap(Double.init) { featureDictionary["6dzUM"] = dzUMValue6 }
+                    if let dzLMValue6 = row["6dzLM"].flatMap(Double.init) { featureDictionary["6dzLM"] = dzLMValue6 }
                     
                     if let xMeValue7 = row["7xMe"].flatMap(Double.init) { featureDictionary["7xMe"] = xMeValue7 }
                     if let xVrValue7 = row["7xVr"].flatMap(Double.init) { featureDictionary["7xVr"] = xVrValue7 }
@@ -756,24 +756,24 @@ struct ContentView: View {
                     if let zUMValue7 = row["7zUM"].flatMap(Double.init) { featureDictionary["7zUM"] = zUMValue7 }
                     if let zLMValue7 = row["7zLM"].flatMap(Double.init) { featureDictionary["7zLM"] = zLMValue7 }
                     
-                    if let dxMeValue7 = row["d7xMe"].flatMap(Double.init) { featureDictionary["d7xMe"] = dxMeValue7 }
-                    if let dxVrValue7 = row["d7xVr"].flatMap(Double.init) { featureDictionary["d7xVr"] = dxVrValue7 }
-                    if let dxMxValue7 = row["d7xMx"].flatMap(Double.init) { featureDictionary["d7xMx"] = dxMxValue7 }
-                    if let dxMiValue7 = row["d7xMi"].flatMap(Double.init) { featureDictionary["d7xMi"] = dxMiValue7 }
-                    if let dxUMValue7 = row["d7xUM"].flatMap(Double.init) { featureDictionary["d7xUM"] = dxUMValue7 }
-                    if let dxLMValue7 = row["d7xLM"].flatMap(Double.init) { featureDictionary["d7xLM"] = dxLMValue7 }
-                    if let dyMeValue7 = row["d7yMe"].flatMap(Double.init) { featureDictionary["d7yMe"] = dyMeValue7 }
-                    if let dyVrValue7 = row["d7yVr"].flatMap(Double.init) { featureDictionary["d7yVr"] = dyVrValue7 }
-                    if let dyMxValue7 = row["d7yMx"].flatMap(Double.init) { featureDictionary["d7yMx"] = dyMxValue7 }
-                    if let dyMnValue7 = row["d7yMn"].flatMap(Double.init) { featureDictionary["d7yMn"] = dyMnValue7 }
-                    if let dyUMValue7 = row["d7yUM"].flatMap(Double.init) { featureDictionary["d7yUM"] = dyUMValue7 }
-                    if let dyLMValue7 = row["d7yLM"].flatMap(Double.init) { featureDictionary["d7yLM"] = dyLMValue7 }
-                    if let dzMeValue7 = row["d7zMe"].flatMap(Double.init) { featureDictionary["d7zMe"] = dzMeValue7 }
-                    if let dzVrValue7 = row["d7zVr"].flatMap(Double.init) { featureDictionary["d7zVr"] = dzVrValue7 }
-                    if let dzMxValue7 = row["d7zMx"].flatMap(Double.init) { featureDictionary["d7zMx"] = dzMxValue7 }
-                    if let dzMiValue7 = row["d7zMi"].flatMap(Double.init) { featureDictionary["d7zMi"] = dzMiValue7 }
-                    if let dzUMValue7 = row["d7zUM"].flatMap(Double.init) { featureDictionary["d7zUM"] = dzUMValue7 }
-                    if let dzLMValue7 = row["d7zLM"].flatMap(Double.init) { featureDictionary["d7zLM"] = dzLMValue7 }
+                    if let dxMeValue7 = row["7dxMe"].flatMap(Double.init) { featureDictionary["7dxMe"] = dxMeValue7 }
+                    if let dxVrValue7 = row["7dxVr"].flatMap(Double.init) { featureDictionary["7dxVr"] = dxVrValue7 }
+                    if let dxMxValue7 = row["7dxMx"].flatMap(Double.init) { featureDictionary["7dxMx"] = dxMxValue7 }
+                    if let dxMiValue7 = row["7dxMi"].flatMap(Double.init) { featureDictionary["7dxMi"] = dxMiValue7 }
+                    if let dxUMValue7 = row["7dxUM"].flatMap(Double.init) { featureDictionary["7dxUM"] = dxUMValue7 }
+                    if let dxLMValue7 = row["7dxLM"].flatMap(Double.init) { featureDictionary["7dxLM"] = dxLMValue7 }
+                    if let dyMeValue7 = row["7dyMe"].flatMap(Double.init) { featureDictionary["7dyMe"] = dyMeValue7 }
+                    if let dyVrValue7 = row["7dyVr"].flatMap(Double.init) { featureDictionary["7dyVr"] = dyVrValue7 }
+                    if let dyMxValue7 = row["7dyMx"].flatMap(Double.init) { featureDictionary["7dyMx"] = dyMxValue7 }
+                    if let dyMnValue7 = row["7dyMn"].flatMap(Double.init) { featureDictionary["7dyMn"] = dyMnValue7 }
+                    if let dyUMValue7 = row["7dyUM"].flatMap(Double.init) { featureDictionary["7dyUM"] = dyUMValue7 }
+                    if let dyLMValue7 = row["7dyLM"].flatMap(Double.init) { featureDictionary["7dyLM"] = dyLMValue7 }
+                    if let dzMeValue7 = row["7dzMe"].flatMap(Double.init) { featureDictionary["7dzMe"] = dzMeValue7 }
+                    if let dzVrValue7 = row["7dzVr"].flatMap(Double.init) { featureDictionary["7dzVr"] = dzVrValue7 }
+                    if let dzMxValue7 = row["7dzMx"].flatMap(Double.init) { featureDictionary["7dzMx"] = dzMxValue7 }
+                    if let dzMiValue7 = row["7dzMi"].flatMap(Double.init) { featureDictionary["7dzMi"] = dzMiValue7 }
+                    if let dzUMValue7 = row["7dzUM"].flatMap(Double.init) { featureDictionary["7dzUM"] = dzUMValue7 }
+                    if let dzLMValue7 = row["7dzLM"].flatMap(Double.init) { featureDictionary["7dzLM"] = dzLMValue7 }
 
                                     let modelInput = alcoholInput(
                     _0xMe: featureDictionary["0xMe"] ?? 0.0,
@@ -794,24 +794,24 @@ struct ContentView: View {
                     _0zMi: featureDictionary["0zMi"] ?? 0.0,
                     _0zUM: featureDictionary["0zUM"] ?? 0.0,
                     _0zLM: featureDictionary["0zLM"] ?? 0.0,
-                    d0xMe: featureDictionary["d0xMe"] ?? 0.0,
-                    d0xVr: featureDictionary["d0xVr"] ?? 0.0,
-                    d0xMx: featureDictionary["d0xMx"] ?? 0.0,
-                    d0xMi: featureDictionary["d0xMi"] ?? 0.0,
-                    d0xUM: featureDictionary["d0xUM"] ?? 0.0,
-                    d0xLM: featureDictionary["d0xLM"] ?? 0.0,
-                    d0yMe: featureDictionary["d0yMe"] ?? 0.0,
-                    d0yVr: featureDictionary["d0yVr"] ?? 0.0,
-                    d0yMx: featureDictionary["d0yMx"] ?? 0.0,
-                    d0yMn: featureDictionary["d0yMn"] ?? 0.0,
-                    d0yUM: featureDictionary["d0yUM"] ?? 0.0,
-                    d0yLM: featureDictionary["d0yLM"] ?? 0.0,
-                    d0zMe: featureDictionary["d0zMe"] ?? 0.0,
-                    d0zVr: featureDictionary["d0zVr"] ?? 0.0,
-                    d0zMx: featureDictionary["d0zMx"] ?? 0.0,
-                    d0zMi: featureDictionary["d0zMi"] ?? 0.0,
-                    d0zUM: featureDictionary["d0zUM"] ?? 0.0,
-                    d0zLM: featureDictionary["d0zLM"] ?? 0.0,
+                    d0xMe: featureDictionary["0dxMe"] ?? 0.0,
+                    d0xVr: featureDictionary["0dxVr"] ?? 0.0,
+                    d0xMx: featureDictionary["0dxMx"] ?? 0.0,
+                    d0xMi: featureDictionary["0dxMi"] ?? 0.0,
+                    d0xUM: featureDictionary["0dxUM"] ?? 0.0,
+                    d0xLM: featureDictionary["0dxLM"] ?? 0.0,
+                    d0yMe: featureDictionary["0dyMe"] ?? 0.0,
+                    d0yVr: featureDictionary["0dyVr"] ?? 0.0,
+                    d0yMx: featureDictionary["0dyMx"] ?? 0.0,
+                    d0yMn: featureDictionary["0dyMn"] ?? 0.0,
+                    d0yUM: featureDictionary["0dyUM"] ?? 0.0,
+                    d0yLM: featureDictionary["0dyLM"] ?? 0.0,
+                    d0zMe: featureDictionary["0dzMe"] ?? 0.0,
+                    d0zVr: featureDictionary["0dzVr"] ?? 0.0,
+                    d0zMx: featureDictionary["0dzMx"] ?? 0.0,
+                    d0zMi: featureDictionary["0dzMi"] ?? 0.0,
+                    d0zUM: featureDictionary["0dzUM"] ?? 0.0,
+                    d0zLM: featureDictionary["0dzLM"] ?? 0.0,
                     _1xMe: featureDictionary["1xMe"] ?? 0.0,
                     _1xVr: featureDictionary["1xVr"] ?? 0.0,
                     _1xMx: featureDictionary["1xMx"] ?? 0.0,
@@ -830,24 +830,24 @@ struct ContentView: View {
                     _1zMi: featureDictionary["1zMi"] ?? 0.0,
                     _1zUM: featureDictionary["1zUM"] ?? 0.0,
                     _1zLM: featureDictionary["1zLM"] ?? 0.0,
-                    d1xMe: featureDictionary["d1xMe"] ?? 0.0,
-                    d1xVr: featureDictionary["d1xVr"] ?? 0.0,
-                    d1xMx: featureDictionary["d1xMx"] ?? 0.0,
-                    d1xMi: featureDictionary["d1xMi"] ?? 0.0,
-                    d1xUM: featureDictionary["d1xUM"] ?? 0.0,
-                    d1xLM: featureDictionary["d1xLM"] ?? 0.0,
-                    d1yMe: featureDictionary["d1yMe"] ?? 0.0,
-                    d1yVr: featureDictionary["d1yVr"] ?? 0.0,
-                    d1yMx: featureDictionary["d1yMx"] ?? 0.0,
-                    d1yMn: featureDictionary["d1yMn"] ?? 0.0,
-                    d1yUM: featureDictionary["d1yUM"] ?? 0.0,
-                    d1yLM: featureDictionary["d1yLM"] ?? 0.0,
-                    d1zMe: featureDictionary["d1zMe"] ?? 0.0,
-                    d1zVr: featureDictionary["d1zVr"] ?? 0.0,
-                    d1zMx: featureDictionary["d1zMx"] ?? 0.0,
-                    d1zMi: featureDictionary["d1zMi"] ?? 0.0,
-                    d1zUM: featureDictionary["d1zUM"] ?? 0.0,
-                    d1zLM: featureDictionary["d1zLM"] ?? 0.0,
+                    d1xMe: featureDictionary["1dxMe"] ?? 0.0,
+                    d1xVr: featureDictionary["1dxVr"] ?? 0.0,
+                    d1xMx: featureDictionary["1dxMx"] ?? 0.0,
+                    d1xMi: featureDictionary["1dxMi"] ?? 0.0,
+                    d1xUM: featureDictionary["1dxUM"] ?? 0.0,
+                    d1xLM: featureDictionary["1dxLM"] ?? 0.0,
+                    d1yMe: featureDictionary["1dyMe"] ?? 0.0,
+                    d1yVr: featureDictionary["1dyVr"] ?? 0.0,
+                    d1yMx: featureDictionary["1dyMx"] ?? 0.0,
+                    d1yMn: featureDictionary["1dyMn"] ?? 0.0,
+                    d1yUM: featureDictionary["1dyUM"] ?? 0.0,
+                    d1yLM: featureDictionary["1dyLM"] ?? 0.0,
+                    d1zMe: featureDictionary["1dzMe"] ?? 0.0,
+                    d1zVr: featureDictionary["1dzVr"] ?? 0.0,
+                    d1zMx: featureDictionary["1dzMx"] ?? 0.0,
+                    d1zMi: featureDictionary["1dzMi"] ?? 0.0,
+                    d1zUM: featureDictionary["1dzUM"] ?? 0.0,
+                    d1zLM: featureDictionary["1dzLM"] ?? 0.0,
                     _2xMe: featureDictionary["2xMe"] ?? 0.0,
                     _2xVr: featureDictionary["2xVr"] ?? 0.0,
                     _2xMx: featureDictionary["2xMx"] ?? 0.0,
@@ -866,24 +866,24 @@ struct ContentView: View {
                     _2zMi: featureDictionary["2zMi"] ?? 0.0,
                     _2zUM: featureDictionary["2zUM"] ?? 0.0,
                     _2zLM: featureDictionary["2zLM"] ?? 0.0,
-                    d2xMe: featureDictionary["d2xMe"] ?? 0.0,
-                    d2xVr: featureDictionary["d2xVr"] ?? 0.0,
-                    d2xMx: featureDictionary["d2xMx"] ?? 0.0,
-                    d2xMi: featureDictionary["d2xMi"] ?? 0.0,
-                    d2xUM: featureDictionary["d2xUM"] ?? 0.0,
-                    d2xLM: featureDictionary["d2xLM"] ?? 0.0,
-                    d2yMe: featureDictionary["d2yMe"] ?? 0.0,
-                    d2yVr: featureDictionary["d2yVr"] ?? 0.0,
-                    d2yMx: featureDictionary["d2yMx"] ?? 0.0,
-                    d2yMn: featureDictionary["d2yMn"] ?? 0.0,
-                    d2yUM: featureDictionary["d2yUM"] ?? 0.0,
-                    d2yLM: featureDictionary["d2yLM"] ?? 0.0,
-                    d2zMe: featureDictionary["d2zMe"] ?? 0.0,
-                    d2zVr: featureDictionary["d2zVr"] ?? 0.0,
-                    d2zMx: featureDictionary["d2zMx"] ?? 0.0,
-                    d2zMi: featureDictionary["d2zMi"] ?? 0.0,
-                    d2zUM: featureDictionary["d2zUM"] ?? 0.0,
-                    d2zLM: featureDictionary["d2zLM"] ?? 0.0,
+                    d2xMe: featureDictionary["2dxMe"] ?? 0.0,
+                    d2xVr: featureDictionary["2dxVr"] ?? 0.0,
+                    d2xMx: featureDictionary["2dxMx"] ?? 0.0,
+                    d2xMi: featureDictionary["2dxMi"] ?? 0.0,
+                    d2xUM: featureDictionary["2dxUM"] ?? 0.0,
+                    d2xLM: featureDictionary["2dxLM"] ?? 0.0,
+                    d2yMe: featureDictionary["2dyMe"] ?? 0.0,
+                    d2yVr: featureDictionary["2dyVr"] ?? 0.0,
+                    d2yMx: featureDictionary["2dyMx"] ?? 0.0,
+                    d2yMn: featureDictionary["2dyMn"] ?? 0.0,
+                    d2yUM: featureDictionary["2dyUM"] ?? 0.0,
+                    d2yLM: featureDictionary["2dyLM"] ?? 0.0,
+                    d2zMe: featureDictionary["2dzMe"] ?? 0.0,
+                    d2zVr: featureDictionary["2dzVr"] ?? 0.0,
+                    d2zMx: featureDictionary["2dzMx"] ?? 0.0,
+                    d2zMi: featureDictionary["2dzMi"] ?? 0.0,
+                    d2zUM: featureDictionary["2dzUM"] ?? 0.0,
+                    d2zLM: featureDictionary["2dzLM"] ?? 0.0,
                     _4xMe: featureDictionary["4xMe"] ?? 0.0,
                     _4xVr: featureDictionary["4xVr"] ?? 0.0,
                     _4xMx: featureDictionary["4xMx"] ?? 0.0,
@@ -902,24 +902,24 @@ struct ContentView: View {
                     _4zMi: featureDictionary["4zMi"] ?? 0.0,
                     _4zUM: featureDictionary["4zUM"] ?? 0.0,
                     _4zLM: featureDictionary["4zLM"] ?? 0.0,
-                    d4xMe: featureDictionary["d4xMe"] ?? 0.0,
-                    d4xVr: featureDictionary["d4xVr"] ?? 0.0,
-                    d4xMx: featureDictionary["d4xMx"] ?? 0.0,
-                    d4xMi: featureDictionary["d4xMi"] ?? 0.0,
-                    d4xUM: featureDictionary["d4xUM"] ?? 0.0,
-                    d4xLM: featureDictionary["d4xLM"] ?? 0.0,
-                    d4yMe: featureDictionary["d4yMe"] ?? 0.0,
-                    d4yVr: featureDictionary["d4yVr"] ?? 0.0,
-                    d4yMx: featureDictionary["d4yMx"] ?? 0.0,
-                    d4yMn: featureDictionary["d4yMn"] ?? 0.0,
-                    d4yUM: featureDictionary["d4yUM"] ?? 0.0,
-                    d4yLM: featureDictionary["d4yLM"] ?? 0.0,
-                    d4zMe: featureDictionary["d4zMe"] ?? 0.0,
-                    d4zVr: featureDictionary["d4zVr"] ?? 0.0,
-                    d4zMx: featureDictionary["d4zMx"] ?? 0.0,
-                    d4zMi: featureDictionary["d4zMi"] ?? 0.0,
-                    d4zUM: featureDictionary["d4zUM"] ?? 0.0,
-                    d4zLM: featureDictionary["d4zLM"] ?? 0.0,
+                    d4xMe: featureDictionary["4dxMe"] ?? 0.0,
+                    d4xVr: featureDictionary["4dxVr"] ?? 0.0,
+                    d4xMx: featureDictionary["4dxMx"] ?? 0.0,
+                    d4xMi: featureDictionary["4dxMi"] ?? 0.0,
+                    d4xUM: featureDictionary["4dxUM"] ?? 0.0,
+                    d4xLM: featureDictionary["4dxLM"] ?? 0.0,
+                    d4yMe: featureDictionary["4dyMe"] ?? 0.0,
+                    d4yVr: featureDictionary["4dyVr"] ?? 0.0,
+                    d4yMx: featureDictionary["4dyMx"] ?? 0.0,
+                    d4yMn: featureDictionary["4dyMn"] ?? 0.0,
+                    d4yUM: featureDictionary["4dyUM"] ?? 0.0,
+                    d4yLM: featureDictionary["4dyLM"] ?? 0.0,
+                    d4zMe: featureDictionary["4dzMe"] ?? 0.0,
+                    d4zVr: featureDictionary["4dzVr"] ?? 0.0,
+                    d4zMx: featureDictionary["4dzMx"] ?? 0.0,
+                    d4zMi: featureDictionary["4dzMi"] ?? 0.0,
+                    d4zUM: featureDictionary["4dzUM"] ?? 0.0,
+                    d4zLM: featureDictionary["4dzLM"] ?? 0.0,
                     _5xMe: featureDictionary["5xMe"] ?? 0.0,
                     _5xVr: featureDictionary["5xVr"] ?? 0.0,
                     _5xMx: featureDictionary["5xMx"] ?? 0.0,
@@ -938,24 +938,24 @@ struct ContentView: View {
                     _5zMi: featureDictionary["5zMi"] ?? 0.0,
                     _5zUM: featureDictionary["5zUM"] ?? 0.0,
                     _5zLM: featureDictionary["5zLM"] ?? 0.0,
-                    d5xMe: featureDictionary["d5xMe"] ?? 0.0,
-                    d5xVr: featureDictionary["d5xVr"] ?? 0.0,
-                    d5xMx: featureDictionary["d5xMx"] ?? 0.0,
-                    d5xMi: featureDictionary["d5xMi"] ?? 0.0,
-                    d5xUM: featureDictionary["d5xUM"] ?? 0.0,
-                    d5xLM: featureDictionary["d5xLM"] ?? 0.0,
-                    d5yMe: featureDictionary["d5yMe"] ?? 0.0,
-                    d5yVr: featureDictionary["d5yVr"] ?? 0.0,
-                    d5yMx: featureDictionary["d5yMx"] ?? 0.0,
-                    d5yMn: featureDictionary["d5yMn"] ?? 0.0,
-                    d5yUM: featureDictionary["d5yUM"] ?? 0.0,
-                    d5yLM: featureDictionary["d5yLM"] ?? 0.0,
-                    d5zMe: featureDictionary["d5zMe"] ?? 0.0,
-                    d5zVr: featureDictionary["d5zVr"] ?? 0.0,
-                    d5zMx: featureDictionary["d5zMx"] ?? 0.0,
-                    d5zMi: featureDictionary["d5zMi"] ?? 0.0,
-                    d5zUM: featureDictionary["d5zUM"] ?? 0.0,
-                    d5zLM: featureDictionary["d5zLM"] ?? 0.0,
+                    d5xMe: featureDictionary["5dxMe"] ?? 0.0,
+                    d5xVr: featureDictionary["5dxVr"] ?? 0.0,
+                    d5xMx: featureDictionary["5dxMx"] ?? 0.0,
+                    d5xMi: featureDictionary["5dxMi"] ?? 0.0,
+                    d5xUM: featureDictionary["5dxUM"] ?? 0.0,
+                    d5xLM: featureDictionary["5dxLM"] ?? 0.0,
+                    d5yMe: featureDictionary["5dyMe"] ?? 0.0,
+                    d5yVr: featureDictionary["5dyVr"] ?? 0.0,
+                    d5yMx: featureDictionary["5dyMx"] ?? 0.0,
+                    d5yMn: featureDictionary["5dyMn"] ?? 0.0,
+                    d5yUM: featureDictionary["5dyUM"] ?? 0.0,
+                    d5yLM: featureDictionary["5dyLM"] ?? 0.0,
+                    d5zMe: featureDictionary["5dzMe"] ?? 0.0,
+                    d5zVr: featureDictionary["5dzVr"] ?? 0.0,
+                    d5zMx: featureDictionary["5dzMx"] ?? 0.0,
+                    d5zMi: featureDictionary["5dzMi"] ?? 0.0,
+                    d5zUM: featureDictionary["5dzUM"] ?? 0.0,
+                    d5zLM: featureDictionary["5dzLM"] ?? 0.0,
                     _6xMe: featureDictionary["6xMe"] ?? 0.0,
                     _6xVr: featureDictionary["6xVr"] ?? 0.0,
                     _6xMx: featureDictionary["6xMx"] ?? 0.0,
@@ -974,24 +974,24 @@ struct ContentView: View {
                     _6zMi: featureDictionary["6zMi"] ?? 0.0,
                     _6zUM: featureDictionary["6zUM"] ?? 0.0,
                     _6zLM: featureDictionary["6zLM"] ?? 0.0,
-                    d6xMe: featureDictionary["d6xMe"] ?? 0.0,
-                    d6xVr: featureDictionary["d6xVr"] ?? 0.0,
-                    d6xMx: featureDictionary["d6xMx"] ?? 0.0,
-                    d6xMi: featureDictionary["d6xMi"] ?? 0.0,
-                    d6xUM: featureDictionary["d6xUM"] ?? 0.0,
-                    d6xLM: featureDictionary["d6xLM"] ?? 0.0,
-                    d6yMe: featureDictionary["d6yMe"] ?? 0.0,
-                    d6yVr: featureDictionary["d6yVr"] ?? 0.0,
-                    d6yMx: featureDictionary["d6yMx"] ?? 0.0,
-                    d6yMn: featureDictionary["d6yMn"] ?? 0.0,
-                    d6yUM: featureDictionary["d6yUM"] ?? 0.0,
-                    d6yLM: featureDictionary["d6yLM"] ?? 0.0,
-                    d6zMe: featureDictionary["d6zMe"] ?? 0.0,
-                    d6zVr: featureDictionary["d6zVr"] ?? 0.0,
-                    d6zMx: featureDictionary["d6zMx"] ?? 0.0,
-                    d6zMi: featureDictionary["d6zMi"] ?? 0.0,
-                    d6zUM: featureDictionary["d6zUM"] ?? 0.0,
-                    d6zLM: featureDictionary["d6zLM"] ?? 0.0,
+                    d6xMe: featureDictionary["6dxMe"] ?? 0.0,
+                    d6xVr: featureDictionary["6dxVr"] ?? 0.0,
+                    d6xMx: featureDictionary["6dxMx"] ?? 0.0,
+                    d6xMi: featureDictionary["6dxMi"] ?? 0.0,
+                    d6xUM: featureDictionary["6dxUM"] ?? 0.0,
+                    d6xLM: featureDictionary["6dxLM"] ?? 0.0,
+                    d6yMe: featureDictionary["6dyMe"] ?? 0.0,
+                    d6yVr: featureDictionary["6dyVr"] ?? 0.0,
+                    d6yMx: featureDictionary["6dyMx"] ?? 0.0,
+                    d6yMn: featureDictionary["6dyMn"] ?? 0.0,
+                    d6yUM: featureDictionary["6dyUM"] ?? 0.0,
+                    d6yLM: featureDictionary["6dyLM"] ?? 0.0,
+                    d6zMe: featureDictionary["6dzMe"] ?? 0.0,
+                    d6zVr: featureDictionary["6dzVr"] ?? 0.0,
+                    d6zMx: featureDictionary["6dzMx"] ?? 0.0,
+                    d6zMi: featureDictionary["6dzMi"] ?? 0.0,
+                    d6zUM: featureDictionary["6dzUM"] ?? 0.0,
+                    d6zLM: featureDictionary["6dzLM"] ?? 0.0,
                     _7xMe: featureDictionary["7xMe"] ?? 0.0,
                     _7xVr: featureDictionary["7xVr"] ?? 0.0,
                     _7xMx: featureDictionary["7xMx"] ?? 0.0,
@@ -1010,27 +1010,44 @@ struct ContentView: View {
                     _7zMi: featureDictionary["7zMi"] ?? 0.0,
                     _7zUM: featureDictionary["7zUM"] ?? 0.0,
                     _7zLM: featureDictionary["7zLM"] ?? 0.0,
-                    d7xMe: featureDictionary["d7xMe"] ?? 0.0,
-                    d7xVr: featureDictionary["d7xVr"] ?? 0.0,
-                    d7xMx: featureDictionary["d7xMx"] ?? 0.0,
-                    d7xMi: featureDictionary["d7xMi"] ?? 0.0,
-                    d7xUM: featureDictionary["d7xUM"] ?? 0.0,
-                    d7xLM: featureDictionary["d7xLM"] ?? 0.0,
-                    d7yMe: featureDictionary["d7yMe"] ?? 0.0,
-                    d7yVr: featureDictionary["d7yVr"] ?? 0.0,
-                    d7yMx: featureDictionary["d7yMx"] ?? 0.0,
-                    d7yMn: featureDictionary["d7yMn"] ?? 0.0,
-                    d7yUM: featureDictionary["d7yUM"] ?? 0.0,
-                    d7yLM: featureDictionary["d7yLM"] ?? 0.0,
-                    d7zMe: featureDictionary["d7zMe"] ?? 0.0,
-                    d7zVr: featureDictionary["d7zVr"] ?? 0.0,
-                    d7zMx: featureDictionary["d7zMx"] ?? 0.0,
-                    d7zMi: featureDictionary["d7zMi"] ?? 0.0,
-                    d7zUM: featureDictionary["d7zUM"] ?? 0.0,
-                    d7zLM: featureDictionary["d7zLM"] ?? 0.0)
+                    d7xMe: featureDictionary["7dxMe"] ?? 0.0,
+                    d7xVr: featureDictionary["7dxVr"] ?? 0.0,
+                    d7xMx: featureDictionary["7dxMx"] ?? 0.0,
+                    d7xMi: featureDictionary["7dxMi"] ?? 0.0,
+                    d7xUM: featureDictionary["7dxUM"] ?? 0.0,
+                    d7xLM: featureDictionary["7dxLM"] ?? 0.0,
+                    d7yMe: featureDictionary["7dyMe"] ?? 0.0,
+                    d7yVr: featureDictionary["7dyVr"] ?? 0.0,
+                    d7yMx: featureDictionary["7dyMx"] ?? 0.0,
+                    d7yMn: featureDictionary["7dyMn"] ?? 0.0,
+                    d7yUM: featureDictionary["7dyUM"] ?? 0.0,
+                    d7yLM: featureDictionary["7dyLM"] ?? 0.0,
+                    d7zMe: featureDictionary["7dzMe"] ?? 0.0,
+                    d7zVr: featureDictionary["7dzVr"] ?? 0.0,
+                    d7zMx: featureDictionary["7dzMx"] ?? 0.0,
+                    d7zMi: featureDictionary["7dzMi"] ?? 0.0,
+                    d7zUM: featureDictionary["7dzUM"] ?? 0.0,
+                    d7zLM: featureDictionary["7dzLM"] ?? 0.0)
+                    
+                    print("model input:")
+                    let mirror = Mirror(reflecting: modelInput)
+                    for child in mirror.children {
+                        print("\(child.label!): \(child.value)")
+                    }
         
                     let prediction = try! model.prediction(input: modelInput)
-                print("Current Level: ", prediction.TAC_Reading)
+                    if prediction.TAC_Reading == 0 {
+                        print("Current Level: ", 2)
+                    } else if prediction.TAC_Reading == 2 {
+                        print("Current Level: ", 0)
+                    } else {
+                        print("Current Level: ", prediction.TAC_Reading)
+                    }
+                        
+                    // print("Current Level: ", prediction.TAC_Reading)
+                    print(prediction.classProbability)
+                    
+                    
                 }
                 
 

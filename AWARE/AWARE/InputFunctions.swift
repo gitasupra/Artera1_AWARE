@@ -204,7 +204,7 @@ class InputFunctions : ObservableObject{
                 
                 let x = try! DataFrame(
                     contentsOfCSVFile: fileURL,
-                    columns: joinColumns,
+                    columns: fileCSV?.header,
                     rows: nil, // You can specify a range of rows if needed
                     types: finalColumnTypes
                 )
@@ -394,6 +394,8 @@ class InputFunctions : ObservableObject{
                 
                 
                 while i + 10 < tot_rows{
+                    print("LOOP")
+                    print(i)
                     single_row.append(mean_all[i+9][0])
                     for col in 1...3{
 
