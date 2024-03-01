@@ -49,7 +49,7 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
             }
-  
+            
             Text("Welcome to AWARE")
                 .font(.title)
                 .padding()
@@ -108,7 +108,7 @@ struct HomeView: View {
                 biometricsManager.startDeviceMotion()
                 biometricsManager.startHeartRate()
                 let timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: true) { timer in
-                   // code to be executed every 1 second
+                    // code to be executed every 1 second
                     sendCSVToServer(accData: biometricsManager.windowFile) { predictionResult in
                         alertManager.intoxLevel = predictionResult
                     }
@@ -121,37 +121,49 @@ struct HomeView: View {
         }
     }
     
-
-
+    
+    
     func sendCSVToServer(accData: String, completion: @escaping (Int) -> Void) {
+        // Create a unique filename for the CSV file
+        let fileName = "uploaded_file.csv"
+        
+        // Get the document directory path
+        guard let documentDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Document directory not found.")
+            completion(-5) // or pass appropriate error code
+            return
+        }
+        
+        // Create a URL for the CSV file in the document directory
+        let fileURL = documentDirectoryPath.appendingPathComponent(fileName)
+        
+        // Save CSV data to the fileURL
+        do {
+            try accData.write(to: fileURL, atomically: true, encoding: .utf8)
+        } catch {
+            print("Error saving CSV data to file: \(error)")
+            completion(-6) // or pass appropriate error code
+            return
+        }
+        
+        // Now you can use the fileURL to send the CSV file to the server
         guard let url = URL(string: "https://jessicalieu.pythonanywhere.com/uploadCSV") else {
             print("Invalid URL")
             completion(-1)
             return
         }
-
-        guard let fileURL = Bundle.main.url(forResource: accData, withExtension: "csv") else {
-            print("CSV file not found.")
-            completion(-2)
-            return
-        }
-        
         
         // Create URLRequest
-        // Create URLRequest with error handling
         do {
             var urlRequest = try URLRequest(url: url, method: .post)
-            
-            // Set custom timeout interval (e.g., 60 seconds)
             urlRequest.timeoutInterval = 300
             
-            // Upload request with custom timeout
             AF.upload(
                 multipartFormData: { multipartFormData in
                     // Append the CSV file to the multipart form data
-                    multipartFormData.append(fileURL, withName: "file", fileName: "uploaded_file.csv", mimeType: "text/csv")
+                    multipartFormData.append(fileURL, withName: "file", fileName: fileName, mimeType: "text/csv")
                 },
-                with: urlRequest // Use the custom URLRequest
+                with: urlRequest
             )
             .uploadProgress { progress in
                 // Handle upload progress if needed
@@ -162,7 +174,6 @@ struct HomeView: View {
                 case .success(let value):
                     // Handle successful response
                     print("Parsed Response: \(value)")
-                    // You can access response properties directly using value.key1, value.key2, etc.
                     completion(0) // or pass appropriate success code
                 case .failure(let error):
                     // Handle error
@@ -175,5 +186,5 @@ struct HomeView: View {
             print("Error creating URLRequest: \(error)")
             completion(-4) // or pass appropriate error code
         }
-}
+    }
 }
