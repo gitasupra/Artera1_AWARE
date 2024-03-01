@@ -119,69 +119,124 @@ struct CalendarView: View {
             .map {formatter.string(from: $0)}
     }
 
+//    var body: some View {
+//        VStack(alignment: .leading, spacing: 10) {
+////            Text("Today")
+//        Text("Intoxication History")
+//                .font(.title)
+//
+//                .font(.title)
+//                .padding(.top, 5)
+//                HStack {
+//                    let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+//                    let datesForCurrentWeek = getDatesForCurrentWeek()
+//                    let currentDay = Calendar.current.component(.day, from: Date())
+//
+//                    ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
+//                        VStack {
+//                            Text(element)
+//                                .padding(10)
+//                                .foregroundColor(.gray)
+//                                .cornerRadius(8)
+//                                .font(.system(size: 12))
+//
+//                            let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
+//                            Text(datesForCurrentWeek[index].components(separatedBy: " ")[1])
+//                                .padding(10)
+//                                .background(currentDay == dayOnly ? Style.accentColor : .black)
+//                                .foregroundColor(.white)
+//                                .cornerRadius(8)
+//                                .font(.system(size: 15))
+//                        }
+//                    }
+//                }
+//                .cornerRadius(6)
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 6)
+//                        .stroke(Style.accentColor, lineWidth: 1)
+//                )
+//
+//           
+//            ForEach(calendarData, id: \.self) { week in
+//                            VStack(alignment: .leading, spacing: 10) {
+//                                // Days of the week at the top
+//                                HStack(spacing: 10) {
+////                                    ForEach(["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"], id: \.self) { day in
+////                                        Text(day)
+////                                            .foregroundColor(.gray)
+////                                            .font(.system(size: 12))
+////                                    }
+//                                }
+//
+//                                HStack(spacing: 10) {
+//                                    ForEach(week, id: \.self) { day in
+//                                        VStack {
+//                                            if day.level != -2 {
+//                                                VStack {
+//                                                    if day.level != -1 {
+//                                                        Text("\(day.date.day)")
+//                                                            .font(.subheadline)
+//                                                            .foregroundColor(day.date.isToday ? .white : .black) // Highlight today's date
+//                                                            .background(day.date.isToday ? Style.accentColor : .clear) // Highlight today's date with accent color
+//                                                            .cornerRadius(8)
+//                                                    }
+//
+//                                                    Circle()
+//                                                        .foregroundColor(colors[day.level + 1])
+//                                                        .frame(width: 10, height: 10) // Smaller circles
+//                                                }
+//                                            } else {
+//                                                Circle()
+//                                                    .foregroundColor(Color.clear)
+//                                                    .frame(width: 10, height: 10) // Smaller circles
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Today")
-                .font(.title)
-                .padding(.top, 5)
-                HStack {
-                    let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-                    let datesForCurrentWeek = getDatesForCurrentWeek()
-                    let currentDay = Calendar.current.component(.day, from: Date())
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Intoxication History")
+                    .font(.title)
 
-                    ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
-                        VStack {
-                            Text(element)
-                                .padding(10)
-                                .foregroundColor(.gray)
-                                .cornerRadius(8)
-                                .font(.system(size: 12))
+                ForEach(calendarData, id: \.self) { week in
+                    HStack(spacing: 10) {
+                        ForEach(week, id: \.self) { day in
+                            VStack {
+                                if day.level != -2 {
+                                    VStack {
+                                        if day.level != -1 {
+                                            Text("\(day.date.day)")
+                                                .font(.subheadline)
+                                                .foregroundColor(day.date.isToday ? .white : .black)
+                                                .background(day.date.isToday ? Style.accentColor : .clear)
+                                                .cornerRadius(8)
+                                                .frame(width: 20, height: 20) // Adjust width and height for spacing
+                                        }
 
-                            let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-                            Text(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-                                .padding(10)
-                                .background(currentDay == dayOnly ? Style.accentColor : .black)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                                .font(.system(size: 15))
-                        }
-                    }
-                }
-                .cornerRadius(6)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Style.accentColor, lineWidth: 1)
-                )
-
-            Text("Intoxication History")
-                .font(.title)
-
-            ForEach(calendarData, id: \.self) { week in
-                HStack(spacing: 10) {
-                    ForEach(week, id: \.self) { day in
-                        ZStack {
-                            if day.level != -2 {
-                                Circle()
-                                    .foregroundColor(colors[day.level + 1])
-                                    .frame(width: 40, height: 40)
-
-                                if day.level != -1 {
-                                    Text("\(day.date.day)")
-                                        .font(.subheadline)
-                                        .foregroundColor(.white)
+                                        Circle()
+                                            .foregroundColor(colors[day.level + 1])
+                                            .frame(width: 15, height: 15)
+                                    }
+                                } else {
+                                    Circle()
+                                        .foregroundColor(Color.clear)
+                                        .frame(width: 15, height: 15)
                                 }
-                            } else {
-                                Circle()
-                                    .foregroundColor(Color.clear)
-                                    .frame(width: 40, height: 40)
                             }
                         }
                     }
+                    .padding(.bottom, 10) // Add spacing between weeks
                 }
             }
+            .padding() // Add padding to space it out and take up the whole screen
         }
     }
-}
 
 extension Date {
     func startOfMonth() -> Date {
@@ -206,5 +261,10 @@ extension Date {
         let calendar = Calendar.current
         return calendar.component(.weekday, from: self)
     }
+    
+    var isToday: Bool {
+          let calendar = Calendar.current
+          return calendar.isDateInToday(self)
+      }
 }
 
