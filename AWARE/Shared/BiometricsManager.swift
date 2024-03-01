@@ -19,10 +19,11 @@ class BiometricsManager: ObservableObject {
     
     // accelerometer data variables
     var acc: [AccelerometerDataPoint] = []
+    var windowAccData: [AccelerometerDataPoint] = []
     var accIdx: Int = 0
     
     //accelerometer 10-second window data variables
-    @State private var windowAccData: [AccelerometerDataPoint] = []
+    //@State private var windowAccData: [AccelerometerDataPoint] = []
     var windowFile: String = "window_data.csv"
     var windowFileURL: String = ""
     
@@ -57,6 +58,11 @@ class BiometricsManager: ObservableObject {
                     //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
                     //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
                     
+                    self.accIdx += 1
+                    self.acc.append(new)
+                    self.windowAccData.append(new)
+                    print("append to acc")
+                    
                     if (self.accIdx > 0 ) && (self.accIdx % 400 == 0){
                         //At multiple of (data points per second) * 10 seconds
                         self.windowFileURL = self.writeAccDataToCSV(data: self.windowAccData)!
@@ -65,10 +71,6 @@ class BiometricsManager: ObservableObject {
                         self.windowAccData=[]
                     }
                     
-                    self.accIdx += 1
-                    self.acc.append(new)
-                    self.windowAccData.append(new)
-                    print("append to acc")
                 }
             }
             // Add the timer to the current run loop
@@ -138,6 +140,7 @@ class BiometricsManager: ObservableObject {
             let z = dataPoint.z
             csvString.append("\(timestamp),\(x),\(y),\(z)\n")
         }
+        print("csvString: \(csvString)")
         
         //        if let firstTimestamp = data.first?.timestamp,
         //            let lastTimestamp = data.last?.timestamp {
@@ -145,7 +148,7 @@ class BiometricsManager: ObservableObject {
         //         }
         
         // Create a file URL for saving the CSV file
-        let fileName = "windowFile"
+        let fileName = windowFile
         guard let fileURL = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName) else {
             print("Failed to create file URL")
             return nil
@@ -153,8 +156,9 @@ class BiometricsManager: ObservableObject {
         
         // Write the CSV string to the file
         do {
+            print("DO LINE IN WRITE CSV!!!")
             try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
-            //            print("CSV file saved successfully")
+                        print("CSV file saved successfully")
             return fileURL.path
         } catch {
             print("Error writing CSV file: \(error)")

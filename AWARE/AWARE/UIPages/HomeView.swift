@@ -124,6 +124,8 @@ struct HomeView: View {
     
     
     func sendCSVToServer(accData: String, completion: @escaping (Int) -> Void) {
+        
+        print("TESTING: SEND CSV TO SERVER!!!!!!!!!!!!!!")
         // Create a unique filename for the CSV file
         let fileName = "uploaded_file.csv"
         
