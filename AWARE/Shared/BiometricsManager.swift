@@ -15,7 +15,7 @@ class BiometricsManager: ObservableObject {
     let motion = CMMotionManager()
     let healthStore = HKHealthStore()
     var timer: Timer?
-    
+    var intoxLevel: Int = 0
     // accelerometer data variables
     var acc: [AccelerometerDataPoint] = []
     var accIdx: Int = 0
@@ -63,15 +63,19 @@ class BiometricsManager: ObservableObject {
         print("start heart rate called")
         let heartRateQuantity = HKUnit(from: "count/min")
         var heartRateIdx = 0
-        
+        var consecutiveDangerousHeartRateCount = 0
+        var timeInDangerousRange: TimeInterval = 0
+        let durationThreshold: TimeInterval = 15 * 60 // 15 minutes
+        let lowThreshold = 50 // low heart rate threshold for bradycardia
+        let highThreshold = 150 // high heart rate threshold for tachycardia
+
         if motion.isDeviceMotionAvailable {
             self.motion.deviceMotionUpdateInterval = 1.0
             self.motion.showsDeviceMovementDisplay = true
             self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
             
             // Configure a timer to fetch the device motion data
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true,
-                                         block: { (timer) in
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
                 
                 let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
@@ -87,6 +91,22 @@ class BiometricsManager: ObservableObject {
                         lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
                     }
                     
+                    // check if heart rate is within dangerous range
+                    if self.intoxLevel == 2 {
+                        if lastHeartRate < Double(lowThreshold) || lastHeartRate > Double(highThreshold) {
+                            consecutiveDangerousHeartRateCount += 1
+                            timeInDangerousRange += 1
+                            
+                            // if consecutive dangerous heart rate readings exceed threshold and time in dangerous range reaches threshold, trigger alert
+                            if consecutiveDangerousHeartRateCount >= 1 && timeInDangerousRange >= durationThreshold {
+                                self.intoxLevel = 3
+                            }
+                        } else {
+                            consecutiveDangerousHeartRateCount = 0
+                            timeInDangerousRange = 0
+                        }
+                    }
+                    
                     heartRateIdx += 1
                     WCSession.default.transferUserInfo(["lastHeartRate": lastHeartRate, "heartRateIdx": heartRateIdx])
                 }
@@ -94,7 +114,7 @@ class BiometricsManager: ObservableObject {
                 let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: .heartRate)!, predicate: devicePredicate, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: updateHandler)
                      
                 self.healthStore.execute(query)
-            })
+            }
         }
     }
     

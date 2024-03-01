@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct HomeView: View {
     @EnvironmentObject var enableDataCollectionObj: EnableDataCollection
@@ -14,6 +15,7 @@ struct HomeView: View {
     @Binding var name: String
     
     @State private var shouldHide = false
+    @State private var intoxLevelSub: AnyCancellable?
     
     var body: some View {
         VStack(alignment: .center) {
@@ -100,9 +102,16 @@ struct HomeView: View {
             if (enableDataCollectionObj.enableDataCollection == 1) {
                 biometricsManager.startDeviceMotion()
                 biometricsManager.startHeartRate()
+                intoxLevelSub = alertManager.$intoxLevel
+                    .sink { level in
+                        if level == 3 {
+                            alertManager.intoxLevel = 3
+                        }
+                    }
             } else {
                 biometricsManager.stopDeviceMotion()
                 biometricsManager.stopHeartRate()
+                intoxLevelSub?.cancel()
             }
         }
     }
