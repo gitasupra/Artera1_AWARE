@@ -8,10 +8,10 @@
 import SwiftUI
 
 class Style {
-    static let accentColor:Color = Color(red: 148/255, green: 40/255, blue: 186/255)
-    static let primaryColor:Color = Color(red: 45/255, green: 24/255, blue: 92/255)
-    static let secondaryColor:Color = Color(red: 250/255, green: 51/255, blue: 92/255)
-    static let backgroundColor:Color = .black
+    static var accentColor:Color = Color(red: 148/255, green: 40/255, blue: 186/255)
+    static var primaryColor:Color = Color(red: 45/255, green: 24/255, blue: 92/255)
+    static var secondaryColor:Color = Color(red: 250/255, green: 51/255, blue: 92/255)
+    static var backgroundColor:Color = .black
     struct CustomButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
