@@ -62,8 +62,7 @@
 		12DE7BD32B93E7B6007EABE4 /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */; };
 		12DE7BD62B93EA34007EABE4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BD52B93EA34007EABE4 /* CSV */; };
 		12DE7BD82B93EA4C007EABE4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BD72B93EA4C007EABE4 /* CSV */; };
-		12DE7BE52B93EE1D007EABE4 /* alcohol.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 12DE7BE42B93EE1D007EABE4 /* alcohol.mlmodel */; };
-		12DE7BE62B93EE1D007EABE4 /* alcohol.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 12DE7BE42B93EE1D007EABE4 /* alcohol.mlmodel */; };
+		569D41032B93EF1800C58530 /* alcohol.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 569D41022B93EF1800C58530 /* alcohol.mlmodel */; };
 		77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */; };
 		AD5ECFF3F4D796166139E335 /* libPods-AWARE Watch AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */; };
 		CC94828A2AF870DF00A3A64E /* AWAREApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482892AF870DF00A3A64E /* AWAREApp.swift */; };
@@ -175,13 +174,13 @@
 		12C1CC422B7DB05D009AA8FE /* EmergencySOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencySOSView.swift; sourceTree = "<group>"; };
 		12C1CC442B7EFB6E009AA8FE /* Calling911View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calling911View.swift; sourceTree = "<group>"; };
 		12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
-		12DE7BE42B93EE1D007EABE4 /* alcohol.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = alcohol.mlmodel; path = ../../../../Downloads/alcohol.mlmodel; sourceTree = "<group>"; };
 		3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWARE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D561D5D149A38A31A02F63C /* Pods-AWARE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE.debug.xcconfig"; path = "Target Support Files/Pods-AWARE/Pods-AWARE.debug.xcconfig"; sourceTree = "<group>"; };
 		405C03793B373ABC3F7F9CB8 /* Pods-AWARETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARETests.release.xcconfig"; path = "Target Support Files/Pods-AWARETests/Pods-AWARETests.release.xcconfig"; sourceTree = "<group>"; };
 		406187498D125379879CB313 /* Pods-AWARE Watch AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE Watch AppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AWARE Watch AppUITests/Pods-AWARE Watch AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		49D48D2DEEE2EA7196441BDF /* Pods-AWARE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE.release.xcconfig"; path = "Target Support Files/Pods-AWARE/Pods-AWARE.release.xcconfig"; sourceTree = "<group>"; };
 		5655CFE3C3F087D173B7F6F0 /* Pods-AWARE Watch AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE Watch AppTests.release.xcconfig"; path = "Target Support Files/Pods-AWARE Watch AppTests/Pods-AWARE Watch AppTests.release.xcconfig"; sourceTree = "<group>"; };
+		569D41022B93EF1800C58530 /* alcohol.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = alcohol.mlmodel; sourceTree = "<group>"; };
 		56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AWARE Watch App.entitlements"; sourceTree = "<group>"; };
 		825C0DD259AE3933A18F8425 /* Pods-AWARETests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARETests.debug.xcconfig"; path = "Target Support Files/Pods-AWARETests/Pods-AWARETests.debug.xcconfig"; sourceTree = "<group>"; };
 		93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AWARE Watch AppUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -387,7 +386,7 @@
 		127DBA272B1D571A0031F9F7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				12DE7BE42B93EE1D007EABE4 /* alcohol.mlmodel */,
+				569D41022B93EF1800C58530 /* alcohol.mlmodel */,
 				1278BA6B2B5CC6D80053DF42 /* DeviceLocationService.swift */,
 				127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */,
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
@@ -916,7 +915,7 @@
 				125506B92B5CB61F007F0323 /* ContactListView.swift in Sources */,
 				12DE7BCD2B93DF28007EABE4 /* InputFunctions.swift in Sources */,
 				127DBA292B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
-				12DE7BE52B93EE1D007EABE4 /* alcohol.mlmodel in Sources */,
+				569D41032B93EF1800C58530 /* alcohol.mlmodel in Sources */,
 				CC94828C2AF870DF00A3A64E /* ContentView.swift in Sources */,
 				125506BF2B5CB61F007F0323 /* ContactDetailView.swift in Sources */,
 				12143EA62B5C8ADE004A168F /* AuthViewModel.swift in Sources */,
@@ -972,7 +971,6 @@
 				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
 				124AF8AC2B816B19004A7483 /* BiometricsManager.swift in Sources */,
 				127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
-				12DE7BE62B93EE1D007EABE4 /* alcohol.mlmodel in Sources */,
 				CC9482B22AF870E100A3A64E /* AWAREApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
