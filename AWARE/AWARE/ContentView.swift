@@ -2,9 +2,10 @@ import SwiftUI
 import HealthKit
 import Firebase
 import FirebaseCore
+import FirebaseDatabase
 import FirebaseAnalytics
 import FirebaseAnalyticsSwift
-import FirebaseDatabase
+
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: AuthViewModel
