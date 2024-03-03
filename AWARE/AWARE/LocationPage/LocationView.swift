@@ -172,7 +172,7 @@ extension MKCoordinateRegion {
 final class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager: CLLocationManager?
     
-    @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)) //latitude: 37.221516, longitude: -121.891854
+    @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)) 
     
     func checkIfLocationServicesIsEnabled() {
         DispatchQueue.global().async {

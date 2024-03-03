@@ -49,41 +49,24 @@ struct Page2View: View {
             if (enableDataCollectionObj.enableDataCollection == 0) {
                 if !self.$shouldHide.wrappedValue {
                     Text("Enable Drinking Mode")
-//                        .multilineTextAlignment(.center)
-//                    Button(action: {
-//                        enableDataCollectionObj.toggleOn()
-//                    }) {
-//                        Image(systemName: "touchid")
-//                            .font(.system(size: 50))
-//                            .foregroundColor(.red)
-//                            .controlSize(.extraLarge)
-//                    }
                     Button {
                         enableDataCollectionObj.toggleOn()
                     } label: {
                         ZStack {
                             Circle()
                                 .foregroundColor(.white)
-                                .frame(width: 110, height: 100) // 170 80 100
+                                .frame(width: 110, height: 100)
                             
-                            Image(systemName: "wineglass")
-                                .font(.system(size: 50))
-                                .foregroundColor(.gray)
+                            Image("cocktail")
+                                .frame(width: 50, height: 50)
                                 .controlSize(.extraLarge)
+                                .overlay(Color.gray.opacity(1))
+                                .mask(Image("cocktail").resizable())
                         }
                     }
                 }
             } else {
                 Text("Disable Drinking Mode")
-//                    .multilineTextAlignment(.center)
-//                Button {
-//                    enableDataCollectionObj.toggleOff()
-//                } label: {
-//                    Image(systemName: "touchid")
-//                        .font(.system(size: 50))
-//                        .foregroundColor(.green)
-//                        .controlSize(.extraLarge)
-//                }
                 Button {
                     enableDataCollectionObj.toggleOff()
                 } label: {
@@ -92,10 +75,11 @@ struct Page2View: View {
                             .foregroundColor(.green)
                             .frame(width: 100, height: 100)
                         
-                        Image(systemName: "wineglass.fill")
-                            .font(.system(size: 50))
-                            .foregroundColor(.white)
+                        Image("cocktail.fill")
+                            .frame(width: 50, height: 50)
                             .controlSize(.extraLarge)
+                            .overlay(Color.white.opacity(1))
+                            .mask(Image("cocktail.fill").resizable())
                     }
                 }
             }
