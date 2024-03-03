@@ -80,6 +80,11 @@ struct Page2View: View {
                             .controlSize(.extraLarge)
                             .overlay(Color.white.opacity(1))
                             .mask(Image("cocktail.fill").resizable())
+                        
+                        Image(systemName: "bubbles.and.sparkles")
+                            .font(.system(size: 15))
+                            .foregroundColor(.white)
+                            .offset(x: 5, y: -25)
                     }
                 }
             }
