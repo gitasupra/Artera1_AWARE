@@ -5,8 +5,10 @@
 //  Created by Jessica Nguyen on 2/17/24.
 //
 
+import CoreML
 import Charts
 import SwiftUI
+import SwiftCSV
 import HealthKit
 import CoreMotion
 import WatchConnectivity
@@ -16,39 +18,69 @@ class BiometricsManager: ObservableObject {
     let healthStore = HKHealthStore()
     var timer: Timer?
     var intoxLevel: Int = 0
+    
     // accelerometer data variables
     var acc: [AccelerometerDataPoint] = []
     var accIdx: Int = 0
     
     // accelerometer data struct
     struct AccelerometerDataPoint: Identifiable {
+        let timestamp: Int64
         let x: Double
         let y: Double
         let z: Double
         var myIndex: Int = 0
         var id: UUID
     }
-
+    
+    // machine learning variables
+    var windowAccData: [AccelerometerDataPoint] = []
+    @State private var windowFile: String = "window_data.csv"
+    var windowFileURL: String = ""
+    @StateObject var inputFunctions = InputFunctions()
+    
     func startDeviceMotion() {
-        print("start device motion called")
         if motion.isDeviceMotionAvailable {
-            self.motion.deviceMotionUpdateInterval = 1.0/50.0
+            //Bar Crawl dataset sampled at 40Hz
+            self.motion.deviceMotionUpdateInterval = 1.0/40.0
             self.motion.showsDeviceMovementDisplay = true
             self.motion.startDeviceMotionUpdates(using: .xMagneticNorthZVertical)
             
             // Configure a timer to fetch the device motion data
-            let timer = Timer(fire: Date(), interval: (1.0/50.0), repeats: true) { (timer) in
+            let timer = Timer(fire: Date(), interval: (1.0/40.0), repeats: true,
+                              block: { (timer) in
                 if let data = self.motion.deviceMotion {
-                    // Get accelerometer data
+                    // Get attitude, accelerometer, and gyroscope data
+                    let attitude = data.attitude
                     let accelerometer = data.userAcceleration
-                    self.accIdx += 1
+                    let gyro = data.rotationRate
                     
-                    let new: AccelerometerDataPoint = AccelerometerDataPoint(x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: self.accIdx, id: UUID())
+                    let timestampInMilliseconds = Int64(Date().timeIntervalSince1970 * 1000)
+                    
+                    let new:AccelerometerDataPoint = AccelerometerDataPoint(timestamp: timestampInMilliseconds, x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: self.accIdx, id: UUID())
                     
                     self.acc.append(new)
-                    print("append to acc")
+                    self.windowAccData.append(new)
+                    
+                    //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
+                    //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
+                    
+                    if self.accIdx >= 840 && self.accIdx % 840 == 0 {
+                        //At multiple of (data points per second) * 10 seconds
+                        #if os(iOS)
+                        self.windowFileURL = self.writeAccDataToCSV(data: self.windowAccData)!
+                        print("Window data saved to: \(self.windowFileURL)")
+                        let file = self.inputFunctions.processData(datafile: self.windowFileURL)
+                        Predictor.predictLevel(file: file)
+                        #endif
+                        
+                        //reset window data array
+                        self.windowAccData=[]
+                    }
+                    self.accIdx += 1
                 }
-            }
+            })
+            
             // Add the timer to the current run loop
             RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
         }
@@ -68,7 +100,7 @@ class BiometricsManager: ObservableObject {
         let durationThreshold: TimeInterval = 15 * 60 // 15 minutes
         let lowThreshold = 50 // low heart rate threshold for bradycardia
         let highThreshold = 150 // high heart rate threshold for tachycardia
-
+        
         if motion.isDeviceMotionAvailable {
             self.motion.deviceMotionUpdateInterval = 1.0
             self.motion.showsDeviceMovementDisplay = true
@@ -112,7 +144,7 @@ class BiometricsManager: ObservableObject {
                 }
                 
                 let query = HKAnchoredObjectQuery(type: HKObjectType.quantityType(forIdentifier: .heartRate)!, predicate: devicePredicate, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: updateHandler)
-                     
+                
                 self.healthStore.execute(query)
             }
         }
@@ -123,8 +155,39 @@ class BiometricsManager: ObservableObject {
         timer?.invalidate()
         timer = nil
     }
-}
+    
+    func writeAccDataToCSV(data: [AccelerometerDataPoint]) -> String? {
+        // Create a CSV string header
+        var csvString = "time,x,y,z\n"
+        
+        // Append each data point to the CSV string
+        for dataPoint in data {
+            let timestamp = dataPoint.timestamp
+            let x = dataPoint.x
+            let y = dataPoint.y
+            let z = dataPoint.z
+            csvString.append("\(timestamp),\(x),\(y),\(z)\n")
+        }
 
+        // Create a file URL for saving the CSV file
+        let fileName = windowFile
+        guard let fileURL = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName) else {
+            print("Failed to create file URL")
+            return nil
+        }
+        
+        // Write the CSV string to the file
+        do {
+            try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+            print("file path: \(fileURL.path) thanks")
+            return fileURL.path
+        } catch {
+            print("Error writing CSV file: \(error)")
+            return nil
+        }
+    }
+}
+                              
 struct accelerometerGraph: View {
     var acc: [BiometricsManager.AccelerometerDataPoint]
     var body: some View {
