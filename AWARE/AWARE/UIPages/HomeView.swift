@@ -75,24 +75,33 @@ struct HomeView: View {
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
                     }) {
-                        Image(systemName: "wineglass")
-                            .font(.system(size: 100))
-                            .foregroundColor(.gray)
-                            .controlSize(.extraLarge)
+                        ZStack {
+                            Circle()
+                                .foregroundColor(.white)
+                                .frame(width: 170, height: 170)
+                            Image(systemName: "wineglass")
+                                .font(.system(size: 80))
+                                .foregroundColor(.gray)
+                                .controlSize(.extraLarge)
+                        }
                     }.padding()
-                    Text("Enable Drinking Mode")
                     Spacer()
                 }
             } else {
                 Button(action: {
                     enableDataCollectionObj.toggleOff()
                 }) {
-                    Image(systemName: "wineglass.fill")
-                        .font(.system(size: 100))
-                        .foregroundColor(.green)
-                        .controlSize(.extraLarge)
+                    ZStack {
+                        Circle()
+                            .foregroundColor(.green)
+                            .frame(width: 170, height: 170)
+                    
+                        Image(systemName: "wineglass.fill")
+                            .font(.system(size: 80))
+                            .foregroundColor(.white)
+                            .controlSize(.extraLarge)
+                    }
                 }.padding()
-                Text("Disable Drinking Mode")
                 Spacer()
             }
         }
