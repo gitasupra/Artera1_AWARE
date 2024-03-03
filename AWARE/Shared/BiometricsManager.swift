@@ -34,9 +34,9 @@ class BiometricsManager: ObservableObject {
     }
     
     // machine learning variables
-    @State private var windowAccData: [AccelerometerDataPoint] = []
+    var windowAccData: [AccelerometerDataPoint] = []
     @State private var windowFile: String = "window_data.csv"
-    @State private var windowFileURL: String = ""
+    var windowFileURL: String = ""
     @StateObject var inputFunctions = InputFunctions()
     
     func startDeviceMotion() {
@@ -65,13 +65,13 @@ class BiometricsManager: ObservableObject {
                     //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
                     //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
                     
-                    if self.accIdx > 0 && self.accIdx % 840 == 0 {
+                    if self.accIdx >= 840 && self.accIdx % 840 == 0 {
                         //At multiple of (data points per second) * 10 seconds
+                        #if os(iOS)
                         self.windowFileURL = self.writeAccDataToCSV(data: self.windowAccData)!
                         print("Window data saved to: \(self.windowFileURL)")
                         let file = self.inputFunctions.processData(datafile: self.windowFileURL)
-                        #if os(iOS)
-                        Predictor.predictLevel(file: "file.csv")
+                        Predictor.predictLevel(file: file)
                         #endif
                         
                         //reset window data array
@@ -179,7 +179,7 @@ class BiometricsManager: ObservableObject {
         // Write the CSV string to the file
         do {
             try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
-            // print("CSV file saved successfully")
+            print("file path: \(fileURL.path) thanks")
             return fileURL.path
         } catch {
             print("Error writing CSV file: \(error)")
