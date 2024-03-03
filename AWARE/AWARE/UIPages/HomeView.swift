@@ -75,9 +75,9 @@ struct HomeView: View {
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
                     }) {
-                        Image(systemName: "touchid")
+                        Image(systemName: "wineglass")
                             .font(.system(size: 100))
-                            .foregroundColor(.red)
+                            .foregroundColor(.gray)
                             .controlSize(.extraLarge)
                     }.padding()
                     Text("Enable Drinking Mode")
@@ -87,7 +87,7 @@ struct HomeView: View {
                 Button(action: {
                     enableDataCollectionObj.toggleOff()
                 }) {
-                    Image(systemName: "touchid")
+                    Image(systemName: "wineglass.fill")
                         .font(.system(size: 100))
                         .foregroundColor(.green)
                         .controlSize(.extraLarge)
