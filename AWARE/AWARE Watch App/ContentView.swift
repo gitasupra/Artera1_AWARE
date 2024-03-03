@@ -5,22 +5,35 @@ import WatchConnectivity
 
 struct ContentView: View {
     @State private var shouldHide = false
+    @State private var selection: Int // Declare selection here
+
+    
+    init() {
+        _selection = State(initialValue: 2) // Set initial value here
+
+    }
 
     var body: some View {
         NavigationView {
-            TabView {
+            TabView(selection:$selection) {
                 // Page 1
                 Page1View()
                     .tabItem {
                         Label("AWARE", systemImage: "person.circle.fill")
-                    }
+                    }.tag(1)
 
                 // Page 2
                 Page2View(shouldHide: $shouldHide)
                     .tabItem {
                         Label("Page 2", systemImage: "info.circle")
-                    }
+                    }.tag(2)
             }
+            .onAppear {
+                           // Set the initial tab selection to HomeView (tag 3) only on the first appearance
+                           if selection != 2 {
+                               selection = 2
+                           }
+                       }
         }
     }
     

@@ -121,37 +121,10 @@ struct CalendarView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-//            Text("Today")
-//                .font(.title)
-//                .padding(.top, 5)
+
             HStack {
-//                let daysOfTheWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-//                let datesForCurrentWeek = getDatesForCurrentWeek()
-//                let currentDay = Calendar.current.component(.day, from: Date())
-                
-//                ForEach(Array(daysOfTheWeek.enumerated()), id: \.element) { index, element in
-//                    VStack {
-//                        Text(element)
-//                            .padding(10)
-//                            .foregroundColor(.gray)
-//                            .cornerRadius(8)
-//                            .font(.system(size: 12))
-//                        
-//                        let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-//                        Text(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-//                            .padding(10)
-//                            .background(currentDay == dayOnly ? Style.accentColor : .black)
-//                            .foregroundColor(.white)
-//                            .cornerRadius(8)
-//                            .font(.system(size: 15))
-//                    }
-//                }
+
             }
-//            .cornerRadius(6)
-//            .overlay(
-//                RoundedRectangle(cornerRadius: 6)
-//                    .stroke(Style.accentColor, lineWidth: 1)
-//            )
             
             Text("Intoxication History")
                 .font(.title)
@@ -170,12 +143,7 @@ struct CalendarView: View {
                             .font(.system(size: 12))
                         
                         let dayOnly = Int(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-//                        Text(datesForCurrentWeek[index].components(separatedBy: " ")[1])
-//                            .padding(10)
-//                            .background(currentDay == dayOnly ? Style.accentColor : .black)
-//                            .foregroundColor(.white)
-//                            .cornerRadius(8)
-//                            .font(.system(size: 15))
+
                     }
                 }
             }
@@ -196,16 +164,10 @@ struct CalendarView: View {
                                     .offset(y: 15) // Adjust the offset to position the tiny colored circle below the gray circle
                                 Text("\(day.date.day)")
                                     .font(.subheadline)
-                                //                                            .foregroundColor(day.level != -1 ? .white : .black)
                                     .foregroundColor(.white)
                                     .padding(10)
 
-                                
-                                //                                if day.level != -1 {
-                                //                                    Text("\(day.date.day)")
-                                //                                        .font(.subheadline)
-                                //                                        .foregroundColor(day.level != -1 ? .white : .black)
-                                //                                }
+                               
                                 
                                 if day.date.isToday {
                                     Circle()
@@ -218,10 +180,7 @@ struct CalendarView: View {
                                         .frame(width: 30, height: 30) // Adjust the width and height as needed
 
                                 }
-                                //                                .foregroundColor(day.date.isToday ? .white : .black)
-                                //                                .background(day.date.isToday ? Style.accentColor : .clear)
-                                //                                .cornerRadius(10)
-                                //                                .frame(width: 20, height: 20) // Adjust width and height for spacing
+                               
                             } else {
                                 Circle()
                                     .foregroundColor(.clear)
@@ -233,7 +192,6 @@ struct CalendarView: View {
                 }
             }
 
-//            .padding(isToday ? [.top, .bottom] : .none, 10)
             .padding(.bottom, 10)
 
 
@@ -244,7 +202,6 @@ struct CalendarView: View {
                 
                     RoundedRectangle(cornerRadius: 6)
                         .stroke(Style.accentColor, lineWidth: 1)
-//                        .padding([.top, .bottom], 100) // Add equal padding to top and bottom
 
 
                 )
