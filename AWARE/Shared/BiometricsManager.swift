@@ -33,11 +33,13 @@ class BiometricsManager: ObservableObject {
         var id: UUID
     }
     
+    #if os(iOS)
     // machine learning variables
     @State private var windowAccData: [AccelerometerDataPoint] = []
     @State private var windowFile: String = "window_data.csv"
     @State private var windowFileURL: String = ""
     @StateObject var inputFunctions = InputFunctions()
+    #endif
     
     func startDeviceMotion() {
         if motion.isDeviceMotionAvailable {
@@ -60,12 +62,12 @@ class BiometricsManager: ObservableObject {
                     let new:AccelerometerDataPoint = AccelerometerDataPoint(timestamp: timestampInMilliseconds, x: Double(accelerometer.x), y: Double(accelerometer.y), z: Double(accelerometer.z), myIndex: self.accIdx, id: UUID())
                     
                     self.acc.append(new)
-                    self.windowAccData.append(new)
                     
                     //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
                     //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
-                    
                     #if os(iOS)
+                    self.windowAccData.append(new)
+                    
                     if self.accIdx > 0 && self.accIdx % 840 == 0 {
                         //At multiple of (data points per second) * 10 seconds
                         self.windowFileURL = self.writeAccDataToCSV(data: self.windowAccData)!
