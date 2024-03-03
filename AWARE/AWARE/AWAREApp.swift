@@ -61,7 +61,7 @@ struct AWAREApp: App {
                 .environmentObject(motion)
                 .environmentObject(viewModel)
                 .accentColor(Style.accentColor)
-                .preferredColorScheme(.dark)
+                //.preferredColorScheme(.dark)
         }
     }
 }

@@ -59,9 +59,11 @@
 		12DE7BCD2B93DF28007EABE4 /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */; };
 		12DE7BD02B93E681007EABE4 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BCF2B93E681007EABE4 /* SwiftCSV */; };
 		12DE7BD22B93E727007EABE4 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BD12B93E727007EABE4 /* SwiftCSV */; };
-		12DE7BD32B93E7B6007EABE4 /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */; };
 		12DE7BD62B93EA34007EABE4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BD52B93EA34007EABE4 /* CSV */; };
 		12DE7BD82B93EA4C007EABE4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BD72B93EA4C007EABE4 /* CSV */; };
+		12F7699D2B93F0D600B9FDE2 /* alcohol.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 569D41022B93EF1800C58530 /* alcohol.mlmodel */; };
+		12F7699E2B93F10300B9FDE2 /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */; };
+		12F769A42B93FFC100B9FDE2 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F769A32B93FFC100B9FDE2 /* Predictor.swift */; };
 		569D41032B93EF1800C58530 /* alcohol.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 569D41022B93EF1800C58530 /* alcohol.mlmodel */; };
 		77E2D165A485EC884FF432AE /* Pods_AWARE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */; };
 		AD5ECFF3F4D796166139E335 /* libPods-AWARE Watch AppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AB1DCD0244C096E6BCBF14 /* libPods-AWARE Watch AppUITests.a */; };
@@ -174,6 +176,7 @@
 		12C1CC422B7DB05D009AA8FE /* EmergencySOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencySOSView.swift; sourceTree = "<group>"; };
 		12C1CC442B7EFB6E009AA8FE /* Calling911View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calling911View.swift; sourceTree = "<group>"; };
 		12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFunctions.swift; sourceTree = "<group>"; };
+		12F769A32B93FFC100B9FDE2 /* Predictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
 		3853FF23E43F9FE360A1D858 /* Pods_AWARE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWARE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D561D5D149A38A31A02F63C /* Pods-AWARE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE.debug.xcconfig"; path = "Target Support Files/Pods-AWARE/Pods-AWARE.debug.xcconfig"; sourceTree = "<group>"; };
 		405C03793B373ABC3F7F9CB8 /* Pods-AWARETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARETests.release.xcconfig"; path = "Target Support Files/Pods-AWARETests/Pods-AWARETests.release.xcconfig"; sourceTree = "<group>"; };
@@ -386,7 +389,6 @@
 		127DBA272B1D571A0031F9F7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				569D41022B93EF1800C58530 /* alcohol.mlmodel */,
 				1278BA6B2B5CC6D80053DF42 /* DeviceLocationService.swift */,
 				127DBA282B1D572B0031F9F7 /* EnableDataCollection.swift */,
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
@@ -413,6 +415,15 @@
 				122D23F22B7D9FAE001A1A18 /* TwilioSMSManager.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		12F769A52B94005500B9FDE2 /* MLPredictor */ = {
+			isa = PBXGroup;
+			children = (
+				569D41022B93EF1800C58530 /* alcohol.mlmodel */,
+				12F769A32B93FFC100B9FDE2 /* Predictor.swift */,
+			);
+			path = MLPredictor;
 			sourceTree = "<group>";
 		};
 		A30E0BA88A455E9A1858A649 /* Pods */ = {
@@ -470,6 +481,7 @@
 				12143EAC2B5C8AF1004A168F /* Model */,
 				125506AB2B5CB61F007F0323 /* ContactPage */,
 				12C1CC492B7F1135009AA8FE /* Response */,
+				12F769A52B94005500B9FDE2 /* MLPredictor */,
 				125F09D22B85B54E004BD037 /* UIPages */,
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
@@ -909,6 +921,7 @@
 				124746D92B6EF1DD002E1AC9 /* UserContact.swift in Sources */,
 				1278BA6C2B5CC6D80053DF42 /* DeviceLocationService.swift in Sources */,
 				12C1CC432B7DB05D009AA8FE /* EmergencySOSView.swift in Sources */,
+				12F769A42B93FFC100B9FDE2 /* Predictor.swift in Sources */,
 				125506B82B5CB61F007F0323 /* Contact.swift in Sources */,
 				125F09DC2B85BC43004BD037 /* SettingsView.swift in Sources */,
 				1278BA6A2B5CC3360053DF42 /* LocationView.swift in Sources */,
@@ -966,8 +979,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12DE7BD32B93E7B6007EABE4 /* InputFunctions.swift in Sources */,
 				127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
+				12F7699D2B93F0D600B9FDE2 /* alcohol.mlmodel in Sources */,
+				12F7699E2B93F10300B9FDE2 /* InputFunctions.swift in Sources */,
 				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
 				124AF8AC2B816B19004A7483 /* BiometricsManager.swift in Sources */,
 				127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
