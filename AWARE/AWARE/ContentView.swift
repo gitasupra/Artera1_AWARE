@@ -15,28 +15,35 @@ struct ContentView: View {
     @State private var showEmergencySOS = false
     @State private var showCalling911 = false
     @State private var name: String
+    @State private var selection: Int // Declare selection here
+
 
     init() {
         UITabBar.appearance().backgroundColor = UIColor(Style.primaryColor)
         name = Auth.auth().currentUser?.displayName ?? ""
+        _selection = State(initialValue: 3) // Set initial value here
+
     }
     
     var body: some View {
         if viewModel.userSession != nil {
-            TabView {
+//            @State var selection = 3
+            
+
+            TabView(selection:$selection) {
                 // Page 1 Analytics
                 AnalyticsView()
                     .environmentObject(enableDataCollectionObj)
                     .environmentObject(biometricsManager)
                     .tabItem {
                         Label("Analytics", systemImage: "heart.text.square")
-                    }
+                    } .tag(1)
                 
                 // Page 2 Contacts
                 ContactListView()
                     .tabItem {
                         Label("Contacts", systemImage: "person.crop.circle")
-                    }
+                    } .tag(2)
                 
                 // Page 3 - Home / Toggle
                 HomeView(name: $name)
@@ -45,21 +52,27 @@ struct ContentView: View {
                     .environmentObject(alertManager)
                     .tabItem {
                         Label("Home", systemImage: "house.fill")
-                    }
+                    }.tag(3)
                 
                 // Page 4 Navigation
                 NavigationServicesView()
                     .tabItem {
                         Label("Navigation", systemImage: "map")
-                    }
+                    }.tag(4)
                 
                 // Page 5 Settings
                 SettingsView(name: $name)
                     .environmentObject(viewModel)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
-                    }
+                    }.tag(5)
             }
+            .onAppear {
+                           // Set the initial tab selection to HomeView (tag 3) only on the first appearance
+                           if selection != 3 {
+                               selection = 3
+                           }
+                       }
             .onReceive(viewModel.$userSession) { userSession in
                 if userSession != nil {
                     name = Auth.auth().currentUser?.displayName ?? "user"
