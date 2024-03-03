@@ -79,10 +79,11 @@ struct HomeView: View {
                             Circle()
                                 .foregroundColor(.white)
                                 .frame(width: 170, height: 170)
-                            Image(systemName: "wineglass")
+                            Image("cocktail")
                                 .font(.system(size: 80))
-                                .foregroundColor(.gray)
                                 .controlSize(.extraLarge)
+                                .overlay(Color.gray.opacity(1))
+                                .mask(Image("cocktail").resizable())
                         }
                     }.padding()
                     Spacer()
@@ -96,10 +97,11 @@ struct HomeView: View {
                             .foregroundColor(.green)
                             .frame(width: 170, height: 170)
                     
-                        Image(systemName: "wineglass.fill")
+                        Image("cocktail.fill")
                             .font(.system(size: 80))
-                            .foregroundColor(.white)
                             .controlSize(.extraLarge)
+                            .overlay(Color.white.opacity(1))
+                            .mask(Image("cocktail.fill").resizable())
                     }
                 }.padding()
                 Spacer()
