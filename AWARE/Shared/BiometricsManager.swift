@@ -65,18 +65,20 @@ class BiometricsManager: ObservableObject {
                     //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
                     //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
                     
+                    #if os(iOS)
                     if self.accIdx > 0 && self.accIdx % 840 == 0 {
                         //At multiple of (data points per second) * 10 seconds
                         self.windowFileURL = self.writeAccDataToCSV(data: self.windowAccData)!
                         print("Window data saved to: \(self.windowFileURL)")
                         let file = self.inputFunctions.processData(datafile: self.windowFileURL)
-                        #if os(iOS)
+                        
                         Predictor.predictLevel(file: "file.csv")
-                        #endif
                         
                         //reset window data array
                         self.windowAccData=[]
                     }
+                    #endif
+                    
                     self.accIdx += 1
                 }
             })
