@@ -96,12 +96,17 @@ struct HomeView: View {
                         Circle()
                             .foregroundColor(.green)
                             .frame(width: 170, height: 170)
-                    
+                        
                         Image("cocktail.fill")
                             .font(.system(size: 80))
                             .controlSize(.extraLarge)
                             .overlay(Color.white.opacity(1))
                             .mask(Image("cocktail.fill").resizable())
+                        
+                        Image(systemName: "bubbles.and.sparkles")
+                            .font(.system(size: 30))
+                            .foregroundColor(.white)
+                            .offset(x: 10, y: -50)
                     }
                 }.padding()
                 Spacer()

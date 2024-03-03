@@ -72,7 +72,7 @@ struct CalendarView: View {
         var dayIterator = startDate
         while dayIterator <= endDate {
             let level: Int
-            if dayIterator <= currentDate {
+            if dayIterator < currentDate.yesterday {
                 level = Int.random(in: 0...3)
             } else {
                 level = -1 // No info for future days
@@ -110,13 +110,20 @@ struct CalendarView: View {
         let currentDate = Date()
         let calendar = Calendar.current
 
-        let lastSunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: currentDate))!
+        // Find the start of the current week (Sunday)
+        guard let sunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: currentDate)) else {
+            return []
+        }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM'\u{2028}' d"
-
-        return (0..<7).map { calendar.date(byAdding: .day, value: $0, to: lastSunday)! }
-            .map {formatter.string(from: $0)}
+        var datesForCurrentWeek: [String] = []
+        for i in 0..<7 {
+            if let date = calendar.date(byAdding: .day, value: i, to: sunday) {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MMM d"
+                datesForCurrentWeek.append(formatter.string(from: date))
+            }
+        }
+        return datesForCurrentWeek
     }
 
     var body: some View {
@@ -223,9 +230,10 @@ extension Date {
 
     func endOfMonth() -> Date {
         let calendar = Calendar.current
-        let range = calendar.range(of: .day, in: .month, for: self)!
-        let lastDayOfMonth = range.upperBound - 1
-        return calendar.date(byAdding: .day, value: lastDayOfMonth, to: startOfMonth())!
+        var components = calendar.dateComponents([.year, .month], from: self)
+        components.month! += 1
+        components.day = 0
+        return calendar.date(from: components)!
     }
 
     var day: Int {
@@ -239,7 +247,11 @@ extension Date {
     }
     
     var isToday: Bool {
-             let calendar = Calendar.current
-             return calendar.isDateInToday(self)
-         }
+        let calendar = Calendar.current
+        return calendar.isDateInToday(self)
+    }
+    
+    var yesterday: Date {
+        return Calendar.current.date(byAdding: .day, value: -1, to: self) ?? self
+    }
 }
