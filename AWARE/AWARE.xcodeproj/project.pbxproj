@@ -61,7 +61,6 @@
 		12DE7BD22B93E727007EABE4 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BD12B93E727007EABE4 /* SwiftCSV */; };
 		12DE7BD62B93EA34007EABE4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BD52B93EA34007EABE4 /* CSV */; };
 		12DE7BD82B93EA4C007EABE4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 12DE7BD72B93EA4C007EABE4 /* CSV */; };
-		12F7699D2B93F0D600B9FDE2 /* alcohol.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 569D41022B93EF1800C58530 /* alcohol.mlmodel */; };
 		12F7699E2B93F10300B9FDE2 /* InputFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */; };
 		12F769A42B93FFC100B9FDE2 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F769A32B93FFC100B9FDE2 /* Predictor.swift */; };
 		569D41032B93EF1800C58530 /* alcohol.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 569D41022B93EF1800C58530 /* alcohol.mlmodel */; };
@@ -980,7 +979,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				127DBA2A2B1D572B0031F9F7 /* EnableDataCollection.swift in Sources */,
-				12F7699D2B93F0D600B9FDE2 /* alcohol.mlmodel in Sources */,
 				12F7699E2B93F10300B9FDE2 /* InputFunctions.swift in Sources */,
 				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
 				124AF8AC2B816B19004A7483 /* BiometricsManager.swift in Sources */,
