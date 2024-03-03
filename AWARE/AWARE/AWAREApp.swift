@@ -32,21 +32,11 @@ struct AWAREApp: App {
         
         let sampleTypesToReadShare = Set([
             HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKObjectType.quantityType(forIdentifier: .bloodAlcoholContent)!,
-            HKObjectType.quantityType(forIdentifier: .bloodPressureSystolic)!,
-            HKObjectType.quantityType(forIdentifier: .bloodPressureDiastolic)!,
-            HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
-            HKObjectType.categoryType(forIdentifier: .shortnessOfBreath)!,
         ])
         
         let sampleTypesToReadOnly = Set([
             HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKObjectType.quantityType(forIdentifier: .bloodAlcoholContent)!,
-            HKObjectType.quantityType(forIdentifier: .bloodPressureSystolic)!,
-            HKObjectType.quantityType(forIdentifier: .bloodPressureDiastolic)!,
             HKObjectType.quantityType(forIdentifier: .appleWalkingSteadiness)!,
-            HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
-            HKObjectType.categoryType(forIdentifier: .shortnessOfBreath)!,
         ])
         
         healthStore.requestAuthorization(toShare: sampleTypesToReadShare, read: sampleTypesToReadOnly) { (success, error) in
