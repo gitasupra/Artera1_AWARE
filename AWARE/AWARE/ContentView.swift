@@ -87,7 +87,7 @@ struct ContentView: View {
                     return // Return early if the value hasn't changed
                 }
                 print("sending notif")
-                
+                enableDataCollectionObj.sendLevelToWatch(level: biometricsManager.intoxLevel)
                 sendPhoneNotification(level: biometricsManager.intoxLevel)
             }
         } else {

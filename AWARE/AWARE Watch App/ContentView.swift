@@ -2,6 +2,7 @@ import SwiftUI
 import HealthKit
 import CoreMotion
 import WatchConnectivity
+import UserNotifications
 
 struct ContentView: View {
     @State private var shouldHide = false
@@ -14,7 +15,7 @@ struct ContentView: View {
                     .tabItem {
                         Label("AWARE", systemImage: "person.circle.fill")
                     }
-
+                
                 // Page 2
                 Page2View(shouldHide: $shouldHide)
                     .tabItem {
@@ -23,7 +24,6 @@ struct ContentView: View {
             }
         }
     }
-    
 }
 
 struct Page1View: View {
@@ -71,6 +71,8 @@ struct Page2View: View {
                         .controlSize(.extraLarge)
                 }
             }
+            Text("Current Level: \(enableDataCollectionObj.newIntoxLevel)")
+                .multilineTextAlignment(.center)
         }
         .onChange(of: enableDataCollectionObj.enableDataCollection) {
             if (enableDataCollectionObj.enableDataCollection == 1) {
@@ -82,6 +84,8 @@ struct Page2View: View {
             }
         }
     }
+    
+    
 }
 
 #Preview{

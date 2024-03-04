@@ -4,10 +4,13 @@ import WatchConnectivity
 class SessionDelegater: NSObject, WCSessionDelegate {
     let enableDataCollectionSubject: PassthroughSubject<Int, Never>
     let heartRateSubject: PassthroughSubject<(Double, Int), Never>
+    let newIntoxLevelSubject:  PassthroughSubject<Int, Never>
+
     
-    init(enableDataCollectionSubject: PassthroughSubject<Int, Never>, heartRateSubject: PassthroughSubject<(Double, Int), Never>) {
+    init(enableDataCollectionSubject: PassthroughSubject<Int, Never>, heartRateSubject: PassthroughSubject<(Double, Int), Never>, newIntoxLevelSubject:  PassthroughSubject<Int, Never>) {
         self.enableDataCollectionSubject = enableDataCollectionSubject
         self.heartRateSubject = heartRateSubject
+        self.newIntoxLevelSubject = newIntoxLevelSubject
         super.init()
     }
     
@@ -20,7 +23,11 @@ class SessionDelegater: NSObject, WCSessionDelegate {
         DispatchQueue.main.async {
             if let enableDataCollection = message["enableDataCollection"] as? Int {
                 self.enableDataCollectionSubject.send(enableDataCollection)
-            } else {
+            }
+            else if let newIntoxLevel = message["newIntoxLevel"] as? Int {
+                self.newIntoxLevelSubject.send(newIntoxLevel)
+            }
+            else {
                 print("There was an error")
             }
         }
