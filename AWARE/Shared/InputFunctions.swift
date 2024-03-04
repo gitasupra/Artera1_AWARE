@@ -205,7 +205,7 @@ class InputFunctions : ObservableObject{
             
             do {
                 try df.writeCSV(to: outputURL)
-                print("Combined DataFrame saved to CSV: \(outputURL.path)")
+//                print("Combined DataFrame saved to CSV: \(outputURL.path)")
                 return outputURL.path
             } catch {
                 print("Error: \(error.localizedDescription)")

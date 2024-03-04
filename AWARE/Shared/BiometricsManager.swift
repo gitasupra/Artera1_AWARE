@@ -180,7 +180,7 @@ class BiometricsManager: ObservableObject {
         // Write the CSV string to the file
         do {
             try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
-            print("file path: \(fileURL.path) thanks")
+//            print("file path: \(fileURL.path) thanks")
             return fileURL.path
         } catch {
             print("Error writing CSV file: \(error)")
