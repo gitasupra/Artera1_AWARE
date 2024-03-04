@@ -120,6 +120,7 @@ struct ContentView: View {
     private func sendPhoneNotification(level: Int){
         let content = UNMutableNotificationContent()
         content.title="Intoxication Level Alert"
+        content.sound=UNNotificationSound.default
         switch level {
         case 0:
             content.subtitle = "Current level: sober"
@@ -137,6 +138,12 @@ struct ContentView: View {
         
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
-        UNUserNotificationCenter.current().add(request)
+        UNUserNotificationCenter.current().add(request){ (error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }else{
+                print("scheduled successfully")
+            }
+        }
     }
 }

@@ -25,7 +25,7 @@ final class EnableDataCollection: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] receivedHeartRate in
                 self?.heartRateList.append(receivedHeartRate)
-                print("append to heart rate")
+//                print("append to heart rate")
             }
             .store(in: &cancellables)
     }
