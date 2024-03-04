@@ -249,7 +249,7 @@ class InputFunctions : ObservableObject{
             for idx in 0..<tot_rows {
                 if idx%1000 == 0 {
                     //FIXME remove this, will make the console messy
-                    print(" \(idx) **")
+//                    print(" \(idx) **")
                 }
                 
                 let curr_row = acc_data[idx]
@@ -322,7 +322,7 @@ class InputFunctions : ObservableObject{
                 return ""
             }
             
-            print("create_per_second SUCCESS: \(metric_no)")
+//            print("create_per_second SUCCESS: \(metric_no)")
             return outputFileURL.path
         } catch {
             // Handle the error
@@ -512,7 +512,7 @@ class InputFunctions : ObservableObject{
                 return ""
             }
             //may need to return full path (outputURL.path)
-            print("create_per_window SUCCESS \(metric_no)")
+//            print("create_per_window SUCCESS \(metric_no)")
             //                print(outputFileURL.path)
             return outputFileURL.deletingLastPathComponent().path
         }
@@ -523,7 +523,7 @@ class InputFunctions : ObservableObject{
     }
     
     func processData(datafile: String) -> String {
-        print("processing data!")
+//        print("processing data!")
         
         var perWindowDataDir: String = ""
         for metricNum in Features.allCases{
@@ -531,12 +531,12 @@ class InputFunctions : ObservableObject{
             perWindowDataDir = create_per_window_data(file: perSecondDataFile, metric_no: metricNum.rawValue)
         }
         
-        print("SUCCESS creating all window data")
+//        print("SUCCESS creating all window data")
         
-        print("Window data in: \(perWindowDataDir)")
+//        print("Window data in: \(perWindowDataDir)")
         
         let result = combine_features(csvPath: perWindowDataDir)!
-        print("combining features success")
+//        print("combining features success")
         
         return result
     }

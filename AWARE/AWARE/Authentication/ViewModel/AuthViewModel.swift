@@ -43,7 +43,7 @@ class AuthViewModel: ObservableObject {
             changeRequest.displayName = fullname
             try await changeRequest.commitChanges()
             
-            print("Success")
+//            print("Success")
             self.userSession = result.user
             //use Codable protocol: map User object to JSON data
             let user = User(id: result.user.uid, fullname: fullname, email: email)

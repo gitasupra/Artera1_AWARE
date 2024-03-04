@@ -78,9 +78,9 @@ class ContactsManager: ObservableObject {
             
             dispatchGroup.notify(queue: .main) {
                 self.contacts = fetchedContacts
-                print("contacts added")
-                print(fetchedContacts)
-                print(self.contacts)
+//                print("contacts added")
+//                print(fetchedContacts)
+//                print(self.contacts)
             }
         }
     }

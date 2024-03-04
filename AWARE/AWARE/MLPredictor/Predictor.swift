@@ -9,7 +9,7 @@ import CoreML
 import SwiftCSV
 
 class Predictor {
-    static func predictLevel(file: String) {
+    static func predictLevel(file: String) -> Int{
         do {
             let config = MLModelConfiguration()
             let model = try! alcohol(configuration: config)
@@ -540,15 +540,18 @@ class Predictor {
                     d7zUM: featureDictionary["7dzUM"] ?? 0.0,
                     d7zLM: featureDictionary["7dzLM"] ?? 0.0)
                 
-                print("model input:")
-                let mirror = Mirror(reflecting: modelInput)
-                for child in mirror.children {
-                    print("\(child.label!): \(child.value)")
-                }
+//                print("model input:")
+//                let mirror = Mirror(reflecting: modelInput)
+//                for child in mirror.children {
+//                    print("\(child.label!): \(child.value)")
+//                }
                 
                 let prediction = try! model.prediction(input: modelInput)
                 print("Current Level: ", prediction.TAC_Reading)
+                return Int(prediction.TAC_Reading)
             }
         }
+        print("Error in predicting level")
+        return 0;
     }
 }

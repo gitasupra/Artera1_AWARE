@@ -17,7 +17,7 @@ class BiometricsManager: ObservableObject {
     let motion = CMMotionManager()
     let healthStore = HKHealthStore()
     var timer: Timer?
-    var intoxLevel: Int = 0
+    @Published var intoxLevel: Int = 0
     
     // accelerometer data variables
     var acc: [AccelerometerDataPoint] = []
@@ -69,9 +69,10 @@ class BiometricsManager: ObservableObject {
                         //At multiple of (data points per second) * 10 seconds
                         #if os(iOS)
                         self.windowFileURL = self.writeAccDataToCSV(data: self.windowAccData)!
-                        print("Window data saved to: \(self.windowFileURL)")
+//                        print("Window data saved to: \(self.windowFileURL)")
                         let file = self.inputFunctions.processData(datafile: self.windowFileURL)
-                        Predictor.predictLevel(file: file)
+                        self.intoxLevel = Predictor.predictLevel(file: file)
+//                        print(self.intoxLevel)
                         #endif
                         
                         //reset window data array
