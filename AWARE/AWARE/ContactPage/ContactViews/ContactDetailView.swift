@@ -343,21 +343,23 @@ struct ContactDetailView: View {
             if let error = error {
                 self.showAlertWithError(error)
             } else {
+                // Remove the contact from the local array
+                if let index = self.contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
+                    self.contactsManager.contacts.remove(at: index)
+                }
+                
+                // Attempt to delete the profile picture reference
                 profileImgRef.delete { error in
-                    if let error = error {
+                    if let error = error as NSError?, error.domain == StorageErrorDomain, error.code == StorageErrorCode.objectNotFound.rawValue {
+                        print("Profile picture reference not found, skipping deletion.")
+                    } else if let error = error {
                         self.showAlertWithError(error)
                     } else {
                         self.showAlertWithSuccess("Contact deleted successfully")
-                        
-                        // Remove the contact from the local array
-                        if let index = self.contactsManager.contacts.firstIndex(where: { $0.id == contact.id }) {
-                            self.contactsManager.contacts.remove(at: index)
-                        }
                     }
                 }
             }
         }
-        
         // Reset contact detail page
         editedImage = nil
     }
