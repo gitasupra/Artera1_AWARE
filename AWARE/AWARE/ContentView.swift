@@ -12,19 +12,25 @@ struct ContentView: View {
     @StateObject var biometricsManager = BiometricsManager()
     @StateObject var alertManager = AlertManager()
 
-    @State private var showEmergencySOS = false
-    @State private var showCalling911 = false
     @State private var name: String
-    @State private var selection: Int // Declare selection here
-    
-    @State private var testIntoxLevel = -1; // Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
-
+    @State private var selection: Int
+    @State private var testIntoxLevel: Int
+    @State private var tabBarColor: Color
+    @State private var isCustomColorEnabled: Bool
+    @State private var showEmergencySOS: Bool
+    @State private var showCalling911: Bool
 
     init() {
-        UITabBar.appearance().backgroundColor = UIColor(Style.primaryColor)
+        _selection = State(initialValue: 3)
+        _name = State(initialValue: Auth.auth().currentUser?.displayName ?? "")
+        _testIntoxLevel = State(initialValue: -1)
+        _tabBarColor = State(initialValue: Color(Style.primaryColor)) // Set the default color
+        _isCustomColorEnabled = State(initialValue: true)
 
-        name = Auth.auth().currentUser?.displayName ?? ""
-        _selection = State(initialValue: 3) // Set initial value here
+        _showEmergencySOS = State(initialValue: false)
+        _showCalling911 = State(initialValue: false)
+
+        UITabBar.appearance().backgroundColor = UIColor(tabBarColor)
     }
     
     var body: some View {

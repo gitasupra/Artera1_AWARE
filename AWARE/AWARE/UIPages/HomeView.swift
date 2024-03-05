@@ -16,7 +16,7 @@ struct HomeView: View {
     @State private var shouldHide = false
     @State private var switchLevels = false
     
-    @State private var testIntoxLevel = 2; // Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
+    @State private var testIntoxLevel = 0; // Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
     
     var body: some View {
         VStack(alignment: .center) {
@@ -96,11 +96,11 @@ struct HomeView: View {
                     Text("You are")
                         .font(.system(size: 25))
                         .font(.headline)
-                        .foregroundColor(Style.soberTextColor)
+                        .foregroundColor(testIntoxLevel == 0 ? Style.soberTextColor : (testIntoxLevel == 1 ? Style.tipsyTextColor : (testIntoxLevel == 2 ? Style.drunkTextColor : (testIntoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
                     Text(testIntoxLevel == 0 ? "SOBER" : (testIntoxLevel == 1 ? "TIPSY" : (testIntoxLevel == 2 ? "DRUNK" : "IN DANGER")))
                         .font(.system(size: 50))
                         .minimumScaleFactor(0.5)
-                        .foregroundColor(Style.soberTextColor)
+                        .foregroundColor(testIntoxLevel == 0 ? Style.soberTextColor : (testIntoxLevel == 1 ? Style.tipsyTextColor : (testIntoxLevel == 2 ? Style.drunkTextColor : (testIntoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
                 }
                 .frame(width: 300, height: 200)
                 .background(testIntoxLevel == 0 ? Style.soberBoxColor : (testIntoxLevel == 1 ? Style.tipsyBoxColor : (testIntoxLevel == 2 ? Style.drunkBoxColor : (testIntoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor ))))
@@ -112,7 +112,7 @@ struct HomeView: View {
                 }) {
                     ZStack {
                         Circle()
-                            .foregroundColor(.green)
+                            .foregroundColor(testIntoxLevel == 0 ? Style.soberButtonFillColor : (testIntoxLevel == 1 ? Style.tipsyButtonFillColor : (testIntoxLevel == 2 ? Style.drunkButtonFillColor : (testIntoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
                             .frame(width: 170, height: 170)
                         
                         Image("cocktail.fill")
