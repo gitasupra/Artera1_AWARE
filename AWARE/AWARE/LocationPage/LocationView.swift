@@ -68,7 +68,7 @@ struct LocationView: View {
                 MapCompass()
                 MapUserLocationButton()
             }
-            .frame(height: 400)
+            .frame(height: 380)
             .cornerRadius(10)
         Spacer()
 

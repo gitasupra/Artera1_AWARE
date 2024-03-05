@@ -14,7 +14,7 @@ struct NavigationServicesView: View {
                 Spacer().frame(height: 10)
                 LocationView()
             }
-            .navigationBarTitle("Navigation Services", displayMode: .large)
+            .navigationBarTitle("Navigation", displayMode: .large)
         }
     }
 }

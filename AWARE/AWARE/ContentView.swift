@@ -16,20 +16,20 @@ struct ContentView: View {
     @State private var showCalling911 = false
     @State private var name: String
     @State private var selection: Int // Declare selection here
+    
+    @State private var testIntoxLevel = -1; // Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
 
 
     init() {
         UITabBar.appearance().backgroundColor = UIColor(Style.primaryColor)
+
         name = Auth.auth().currentUser?.displayName ?? ""
         _selection = State(initialValue: 3) // Set initial value here
-
     }
     
     var body: some View {
         if viewModel.userSession != nil {
 //            @State var selection = 3
-            
-
             TabView(selection:$selection) {
                 // Page 1 Analytics
                 AnalyticsView()
@@ -68,11 +68,10 @@ struct ContentView: View {
                     }.tag(5)
             }
             .onAppear {
-                           // Set the initial tab selection to HomeView (tag 3) only on the first appearance
-                           if selection != 3 {
-                               selection = 3
-                           }
-                       }
+                if selection != 3 {
+                    selection = 3 // Set the initial tab selection to HomeView (tag 3) only on the first appearance
+                }
+            }
             .onReceive(viewModel.$userSession) { userSession in
                 if userSession != nil {
                     name = Auth.auth().currentUser?.displayName ?? "user"

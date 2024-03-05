@@ -22,7 +22,15 @@ class Style {
     static var soberBackgroundColor:Color = Color(red: 232/255, green: 246/255, blue: 235/255)
     static var soberButtonFillColor:Color = Color(red: 60/255, green: 203/255, blue: 90/255)
     static var soberButtonOutlineColor:Color = Color(red: 22/255, green: 92/255, blue: 52/255)
-    static var soberBoxColor:Color = Color(red: 132/255, green: 233/255, blue: 153/255)
+    static var soberBoxColor:Color = Color(red: 0/255, green: 70/255, blue: 42/255)
+    static var soberTextColor:Color = Color(red: 172/255, green: 229/255, blue: 200/255)
+    
+    // Tipsy
+    static var tipsyHeaderColor:Color = Color(red: 65/255, green: 187/255, blue: 160/255)
+    static var tipsyBackgroundColor:Color = Color(red: 232/255, green: 246/255, blue: 235/255)
+    static var tipsyButtonFillColor:Color = Color(red: 60/255, green: 203/255, blue: 90/255)
+    static var tipsyButtonOutlineColor:Color = Color(red: 22/255, green: 92/255, blue: 52/255)
+    static var tipsyBoxColor:Color = Color(red: 132/255, green: 233/255, blue: 153/255)
    
     // Drunk
     static var drunkHeaderColor:Color = Color(red: 139/255, green: 89/255, blue: 76/255)
