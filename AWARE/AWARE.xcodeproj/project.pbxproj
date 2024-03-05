@@ -191,7 +191,7 @@
 		CC9482862AF870DF00A3A64E /* AWARE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWARE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9482892AF870DF00A3A64E /* AWAREApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWAREApp.swift; sourceTree = "<group>"; };
 		CC94828B2AF870DF00A3A64E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		CC94828D2AF870E100A3A64E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC94828D2AF870E100A3A64E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = MLPredictor/Assets.xcassets; sourceTree = "<group>"; };
 		CC9482902AF870E100A3A64E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CC9482962AF870E100A3A64E /* AWARETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWARETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC94829A2AF870E100A3A64E /* AWARETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWARETests.swift; sourceTree = "<group>"; };
@@ -393,7 +393,6 @@
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
 				124AF8AA2B816B19004A7483 /* BiometricsManager.swift */,
 				12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */,
-				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -485,6 +484,7 @@
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
+				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
 			);
 			path = AWARE;
