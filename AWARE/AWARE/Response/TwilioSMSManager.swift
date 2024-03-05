@@ -97,5 +97,33 @@ class TwilioSMSManager {
             debugPrint("ERROR: Unable to get TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN from environment variables")
         }
     }
+    
+    func text911(contactsManager: ContactsManager) {
+        // set custom emergency message
+        let message = "Emergency medical assistance requested for \(self.username) at the following coordinates: (\(self.latitude), \(self.longitude)). The individual is exhibiting signs of severe intoxication, an extreme heart rate, and is unresponsive. Please dispatch immediate medical assistance to their location."
+        
+        // send text to 911 using Twilio's API
+        if !self.TwilioSID.isEmpty && !self.TwilioToken.isEmpty {
+            let url = "https://api.twilio.com/2010-04-01/Accounts/\(self.TwilioSID)/Messages"
+            
+            let parameters = ["From": "+18667644137", "To": "+911", "Body": message]
+            AF.request(url, method: .post, parameters: parameters)
+                .authenticate(username: self.TwilioSID, password: self.TwilioToken)
+                .responseData { response in
+                    switch response.result {
+                    case .success(let data):
+                        if let xmlString = String(data: data, encoding: .utf8) {
+                            debugPrint(xmlString)
+                        } else {
+                            print("Error converting data to string")
+                        }
+                    case .failure(let error):
+                        print("Request failed with error: \(error.localizedDescription)")
+                    }
+                }
+        } else {
+            debugPrint("ERROR: Unable to get TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN from environment variables")
+        }
+    }
 }
 

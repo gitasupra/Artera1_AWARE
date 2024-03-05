@@ -34,4 +34,8 @@ class AlertManager: ObservableObject {
     func sendUpdate(level: Int) {
         twilioManager.sendSMS(level: level, contactsManager: contactManager)
     }
+    
+    func contactEmergencyServices() {
+        twilioManager.text911(contactsManager: contactManager)
+    }
 }

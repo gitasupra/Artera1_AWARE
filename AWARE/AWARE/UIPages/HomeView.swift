@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct HomeView: View {
     @EnvironmentObject var enableDataCollectionObj: EnableDataCollection
@@ -14,9 +15,13 @@ struct HomeView: View {
     @Binding var name: String
     
     @State private var shouldHide = false
+
     @State private var switchLevels = false
     
     @State private var testIntoxLevel = 0; // Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
+
+    @State private var intoxLevelSub: AnyCancellable?
+
     
     var body: some View {
         VStack(alignment: .center) {
@@ -132,8 +137,23 @@ struct HomeView: View {
         }
         .onChange(of: enableDataCollectionObj.enableDataCollection) {
             if (enableDataCollectionObj.enableDataCollection == 1) {
+
                 switchLevels = true
                 alertManager.intoxLevel = 0;
+
+                biometricsManager.startDeviceMotion()
+                biometricsManager.startHeartRate()
+                intoxLevelSub = alertManager.$intoxLevel
+                    .sink { level in
+                        if level == 3 {
+                            alertManager.intoxLevel = 3
+                        }
+                    }
+            } else {
+                biometricsManager.stopDeviceMotion()
+                biometricsManager.stopHeartRate()
+                intoxLevelSub?.cancel()
+
             }
             
             //            } else {
