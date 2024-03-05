@@ -60,7 +60,7 @@ struct HomeView: View {
                     Text("Estimated Intoxication Level:")
                         .font(.headline)
                         .foregroundColor(.white)
-                    Text("\(alertManager.intoxLevel)")
+                    Text("\(biometricsManager.intoxLevel)")
                         .font(.largeTitle)
                         .foregroundColor(.white)
                 }
