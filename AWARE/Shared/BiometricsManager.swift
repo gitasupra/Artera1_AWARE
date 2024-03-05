@@ -40,6 +40,8 @@ class BiometricsManager: ObservableObject {
     @StateObject var inputFunctions = InputFunctions()
     
     func startDeviceMotion() {
+        //clear window when device motion started
+        windowAccData=[]
         if motion.isDeviceMotionAvailable {
             //Bar Crawl dataset sampled at 40Hz
             self.motion.deviceMotionUpdateInterval = 1.0/40.0
@@ -65,7 +67,7 @@ class BiometricsManager: ObservableObject {
                     //FIXME this might get messed up by start/stop data collection, timer might be better to trigger saving to CSV function
                     //ex: corner cases where stop in middle of window, don't want prediction made on walking windows that are not continuous
                     
-                    if self.accIdx >= 840 && self.accIdx % 840 == 0 {
+                    if self.windowAccData.count == 840 {
                         //At multiple of (data points per second) * 10 seconds
                         #if os(iOS)
                         self.windowFileURL = self.writeAccDataToCSV(data: self.windowAccData)!
