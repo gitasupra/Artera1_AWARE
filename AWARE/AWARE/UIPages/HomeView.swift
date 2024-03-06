@@ -35,7 +35,7 @@ struct HomeView: View {
                     .frame(width: 30, height: 30)
                 Spacer()
             }
-            .background(enableDataCollectionObj.enableDataCollection == 0 ? Style.primaryColor : (testIntoxLevel == 0 ? Style.soberBoxColor : (testIntoxLevel == 1 ? Style.tipsyBoxColor : (testIntoxLevel == 2 ? Style.drunkBoxColor : (testIntoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor )))))
+            .background(enableDataCollectionObj.enableDataCollection == 0 ? Style.primaryColor : (biometricsManager.intoxLevel == 0 ? Style.soberBoxColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyBoxColor : (biometricsManager.intoxLevel == 2 ? Style.drunkBoxColor : (biometricsManager.intoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor )))))
             
             if name == "" {
                 Text("Hello, user!")
@@ -91,14 +91,14 @@ struct HomeView: View {
                     Text("You are")
                         .font(.system(size: 25))
                         .font(.headline)
-                        .foregroundColor(testIntoxLevel == 0 ? Style.soberTextColor : (testIntoxLevel == 1 ? Style.tipsyTextColor : (testIntoxLevel == 2 ? Style.drunkTextColor : (testIntoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
-                    Text(testIntoxLevel == 0 ? "SOBER" : (testIntoxLevel == 1 ? "TIPSY" : (testIntoxLevel == 2 ? "DRUNK" : "IN DANGER")))
+                        .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberTextColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyTextColor : (biometricsManager.intoxLevel == 2 ? Style.drunkTextColor : (biometricsManager.intoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
+                    Text(biometricsManager.intoxLevel == 0 ? "SOBER" : (biometricsManager.intoxLevel == 1 ? "TIPSY" : (biometricsManager.intoxLevel == 2 ? "DRUNK" : "IN DANGER")))
                         .font(.system(size: 50))
                         .minimumScaleFactor(0.5)
-                        .foregroundColor(testIntoxLevel == 0 ? Style.soberTextColor : (testIntoxLevel == 1 ? Style.tipsyTextColor : (testIntoxLevel == 2 ? Style.drunkTextColor : (testIntoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
+                        .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberTextColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyTextColor : (biometricsManager.intoxLevel == 2 ? Style.drunkTextColor : (biometricsManager.intoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
                     }
                         .frame(width: 300, height: 200)
-                        .background(testIntoxLevel == 0 ? Style.soberBoxColor : (testIntoxLevel == 1 ? Style.tipsyBoxColor : (testIntoxLevel == 2 ? Style.drunkBoxColor : (testIntoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor ))))
+                        .background(biometricsManager.intoxLevel == 0 ? Style.soberBoxColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyBoxColor : (biometricsManager.intoxLevel == 2 ? Style.drunkBoxColor : (biometricsManager.intoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor ))))
                         .cornerRadius(20)
                         .padding()
 
@@ -110,7 +110,7 @@ struct HomeView: View {
                 }) {
                     ZStack {
                         Circle()
-                            .foregroundColor(testIntoxLevel == 0 ? Style.soberButtonFillColor : (testIntoxLevel == 1 ? Style.tipsyButtonFillColor : (testIntoxLevel == 2 ? Style.drunkButtonFillColor : (testIntoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
+                            .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberButtonFillColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyButtonFillColor : (biometricsManager.intoxLevel == 2 ? Style.drunkButtonFillColor : (biometricsManager.intoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
                                                .frame(width: 170, height: 170)
 
                         Image("cocktail.fill")
