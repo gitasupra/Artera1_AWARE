@@ -83,6 +83,7 @@
 		CC9482CF2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9482CE2AF870E300A3A64E /* AWARE_Watch_AppUITestsLaunchTests.swift */; };
 		F809440712D5552AD1CBC86E /* libPods-AWARE Watch AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A229487241DA802E293FF595 /* libPods-AWARE Watch AppTests.a */; };
 		FAF1F4F66BD82F33710C5059 /* libPods-AWARETests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D98461CACC3AD1EA9CF8B9 /* libPods-AWARETests.a */; };
+		FF8FD0B32B98407200DC01C5 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8FD0B22B98407200DC01C5 /* Style.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +212,7 @@
 		EB0008F7A11C779E46FB4E69 /* Pods-AWARE Watch AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE Watch AppTests.debug.xcconfig"; path = "Target Support Files/Pods-AWARE Watch AppTests/Pods-AWARE Watch AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F8DF0414AC456B27C7FA0F2B /* Pods-AWARE Watch AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWARE Watch AppUITests.release.xcconfig"; path = "Target Support Files/Pods-AWARE Watch AppUITests/Pods-AWARE Watch AppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AWARE.entitlements; sourceTree = "<group>"; };
+		FF8FD0B22B98407200DC01C5 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -520,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				56EB7BDB2B02ECEE000402B3 /* AWARE Watch App.entitlements */,
+				FF8FD0B22B98407200DC01C5 /* Style.swift */,
 				CC9482B12AF870E100A3A64E /* AWAREApp.swift */,
 				CC9482B32AF870E100A3A64E /* ContentView.swift */,
 				CC9482B52AF870E200A3A64E /* Assets.xcassets */,
@@ -983,6 +986,7 @@
 				CC9482B42AF870E100A3A64E /* ContentView.swift in Sources */,
 				124AF8AC2B816B19004A7483 /* BiometricsManager.swift in Sources */,
 				127DBA312B1D58040031F9F7 /* SessionDelegator.swift in Sources */,
+				FF8FD0B32B98407200DC01C5 /* Style.swift in Sources */,
 				CC9482B22AF870E100A3A64E /* AWAREApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

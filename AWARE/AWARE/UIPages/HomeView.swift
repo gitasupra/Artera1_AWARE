@@ -15,6 +15,10 @@ struct HomeView: View {
     @Binding var name: String
     
     @State private var shouldHide = false
+    @State private var switchLevels = false
+
+    @State private var testIntoxLevel = 0; // Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
+
     @State private var intoxLevelSub: AnyCancellable?
     
     var body: some View {
@@ -31,7 +35,7 @@ struct HomeView: View {
                     .frame(width: 30, height: 30)
                 Spacer()
             }
-            .background(Style.primaryColor)
+            .background(enableDataCollectionObj.enableDataCollection == 0 ? Style.primaryColor : (biometricsManager.intoxLevel == 0 ? Style.soberBoxColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyBoxColor : (biometricsManager.intoxLevel == 2 ? Style.drunkBoxColor : (biometricsManager.intoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor )))))
             
             if name == "" {
                 Text("Hello, user!")
@@ -49,57 +53,88 @@ struct HomeView: View {
                 .font(.title)
                 .padding()
             
-            Text("Explore app features or enable drinking mode to get started.")
-                .font(.headline)
-                .foregroundColor(.secondary)
-            
-            Spacer()
-            
-            Button(action: {}) {
+            if (enableDataCollectionObj.enableDataCollection == 0) {
                 VStack {
-                    Text("Estimated Intoxication Level:")
+                    Text("Press the button below to start tracking your drinking!")
+                        .font(.system(size: 25))
                         .font(.headline)
                         .foregroundColor(.white)
-                    Text("\(alertManager.intoxLevel)")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
+//                    Text("\(biometricsManager.intoxLevel)")
+                        .multilineTextAlignment(.center)
+                        .padding()
                 }
-                .padding()
-                .background(Color.purple)
+                .frame(width: 300, height: 200)
+                .background(Style.primaryColor)
                 .cornerRadius(20)
-            }
-            .padding()
-            
-            Spacer()
-            
-            if (enableDataCollectionObj.enableDataCollection == 0) {
+                .padding()
+
+           
                 if !self.$shouldHide.wrappedValue {
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
                     }) {
-                        Image(systemName: "touchid")
-                            .font(.system(size: 100))
-                            .foregroundColor(.red)
-                            .controlSize(.extraLarge)
+                        ZStack {
+                            Circle()
+                                .foregroundColor(.white)
+                                .frame(width: 170, height: 170)
+                            Image("cocktail")
+                                .font(.system(size: 80))
+                                .controlSize(.extraLarge)
+                                .overlay(Color.gray.opacity(1))
+                                .mask(Image("cocktail").resizable())
+                        }
                     }.padding()
-                    Text("Enable Drinking Mode")
                     Spacer()
                 }
             } else {
+                VStack {
+                    Text("You are")
+                        .font(.system(size: 25))
+                        .font(.headline)
+                        .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberTextColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyTextColor : (biometricsManager.intoxLevel == 2 ? Style.drunkTextColor : (biometricsManager.intoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
+                    Text(biometricsManager.intoxLevel == 0 ? "SOBER" : (biometricsManager.intoxLevel == 1 ? "TIPSY" : (biometricsManager.intoxLevel == 2 ? "DRUNK" : "IN DANGER")))
+                        .font(.system(size: 50))
+                        .minimumScaleFactor(0.5)
+                        .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberTextColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyTextColor : (biometricsManager.intoxLevel == 2 ? Style.drunkTextColor : (biometricsManager.intoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
+                    }
+                        .frame(width: 300, height: 200)
+                        .background(biometricsManager.intoxLevel == 0 ? Style.soberBoxColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyBoxColor : (biometricsManager.intoxLevel == 2 ? Style.drunkBoxColor : (biometricsManager.intoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor ))))
+                        .cornerRadius(20)
+                        .padding()
+
+                
+                
+                
                 Button(action: {
                     enableDataCollectionObj.toggleOff()
                 }) {
-                    Image(systemName: "touchid")
-                        .font(.system(size: 100))
-                        .foregroundColor(.green)
-                        .controlSize(.extraLarge)
+                    ZStack {
+                        Circle()
+                            .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberButtonFillColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyButtonFillColor : (biometricsManager.intoxLevel == 2 ? Style.drunkButtonFillColor : (biometricsManager.intoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
+                                               .frame(width: 170, height: 170)
+
+                        Image("cocktail.fill")
+                            .font(.system(size: 80))
+                            .controlSize(.extraLarge)
+                            .overlay(Color.white.opacity(1))
+                            .mask(Image("cocktail.fill").resizable())
+
+                        Image(systemName: "bubbles.and.sparkles")
+                            .font(.system(size: 30))
+                            .foregroundColor(.white)
+                            .offset(x: 10, y: -50)
+                        }
+                    
+                    
                 }.padding()
-                Text("Disable Drinking Mode")
                 Spacer()
             }
         }
         .onChange(of: enableDataCollectionObj.enableDataCollection) {
             if (enableDataCollectionObj.enableDataCollection == 1) {
+                switchLevels = true
+                alertManager.intoxLevel = 0;
+                
                 biometricsManager.startDeviceMotion()
                 biometricsManager.startHeartRate()
                 intoxLevelSub = alertManager.$intoxLevel

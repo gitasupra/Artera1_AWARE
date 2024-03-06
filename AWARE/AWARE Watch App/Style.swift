@@ -1,10 +1,11 @@
 //
 //  Style.swift
-//  AWARE
+//  AWARE Watch App
 //
-//  Created by Jessica Nguyen on 2/20/24.
+//  Created by Cheryl Stanley on 3/5/24.
 //
 
+import Foundation
 import SwiftUI
 
 class Style {
