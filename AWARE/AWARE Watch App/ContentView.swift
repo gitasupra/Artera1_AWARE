@@ -5,21 +5,34 @@ import WatchConnectivity
 
 struct ContentView: View {
     @State private var shouldHide = false
+    @State private var selection: Int // Declare selection here
+
+
+        init() {
+            _selection = State(initialValue: 2) // Set initial value here
+
+        }
 
     var body: some View {
         NavigationView {
-            TabView {
+            TabView(selection:$selection) {
                 // Page 1
                 Page1View()
                     .tabItem {
                         Label("AWARE", systemImage: "person.circle.fill")
-                    }
+                    }.tag(1)
 
                 // Page 2
                 Page2View(shouldHide: $shouldHide)
                     .tabItem {
                         Label("Page 2", systemImage: "info.circle")
-                    }
+                    }.tag(2)
+            }
+            .onAppear {
+                // Set the initial tab selection to HomeView (tag 3) only on the first appearance
+                if selection != 2 {
+                    selection = 2
+                }
             }
         }
     }
@@ -53,22 +66,40 @@ struct Page2View: View {
                     Button(action: {
                         enableDataCollectionObj.toggleOn()
                     }) {
-                        Image(systemName: "touchid")
-                            .font(.system(size: 50))
-                            .foregroundColor(.red)
-                            .controlSize(.extraLarge)
+                        ZStack {
+                            Circle()
+                                .foregroundColor(.white)
+                                .frame(width: 110, height: 100)
+
+                            Image("cocktail")
+                                .frame(width: 50, height: 50)
+                                .controlSize(.extraLarge)
+                                .overlay(Color.gray.opacity(1))
+                                                        .mask(Image("cocktail").resizable())
+                                                }
                     }
                 }
             } else {
                 Text("Disable Drinking Mode")
-                    .multilineTextAlignment(.center)
-                Button {
+                Button(action: {
                     enableDataCollectionObj.toggleOff()
-                } label: {
-                    Image(systemName: "touchid")
-                        .font(.system(size: 50))
+                }) {
+                    ZStack {
+                        Circle()
                         .foregroundColor(.green)
-                        .controlSize(.extraLarge)
+                        .frame(width: 100, height: 100)
+
+                        Image("cocktail.fill")
+                            .frame(width: 50, height: 50)
+                            .controlSize(.extraLarge)
+                                .overlay(Color.white.opacity(1))
+                                .mask(Image("cocktail.fill").resizable())
+
+                        Image(systemName: "bubbles.and.sparkles")
+                            .font(.system(size: 15))
+                            .foregroundColor(.white)
+                                               .offset(x: 5, y: -25)
+                        }
                 }
             }
         }
