@@ -7,9 +7,9 @@ struct ContentView: View {
     @State private var shouldHide = false
     @State private var selection: Int // Declare selection here
 
-
         init() {
-            _selection = State(initialValue: 2) // Set initial value here
+            _selection = State(initialValue: 0) // Set initial value here
+            
 
         }
 
@@ -56,8 +56,12 @@ struct Page2View: View {
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @StateObject var biometricsManager = BiometricsManager()
     @Binding var shouldHide: Bool
+    @State private var testIntoxLevel = 0;// Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
+
     
     var body: some View {
+    
+
         VStack {
             if (enableDataCollectionObj.enableDataCollection == 0) {
                 if !self.$shouldHide.wrappedValue {
@@ -86,8 +90,9 @@ struct Page2View: View {
                 }) {
                     ZStack {
                         Circle()
-                        .foregroundColor(.green)
-                        .frame(width: 100, height: 100)
+                        .foregroundColor(testIntoxLevel == 0 ? Style.soberButtonFillColor : (testIntoxLevel == 1 ? Style.tipsyButtonFillColor : (testIntoxLevel == 2 ? Style.drunkButtonFillColor : (testIntoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
+//                                               .frame(width: 110, height: 100)
+                        .frame(width: 110, height: 100)
 
                         Image("cocktail.fill")
                             .frame(width: 50, height: 50)
