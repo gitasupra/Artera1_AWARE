@@ -233,6 +233,8 @@ class InputFunctions : ObservableObject{
             // Extract data from the CSV file
             var acc_data: [[Double]] = []
             
+            print("SECOND: rows of input CSV: ", csvFile.rows.count)
+            
             for row in csvFile.rows {
                 let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
                 acc_data.append(rowData)
@@ -341,6 +343,8 @@ class InputFunctions : ObservableObject{
             
             // Extract data from the CSV file
             var mean_all: [[Double]] = []
+            
+            print("WINDOW: rows of input CSV",  csvFile.rows.count)
             
             for row in csvFile.rows {
                 let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]

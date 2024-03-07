@@ -58,12 +58,12 @@ final class EnableDataCollection: ObservableObject {
         print("send level to watch")
         intoxLevel=level
         
-//        session.sendMessage(["intoxLevel": intoxLevel], replyHandler: nil) { error in
-//            print(error.localizedDescription)
-//        }
+        session.sendMessage(["intoxLevel": intoxLevel], replyHandler: nil) { error in
+            print(error.localizedDescription)
+        }
         
         
-        trySendingMessageToWatch(["intoxLevel": intoxLevel] as [String: AnyObject])
+//        trySendingMessageToWatch(["intoxLevel": intoxLevel] as [String: AnyObject])
                     
     }
     
