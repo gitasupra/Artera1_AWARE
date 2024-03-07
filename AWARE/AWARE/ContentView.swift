@@ -41,12 +41,14 @@ struct ContentView: View {
                 AnalyticsView()
                     .environmentObject(enableDataCollectionObj)
                     .environmentObject(biometricsManager)
+                    .accentColor(Style.accentColor)
                     .tabItem {
                         Label("Analytics", systemImage: "heart.text.square")
                     }.tag(1)
                 
                 // Page 2 Contacts
                 ContactListView()
+                    .accentColor(Style.accentColor)
                     .tabItem {
                         Label("Contacts", systemImage: "person.crop.circle")
                     }.tag(2)
@@ -56,12 +58,14 @@ struct ContentView: View {
                     .environmentObject(enableDataCollectionObj)
                     .environmentObject(biometricsManager)
                     .environmentObject(alertManager)
+                    .accentColor(Style.accentColor)
                     .tabItem {
                         Label("Home", systemImage: "house.fill")
                     }.tag(3)
                 
                 // Page 4 Navigation
                 NavigationServicesView()
+                    .accentColor(Style.accentColor)
                     .tabItem {
                         Label("Navigation", systemImage: "map")
                     }.tag(4)
@@ -69,6 +73,7 @@ struct ContentView: View {
                 // Page 5 Settings
                 SettingsView(name: $name)
                     .environmentObject(viewModel)
+                    .accentColor(Style.accentColor)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }.tag(5)
@@ -79,6 +84,7 @@ struct ContentView: View {
                     }
                     requestNotificationPermissions()
             }
+            .accentColor(Style.highlightColor)
             .onReceive(viewModel.$userSession) { userSession in
                 if userSession != nil {
                     name = Auth.auth().currentUser?.displayName ?? "user"

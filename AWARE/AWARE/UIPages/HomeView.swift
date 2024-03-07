@@ -58,7 +58,7 @@ struct HomeView: View {
                     Text("Press the button below to start tracking your drinking!")
                         .font(.system(size: 25))
                         .font(.headline)
-                        .foregroundColor(.white)
+                        .foregroundColor(Style.highlightColor)
 //                    Text("\(biometricsManager.intoxLevel)")
                         .multilineTextAlignment(.center)
                         .padding()
