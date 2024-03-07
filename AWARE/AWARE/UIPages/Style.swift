@@ -16,14 +16,16 @@ class Style {
     static var backgroundColor:Color = .black
     
     struct CustomButtonStyle: ButtonStyle {
+        var isActive: Bool
+        
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 30)
-                        .fill(Color.accentColor)
+                        .fill(isActive ? Style.highlightColor : Color.accentColor)
                 )
-                .foregroundColor(.white)
+                .foregroundColor(isActive ? Style.accentColor : .white)
                 .cornerRadius(30)
                 .padding([.top, .bottom], 2)
         }
