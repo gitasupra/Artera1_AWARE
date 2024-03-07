@@ -351,13 +351,13 @@
 		125506AF2B5CB61F007F0323 /* ContactViews */ = {
 			isa = PBXGroup;
 			children = (
-				125506B02B5CB61F007F0323 /* ContactListView.swift */,
-				125506B12B5CB61F007F0323 /* Styles.swift */,
-				125506B22B5CB61F007F0323 /* ContactRow.swift */,
 				125506B32B5CB61F007F0323 /* AddContactView.swift */,
-				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
 				125506B52B5CB61F007F0323 /* ImagePicker.swift */,
+				125506B22B5CB61F007F0323 /* ContactRow.swift */,
+				125506B02B5CB61F007F0323 /* ContactListView.swift */,
+				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
 				125506B62B5CB61F007F0323 /* ContactDetailView.swift */,
+				125506B12B5CB61F007F0323 /* Styles.swift */,
 			);
 			path = ContactViews;
 			sourceTree = "<group>";

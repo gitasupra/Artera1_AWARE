@@ -17,7 +17,7 @@ struct AnalyticsView: View {
         NavigationView {
             VStack(spacing: 10) {
                 CalendarView()
-                    .padding(.bottom, 10)
+                    .padding([.top, .bottom], 10)
                 VStack {
                     Text("Showing Intoxication History")
                         .padding()
@@ -45,7 +45,7 @@ struct AnalyticsView: View {
                             Text(showAccChart ? "Showing Walking Steadiness Data" : "View Walking Steadiness Data")
                         }
                         .buttonStyle(Style.CustomButtonStyle(isActive: showAccChart))
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 10)
                     }
                 }
             }
@@ -73,7 +73,6 @@ struct CalendarView: View {
     var calendarData: [[Day]] {
         var calendarData = [[Day]]()
         
-        // Check if the current month in real life is equal to self.currentDate
         if Calendar.current.component(.month, from: Date()) != Calendar.current.component(.month, from: self.currentDate) {
             // Regenerate all the dates in the month to match self.currentDate
             let startDate = self.currentDate.startOfMonth()
@@ -99,7 +98,7 @@ struct CalendarView: View {
                         }
                     }
                 } else {
-                    level = -1 // No info for future days
+                    level = -1
                 }
                 currentWeek.append(Day(date: dayIterator, level: level))
                 
@@ -124,7 +123,6 @@ struct CalendarView: View {
                 calendarData.append(currentWeek)
             }
         } else {
-            // Use the existing calendar data
             calendarData = self.generateCalendarData(for: self.currentDate)
         }
         
@@ -210,10 +208,6 @@ struct CalendarView: View {
         GeometryReader { geometry in
             VStack(alignment: .center) {
                 HStack {
-                    Text("\(currentDate.monthName) \(currentDate.yearName)")
-                        .font(.headline)
-                        .padding(.leading, 15)
-                    
                     Spacer()
                     
                     Button {
@@ -227,14 +221,16 @@ struct CalendarView: View {
                             canNavigateBack = false
                         }
                     } label: {
-                        Image(systemName: "arrow.backward.circle")
+                        Image(systemName: "heart.fill")
+                            .rotationEffect(.degrees(90))
                             .font(.title)
                     }
                     .disabled(!canNavigateBack)
                     .padding(.trailing, 10)
                     
-                    
-                    
+                    Text("\(currentDate.monthName) \(currentDate.yearName)")
+                        .font(.headline)
+
                     Button {
                         if Calendar.current.component(.month, from: self.currentDate) != self.currentMonth {
                             self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: self.currentDate)!
@@ -246,11 +242,13 @@ struct CalendarView: View {
                             canNavigateForward = false
                         }
                     } label: {
-                        Image(systemName: "arrow.forward.circle")
+                        Image(systemName: "heart.fill")
+                            .rotationEffect(.degrees(-90))
                             .font(.title)
                     }
                     .disabled(!canNavigateForward)
-                    .padding(.trailing, 15)
+                    .padding(.leading, 10)
+                    Spacer()
                 }
                 .padding([.top, .bottom], -5)
                 
@@ -274,7 +272,8 @@ struct CalendarView: View {
                     
                     ForEach(calendarData, id: \.self) { week in
                         HStack(spacing: 10) {
-                            ForEach(week, id: \.date) { day in
+                            ForEach(week.indices, id: \.self) { index in
+                                let day = week[index]
                                 ZStack {
                                     Circle()
                                         .foregroundColor(Style.primaryColor)
@@ -310,7 +309,7 @@ struct CalendarView: View {
                     Spacer()
                 }
                 .cornerRadius(20)
-                .frame(width: geometry.size.width, height: geometry.size.height * 0.95)
+                .frame(width: geometry.size.width, height: geometry.size.height * 0.90)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Style.primaryColor)

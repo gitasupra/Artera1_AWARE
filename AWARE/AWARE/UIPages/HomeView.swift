@@ -12,14 +12,8 @@ struct HomeView: View {
     @EnvironmentObject var enableDataCollectionObj: EnableDataCollection
     @EnvironmentObject var biometricsManager: BiometricsManager
     @EnvironmentObject var alertManager: AlertManager
-    @Binding var name: String
-    
     @State private var shouldHide = false
-    @State private var switchLevels = false
-
-    @State private var testIntoxLevel = 0; // Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
-
-    @State private var intoxLevelSub: AnyCancellable?
+    @Binding var name: String
     
     var body: some View {
         VStack(alignment: .center) {
@@ -59,7 +53,6 @@ struct HomeView: View {
                         .font(.system(size: 25))
                         .font(.headline)
                         .foregroundColor(Style.highlightColor)
-//                    Text("\(biometricsManager.intoxLevel)")
                         .multilineTextAlignment(.center)
                         .padding()
                 }
@@ -67,7 +60,6 @@ struct HomeView: View {
                 .background(Style.primaryColor)
                 .cornerRadius(20)
                 .padding()
-
            
                 if !self.$shouldHide.wrappedValue {
                     Button(action: {
@@ -102,9 +94,6 @@ struct HomeView: View {
                         .cornerRadius(20)
                         .padding()
 
-                
-                
-                
                 Button(action: {
                     enableDataCollectionObj.toggleOff()
                 }) {
@@ -124,29 +113,19 @@ struct HomeView: View {
                             .foregroundColor(.white)
                             .offset(x: 10, y: -50)
                         }
-                    
-                    
                 }.padding()
                 Spacer()
             }
         }
         .onChange(of: enableDataCollectionObj.enableDataCollection) {
             if (enableDataCollectionObj.enableDataCollection == 1) {
-                switchLevels = true
                 alertManager.intoxLevel = 0;
-                
                 biometricsManager.startDeviceMotion()
                 biometricsManager.startHeartRate()
-                intoxLevelSub = alertManager.$intoxLevel
-                    .sink { level in
-                        if level == 3 {
-                            alertManager.intoxLevel = 3
-                        }
-                    }
             } else {
+                alertManager.intoxLevel = -1;
                 biometricsManager.stopDeviceMotion()
                 biometricsManager.stopHeartRate()
-                intoxLevelSub?.cancel()
             }
         }
     }

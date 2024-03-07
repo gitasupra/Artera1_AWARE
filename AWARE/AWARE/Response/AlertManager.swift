@@ -14,14 +14,13 @@ class AlertManager: ObservableObject {
     @Published var intoxLevel: Int = -1 {
         didSet {
             if intoxLevel == 0 {
-                print("level 0")
-//                sendUpdate(level: 0)
+                sendUpdate(level: 0)
             } else if intoxLevel == 1 {
-//                sendUpdate(level: 1)
+                sendUpdate(level: 1)
             } else if intoxLevel == 2 {
-//                sendUpdate(level: 2)
+                sendUpdate(level: 2)
             } else if intoxLevel == 3 {
-//                AlertManager.triggerHapticFeedback()
+                AlertManager.triggerHapticFeedback()
             }
         }
     }

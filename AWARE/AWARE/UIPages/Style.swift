@@ -23,9 +23,9 @@ class Style {
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 30)
-                        .fill(isActive ? Style.highlightColor : Color.accentColor)
+                        .fill(isActive ? Style.highlightColor : Style.accentColor)
                 )
-                .foregroundColor(isActive ? Style.accentColor : .white)
+                .foregroundColor(isActive ? Style.accentColor : Style.highlightColor)
                 .cornerRadius(30)
                 .padding([.top, .bottom], 2)
         }

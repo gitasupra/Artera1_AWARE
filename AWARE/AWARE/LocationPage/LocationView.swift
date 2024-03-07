@@ -211,7 +211,6 @@ final class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDeleg
             DispatchQueue.main.async {
                 self.region = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
             }
-            
         @unknown default:
             break
         }

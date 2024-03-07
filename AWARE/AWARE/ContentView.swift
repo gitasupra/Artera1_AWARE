@@ -14,28 +14,16 @@ struct ContentView: View {
 
     @State private var showEmergencySOS = false
     @State private var showCalling911 = false
+    @State private var selection = 3
     @State private var name: String
-    @State private var selection: Int
-    @State private var testIntoxLevel: Int
-    @State private var tabBarColor: Color
-    @State private var isCustomColorEnabled: Bool
-
+    
     init() {
-        _selection = State(initialValue: 3)
-        _name = State(initialValue: Auth.auth().currentUser?.displayName ?? "")
-        _testIntoxLevel = State(initialValue: -1)
-        _tabBarColor = State(initialValue: Color(Style.primaryColor)) // Set the default color
-        _isCustomColorEnabled = State(initialValue: true)
-
-        _showEmergencySOS = State(initialValue: false)
-        _showCalling911 = State(initialValue: false)
-
-        UITabBar.appearance().backgroundColor = UIColor(tabBarColor)
+        UITabBar.appearance().backgroundColor = UIColor(Style.primaryColor)
+        self.name = Auth.auth().currentUser?.displayName ?? ""
     }
     
     var body: some View {
         if viewModel.userSession != nil {
-            // @State var selection = 3
             TabView(selection:$selection) {
                 // Page 1 Analytics
                 AnalyticsView()
@@ -96,7 +84,6 @@ struct ContentView: View {
                 }
             }
             .onChange(of: biometricsManager.intoxLevel) { oldValue, newValue in
-                
                 guard oldValue != newValue else{
                     //return if new level same as old
                     print("new intoxLevel not different")
@@ -105,7 +92,9 @@ struct ContentView: View {
                 print("sending notification")
                 enableDataCollectionObj.sendLevelToWatch(level: biometricsManager.intoxLevel)
                 sendPhoneNotification(level: biometricsManager.intoxLevel)
-                //TODO: update alerManager.intoxLevel here too
+                if biometricsManager.intoxLevel > alertManager.intoxLevel {
+                    alertManager.intoxLevel = biometricsManager.intoxLevel
+                }
             }
             .fullScreenCover(isPresented: $showEmergencySOS) {
                 EmergencySOSView(showCalling911: $showCalling911)
@@ -114,7 +103,6 @@ struct ContentView: View {
                 Calling911View()
                     .environmentObject(alertManager)
             }
-
         } else {
             LoginView()
         }
@@ -126,7 +114,7 @@ struct ContentView: View {
         }
     }
     
-    private func requestNotificationPermissions(){
+    private func requestNotificationPermissions() {
         UNUserNotificationCenter.current().getNotificationSettings {
             settings in
             if settings.authorizationStatus != .authorized{
@@ -137,8 +125,7 @@ struct ContentView: View {
                         print(error.localizedDescription)
                     }
                 }
-            }
-            else{
+            } else {
                 print("Already authorized for notifications")
             }
         }
@@ -167,11 +154,10 @@ struct ContentView: View {
 
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
-        
-        UNUserNotificationCenter.current().add(request){ (error) in
-            if let error = error{
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = error {
                 print(error.localizedDescription)
-            }else{
+            } else {
                 print("scheduled successfully")
             }
         }

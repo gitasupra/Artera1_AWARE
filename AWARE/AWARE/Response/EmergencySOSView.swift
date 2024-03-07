@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EmergencySOSView: View {
-    @State private var countdown = 60
+    @State private var countdown = 30
     @Binding var showCalling911: Bool
     @Environment(\.presentationMode) var presentationMode
     

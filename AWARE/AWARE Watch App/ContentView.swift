@@ -29,7 +29,6 @@ struct ContentView: View {
                     }.tag(2)
             }
             .onAppear {
-                // Set the initial tab selection to HomeView (tag 3) only on the first appearance
                 if selection != 2 {
                     selection = 2
                 }
@@ -56,12 +55,8 @@ struct Page2View: View {
     @StateObject var enableDataCollectionObj = EnableDataCollection()
     @StateObject var biometricsManager = BiometricsManager()
     @Binding var shouldHide: Bool
-    @State private var testIntoxLevel = 0;// Use for testing on simulator (Values: 0, 1, 2), uncomment alertManager if statement code for iPhone testing
-
     
     var body: some View {
-    
-
         VStack {
             if (enableDataCollectionObj.enableDataCollection == 0) {
                 if !self.$shouldHide.wrappedValue {
@@ -74,13 +69,13 @@ struct Page2View: View {
                             Circle()
                                 .foregroundColor(.white)
                                 .frame(width: 110, height: 100)
-
+                            
                             Image("cocktail")
                                 .frame(width: 50, height: 50)
                                 .controlSize(.extraLarge)
                                 .overlay(Color.gray.opacity(1))
-                                                        .mask(Image("cocktail").resizable())
-                                                }
+                                .mask(Image("cocktail").resizable())
+                        }
                     }
                 }
             } else {
@@ -90,22 +85,27 @@ struct Page2View: View {
                 }) {
                     ZStack {
                         Circle()
-                        .foregroundColor(enableDataCollectionObj.intoxLevel == 0 ? Style.soberButtonFillColor : (enableDataCollectionObj.intoxLevel == 1 ? Style.tipsyButtonFillColor : (enableDataCollectionObj.intoxLevel == 2 ? Style.drunkButtonFillColor : (enableDataCollectionObj.intoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
-//                                               .frame(width: 110, height: 100)
-                        .frame(width: 110, height: 100)
-
+                            .foregroundColor(enableDataCollectionObj.intoxLevel == 0 ? Style.soberButtonFillColor : (enableDataCollectionObj.intoxLevel == 1 ? Style.tipsyButtonFillColor : (enableDataCollectionObj.intoxLevel == 2 ? Style.drunkButtonFillColor : (enableDataCollectionObj.intoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
+                            .frame(width: 110, height: 100)
+                        
                         Image("cocktail.fill")
                             .frame(width: 50, height: 50)
                             .controlSize(.extraLarge)
-                                .overlay(Color.white.opacity(1))
-                                .mask(Image("cocktail.fill").resizable())
-
+                            .overlay(Color.white.opacity(1))
+                            .mask(Image("cocktail.fill").resizable())
+                        
                         Image(systemName: "bubbles.and.sparkles")
                             .font(.system(size: 15))
                             .foregroundColor(.white)
-                                               .offset(x: 5, y: -25)
-                        }
+                            .offset(x: 5, y: -25)
+                    }
                 }
+                Text(enableDataCollectionObj.intoxLevel == 0 ? "Current Level: Sober" :
+                        enableDataCollectionObj.intoxLevel == 1 ? "Current Level: Tipsy" :
+                        enableDataCollectionObj.intoxLevel == 2 ? "Current Level: Drunk" :
+                        enableDataCollectionObj.intoxLevel == 3 ? "Current Level: Danger" :
+                        "")
+                .font(.subheadline)
             }
         }
         .onChange(of: enableDataCollectionObj.enableDataCollection) {
@@ -123,4 +123,3 @@ struct Page2View: View {
 #Preview{
     ContentView()
 }
-
