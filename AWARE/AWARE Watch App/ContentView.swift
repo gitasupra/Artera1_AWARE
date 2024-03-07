@@ -90,7 +90,7 @@ struct Page2View: View {
                 }) {
                     ZStack {
                         Circle()
-                        .foregroundColor(testIntoxLevel == 0 ? Style.soberButtonFillColor : (testIntoxLevel == 1 ? Style.tipsyButtonFillColor : (testIntoxLevel == 2 ? Style.drunkButtonFillColor : (testIntoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
+                        .foregroundColor(enableDataCollectionObj.intoxLevel == 0 ? Style.soberButtonFillColor : (enableDataCollectionObj.intoxLevel == 1 ? Style.tipsyButtonFillColor : (enableDataCollectionObj.intoxLevel == 2 ? Style.drunkButtonFillColor : (enableDataCollectionObj.intoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
 //                                               .frame(width: 110, height: 100)
                         .frame(width: 110, height: 100)
 

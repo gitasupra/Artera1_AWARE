@@ -40,8 +40,10 @@ class BiometricsManager: ObservableObject {
     @StateObject var inputFunctions = InputFunctions()
     
     func startDeviceMotion() {
-        //clear window when device motion started
+        //clear previous walking data or intoxication level when data collection toggled
         windowAccData=[]
+        intoxLevel=0
+        
         if motion.isDeviceMotionAvailable {
             //Bar Crawl dataset sampled at 40Hz
             self.motion.deviceMotionUpdateInterval = 1.0/40.0
@@ -170,6 +172,8 @@ class BiometricsManager: ObservableObject {
             let z = dataPoint.z
             csvString.append("\(timestamp),\(x),\(y),\(z)\n")
         }
+        
+        print("saving data points to csv: " ,data.count)
 
         // Create a file URL for saving the CSV file
         let fileName = windowFile

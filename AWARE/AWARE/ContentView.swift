@@ -77,6 +77,7 @@ struct ContentView: View {
                     if selection != 3 {
                         selection = 3 // Set the initial tab selection to HomeView (tag 3) only on the first appearance
                     }
+                    requestNotificationPermissions()
             }
             .onReceive(viewModel.$userSession) { userSession in
                 if userSession != nil {
@@ -88,6 +89,18 @@ struct ContentView: View {
                     showEmergencySOS = true
                 }
             }
+            .onChange(of: biometricsManager.intoxLevel) { oldValue, newValue in
+                
+                guard oldValue != newValue else{
+                    //return if new level same as old
+                    print("new intoxLevel not different")
+                    return
+                }
+                print("sending notification")
+                enableDataCollectionObj.sendLevelToWatch(level: biometricsManager.intoxLevel)
+                sendPhoneNotification(level: biometricsManager.intoxLevel)
+                //TODO: update alerManager.intoxLevel here too
+            }
             .fullScreenCover(isPresented: $showEmergencySOS) {
                 EmergencySOSView(showCalling911: $showCalling911)
             }
@@ -95,6 +108,7 @@ struct ContentView: View {
                 Calling911View()
                     .environmentObject(alertManager)
             }
+
         } else {
             LoginView()
         }
@@ -103,6 +117,57 @@ struct ContentView: View {
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             ContentView()
+        }
+    }
+    
+    private func requestNotificationPermissions(){
+        UNUserNotificationCenter.current().getNotificationSettings {
+            settings in
+            if settings.authorizationStatus != .authorized{
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {success, error in
+                    if success {
+                        print("Notification request success")
+                    } else if let error = error {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+            else{
+                print("Already authorized for notifications")
+            }
+        }
+    }
+    
+    private func sendPhoneNotification(level: Int){
+        //notification on phone also appears on watch
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Intoxication Level Alert"
+        content.sound=UNNotificationSound.default
+        switch level {
+        case 0:
+            content.subtitle = "Current level: SOBER"
+        case 1:
+            content.subtitle = "Current level: TIPSY"
+        case 2:
+            content.subtitle = "Current level: DRUNK"
+        case 3:
+            content.subtitle = "Current level: EMERGENCY"
+        default:
+            content.subtitle = "Current level: \(level)"
+        }
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        
+        UNUserNotificationCenter.current().add(request){ (error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }else{
+                print("scheduled successfully")
+            }
         }
     }
 }

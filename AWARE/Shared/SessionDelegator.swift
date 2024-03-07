@@ -4,10 +4,12 @@ import WatchConnectivity
 class SessionDelegater: NSObject, WCSessionDelegate {
     let enableDataCollectionSubject: PassthroughSubject<Int, Never>
     let heartRateSubject: PassthroughSubject<(Double, Int), Never>
+    let intoxLevelSubject: PassthroughSubject<Int, Never>
     
-    init(enableDataCollectionSubject: PassthroughSubject<Int, Never>, heartRateSubject: PassthroughSubject<(Double, Int), Never>) {
+    init(enableDataCollectionSubject: PassthroughSubject<Int, Never>, heartRateSubject: PassthroughSubject<(Double, Int), Never> , intoxLevelSubject: PassthroughSubject<Int, Never>) {
         self.enableDataCollectionSubject = enableDataCollectionSubject
         self.heartRateSubject = heartRateSubject
+        self.intoxLevelSubject = intoxLevelSubject
         super.init()
     }
     
@@ -20,7 +22,11 @@ class SessionDelegater: NSObject, WCSessionDelegate {
         DispatchQueue.main.async {
             if let enableDataCollection = message["enableDataCollection"] as? Int {
                 self.enableDataCollectionSubject.send(enableDataCollection)
-            } else {
+            }
+            else if let intoxLevel = message["intoxLevel"] as? Int{
+                self.intoxLevelSubject.send(intoxLevel)
+            }
+            else {
                 print("There was an error")
             }
         }
@@ -30,7 +36,7 @@ class SessionDelegater: NSObject, WCSessionDelegate {
         if let lastHeartRate = userInfo["lastHeartRate"] as? Double,
            let heartRateIdx = userInfo["heartRateIdx"] as? Int {
             self.heartRateSubject.send((lastHeartRate, heartRateIdx))
-            print(lastHeartRate)
+//            print(lastHeartRate)
             // Append the received heart rate data to the list
             //heartRateList.append(HeartRateDataPoint(heartRate: lastHeartRate, myIndex: heartRateIdx, id: UUID()))
             
