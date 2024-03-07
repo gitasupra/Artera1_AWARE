@@ -168,7 +168,7 @@ struct CalendarView: View {
                 .fontWeight(.bold)
                 .disabled(!canNavigateBack)
                 
-                Text("\(currentDate.monthName)")
+                Text("\(currentDate.monthName) \(currentDate.yearName)")
                     .font(.headline)
                     .padding([.leading, .trailing], 15)
                 
@@ -247,7 +247,7 @@ struct CalendarView: View {
                     .fill(Style.primaryColor)
             )
         }
-        Spacer()
+        .padding(.bottom, 10)
     }
 }
 
@@ -288,6 +288,12 @@ extension Date {
     var monthName: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
+        return dateFormatter.string(from: self)
+    }
+    
+    var yearName: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY"
         return dateFormatter.string(from: self)
     }
 }
