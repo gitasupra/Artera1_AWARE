@@ -233,6 +233,8 @@ class InputFunctions : ObservableObject{
             // Extract data from the CSV file
             var acc_data: [[Double]] = []
             
+            print("SECOND: rows of input CSV: ", csvFile.rows.count)
+            
             for row in csvFile.rows {
                 let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
                 acc_data.append(rowData)
@@ -266,6 +268,8 @@ class InputFunctions : ObservableObject{
                     var metrics_axis: [Double] = []
                     
                     // add last timestamp (last row, first column)
+                    // occassionally crashes here (bad if sub_frame.count < 1)
+                    print("sub_frame count: ", sub_frame.count)
                     metrics_axis.append(sub_frame[sub_frame.count - 1][0])
                     
                     // iterate over col from 1 to 4
@@ -340,6 +344,8 @@ class InputFunctions : ObservableObject{
             // Extract data from the CSV file
             var mean_all: [[Double]] = []
             
+            print("WINDOW: rows of input CSV",  csvFile.rows.count)
+            
             for row in csvFile.rows {
                 let rowData: [Double] = [Double(row["time"]!)!, Double(row["x"]!)!, Double(row["y"]!)!, Double(row["z"]!)!]
                 mean_all.append(rowData)
@@ -350,6 +356,9 @@ class InputFunctions : ObservableObject{
             var single_row: [Double] = []
             var i = 0
             let tot_rows = mean_all.count
+            
+            //occassionally crashes here (bad if tot_rows < 21)
+            print("total rows: ", tot_rows)
             
             while i + 10 < tot_rows {
                 single_row.append(mean_all[i+9][0])
