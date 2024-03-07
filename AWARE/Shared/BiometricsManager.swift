@@ -209,6 +209,9 @@ struct accelerometerGraph: View {
                             .foregroundStyle(by: .value("z", "z"))
                     }
                 }
+                #if os(iOS)
+                .frame(height: UIScreen.main.bounds.height * 0.6) // Adjust the height to your preference
+                #endif
                 .chartScrollableAxes(.horizontal)
                 .chartXVisibleDomain(length: 50)
                 .padding()
@@ -228,6 +231,9 @@ struct heartRateGraph: View {
                         LineMark(x: .value("idx", element.1), y: .value("Heart Rate", element.0))
                     }
                 }
+                #if os(iOS)
+                .frame(height: UIScreen.main.bounds.height * 0.6) // Adjust the height to your preference
+                #endif
                 .chartScrollableAxes(.horizontal)
                 .chartXVisibleDomain(length: 50)
                 .padding()
