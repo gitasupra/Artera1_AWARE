@@ -14,7 +14,9 @@ import UberRides
 
 struct UberRideRequestButton: UIViewRepresentable {
     func makeUIView(context: Context) -> RideRequestButton {
-        return RideRequestButton()
+        let rideRequestButton = RideRequestButton()
+        rideRequestButton.backgroundColor = UIColor(Style.accentColor)
+        return rideRequestButton
     }
 
     func updateUIView(_ uiView: RideRequestButton, context: Context) {
@@ -47,16 +49,23 @@ struct LocationView: View {
     var body: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Current Location")
-                    .font(.title)
+                HStack {
+                    Image(systemName: "mappin.and.ellipse")
+                    Text("Current Location:")
+                }
+                .font(.headline)
+                .foregroundColor(.white)
                 
                 HStack {
                     Text("Latitude: \(coordinates.lat)")
                     Text("Longitude: \(coordinates.lon)")
                 }
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(Style.highlightColor)
             }
+            .frame(width: 340, height: 75)
+            .background(Style.primaryColor)
+            .cornerRadius(20)
         }
         Spacer()
         Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
@@ -78,24 +87,20 @@ struct LocationView: View {
                 .font(.subheadline)
             
             Image(systemName: "wineglass")
-                .foregroundColor(.purple)
+                .foregroundColor(Style.accentColor)
         }
+        
         HStack {
             // Ride request button
             UberRideRequestButton()
                 .frame(width: 240, height: 40)
+                .cornerRadius(50)
         }
         .onAppear {
             observeCoordinateUpdates()
             observeLocationAccessDenied()
             deviceLocationService.requestLocationUpdates()
         }
-        .cornerRadius(6)
-        .background(Color.accentColor)
-        .overlay(
-            RoundedRectangle(cornerRadius: 6)
-                .stroke(Color.accentColor, lineWidth: 1)
-        )
         Spacer()
     }
     
@@ -206,7 +211,6 @@ final class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDeleg
             DispatchQueue.main.async {
                 self.region = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
             }
-            
         @unknown default:
             break
         }

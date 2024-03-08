@@ -11,8 +11,6 @@ import CoreMotion
 
 @main
 struct AWARE_Watch_AppApp: App {        
-    init() {}
-    
     var body: some Scene {
         WindowGroup {
             ContentView()

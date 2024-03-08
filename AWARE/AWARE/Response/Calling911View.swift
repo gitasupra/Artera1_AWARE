@@ -14,17 +14,15 @@ struct Calling911View: View {
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     var body: some View {
-
         VStack {
             Spacer()
-            
-            Text("Calling 911...")
+            Text("Contacting 911...")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .padding(.top, 50)
             ZStack {
-                Image(systemName: "iphone") // Using the phone receiver symbol
+                Image(systemName: "iphone")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)

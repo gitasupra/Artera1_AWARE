@@ -351,13 +351,13 @@
 		125506AF2B5CB61F007F0323 /* ContactViews */ = {
 			isa = PBXGroup;
 			children = (
-				125506B02B5CB61F007F0323 /* ContactListView.swift */,
-				125506B12B5CB61F007F0323 /* Styles.swift */,
-				125506B22B5CB61F007F0323 /* ContactRow.swift */,
 				125506B32B5CB61F007F0323 /* AddContactView.swift */,
-				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
 				125506B52B5CB61F007F0323 /* ImagePicker.swift */,
+				125506B22B5CB61F007F0323 /* ContactRow.swift */,
+				125506B02B5CB61F007F0323 /* ContactListView.swift */,
+				125506B42B5CB61F007F0323 /* ContactPickerButton.swift */,
 				125506B62B5CB61F007F0323 /* ContactDetailView.swift */,
+				125506B12B5CB61F007F0323 /* Styles.swift */,
 			);
 			path = ContactViews;
 			sourceTree = "<group>";
@@ -395,7 +395,6 @@
 				127DBA2F2B1D58040031F9F7 /* SessionDelegator.swift */,
 				124AF8AA2B816B19004A7483 /* BiometricsManager.swift */,
 				12DE7BCC2B93DF28007EABE4 /* InputFunctions.swift */,
-				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -487,6 +486,7 @@
 				FF01F38D2B06FB9A0057AFD6 /* AWARE.entitlements */,
 				CC9482892AF870DF00A3A64E /* AWAREApp.swift */,
 				CC94828B2AF870DF00A3A64E /* ContentView.swift */,
+				CC94828D2AF870E100A3A64E /* Assets.xcassets */,
 				CC94828F2AF870E100A3A64E /* Preview Content */,
 			);
 			path = AWARE;
