@@ -63,7 +63,7 @@ struct LocationView: View {
                 .font(.subheadline)
                 .foregroundColor(Style.highlightColor)
             }
-            .frame(width: 340, height: 75)
+            .frame(width: 340, height: 60)
             .background(Style.primaryColor)
             .cornerRadius(20)
         }
@@ -77,7 +77,7 @@ struct LocationView: View {
                 MapCompass()
                 MapUserLocationButton()
             }
-            .frame(height: 380)
+            .frame(height: 340)
             .cornerRadius(10)
         Spacer()
 

@@ -259,7 +259,7 @@ struct CalendarView: View {
                                 ZStack {
                                 Circle()
                                     .foregroundColor(Style.primaryColor)
-                                    .frame(width: 40, height: 20)
+                                    .frame(width: 30, height: 10)
                                 VStack(alignment: .center) {
                                     Text(element)
                                         .foregroundColor(.gray)
@@ -277,7 +277,7 @@ struct CalendarView: View {
                                 ZStack {
                                     Circle()
                                         .foregroundColor(Style.primaryColor)
-                                        .frame(width: 40, height: 40)
+                                        .frame(width: 30, height: 25)
                                     
                                     if day.level != -2 {
                                         Circle()
@@ -295,12 +295,12 @@ struct CalendarView: View {
                                                     Text("\(day.date.day)")
                                                         .font(.subheadline)
                                                         .foregroundColor(.white))
-                                                .frame(width: 40, height: 40)
+                                                .frame(width: 30, height: 25)
                                         }
                                     } else {
                                         Circle()
                                             .foregroundColor(.clear)
-                                            .frame(width: 30, height: 30)
+                                            .frame(width: 30, height: 25)
                                     }
                                 }
                             }
@@ -309,7 +309,7 @@ struct CalendarView: View {
                     Spacer()
                 }
                 .cornerRadius(20)
-                .frame(width: geometry.size.width, height: geometry.size.height * 0.90)
+                .frame(width: geometry.size.width * 0.90, height: geometry.size.height * 0.90)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Style.primaryColor)

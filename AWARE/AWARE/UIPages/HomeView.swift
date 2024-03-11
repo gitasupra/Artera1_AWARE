@@ -56,10 +56,9 @@ struct HomeView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                 }
-                .frame(width: 300, height: 200)
+                .frame(width: 300, height: 180)
                 .background(Style.primaryColor)
                 .cornerRadius(20)
-                .padding()
            
                 if !self.$shouldHide.wrappedValue {
                     Button(action: {
@@ -68,7 +67,7 @@ struct HomeView: View {
                         ZStack {
                             Circle()
                                 .foregroundColor(.white)
-                                .frame(width: 170, height: 170)
+                                .frame(width: 160, height: 160)
                             Image("cocktail")
                                 .font(.system(size: 80))
                                 .controlSize(.extraLarge)
@@ -89,18 +88,17 @@ struct HomeView: View {
                         .minimumScaleFactor(0.5)
                         .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberTextColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyTextColor : (biometricsManager.intoxLevel == 2 ? Style.drunkTextColor : (biometricsManager.intoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
                     }
-                        .frame(width: 300, height: 200)
+                        .frame(width: 300, height: 180)
                         .background(biometricsManager.intoxLevel == 0 ? Style.soberBoxColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyBoxColor : (biometricsManager.intoxLevel == 2 ? Style.drunkBoxColor : (biometricsManager.intoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor ))))
                         .cornerRadius(20)
-                        .padding()
-
+                
                 Button(action: {
                     enableDataCollectionObj.toggleOff()
                 }) {
                     ZStack {
                         Circle()
                             .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberButtonFillColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyButtonFillColor : (biometricsManager.intoxLevel == 2 ? Style.drunkButtonFillColor : (biometricsManager.intoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
-                                               .frame(width: 170, height: 170)
+                                               .frame(width: 160, height: 160)
 
                         Image("cocktail.fill")
                             .font(.system(size: 80))
