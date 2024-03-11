@@ -141,9 +141,9 @@ struct ContentView: View {
         case 0:
             content.subtitle = "Current level: SOBER"
         case 1:
-            content.subtitle = "Current level: TIPSY"
+            content.subtitle = "Current level: TIPSY - Drink some water!"
         case 2:
-            content.subtitle = "Current level: DRUNK"
+            content.subtitle = "Current level: DRUNK - Slow down, and call an Uber or a friend!"
         case 3:
             content.subtitle = "Current level: EMERGENCY"
         default:
