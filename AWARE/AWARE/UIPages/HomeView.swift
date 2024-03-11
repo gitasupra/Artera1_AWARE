@@ -50,13 +50,13 @@ struct HomeView: View {
             if (enableDataCollectionObj.enableDataCollection == 0) {
                 VStack {
                     Text("Press the button below to start tracking your drinking!")
-                        .font(.system(size: 25))
+                        .font(.system(size: 30))
                         .font(.headline)
                         .foregroundColor(Style.highlightColor)
                         .multilineTextAlignment(.center)
                         .padding()
                 }
-                .frame(width: 300, height: 200)
+                .frame(width: 350, height: 230)
                 .background(Style.primaryColor)
                 .cornerRadius(20)
                 .padding()
@@ -68,7 +68,7 @@ struct HomeView: View {
                         ZStack {
                             Circle()
                                 .foregroundColor(.white)
-                                .frame(width: 170, height: 170)
+                                .frame(width: 200, height: 200)
                             Image("cocktail")
                                 .font(.system(size: 80))
                                 .controlSize(.extraLarge)
@@ -81,7 +81,7 @@ struct HomeView: View {
             } else {
                 VStack {
                     Text("You are")
-                        .font(.system(size: 25))
+                        .font(.system(size: 30))
                         .font(.headline)
                         .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberTextColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyTextColor : (biometricsManager.intoxLevel == 2 ? Style.drunkTextColor : (biometricsManager.intoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
                     Text(biometricsManager.intoxLevel == 0 ? "SOBER" : (biometricsManager.intoxLevel == 1 ? "TIPSY" : (biometricsManager.intoxLevel == 2 ? "DRUNK" : "IN DANGER")))
@@ -89,7 +89,7 @@ struct HomeView: View {
                         .minimumScaleFactor(0.5)
                         .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberTextColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyTextColor : (biometricsManager.intoxLevel == 2 ? Style.drunkTextColor : (biometricsManager.intoxLevel == 3 ? Style.dangerTextColor : Style.primaryColor ))))
                     }
-                        .frame(width: 300, height: 200)
+                        .frame(width: 350, height: 230)
                         .background(biometricsManager.intoxLevel == 0 ? Style.soberBoxColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyBoxColor : (biometricsManager.intoxLevel == 2 ? Style.drunkBoxColor : (biometricsManager.intoxLevel == 3 ? Style.dangerBoxColor : Style.primaryColor ))))
                         .cornerRadius(20)
                         .padding()
@@ -100,7 +100,7 @@ struct HomeView: View {
                     ZStack {
                         Circle()
                             .foregroundColor(biometricsManager.intoxLevel == 0 ? Style.soberButtonFillColor : (biometricsManager.intoxLevel == 1 ? Style.tipsyButtonFillColor : (biometricsManager.intoxLevel == 2 ? Style.drunkButtonFillColor : (biometricsManager.intoxLevel == 3 ? Style.dangerButtonFillColor : Style.primaryColor ))))
-                                               .frame(width: 170, height: 170)
+                                               .frame(width: 200, height: 200)
 
                         Image("cocktail.fill")
                             .font(.system(size: 80))

@@ -47,7 +47,7 @@ struct AnalyticsView: View {
                         .buttonStyle(Style.CustomButtonStyle(isActive: showAccChart))
                         .padding(.bottom, 10)
                     }
-                }
+                }.padding(.bottom, 30)
             }
             .navigationBarTitle("Analytics", displayMode: .large)
         }
@@ -259,7 +259,7 @@ struct CalendarView: View {
                                 ZStack {
                                 Circle()
                                     .foregroundColor(Style.primaryColor)
-                                    .frame(width: 40, height: 20)
+                                    .frame(width: 40, height: 40)
                                 VStack(alignment: .center) {
                                     Text(element)
                                         .foregroundColor(.gray)
@@ -309,7 +309,7 @@ struct CalendarView: View {
                     Spacer()
                 }
                 .cornerRadius(20)
-                .frame(width: geometry.size.width, height: geometry.size.height * 0.90)
+                .frame(width: geometry.size.width, height: geometry.size.height * 0.85)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Style.primaryColor)
